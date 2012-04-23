@@ -1,7 +1,7 @@
 class:: GRectangle
-summary:: 
+summary:: A rectangle
 related:: Reference/scgraph
-categories::  SCGraph>Primitives>2D
+categories:: SCGraph>Primitives>2D
 
 
 Description::

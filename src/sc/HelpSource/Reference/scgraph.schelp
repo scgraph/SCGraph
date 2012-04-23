@@ -69,77 +69,68 @@ SynthDef (\WobblingCube, {
 
 section::Central Data Structures
 
-list::
+tree::
 ## renderer
-list::
-## code::GGLRenderer ::
-::
-::
-list::
-## texture, etc 
-list::
-
-## code::GColor::	(note that there is also the convenience instance-method Color:gr)
-## code::GBlending::
-## code::GCulling::
-## code::GLight::
-## code::GLighting::
-## code::GMaterial::
-## code::GTexQuad::
-## code::GShaderProgram::
-## code::GShaderUniform::
-:: 
-::
-list::
-## positioning
-list::
-## code::GStretch::
-## code::GRotate::
-## code::GTransform::
-## code::GTranslate::
-## code::GFreqAmp::
-::
-::
-list::
-## graphics primitives 2d
-list::
-## code::GBorderedRectangle::
-## code::GLine::
-## code::GPoints::
-## code::GPolygon::
-## code::GQuad::
-## code::GRectangle::
-## code::GTriangle::
-::
-::
-list::
-## graphics primitives 3d
-list::
-## code::GCube::
-::    
-::
-list::          
-## graphics bus access
-list::
-## code::In::
-## code::Out::
-## code::ReplaceOut ::
-::
-::
+    tree::
+    ## code::GGLRenderer::
+    ## texture, etc 
+	    tree::
+		## code::GColor::	(note that there is also the convenience instance-method Color:gr)
+		## code::GBlending::
+		## code::GCulling::
+		## code::GLight::
+		## code::GLighting::
+		## code::GMaterial::
+		## code::GTexQuad::
+		## code::GShaderProgram::
+		## code::GShaderUniform::
+		:: 
+    ## positioning
+	    tree::
+		## code::GStretch::
+		## code::GRotate::
+		## code::GTransform::
+		## code::GTranslate::
+		## code::GFreqAmp::
+		::
+    ## graphics primitives 2d
+	    tree::
+		## code::GBorderedRectangle::
+		## code::GLine::
+		## code::GPoints::
+		## code::GPolygon::
+		## code::GQuad::
+		## code::GCircle::
+		## code::GRectangle::
+		## code::GTriangle::
+		::
+    ## graphics primitives 3d
+	    tree::
+		## code::GCube::
+		## code::GTube::
+		::    
+ 	## graphics bus access
+	    tree::
+		## code::In::
+		## code::Out::
+		## code::ReplaceOut::
+		::
+	::
 ::
 
 section::Features
 
 list::
 ## Should build on Linux as well as Mac OS X (the mac port still has some issues)
- ## SuperCollider OSC protocol (partly implemented)
- ## SuperCollider SynthDef format
- ## SuperCollider plugin loading to make use of control rate units
- ## Support for geometry producing/consuming units (GUnits)
- ## OpenGL rendering (although different renderers should in practice be possible to implement)
- ## Lighting
- ## Blending
- ## Textures (preliminary, hack’ish)
+## SuperCollider OSC protocol (partly implemented)
+## SuperCollider SynthDef format
+## SuperCollider plugin loading to make use of control rate units
+## Support for geometry producing/consuming units (GUnits)
+## OpenGL rendering (although different renderers should in practice be possible to implement)
+## Lighting
+## Blending
+## Textures (preliminary, hack’ish)
+::
 
 section::License
 
@@ -147,7 +138,7 @@ ScGraph uses the GNU General public license (GPL) version 2.
 
 section::Screenshots
 
-What’s a program overview without screenshots? So here we go:
+What's a program overview without screenshots? So here we go:
 
 image::scgraph_more_stuff.png::
 image::scgraph_crazy.png::

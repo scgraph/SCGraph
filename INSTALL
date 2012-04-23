@@ -122,9 +122,3 @@ GGLRenderer.gr(source);
     $(PREFIX)/share/doc/examples/
 
     They show you how to make simple animations with scgraph.
-
-
-Have fun,
-Florian Paul Schmidt
-
-Holger Ballweg

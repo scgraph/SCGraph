@@ -59,6 +59,8 @@ Optionally set the env paths: in your ~/.bashrc add:
    export SCGRAPH_TEXTURE_PATH=~/.scgraph/textures
    export SCGRAPH_PLUGIN_PATH=/usr/local/lib/scgraph/plugins/
 
+On OSX, copy or symlink the build/SCGraph folder to ~/Application Support/SuperCollider/Extensions/
+
 
 You can also set/overwrite them with GServerOptions (see the help file).
 Open supercollider and do:

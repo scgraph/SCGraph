@@ -67,10 +67,10 @@ g.sendMsg
 "x",
 "
 uniform float x;
-        void main()
-        {
-                gl_FragColor = vec4(x,0.9,0.1,1.0);
-        }
+void main()
+{
+gl_FragColor = vec4(x,0.9,0.1,1.0);
+}
 ", 
 0);
 )
@@ -89,20 +89,20 @@ g.sendMsg
 0,
 "a",
 "
-        void main()
-        {
-                gl_FragColor = vec4(0.1,0.9,0.1,1.0);
-        }
+void main()
+{
+gl_FragColor = vec4(0.1,0.9,0.1,1.0);
+}
 ", 
 0,
 "
 void main(void)
 {
-   vec4 a = gl_Vertex;
-   a.x = a.x * 0.5;
-   a.y = a.y * 0.5;
-   a.z = a.z * 0.3;
-   gl_Position = gl_ModelViewProjectionMatrix * a;
+vec4 a = gl_Vertex;
+a.x = a.x * 0.5;
+a.y = a.y * 0.5;
+a.z = a.z * 0.3;
+gl_Position = gl_ModelViewProjectionMatrix * a;
 }
 ",
 1);

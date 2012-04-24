@@ -87,6 +87,10 @@ GServer : Server {
 			program ++ options.asOptionsString(addr.port)).unixCmd;
 		("booting " ++ addr.port.asString).inform;
 	}
+
+	loadTexture { |path|
+		this.sendMsg("/loadTexture", path)
+	}
 }
 
 GServerOptions : ServerOptions

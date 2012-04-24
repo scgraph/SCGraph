@@ -384,11 +384,13 @@ void GLRenderer::compile_and_link_shader_program(unsigned int index, ShaderPool:
 	std::vector<GLint> locations;
 	for (size_t i = 0; i < s->_uniforms.size(); ++i) {
 		GLint loc = glGetUniformLocationARB(my_program, (const GLchar*)s->_uniforms[i].c_str());
-		if (loc == -1)
-			std::cout << "[GLRenderer]: !!!!!!!!!!!!Error getting uniform location" << std::endl;
+		if (loc == -1) {
+			std::cout << "[GLRenderer]: Error getting uniform location!" << std::endl;
+		}
 		locations.push_back(loc);
 	}
-	_shader_uniforms[index] = locations;
+	if(s->_uniforms.size() > 0) 
+		_shader_uniforms[index] = locations;
 
 
 	glGetInfoLogARB(my_program, 100000, &length, (GLcharARB *)log);
@@ -797,10 +799,14 @@ void GLRenderer::visitShaderUniformConst (const ShaderUniform *s)
 
 	//std::cout << "current shader program index: " << _current_shader_program << " uniform index: " << s->_uniform_index << std::endl;
 
+
 	// TODO: Make more efficient..
-	//std::cout << "values.size(): " << s->_values.size() << " uniform index: " << s->_uniform_index << std::endl;
-	if (_shader_uniforms.find(_current_shader_program) == _shader_uniforms.end())
+	// std::cout << "values.size(): " << s->_values.size() << " uniform index: " << s->_uniform_index << " first value: " << s->_values[0] <<  std::endl;
+	if (_shader_uniforms.find(_current_shader_program) == _shader_uniforms.end()) {
+		// std::cout << "[GGLRenderer] No uniform at index " << s->_uniform_index 
+		//		  << " for shader " << _current_shader_program << "!" << std::endl;
 		return;
+	}
 
 	switch(s->_values.size()) {
 		case 1:

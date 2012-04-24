@@ -128,7 +128,7 @@ void TexturePool::add_image (const std::string &filename)
 {
 	Options *options = Options::get_instance ();
 
-	if (options->_verbose >= 2)
+	//if (options->_verbose >= 2)
 		std::cout << "[TexturePool]: Adding texture: " << filename << std::endl;
 
 	try
@@ -186,7 +186,7 @@ void TexturePool::add_image (const std::string &filename)
 			}
 			_textures.push_back (t);
 	
-			if (options->_verbose >= 2)
+			//if (options->_verbose >= 2)
 				std::cout << "  [TexturePool]: New texture has index: " 
 						  << _textures.size() - 1 << std::endl;
 	

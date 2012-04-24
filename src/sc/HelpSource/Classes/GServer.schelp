@@ -22,6 +22,10 @@ An integer for the control rate in Hz.
 METHOD:: graphicsRate
 An integer for the graphics rate in frames per second (FPS).
 
+METHOD:: loadTexture
+Load the given texture and give it a number.
+ARGUMENT:: path
+The path to the image file.
 
 
 EXAMPLES::

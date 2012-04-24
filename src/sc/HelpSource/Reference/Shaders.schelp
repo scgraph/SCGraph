@@ -87,7 +87,7 @@ g.sendMsg
 (
 "/loadShaderProgram", 
 0,
-"",
+"a",
 "
         void main()
         {

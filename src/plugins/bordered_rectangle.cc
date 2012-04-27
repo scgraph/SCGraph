@@ -121,7 +121,7 @@ void BorderedRectangle::process_g (double delta_t)
 
 	l->_vertices[3]._c[0] = -(*_control_ins[0])/2.0;
 	l->_vertices[3]._c[1] = (*_control_ins[1])/2.0;
-	l->_vertices[2]._c[2] = 0;
+	l->_vertices[3]._c[2] = 0;
 
 	l->_face_color = ColorRGBA(
 		(*_control_ins[7]),

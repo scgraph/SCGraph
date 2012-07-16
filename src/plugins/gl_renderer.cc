@@ -959,7 +959,11 @@ void GLRenderer::really_process_g (double delta_t)
 	/* first thing to do */
 	//_gl_widget->makeCurrent ();
 
-	glUseProgramObjectARB(0);
+
+#ifndef HAVE_SHADERS
+	// deactivate shaders
+    glUseProgramObjectARB(0);
+#endif
 
 	//_gl_widget->makeOverlayCurrent ()
 

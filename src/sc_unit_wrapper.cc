@@ -29,7 +29,11 @@ void ScUnitWrapper::process_c (double delta_t)
 	{
 		PluginPool *PluginPool = PluginPool::get_instance ();
 		Options *options = Options::get_instance ();
-		_unit = PluginPool->create_sc_unit (_sc_unit->_name, _special_index, 0, _control_ins.size(), _control_outs.size(), 0, options->_control_rate, 1);
+        _unit = PluginPool->create_sc_unit(_sc_unit->_name,
+                                           _special_index, 0,
+                                           _control_ins.size(),
+                                           _control_outs.size(), 0,
+                                           options->_control_rate, 1);
 	}
 
 	for (size_t i = 0; i < _control_ins.size(); ++i)

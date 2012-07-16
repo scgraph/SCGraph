@@ -395,9 +395,12 @@ void GLRenderer::compile_and_link_shader_program(unsigned int index, ShaderPool:
 
 	glGetInfoLogARB(my_program, 100000, &length, (GLcharARB *)log);
 
-	std::cout << "[GGLRenderer]: Shader log:" << std::endl << log << std::endl << "[GGLRenderer]: Shader log end." << std::endl;
+	std::cout << "[GGLRenderer]: Shader log:" << std::endl 
+			  << log << std::endl 
+			  << "[GGLRenderer]: Shader log end." << std::endl;
 
-	glUseProgramObjectARB(0);
+	// deactivate new shader
+	//glUseProgramObjectARB(0);
 #endif
 }
 
@@ -844,7 +847,7 @@ void GLRenderer::visitShaderUniformConst (const ShaderUniform *s)
 		break;
 	}
 	// lookup attribute
-	//GLint attribute = glGetAttribLocation(_shader_program[s->_index]first, _shader_programs[s->_index].second->_attributes
+	//GLint attribute = glGetAttribLocation(_shader_program[s->_index].first, _shader_programs[s->_index].second->_attributes
 #endif
 }
 
@@ -959,6 +962,7 @@ void GLRenderer::really_process_g (double delta_t)
 	/* first thing to do */
 	//_gl_widget->makeCurrent ();
 
+	// deactivate shaders
 	glUseProgramObjectARB(0);
 
 	//_gl_widget->makeOverlayCurrent ()
@@ -1131,13 +1135,19 @@ void GLRenderer::really_process_g (double delta_t)
 
 	if (*_control_ins[PERSPECTIVE] > 0.5)
 	{
-		gluPerspective (*_control_ins[FOV], (GLfloat)_gl_widget->width()/(GLfloat)_gl_widget->height(), *_control_ins[NEAR_PLANE], *_control_ins[FAR_PLANE]);
+		gluPerspective (*_control_ins[FOV],
+						(GLfloat)_gl_widget->width() / (GLfloat)_gl_widget->height(),
+						*_control_ins[NEAR_PLANE], 
+						*_control_ins[FAR_PLANE]);
 	}
 	else
 	{
-		float ratio = (GLfloat)_gl_widget->width()/(GLfloat)_gl_widget->height();
+		float ratio = (GLfloat)_gl_widget->width() / (GLfloat)_gl_widget->height();
 
-		glOrtho (-1.0 *ratio, 1.0 * ratio, -1.0, 1.0, *_control_ins[NEAR_PLANE], *_control_ins[FAR_PLANE]);
+		glOrtho (-1.0 * ratio, 1.0 * ratio, 
+				 -1.0, 1.0,
+				 *_control_ins[NEAR_PLANE], 
+				 *_control_ins[FAR_PLANE]);
 	}
 
 	glMatrixMode (GL_MODELVIEW);
@@ -1146,18 +1156,15 @@ void GLRenderer::really_process_g (double delta_t)
 
 	glMultMatrixf (_transformation_matrix.get_coefficients ());
 
-	gluLookAt
-	(
-		*_control_ins[EYE + 0],
-		*_control_ins[EYE + 1],
-		*_control_ins[EYE + 2],
-		*_control_ins[CENTER + 0],
-		*_control_ins[CENTER + 1],
-		*_control_ins[CENTER + 2],
-		*_control_ins[UP + 0],
-		*_control_ins[UP + 1],
-		*_control_ins[UP + 2]
-	);
+	gluLookAt(*_control_ins[EYE + 0],
+			  *_control_ins[EYE + 1],
+			  *_control_ins[EYE + 2],
+			  *_control_ins[CENTER + 0],
+			  *_control_ins[CENTER + 1],
+			  *_control_ins[CENTER + 2],
+			  *_control_ins[UP + 0],
+			  *_control_ins[UP + 1],
+			  *_control_ins[UP + 2]);
 
 	/* turn off all lights first so they can be reenabled on demand later */
 	if (*_control_ins[LIGHTING] > 0.5)
@@ -1344,8 +1351,6 @@ void GLRenderer::mouseReleaseEvent (QMouseEvent *event)
 
 void GLRenderer::mouseMoveEvent (QMouseEvent *event)
 {
-	
-
 	_cur_mouse_x = event->x();
 	_cur_mouse_y = event->y();
 	event->ignore ();
@@ -1399,23 +1404,19 @@ void GLRenderer::keyPressEvent (QKeyEvent *event)
 		break;
 
 		case Qt::Key_S: 
-		{
-			if(event->isAutoRepeat() == false) {
+			if(event->isAutoRepeat() == false)
 				_gl_widget->makeScreenshot();			
-			}
+
 			event->accept ();
 			return;
-		}
 		break;
 
 		case Qt::Key_M: 
-		{
-			if(event->isAutoRepeat() == false) {
+			if(event->isAutoRepeat() == false) 
 				_gl_widget->toggleRecording();
-			}
+
 			event->accept ();
 			return;
-		}
 		break;
 	
 		case Qt::Key_I:

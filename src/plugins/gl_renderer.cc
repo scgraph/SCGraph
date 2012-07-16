@@ -278,11 +278,20 @@ GLRenderer::GLRenderer () :
 	_main_window->setAttribute (Qt::WA_QuitOnClose, false);
 
 	_main_window->setWindowTitle (_window_title);
-	_main_window->resize (SCGRAPH_QT_GL_RENDERER_DEFAULT_WIDTH, SCGRAPH_QT_GL_RENDERER_DEFAULT_HEIGHT);
+	_main_window->resize (SCGRAPH_QT_GL_RENDERER_DEFAULT_WIDTH,
+						  SCGRAPH_QT_GL_RENDERER_DEFAULT_HEIGHT);
 	_main_window->show ();
 
-	connect (TexturePool::get_instance (), SIGNAL (textures_changed()), this, SLOT(change_textures()), Qt::QueuedConnection);
-	connect (ShaderPool::get_instance (), SIGNAL (shader_programs_changed()), this, SLOT(change_shader_programs()), Qt::QueuedConnection);
+	connect (TexturePool::get_instance (), 
+			 SIGNAL (textures_changed()), 
+			 this, 
+			 SLOT(change_textures()), 
+			 Qt::QueuedConnection);
+	connect (ShaderPool::get_instance (), 
+			 SIGNAL (shader_programs_changed()), 
+			 this, 
+			 SLOT(change_shader_programs()), 
+			 Qt::QueuedConnection);
 
 #if 0
 	change_textures ();
@@ -400,7 +409,7 @@ void GLRenderer::compile_and_link_shader_program(unsigned int index, ShaderPool:
 			  << "[GGLRenderer]: Shader log end." << std::endl;
 
 	// deactivate new shader
-	//glUseProgramObjectARB(0);
+	glUseProgramObjectARB(0);
 #endif
 }
 
@@ -577,7 +586,9 @@ void GLRenderer::draw_face (const Face &face)
 	// TODO: optimize this switch into a std::map<int, int>
 	// TODO: fix per vertex color for lines
 
-	if (*_control_ins[TEXTURING] > 0.5 && face._texture_coordinates.size () > 0 && face._texture_index < _texture_handles.size())
+	if (*_control_ins[TEXTURING] > 0.5 
+		&& face._texture_coordinates.size () > 0 
+		&& face._texture_index < _texture_handles.size())
 	{
 		glEnable (GL_TEXTURE_2D);
 		//std::cout << _texture_handles[face._texture_index] << std::endl;
@@ -962,8 +973,10 @@ void GLRenderer::really_process_g (double delta_t)
 	/* first thing to do */
 	//_gl_widget->makeCurrent ();
 
+#ifndef HAVE_SHADERS
 	// deactivate shaders
-	glUseProgramObjectARB(0);
+    glUseProgramObjectARB(0);
+#endif
 
 	//_gl_widget->makeOverlayCurrent ()
 

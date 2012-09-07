@@ -55,6 +55,19 @@ option(JACK "Build with jack support for the FFT UGen")
 # option(OSX_PACKAGE "Package dmg for Apple")
 # option(IN_PLACE_BUILD "Build and install in cmake build folder" ON)
 
+
+
+################################################################################
+option(VIDEO "Support video loading (needs libavcodec)")
+
+if(VIDEO)
+  find_package(LibAvCodec)
+  if (NOT AvCodec_FOUND)
+	message(STATUS "libavcodec not found. video loading disabled")
+	set(VIDEO, false)
+  endif()
+endif(VIDEO)
+
 # # osx `make install' defaults into cmake_build/SC3-plugins directory
 # if (APPLE AND IN_PLACE_BUILD)
 #   set(CMAKE_INSTALL_PREFIX "${CMAKE_BINARY_DIR}")
@@ -74,7 +87,6 @@ option(JACK "Build with jack support for the FFT UGen")
 # if (OSX_PACKAGE)
 #   add_subdirectory(osx_package)
 # endif()
-
 
 
 if (LINUX)

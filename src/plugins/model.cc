@@ -27,8 +27,8 @@ extern "C"
 
 Model::Model ()
 {
-	ObjLoader obj = ObjLoader("/Users/hb/src/scgraph/src/fo_frigate.obj");
-	//ObjLoader obj = ObjLoader("/Users/hb/src/scgraph/src/test.obj");
+	//ObjLoader obj = ObjLoader("/Users/hb/src/scgraph/src/fo_frigate.obj");
+	ObjLoader obj = ObjLoader("/Users/hb/src/scgraph/src/test.obj");
 
 	_g = obj._geometry;
 }

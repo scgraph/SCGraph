@@ -1,0 +1,19 @@
+class:: GFBTexQuad
+summary:: A textured quad using a previous frame as texture.
+related:: Reference/scgraph
+categories:: SCGraph>Texture
+
+Description::
+A textured using a previous frame as texture.
+
+
+
+classmethods::
+
+method::gr
+
+argument::past_frame
+specifies which past frame to take (1 = last frame, 2 = second to last frame).
+
+note:: the maximum for past_frame is defined by the max_feedback_frames argument of the renderer containing the synth.
+

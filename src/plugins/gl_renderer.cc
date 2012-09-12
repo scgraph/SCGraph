@@ -105,6 +105,11 @@ GLRenderWidget::GLRenderWidget (QWidget *parent, GLRenderer *renderer) :
 	QGLFormat f = format();
 	f.setDoubleBuffer(true);
 	setFormat(f);
+
+	makeCurrent();
+	//_lastFrame = new QGLFramebufferObject(1024,1024);
+
+	boost::shared_ptr<Texture> _lastFrame(new Texture (1024, 1024, 4));
 	//setAutoBufferSwap(false);
 }
 
@@ -119,8 +124,11 @@ void GLRenderWidget::paintGL ()
 {
 	// makeCurrent ();
 	_renderer->really_process_g(_renderer->_delta_t);
+
 	if(_recording)
 		_recorder.nextFrame(grabFrameBuffer());
+	//	if(_feedback)
+	//	_lastFrame = QGLWidget::convertToGLFormat(grabFrameBuffer());
 }
 
 void GLRenderWidget::initializeGL ()
@@ -251,6 +259,9 @@ GLRenderer::GLRenderer () :
 	_forward (0),
 	_sideward (0),
 	_upward (0),
+	_fbcounter (0),
+	_feedback (0),
+	_max_feedback_frames (SCGRAPH_QT_GL_RENDERER_MAXMAX_FEEDBACK_FRAMES + 1),
 	_window_title("[ScGraph]: GGLRenderer - Press F1 for help")
 {
 	_rot_y = 0;
@@ -270,6 +281,36 @@ GLRenderer::GLRenderer () :
 
 	// std::cout << "[GLRenderer]: constructor" << std::endl;
 
+	// set up display texts
+	font.setPixelSize(10);
+
+	directions << "eye" << "center" << "up";
+
+	axisnames << "x" << "y" << "z";
+
+	offsets.append(EYE);
+	offsets.append(CENTER);
+	offsets.append(UP);
+
+	helptexts << "F1 or H - this help"
+			  << "Clicking the little X - kill the node containing this GLRenderer"
+			  << "R - reset view"		
+			  << "I - show info"
+			  << "F - toggle fullscreen"
+			  << "S - screenshot"
+			  << "M - toggle recording"
+			  << "UPARROW - forward"
+			  << "DOWNARROW - backward"
+			  << "RIGHTARROW - right"
+			  << "LEFTARROW - left"
+			  << "SHIFT-UPARROW - up"
+			  << "SHIFT-DOWNARROW - down";
+
+
+	/*_max_feedback_frames = 
+		std::min<unsigned int>((unsigned int) *_control_ins[MAXFEEDBACKFRAMES], 
+							   SCGRAPH_QT_GL_RENDERER_MAXMAX_FEEDBACK_FRAMES);
+	*/
 	_main_window = new GLMainWindow (this);
 	_gl_widget	 = new GLRenderWidget (_main_window, this);
 	_main_window->setCentralWidget (_gl_widget);
@@ -282,6 +323,7 @@ GLRenderer::GLRenderer () :
 						  SCGRAPH_QT_GL_RENDERER_DEFAULT_HEIGHT);
 	_main_window->show ();
 
+
 	connect (TexturePool::get_instance (), 
 			 SIGNAL (textures_changed()), 
 			 this, 
@@ -292,6 +334,8 @@ GLRenderer::GLRenderer () :
 			 this, 
 			 SLOT(change_shader_programs()), 
 			 Qt::QueuedConnection);
+
+	//	_gl_widget->makeCurrent();
 
 #if 0
 	change_textures ();
@@ -520,10 +564,54 @@ void GLRenderer::change_textures ()
 	}
 }
 
+
+void GLRenderer::change_feedback_frames ()
+{
+	_gl_widget->makeCurrent();
+
+	// TODO texture size?
+
+	_max_feedback_frames = std::min<unsigned int>((unsigned int) *_control_ins[MAXFEEDBACKFRAMES], 
+												  SCGRAPH_QT_GL_RENDERER_MAXMAX_FEEDBACK_FRAMES);
+
+	// empty data to initialize the texture
+	std::vector<GLubyte> emptyData(1024 * 1024 * 4, 0);
+	
+	for (size_t i = 0; i < _max_feedback_frames; i++) {
+		_past_frame_handles.push_back(0);
+		glGenTextures(1, &_past_frame_handles[i]);
+		glBindTexture(GL_TEXTURE_2D, _past_frame_handles[i]);
+
+		glTexSubImage2D(GL_TEXTURE_2D, 
+						0, 0, 0, 1024, 1024, 
+						GL_RGBA, GL_UNSIGNED_BYTE, &emptyData[0]);
+		glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+
+		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+		
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	}
+}
+
+
+void GLRenderer::clear_feedback_frames ()
+{
+	_gl_widget->makeCurrent();
+
+	glDeleteTextures (_past_frame_handles.size (), &_past_frame_handles[0]);
+
+	_past_frame_handles.clear ();
+}
+
 GLRenderer::~GLRenderer ()
 {
 	std::cout << "[GLRenderer]: destructor" << std::endl;
+
 	clear_textures ();
+	clear_feedback_frames ();
 
 	delete _gl_widget;
 	delete _main_window;
@@ -583,22 +671,46 @@ void GLRenderer::draw_face (const Face &face)
 	if (*_control_ins[LIGHTING] > 0.5)
 		do_material (face._material);
 
-	// TODO: optimize this switch into a std::map<int, int>
-	// TODO: fix per vertex color for lines
-
 	if (*_control_ins[TEXTURING] > 0.5 
-		&& face._texture_coordinates.size () > 0 
-		&& face._texture_index < _texture_handles.size())
-	{
-		glEnable (GL_TEXTURE_2D);
-		//std::cout << _texture_handles[face._texture_index] << std::endl;
-		glBindTexture (GL_TEXTURE_2D, _texture_handles[face._texture_index]);
-	}
-	else
-	{
-		glDisable (GL_TEXTURE_2D);
-		// std::cout << "disable" << std::endl;
-	}
+		&& face._texture_coordinates.size () > 0) 
+		{
+			if(face._texture_index >= 0 		
+			   && face._texture_index < _texture_handles.size())
+				{
+					glEnable (GL_TEXTURE_2D);
+					//std::cout << _texture_handles[face._texture_index] << std::endl;
+					glBindTexture (GL_TEXTURE_2D, 
+								   _texture_handles[face._texture_index]);
+				}
+			else
+				{
+					if(face._texture_index < 0)
+						{
+							_feedback = std::min<unsigned int>(
+															   face._texture_index * -1, 
+															   _max_feedback_frames);
+							//std::cout << face._texture_index << std::endl;
+							glEnable (GL_TEXTURE_2D);
+							glBindTexture(GL_TEXTURE_2D, 
+										  _past_frame_handles[
+															  (_max_feedback_frames 
+															   - _feedback 
+															   + _fbcounter) 
+															  % _max_feedback_frames]);
+						}
+					else
+						{
+							glDisable (GL_TEXTURE_2D);
+						}
+				}
+		}
+	else 
+		{
+			glDisable (GL_TEXTURE_2D);
+			// std::cout << "disable" << std::endl;
+		}
+
+	// TODO: fix per vertex color for lines
 
 	switch (face._geometry_type)
 	{
@@ -961,6 +1073,7 @@ void GLRenderer::process_g (double delta_t)
 {
 	_delta_t = delta_t;
 	glewContext = _gl_widget->getGlewContext();
+
 	_gl_widget->updateGL();
 }
 
@@ -969,6 +1082,10 @@ void GLRenderer::really_process_g (double delta_t)
 {
 	if (!_ready)
 		return;
+
+	// TODO find a better place for this
+	if (_max_feedback_frames == (SCGRAPH_QT_GL_RENDERER_MAXMAX_FEEDBACK_FRAMES + 1))
+		change_feedback_frames();
 
 	/* first thing to do */
 	//_gl_widget->makeCurrent ();
@@ -1218,130 +1335,56 @@ void GLRenderer::really_process_g (double delta_t)
 	//glAccum (GL_MULT, 0.5);
 	//glAccum (GL_RETURN, 1.0);
 
+	if (_feedback > 0) {
+							/*glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16, 
+							  0, 0,
+							  (int)pow(2,(int)ceil(log2(_gl_widget->width()))),
+							  (int)pow(2,(int)ceil(log2(_gl_widget->height()))), 
+							  0);*/
+		glActiveTexture(_past_frame_handles[_fbcounter]);
+		glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16, 0, 0, 
+						 _gl_widget->width(), _gl_widget->height(), 0);
+		//std::cout << "GL error message:" << glGetError() << std::endl; 
+		_feedback = 0;
+	}
+	_fbcounter = (_fbcounter + 1) % _max_feedback_frames;
+
 	glDisable (GL_LIGHTING);
 
 	if (_show_help)
 	{
-		std::stringstream stream;
-
-		QFont font;
-		font.setPixelSize (10);
-
 		int y_offset = 20;
 
 		glColor3f (1, 1, 1);
 
-		_gl_widget->renderText (10, y_offset, "F1 or H - this help");
-		y_offset += 13;
-
-		_gl_widget->renderText (10, y_offset, "Clicking the little X - kill the node containing this GLRenderer");
-		y_offset += 13;
-
-		_gl_widget->renderText (10, y_offset, "R - reset view");
-		y_offset += 13;
-
-		_gl_widget->renderText (10, y_offset, "I - show info");
-		y_offset += 13;
-
-		_gl_widget->renderText (10, y_offset, "F - toggle fullscreen");
-		y_offset += 13;
-
-		_gl_widget->renderText (10, y_offset, "S - screenshot");
-		y_offset += 13;
-
-		_gl_widget->renderText (10, y_offset, "M - toggle recording");
-		y_offset += 13;
-
-		_gl_widget->renderText (10, y_offset, "UPARROW - forward");
-		y_offset += 13;
-
-		_gl_widget->renderText (10, y_offset, "DOWNARROW - backward");
-		y_offset += 13;
-
-		_gl_widget->renderText (10, y_offset, "RIGHTARROW - right");
-		y_offset += 13;
-
-		_gl_widget->renderText (10, y_offset, "LEFTARROW - left");
-		y_offset += 13;
-
-		_gl_widget->renderText (10, y_offset, "SHIFT-UPARROW - up");
-		y_offset += 13;
-
-		_gl_widget->renderText (10, y_offset, "SHIFT-DOWNARROW - down");
-		y_offset += 13;
+		QStringList::const_iterator constIterator;
+		for (constIterator = helptexts.constBegin(); 
+			 _show_help && (constIterator != helptexts.constEnd());
+			 ++constIterator)
+			{
+				_gl_widget->renderText (10, y_offset, *constIterator, font);
+				y_offset += 13;
+			}
 	}
 
 	if (_show_info)
 	{
 		_show_help = false;
 
-		std::stringstream stream;
-
-		QFont font;
-		font.setPixelSize (10);
-
-		int y_offset = 20;
-
 		glColor3f (1, 1, 1);
 
-		stream << "eye_x: " << *_control_ins[EYE + 0];
-		_gl_widget->renderText (10, y_offset, stream.str ().c_str ());
-		stream.str ("");
-		stream.clear ();
-		y_offset += 13;
-
-		stream << "eye_y: " << *_control_ins[EYE + 1];
-		_gl_widget->renderText (10, y_offset, stream.str ().c_str ());
-		stream.str ("");
-		stream.clear ();
-		y_offset += 13;
-
-		stream << "eye_z: " << *_control_ins[EYE + 2];
-		_gl_widget->renderText (10, y_offset, stream.str ().c_str ());
-		stream.str ("");
-		stream.clear ();
-		y_offset += 13;
-
-		stream << "center_x: " << *_control_ins[CENTER + 0];
-		_gl_widget->renderText (10, y_offset, stream.str ().c_str ());
-		stream.str ("");
-		stream.clear ();
-		y_offset += 13;
-
-		stream << "center_y: " << *_control_ins[CENTER + 1];
-		_gl_widget->renderText (10, y_offset, stream.str ().c_str ());
-		stream.str ("");
-		stream.clear ();
-		y_offset += 13;
-
-		stream << "center_z: " << *_control_ins[CENTER + 2];
-		_gl_widget->renderText (10, y_offset, stream.str ().c_str ());
-		stream.str ("");
-		stream.clear ();
-		y_offset += 13;
-
-		stream << "up_x: " << *_control_ins[UP + 0];
-		_gl_widget->renderText (10, y_offset, stream.str ().c_str ());
-		stream.str ("");
-		stream.clear ();
-		y_offset += 13;
-
-		stream << "up_y: " << *_control_ins[UP + 1];
-		_gl_widget->renderText (10, y_offset, stream.str ().c_str ());
-		stream.str ("");
-		stream.clear ();
-		y_offset += 13;
-
-		stream << "up_z: " << *_control_ins[UP + 2];
-		_gl_widget->renderText (10, y_offset, stream.str ().c_str ());
-		stream.str ("");
-		stream.clear ();
-		y_offset += 13;
-
-		// glLoadIdentity ();
-		glColor3f (1, 1, 1);
-		// std::cout << stream.str ().c_str ();
-		_gl_widget->renderText (y_offset, 20, stream.str ().c_str ());
+		for(unsigned char dir = 0; _show_info && (dir < 3); dir++) {
+			for(unsigned char axis = 0; _show_info && (axis < 3); axis++) {
+				if(_show_info)
+					_gl_widget->renderText(10, 
+									   ((dir * 3) + (axis + 1)) * 13, 
+									   QString("%1_%2: %3")
+									   .arg(directions.at(dir))
+									   .arg(axisnames.at(axis))
+									   .arg(*_control_ins[offsets.at(dir) + axis]),
+									   font);
+			}
+		}
 	}
 
 	//if(_gl_widget->doubleBuffer()) _gl_widget->swapBuffers ();

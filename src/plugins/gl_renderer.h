@@ -27,12 +27,13 @@
 #include <QtGui/QImage>
 #include <QtCore/QDateTime>
 #include <QtCore/QString>
+#include <QtCore/QStringList>
 
 #include <QtCore/QFuture>
 #include <QtCore/QtConcurrentRun>		
 
 #include <QtOpenGL/QGLWidget>
-
+#include <QtOpenGL/QGLFramebufferObject>
 
 void writeImage (QImage img);
 
@@ -69,7 +70,8 @@ class GLRenderWidget : public QGLWidget
 	GLenum _shader_program;
 
 	bool _recording;
-Recorder _recorder;
+
+	Recorder _recorder;
 
 	GLEWContext _glew_context;
 
@@ -83,7 +85,6 @@ Recorder _recorder;
 		void initializeGL ();
 		void makeScreenshot ();
 		bool toggleRecording ();
-
 };
 
 class GLMainWindow : public QMainWindow
@@ -105,6 +106,7 @@ class GLMainWindow : public QMainWindow
 
 #define SCGRAPH_QT_GL_RENDERER_DEFAULT_WIDTH        640
 #define SCGRAPH_QT_GL_RENDERER_DEFAULT_HEIGHT       480
+#define SCGRAPH_QT_GL_RENDERER_MAXMAX_FEEDBACK_FRAMES       1024
 
 class GLRenderer : public QObject, public GUnit, public GraphicsVisitor, public TransformationCommandVisitor
 {
@@ -131,7 +133,8 @@ class GLRenderer : public QObject, public GUnit, public GraphicsVisitor, public 
 		FOG_END = 26,
 		FOG_NICENESS = 27,
 		FOG_COLOR = 28,
-		TEXTURING = 32
+		TEXTURING = 32,
+		MAXFEEDBACKFRAMES = 33
 	};
 
 	GLMainWindow     *_main_window;
@@ -176,6 +179,13 @@ class GLRenderer : public QObject, public GUnit, public GraphicsVisitor, public 
 
 	QString _window_title;
 
+	QStringList directions, axisnames, helptexts;
+	QList<int> offsets;
+	QFont font;
+
+	unsigned int _feedback;
+	unsigned int _fbcounter;
+	unsigned int _max_feedback_frames;
 
 	void draw_face (const Face &face);
 
@@ -184,6 +194,10 @@ class GLRenderer : public QObject, public GUnit, public GraphicsVisitor, public 
 
 	std::vector<GLuint>
                       _texture_handles;
+
+	std::vector<GLuint>
+                      _past_frame_handles;
+	boost::shared_ptr<Texture> _lastFrame;
 
 	// first is program handle, second is vector of shader handles
 	typedef 
@@ -206,6 +220,9 @@ class GLRenderer : public QObject, public GUnit, public GraphicsVisitor, public 
 	void do_light (const Light &light);
 
 	void do_face (const Face& face);
+
+	void change_feedback_frames ();
+	void clear_feedback_frames ();
 
 	public:
 		GLRenderer ();

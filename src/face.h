@@ -29,7 +29,7 @@ struct Face : public DeepCopyable
 	std::vector<Vector2D>      _texture_coordinates;
 
 	/** this indicates which texture to use */
-	unsigned int               _texture_index;
+	int               _texture_index;
 
 	/** use this color vector if you use per vertex color.
 	    in the other case use the per face color below.

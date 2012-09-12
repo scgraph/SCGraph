@@ -25,4 +25,16 @@ class TexQuad : public GUnit
 		virtual void process_g (double delta_t);
 };
 
+class FBTexQuad : public GUnit
+{
+	cow_ptr<Geometry> _g;
+
+	public:
+		FBTexQuad ();
+		~FBTexQuad ();
+
+		virtual void process_g (double delta_t);
+};
+
+
 #endif

@@ -18,6 +18,14 @@ GServer : Server {
 		default = GServer.new(\graphics, NetAddr("127.0.0.1", 37291));
 	}
 
+	// same as Server.sc, but don't try to create the default group
+	initTree {
+		nodeAllocator = NodeIDAllocator(clientID, options.initialNodeID);
+		//this.sendMsg("/g_new", 1, 0, 0);
+		tree.value(this);
+		ServerTree.run(this);
+	}
+
 	// same as in Server.sc, but without SHM
 	boot { arg startAliveThread=true, recover=false;
 		var resp;

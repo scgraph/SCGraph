@@ -9,7 +9,7 @@
 #include <QtGui/QImage>
 #include <QtGui/QImageReader>
 #include <QtGui/QColor>
-
+#include <QtOpenGL/QGLWidget>
 
 /** a texture image in RGBA format with unsigned chars as data */
 struct Texture
@@ -19,6 +19,7 @@ struct Texture
 
 	int _width, _height, _channels;
 	unsigned char *_data;
+	QImage _img;
 };
 
 class TexturePool : public QObject

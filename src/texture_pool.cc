@@ -136,7 +136,7 @@ void TexturePool::add_image (const std::string &filename)
 
 		const char * tmp = filename.c_str();
 		QImage image(tmp);
-          
+
 		if(image.isNull()) {
 			std::cout << "  [TexturePool]: Unrecognized Image Format. No texture loaded." 
 					  << std::endl;
@@ -151,46 +151,47 @@ void TexturePool::add_image (const std::string &filename)
 		{
 			int im_width, im_height, tex_width, tex_height;
 
-			im_width = image.width();
-			im_height = image.height();
-	
-			tex_width =  (int)pow(2,(int)ceil(log2(im_width)));
-			tex_height = (int)pow(2,(int)ceil(log2(im_height)));
+			QImage gl_image = QGLWidget::convertToGLFormat(image);
 
-			if (options->_verbose >= 2)
-			{
-				std::cout << "  [TexturePool]: Texture Width/Height: " << tex_width 
-						  << "/" << tex_height << std::endl;
-				std::cout << "  [TexturePool]: Image source Width/Height: " << im_width 
-						  << "/" << im_height << std::endl;
-			}
-
-			// std::cout << width << " " << height << std::endl;
-	
-			boost::shared_ptr<Texture> t(new Texture (tex_width, tex_height, 4));
-
-			for (int i = 0; i < im_width; ++i)
-			{
-				for (int j = 0; j < im_height; ++j)
+			//make sure its not null
+			if(gl_image.isNull()) 
 				{
-					/* swap image */
-					QRgb color = image.pixel(i,im_height - j - 1);
-					//std::cout << qAlpha(color) << std::endl;
-
-					int tmpIndex = 4 * (tex_width * j + i);
-					t->_data[tmpIndex]     = (unsigned char) qRed(color);
-					t->_data[tmpIndex + 1] = (unsigned char) qGreen(color);
-					t->_data[tmpIndex + 2] = (unsigned char) qBlue(color);
-					t->_data[tmpIndex + 3] = (unsigned char) qAlpha(color);
+				std::cout 
+					<< 	"  [TexturePool]: Unable to convert image to GL format. No texture loaded." 
+					<< std::endl;
 				}
-			}
-			_textures.push_back (t);
+			else
+				{
+
+		
+					im_width = gl_image.width();
+					im_height = gl_image.height();
 	
-			//if (options->_verbose >= 2)
-				std::cout << "  [TexturePool]: New texture has index: " 
-						  << _textures.size() - 1 << std::endl;
+					tex_width =  (int)pow(2,(int)ceil(log2(im_width)));
+					tex_height = (int)pow(2,(int)ceil(log2(im_height)));
+
+					if (options->_verbose >= 2)
+						{
+							std::cout << "  [TexturePool]: Texture Width/Height: " << tex_width 
+									  << "/" << tex_height << std::endl;
+							std::cout << "  [TexturePool]: Image source Width/Height: " << im_width 
+									  << "/" << im_height << std::endl;
+						}
+
+					// std::cout << width << " " << height << std::endl;
 	
-			emit (textures_changed());
+					boost::shared_ptr<Texture> t(new Texture (tex_width, tex_height, 4));
+					t->_data = gl_image.bits();
+					t->_img = gl_image;
+
+					_textures.push_back (t);
+			
+					//if (options->_verbose >= 2)
+					std::cout << "  [TexturePool]: New texture has index: " 
+							  << _textures.size() - 1 << std::endl;
+	
+					emit (textures_changed());
+				}
 		}
 	}
 	catch (const char* error)

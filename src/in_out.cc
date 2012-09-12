@@ -7,8 +7,7 @@ void In::process_g (double delta_t)
 {
 	ScGraph *scgraph = ScGraph::get_instance ();
 
-	if(!((size_t)(*_control_ins[0]) < 0 || 
-		 (size_t)(*_control_ins[0]) >= Options::get_instance ()->_graphics_busses)) 
+	if(!((size_t)(*_control_ins[0]) >= Options::get_instance ()->_graphics_busses)) 
 		_bus = (size_t)(*_control_ins[0]);
 																				   
 	_graphics_outs[0]._graphics.clear();
@@ -21,8 +20,7 @@ void In::process_g (double delta_t)
 
 void In::process_c (double delta_t)
 {
-	if(!((size_t)(*_control_ins[0]) < 0 || 
-		 (size_t)(*_control_ins[0]) >= Options::get_instance ()->_control_busses)) 
+	if(!((size_t)(*_control_ins[0]) >= Options::get_instance ()->_control_busses)) 
 		_bus = (size_t)(*_control_ins[0]);
 	
 	_control_outs [0] = ScGraph::get_instance ()->_control_busses[_bus];
@@ -32,8 +30,7 @@ void Out::process_g (double delta_t)
 {
 	ScGraph *scgraph = ScGraph::get_instance ();
 
-	if(!((size_t)(*_control_ins[0]) < 0 || 
-		 (size_t)(*_control_ins[0]) >= Options::get_instance ()->_graphics_busses)) 
+	if(!((size_t)(*_control_ins[0]) >= Options::get_instance ()->_graphics_busses)) 
 		_bus = (size_t)(*_control_ins[0]);
 
 	for (size_t i = 0; i < _graphics_ins[1]->_graphics.size (); ++i)
@@ -44,8 +41,7 @@ void Out::process_g (double delta_t)
 
 void Out::process_c (double delta_t)
 {
-	if(!((size_t)(*_control_ins[0]) < 0 || 
-		 (size_t)(*_control_ins[0]) >= Options::get_instance ()->_control_busses)) 
+	if(!((size_t)(*_control_ins[0]) >= Options::get_instance ()->_control_busses)) 
 		_bus = (size_t)(*_control_ins[0]);
 	
 	ScGraph::get_instance ()->_control_busses[_bus] += *_control_ins [1];
@@ -56,8 +52,7 @@ void ReplaceOut::process_g (double delta_t)
 {
 	ScGraph *scgraph = ScGraph::get_instance ();
 
-	if(!((size_t)(*_control_ins[0]) < 0 || 
-		 (size_t)(*_control_ins[0]) >= Options::get_instance ()->_graphics_busses)) 
+	if(!((size_t)(*_control_ins[0]) >= Options::get_instance ()->_graphics_busses)) 
 		_bus = (size_t)(*_control_ins[0]);
 
 	scgraph->_graphics_busses[_bus]._graphics.clear ();
@@ -71,8 +66,7 @@ void ReplaceOut::process_g (double delta_t)
 void ReplaceOut::process_c (double delta_t)
 {
 
-	if(!((size_t)(*_control_ins[0]) < 0 || 
-		 (size_t)(*_control_ins[0]) >= Options::get_instance ()->_control_busses)) 
+	if(!((size_t)(*_control_ins[0]) >= Options::get_instance ()->_control_busses)) 
 		_bus = (size_t)(*_control_ins[0]);
 	
 	ScGraph::get_instance ()->_control_busses[_bus] = *_control_ins [1];

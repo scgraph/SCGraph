@@ -1069,6 +1069,21 @@ void GLRenderer::visitCullingConst (const Culling *c)
 	}
 }
 
+void GLRenderer::visitTextConst (const Text *t)
+{
+	glPushMatrix();
+
+	if (*_control_ins[LIGHTING] > 0.5)
+		do_material (t->_material);
+
+	visitTransformationConst (t);
+	glColor4fv (&(t->_color._c[0]));
+	StringPool *str = StringPool::get_instance();
+	str->font.FaceSize(t->_fontsize);
+	str->font.Render(t->_text.c_str());
+	glPopMatrix();
+}
+
 void GLRenderer::process_g (double delta_t)
 {
 	_delta_t = delta_t;

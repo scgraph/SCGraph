@@ -39,6 +39,8 @@ struct GraphicsVisitor
 	/** the default implementation of visitTransparency calls visitCommand */
 	virtual void visitCullingConst (const Culling *c);
 
+	virtual void visitTextConst (const Text *g);
+
 
 	// NON CONST
 	/** the default implementation does nothing */
@@ -70,6 +72,8 @@ struct GraphicsVisitor
 
 	/** the default implementation of visitTransparency calls visitCommand */
 	virtual void visitCulling (Culling *c);
+
+	virtual void visitText (Text *g);
 
 	GraphicsVisitor ();
 	virtual ~GraphicsVisitor ();

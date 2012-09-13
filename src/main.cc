@@ -9,6 +9,7 @@
 #include "options.h"
 #include "plugin_pool.h"
 #include "texture_pool.h"
+#include "string_pool.h"
 #include "scgraph.h"
 
 bool signalled_again = false;
@@ -52,6 +53,8 @@ int main (int argc, char *argv[])
 	TexturePool::get_instance ();
 
 	PluginPool::get_instance ();
+
+	StringPool::get_instance ();
 
 	ScGraph *scgraph = ScGraph::get_instance (argc, argv);
 

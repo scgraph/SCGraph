@@ -181,5 +181,24 @@ struct Culling : public Command
 	}
 };
 
+struct Text : Transformation
+{
+
+	std::string _text;
+
+	unsigned int _fontsize;
+
+	ColorRGBA _color;
+
+	Material  _material;
+
+	virtual void accept(GraphicsVisitor* v);
+	virtual void acceptConst(GraphicsVisitor* v) const;
+
+	virtual Text *deepCopy() {
+		return new Text(*this);
+	}
+
+};
 
 #endif

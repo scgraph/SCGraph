@@ -9,6 +9,8 @@
 #include "../graphics_visitor.h"
 #include "../texture_pool.h"
 
+#include "../string_pool.h"
+
 #include <map>
 
 #include "../shader_pool.h"
@@ -34,6 +36,7 @@
 
 #include <QtOpenGL/QGLWidget>
 #include <QtOpenGL/QGLFramebufferObject>
+#include <QtGui/QPainter>
 
 void writeImage (QImage img);
 
@@ -237,6 +240,7 @@ class GLRenderer : public QObject, public GUnit, public GraphicsVisitor, public 
 		virtual void visitLightingConst (const Lighting *l);
 		virtual void visitBlendingConst (const Blending *b);
 		virtual void visitCullingConst (const Culling *c);
+		virtual void visitTextConst (const Text *c);
 
 		virtual void visitShaderProgramConst (const ShaderProgram *c);
 		virtual void visitShaderUniformConst (const ShaderUniform *c);

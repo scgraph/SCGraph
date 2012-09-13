@@ -45,6 +45,13 @@ void GMaterial::visitGeometry (Geometry *g)
 	}
 }
 
+void GMaterial::visitText (Text *t)
+{
+	Material material;
+
+	t->_material = _material;
+}
+
 void GMaterial::process_g (double delta_t)
 {	_graphics_outs[0]._graphics.clear();
 

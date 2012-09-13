@@ -3,6 +3,7 @@
 
 #include "shader_pool.h"
 #include "texture_pool.h"
+#include "string_pool.h"
 
 #include <iostream>
 #include <stdexcept>
@@ -275,6 +276,10 @@ int OscHandler::command_name_to_int (const std::string& command_name)
 		return cmd_loadShaderProgram;
 	if (command_name == std::string("/clearShaderPrograms"))
 		return cmd_clearShaderPrograms;
+	if (command_name == std::string("/addString"))
+		return cmd_addString;
+	if (command_name == std::string("/changeString"))
+		return cmd_changeString;
 
 	return cmd_none;
 }
@@ -337,6 +342,73 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 			std::cout << "[OscHandler]: cmd_quit()" << std::endl;
 			// return;
 		}
+		break;
+
+		case cmd_changeString:
+			{
+				osc::ReceivedMessage::const_iterator arg = message->ArgumentsBegin();
+	
+				const char *str = 0;
+				osc::int32 index;
+				try
+					{
+
+						index = (arg++)->AsInt32();
+						str = (*(arg++)).AsString ();
+
+						std::string tmp (str);
+						if (options->_verbose >= 2)
+							std::cout << "[OscHandler]: /changeString " << tmp << std::endl;
+
+						QReadLocker locker (&scgraph->_read_write_lock);
+						StringPool::get_instance()->change_string(tmp, index);
+						//send_notifications ("/n_go", synth->_id);
+	
+					}
+				catch (const char* error)
+					{
+						if (str)
+							std::cout << "[OscHandler]: Warning: String changing failed: (string: \"" << str << "\"). Reason: " << error << std::endl;
+					}
+				catch (osc::Exception &e)
+					{
+						std::cout << "[OscHandler]: Error while parsing message: /changeString: " << e.what () << ". TypeTags: " << message->TypeTags() << std::endl;
+					}
+				//scgraph->unlock ();
+			}
+			
+		break;
+
+		case cmd_addString:
+			{
+				osc::ReceivedMessage::const_iterator arg = message->ArgumentsBegin();
+	
+				const char *str = 0;
+				try
+					{
+						str = (*(arg++)).AsString ();
+
+						std::string tmp (str);
+						if (options->_verbose >= 2)
+							std::cout << "[OscHandler]: /addString " << tmp << std::endl;
+
+						QReadLocker locker (&scgraph->_read_write_lock);
+						StringPool::get_instance()->add_string(tmp, -1);
+						//send_notifications ("/n_go", synth->_id);
+	
+					}
+				catch (const char* error)
+					{
+						if (str)
+							std::cout << "[OscHandler]: Warning: String adding failed: (string: \"" << str << "\"). Reason: " << error << std::endl;
+					}
+				catch (osc::Exception &e)
+					{
+						std::cout << "[OscHandler]: Error while parsing message: /addString: " << e.what () << ". TypeTags: " << message->TypeTags() << std::endl;
+					}
+				//scgraph->unlock ();
+			}
+			
 		break;
 
 		case cmd_clearShaderPrograms:

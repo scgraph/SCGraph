@@ -177,4 +177,11 @@ void Culling::acceptConst(GraphicsVisitor* v) const
 	v->visitCullingConst(this);
 }
 
-
+void Text::accept(GraphicsVisitor* v)
+{
+	v->visitText(this);
+}
+void Text::acceptConst(GraphicsVisitor* v) const
+{
+	v->visitTextConst(this);
+}

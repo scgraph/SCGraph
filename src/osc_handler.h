@@ -100,7 +100,10 @@ enum {
 	cmd_loadShaderProgram = 60,
 	cmd_clearShaderPrograms = 61,
 
-	NUMBER_OF_COMMANDS = 60
+	cmd_addString = 62,
+	cmd_changeString = 63,
+
+	NUMBER_OF_COMMANDS = 62
 };
 
 class OscMessage : public QObject

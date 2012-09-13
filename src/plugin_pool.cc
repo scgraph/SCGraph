@@ -566,13 +566,33 @@ bool fDefinePlugInCmd (const char *inCmdName, PlugInCmdFunc inFunc, void* inUser
 	return true;
 }
 
+extern char *itoa(int, char *, int);
+
 // call printf for debugging. should not use in finished code.
 int fPrint(const char *fmt, ...)
 {
-	std::cout << "[Warning]: fPrint() not supported" << std::endl;
+	va_list vargs;
+	va_start(vargs, fmt);
+	return vprintf(fmt, vargs);
+}
+/*
+int fPrint(const char *fmt, ...)
+{
+	//std::cout << "[Warning]: fPrint() not supported" << std::endl;
+
+	QString output = new QString(fmt);
+
+	va_list ap;
+    int j;
+    va_start(ap, count); //Requires the last fixed parameter (to get the address)
+    for(j=0; j<count; j++) {
+        va_arg(ap); //Requires the type to cast to.
+								 //Increments ap to the next argument.
+	}
+    va_end(ap);
 	return 0;
 }
-
+*/
 // get a seed for a random number generator
 int32 fRanSeed()
 {

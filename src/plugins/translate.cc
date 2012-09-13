@@ -23,6 +23,7 @@ void Translate::visitTransformation (Transformation *t)
 	t->_commands.push_back (_t);
 }
 
+
 extern "C"
 {
 	GUnit *create (size_t index, int special_index)

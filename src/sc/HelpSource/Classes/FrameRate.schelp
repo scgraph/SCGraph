@@ -1,0 +1,14 @@
+class:: FrameRate
+summary:: Outputs the currently set frame rate.
+related:: Reference/scgraph
+categories::  SCGraph>Renderer
+
+
+Description::
+
+Outputs the currently set frame rate (or graphics rate) in frames per second.
+
+classmethods::
+
+method::kr
+

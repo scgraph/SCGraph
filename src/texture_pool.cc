@@ -120,16 +120,48 @@ void TexturePool::traverse_directory (const std::string &directory, void (Textur
 
 unsigned int TexturePool::add_image (const std::string &filename, unsigned int index)
 {
-	add_image(filename);
+	std::cout << "[TexturePool]: Adding texture: " << filename << std::endl;
+	boost::shared_ptr<Texture> tmp = load_image(filename);
+
+	if(tmp) {
+		_textures.push_back (tmp);
+			
+		//if (options->_verbose >= 2)
+		std::cout << "  [TexturePool]: New texture has index: " 
+				  << _textures.size() - 1 << std::endl;
+	
+		emit (textures_changed());
+	}
 	return _textures.size() - 1;
 }
 
 void TexturePool::add_image (const std::string &filename)
 {
-	Options *options = Options::get_instance ();
+	add_image(filename, 0);
+}
 
-	//if (options->_verbose >= 2)
-		std::cout << "[TexturePool]: Adding texture: " << filename << std::endl;
+unsigned int TexturePool::change_image (const std::string &filename, unsigned int index)
+{
+	change_image(filename, index);
+	boost::shared_ptr<Texture> tmp = load_image(filename);
+
+	if(tmp) {
+		if(index < _textures.size()) {
+			_textures[index] = tmp;
+			
+			std::cout << "  [TexturePool]: Changed texture at index " 
+					  << index << std::endl;
+	
+		emit (textures_changed());
+		}
+	}
+
+	return _textures.size() - 1;
+}
+
+boost::shared_ptr<Texture> TexturePool::load_image (const std::string &filename)
+{
+	Options *options = Options::get_instance ();
 
 	try
 	{
@@ -184,13 +216,8 @@ void TexturePool::add_image (const std::string &filename)
 					t->_data = gl_image.bits();
 					t->_img = gl_image;
 
-					_textures.push_back (t);
-			
-					//if (options->_verbose >= 2)
-					std::cout << "  [TexturePool]: New texture has index: " 
-							  << _textures.size() - 1 << std::endl;
-	
-					emit (textures_changed());
+					return t;
+
 				}
 		}
 	}

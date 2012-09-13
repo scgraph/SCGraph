@@ -29,6 +29,8 @@ class TexturePool : public QObject
 	static TexturePool *_instance;
 	std::vector <boost::shared_ptr<Texture> > _textures;
 
+	boost::shared_ptr<Texture> load_image (const std::string &filename);
+
 	void add_image (const std::string &filename);
 
 	void tokenize_path (const std::string &path, void (TexturePool::*function)(const std::string &directory));
@@ -48,6 +50,7 @@ class TexturePool : public QObject
 
 		/** if the index is -1, we simply add it to the end of the list */
 		unsigned int add_image (const std::string &path, unsigned int index);
+		unsigned int change_image (const std::string &path, unsigned int index);
 
 	signals:
 		void texture_added (unsigned int index);

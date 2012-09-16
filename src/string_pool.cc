@@ -21,17 +21,10 @@ StringPool *StringPool::get_instance ()
 	return _instance;
 }
 
-StringPool::StringPool () :
-	font("/Users/hb/src/scgraph/Bitstream-Vera-Sans-Mono.ttf")
+StringPool::StringPool ()
 {
-	// Create a pixmap font from a TrueType file.
-
-	font.UseDisplayList(true);
-	// If something went wrong, bail out.
-	if(font.Error())
-		std::cout << "[StringPool]: Font loading not working!" << std::endl;
+	_font = NULL;
 }
-
 
 unsigned int StringPool::add_string (const std::string &str, unsigned int index)
 {
@@ -44,6 +37,22 @@ unsigned int StringPool::change_string (const std::string &str, unsigned int ind
 	if(index < _strings.size())
 		_strings[index] = str;
 	return 0;
+}
+
+void StringPool::set_font (const std::string &filename)
+{
+	// Create a polygon font from a TrueType file.
+	FTPolygonFont * tmp_font = new FTPolygonFont(filename.c_str());
+
+	// If something went wrong, bail out.
+	if(tmp_font->Error())
+		std::cout << "[StringPool]: Loading font " << filename << " didn't work!" << std::endl;
+	else
+		{
+			std::cout << "[StringPool]: Loaded font " << filename << "" << std::endl;
+			_font = tmp_font;
+			_font->UseDisplayList(true);
+		}
 }
 
 void StringPool::add_string (const std::string &str)
@@ -59,6 +68,7 @@ void StringPool::add_string (const std::string &str)
 StringPool::~StringPool ()
 {
 	// TODO: clean up
+	delete _font;
 }
 
 unsigned int StringPool::get_number_of_strings ()

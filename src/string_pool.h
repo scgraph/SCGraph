@@ -29,7 +29,8 @@ class StringPool : public QObject
 		std::string get_string (unsigned int index);
 		unsigned int change_string (const std::string &str, unsigned int index);
 
-		FTPolygonFont font;
+		FTPolygonFont* _font;
+		void set_font(const std::string &filename);
 
 		/** if the index is -1, we simply add it to the end of the list */
 		unsigned int add_string (const std::string &str, unsigned int index);

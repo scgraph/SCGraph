@@ -8,14 +8,6 @@ find_package(PkgConfig)
 
 find_package(Threads)
 
-find_package(FTGL)
-
-find_package(Freetype)
-
-include_directories(/usr/local/include/freetype2)
-include_directories(FTGL_INCLUDE_DIR)
-
-#message(${FREETYPE_INCLUDE_DIRS})
 
 ################################################################################
 
@@ -23,7 +15,8 @@ set(scgraph_srcs main cow_ptr transformation_command
 transformation_command_visitor graphics_visitor obj_loader loader_3d
 buffer_pool matrix node_tree synth node group options scgraph synthdef
 control_loop graphic_loop synthdef_file util synthdef_pool plugin_pool
-string_pool plugin unit  osc_handler graphics tree in_out control graphics_bus material face color_rgba vector_3d hvector_3d vector_2d sc_unit_wrapper sc__unit texture_pool ui_pool shader_pool)
+ plugin unit  osc_handler graphics tree in_out control graphics_bus material face color_rgba vector_3d hvector_3d vector_2d sc_unit_wrapper sc__unit texture_pool ui_pool shader_pool)
+
 
 # configure a header file to pass some of the CMake settings
 # to the source code
@@ -85,6 +78,26 @@ if(JACK)
 
   set(scgraph_srcs ${scgraph_srcs} jack_client)
 endif()
+
+################################################################################
+# text support
+
+find_package(FTGL)
+
+find_package(Freetype)
+
+if (!FTGL_FOUND)
+  message(SEND_ERROR "Cannot find FTGL!")
+endif()
+
+if (!FREETYPE_FOUND)
+  message(SEND_ERROR "Cannot find freetype!")
+endif()
+
+include_directories(${FREETYPE_INCLUDE_DIRS})
+include_directories(${FTGL_INCLUDE_DIR})
+
+set(scgraph_srcs ${scgraph_srcs} string_pool)
 
 ################################################################################
 # qt-specific stuff

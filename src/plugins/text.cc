@@ -29,29 +29,35 @@ Textfield::Textfield () :
 {
 	_t.touch()->_color = ColorRGBA (1,1,1,1);
 
-	_t.touch()->_fontsize = 24;
+	_t.touch()->_fontsize = 1 * 21;
 	
-	_t.touch()->_text = std::string("Blub");
+	_t.touch()->_text = std::string("No text :(");
 }
 
 Textfield::~Textfield ()
 {
-	// std::cout << "[Textfield]: Destructor" << std::endl;
+	// std::cout << "[GText]: Destructor" << std::endl;
 }
 
 void Textfield::process_g (double delta_t)
 {
-
 	StringPool *sp = StringPool::get_instance();
+	if(sp->_font != NULL) 
+		{
+			// font size 1 * 10 = cube size 1
+			_t.touch()->_fontsize = ((unsigned int) *_control_ins[0]) * 21;
 
-	_t.touch()->_fontsize = (unsigned int) *_control_ins[0];
+			unsigned int index = (unsigned int) *_control_ins[1];
 
-	unsigned int index = (unsigned int) *_control_ins[1];
+			if(index < sp->get_number_of_strings()) 
+				_t.touch()->_text = sp->get_string(index);
 
-	if(index < sp->get_number_of_strings()) 
-		_t.touch()->_text = sp->get_string(index);
+			_graphics_outs[0]._graphics.clear();
 
-	_graphics_outs[0]._graphics.clear();
-
-	_graphics_outs[0]._graphics.push_back(_t);
+			_graphics_outs[0]._graphics.push_back(_t);
+		}
+	else
+		{
+			std::cout << "[GText]: No font loaded. Can't render without a font!" << std::endl;
+		}
 }

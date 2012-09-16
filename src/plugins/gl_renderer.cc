@@ -1078,9 +1078,13 @@ void GLRenderer::visitTextConst (const Text *t)
 
 	visitTransformationConst (t);
 	glColor4fv (&(t->_color._c[0]));
+
+	glScalef(0.2,0.2,0.2);
+
 	StringPool *str = StringPool::get_instance();
-	str->font.FaceSize(t->_fontsize);
-	str->font.Render(t->_text.c_str());
+	str->_font->FaceSize(t->_fontsize);
+	str->_font->Render(t->_text.c_str());
+
 	glPopMatrix();
 }
 

@@ -280,6 +280,8 @@ int OscHandler::command_name_to_int (const std::string& command_name)
 		return cmd_addString;
 	if (command_name == std::string("/changeString"))
 		return cmd_changeString;
+	if (command_name == std::string("/setFont"))
+		return cmd_setFont;
 
 	return cmd_none;
 }
@@ -342,6 +344,38 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 			std::cout << "[OscHandler]: cmd_quit()" << std::endl;
 			// return;
 		}
+		break;
+
+		case cmd_setFont:
+			{
+				osc::ReceivedMessage::const_iterator arg = message->ArgumentsBegin();
+	
+				const char *str = 0;
+				try
+					{
+						str = (*(arg++)).AsString ();
+
+						std::string tmp (str);
+						if (options->_verbose >= 2)
+							std::cout << "[OscHandler]: /setFont " << tmp << std::endl;
+
+						QReadLocker locker (&scgraph->_read_write_lock);
+						StringPool::get_instance()->set_font(tmp);
+						//send_notifications ("/n_go", synth->_id);
+	
+					}
+				catch (const char* error)
+					{
+						if (str)
+							std::cout << "[OscHandler]: Warning: Set font failed: (font: \"" << str << "\"). Reason: " << error << std::endl;
+					}
+				catch (osc::Exception &e)
+					{
+						std::cout << "[OscHandler]: Error while parsing message: /setFont: " << e.what () << ". TypeTags: " << message->TypeTags() << std::endl;
+					}
+				//scgraph->unlock ();
+			}
+			
 		break;
 
 		case cmd_changeString:

@@ -102,8 +102,9 @@ enum {
 
 	cmd_addString = 62,
 	cmd_changeString = 63,
+	cmd_setFont = 64,
 
-	NUMBER_OF_COMMANDS = 62
+	NUMBER_OF_COMMANDS = 63
 };
 
 class OscMessage : public QObject

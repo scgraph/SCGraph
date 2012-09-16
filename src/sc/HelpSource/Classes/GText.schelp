@@ -1,0 +1,45 @@
+class:: GText
+summary:: Display a string
+related:: Reference/scgraph
+categories:: SCGraph>Primitives>2D
+
+
+Description::
+Display a string.
+
+
+
+classmethods::
+
+method::gr
+
+argument::fontsize
+Font size in display units (i. e. 1 is roughly the height of a GQuad with height 1).
+
+argument::stringid
+ID of the string to be displayed. 
+
+
+EXAMPLES::
+
+code::
+g = GServer.default;
+g.boot;
+
+// load a font
+g.sendMsg("/setFont", "/Library/Fonts/Tahoma.ttf");
+g.sendMsg("/setFont", "/Library/Fonts/Wingdings.ttf");
+
+// add a string
+g.sendMsg("/addString", "Hello text!");
+
+
+// change the string with the ID 0
+g.sendMsg("/changeString", 0, "Good day, text!");
+
+
+// display the string with ID 0, with a font size of 1, with the loaded font
+SynthDef(\text, {
+	GGLRenderer.gr(GText.gr(1, 0));
+}).play(g);
+::

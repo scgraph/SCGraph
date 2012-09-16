@@ -17,3 +17,21 @@ specifies which past frame to take (1 = last frame, 2 = second to last frame).
 
 note:: the maximum for past_frame is defined by the max_feedback_frames argument of the renderer containing the synth.
 
+
+
+EXAMPLES::
+
+code::
+g = GServer.default;
+
+g.boot;
+
+SynthDef(\fb, {
+	GGLRenderer.gr(
+		GRotate.gr(
+			GStretch.gr(
+				GFBTexQuad.gr(past_frame: 1) + GLine.gr(3), 
+				[12,8,0]), 
+			[0,0,1],LFSaw.kr(0.1) * 360), 
+		0, LFNoise1.kr(0.5!4).unipolar, texturing: 1) }).play(g)
+::

@@ -67,6 +67,7 @@ class GLRenderWidget : public QGLWidget
 	void mousePressEvent (QMouseEvent *event);
 	void mouseReleaseEvent (QMouseEvent *event);
 	void mouseMoveEvent (QMouseEvent *event);
+	void mouseDoubleClickEvent (QMouseEvent *event);
 	void keyPressEvent (QKeyEvent *event);
 	void keyReleaseEvent (QKeyEvent *event);
 
@@ -255,6 +256,7 @@ class GLRenderer : public QObject, public GUnit, public GraphicsVisitor, public 
 		void mousePressEvent (QMouseEvent *event);
 		void mouseReleaseEvent (QMouseEvent *event);
 		void mouseMoveEvent (QMouseEvent *event);
+		void mouseDoubleClickEvent (QMouseEvent *event);
 		void keyPressEvent (QKeyEvent *event);
 		void keyReleaseEvent (QKeyEvent *event);
 

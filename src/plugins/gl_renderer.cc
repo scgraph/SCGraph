@@ -190,6 +190,11 @@ void GLRenderWidget::mouseMoveEvent (QMouseEvent *event)
 	_renderer->mouseMoveEvent (event);
 }
 
+void GLRenderWidget::mouseDoubleClickEvent (QMouseEvent *event)
+{
+	_renderer->mouseDoubleClickEvent (event);
+}
+
 
 void GLRenderWidget::keyPressEvent (QKeyEvent *event)
 {
@@ -296,7 +301,7 @@ GLRenderer::GLRenderer () :
 			  << "Clicking the little X - kill the node containing this GLRenderer"
 			  << "R - reset view"		
 			  << "I - show info"
-			  << "F - toggle fullscreen"
+			  << "F or double click - toggle fullscreen"
 			  << "S - screenshot"
 			  << "M - toggle recording"
 			  << "UPARROW - forward"
@@ -1431,6 +1436,16 @@ void GLRenderer::mouseMoveEvent (QMouseEvent *event)
 	event->ignore ();
 }
 
+void GLRenderer::mouseDoubleClickEvent (QMouseEvent *event)
+{
+	_full_screen = !_full_screen;
+	if (_full_screen)
+		_main_window->showFullScreen ();
+	else
+		_main_window->showNormal ();
+	event->ignore ();
+}
+
 
 void GLRenderer::keyPressEvent (QKeyEvent *event)
 {
@@ -1524,6 +1539,17 @@ void GLRenderer::keyPressEvent (QKeyEvent *event)
 			event->accept ();
 			return;
 		break;
+
+		case Qt::Key_Escape:
+			if (_full_screen)
+				{
+					_full_screen = !_full_screen;
+					_main_window->showNormal ();
+				}
+			event->accept ();
+			return;
+		break;
+
 	
 	}
 	event->ignore ();

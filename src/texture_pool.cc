@@ -11,18 +11,47 @@
 
 #include <cstring>
 
-Texture::Texture (int width, int height, int channels)
+Texture::Texture (int width, int height, int channels, bool zero = true)
 {
 	_width = width; _height = height; _channels = channels;
 
 	_data = new unsigned char [width * height * channels];
 
-	memset (_data, 0, width * height * channels);
+	if(zero)
+		this->zero();
 }
+
 
 Texture::~Texture ()
 {
 	delete[] _data;
+}
+
+void Texture::fill (uint32_t starting_index, uint32_t num_samples, int32_t color)
+{
+	for(int i = 0; i < num_samples; i++) {
+		set_pixel(starting_index + i, 
+				  color);
+	}
+}
+
+void Texture::zero ()
+{
+	memset (_data, 0, _width * _height * _channels);
+}
+
+void Texture::set_pixel(unsigned int pindex, int32_t color)
+{
+	if(pindex < (_width * _height)) {
+		int tmpIndex = 4 * pindex;
+		_data[tmpIndex]     = (unsigned char) (color & 0xFF);
+		_data[tmpIndex + 1] = (unsigned char) ((color >> 8) & 0xFF);
+		_data[tmpIndex + 2] = (unsigned char) ((color >> 16) & 0xFF);
+		_data[tmpIndex + 3] = (unsigned char) ((color >> 25) & 0xFF);
+	}
+	else {
+		std::cout << "[TexturePool]: coordinate out of range!"  << std::endl;
+	}
 }
 
 TexturePool *TexturePool::_instance = 0;
@@ -117,7 +146,6 @@ void TexturePool::traverse_directory (const std::string &directory, void (Textur
 	closedir (dir);
 }
 
-
 unsigned int TexturePool::add_image (const std::string &filename, unsigned int index)
 {
 	std::cout << "[TexturePool]: Adding texture: " << filename << std::endl;
@@ -183,24 +211,21 @@ boost::shared_ptr<Texture> TexturePool::load_image (const std::string &filename)
 		{
 			int im_width, im_height, tex_width, tex_height;
 
-			QImage gl_image = QGLWidget::convertToGLFormat(image);
-
-			//make sure its not null
-			if(gl_image.isNull()) 
+			if(image.isNull()) 
 				{
 				std::cout 
 					<< 	"  [TexturePool]: Unable to convert image to GL format. No texture loaded." 
 					<< std::endl;
 				}
 			else
-				{
+				{		
+					im_width = image.width();
+					im_height = image.height();
 
-		
-					im_width = gl_image.width();
-					im_height = gl_image.height();
-	
 					tex_width =  (int)pow(2,(int)ceil(log2(im_width)));
 					tex_height = (int)pow(2,(int)ceil(log2(im_height)));
+
+					boost::shared_ptr<Texture> t(new Texture (tex_width, tex_height, 4));
 
 					if (options->_verbose >= 2)
 						{
@@ -212,12 +237,22 @@ boost::shared_ptr<Texture> TexturePool::load_image (const std::string &filename)
 
 					// std::cout << width << " " << height << std::endl;
 	
-					boost::shared_ptr<Texture> t(new Texture (tex_width, tex_height, 4));
-					t->_data = gl_image.bits();
-					t->_img = gl_image;
+					for (int i = 0; i < im_width; ++i)
+						{
+							for (int j = 0; j < im_height; ++j)
+								{
+									// swap image
+									QRgb color = image.pixel(i,im_height - j - 1);
+
+									int tmpIndex = 4 * (tex_width * j + i);
+									t->_data[tmpIndex]     = (unsigned char) qRed(color);
+									t->_data[tmpIndex + 1] = (unsigned char) qGreen(color);
+									t->_data[tmpIndex + 2] = (unsigned char) qBlue(color);
+									t->_data[tmpIndex + 3] = (unsigned char) qAlpha(color);
+								}
+						}
 
 					return t;
-
 				}
 		}
 	}
@@ -234,6 +269,8 @@ TexturePool::~TexturePool ()
 	// TODO: clean up
 }
 
+
+
 unsigned int TexturePool::get_number_of_textures ()
 {
 	return _textures.size ();
@@ -241,8 +278,16 @@ unsigned int TexturePool::get_number_of_textures ()
 
 boost::shared_ptr<Texture> TexturePool::get_texture (unsigned int index)
 {
-	return _textures[index];
+	if(index < _textures.size())
+		return _textures[index];
+	else
+		{
+			std::cout << "[TexturePool]: texture doesn't exist!"  << std::endl;
+		}
 }
 
 
-
+void TexturePool::update ()
+{
+	emit (textures_changed());
+}

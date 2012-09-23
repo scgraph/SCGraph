@@ -268,10 +268,6 @@ int OscHandler::command_name_to_int (const std::string& command_name)
 		return cmd_graphicsRate;
 	if (command_name == std::string("/controlRate"))
 		return cmd_controlRate;
-	if (command_name == std::string("/loadTexture"))
-		return cmd_loadTexture;
-	if (command_name == std::string("/loadTextureDir"))
-		return cmd_loadTextureDir;
 	if (command_name == std::string("/loadShaderProgram"))
 		return cmd_loadShaderProgram;
 	if (command_name == std::string("/clearShaderPrograms"))
@@ -324,20 +320,9 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 		case cmd_quit:
 		{
 			QReadLocker locker (&scgraph->_read_write_lock);
-			osc::OutboundPacketStream p (_message_buffer, SCGRAPH_OSC_MESSAGE_BUFFER_SIZE);
 
-			try
-			{
-				p << osc::BeginMessage ("/done") 
-				  << "/quit"
-				  << osc::EndMessage;
-	
-				_socket->SendTo (msg->_endpoint_name, p.Data (), p.Size ());
-			}
-			catch (osc::Exception &e)
-			{
-				std::cout << "[OscHandler]: Error: " << e.what () << std::endl;
-			}
+			send_done("/quit", msg->_endpoint_name);
+
 			QApplication::instance()->exit ();
 			// we are done anyways
 			//pthread_mutex_unlock (&_mutex);
@@ -682,14 +667,7 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 					_notifications.push_back (msg->_endpoint_name);
 			}
 	
-			// _socket->Connect (msg->_endpoint_name);
-			osc::OutboundPacketStream p (_message_buffer, SCGRAPH_OSC_MESSAGE_BUFFER_SIZE);
-	
-			p << osc::BeginBundleImmediate 
-			  << osc::BeginMessage ("/done")
-			<< osc::EndMessage << osc::EndBundle;
-	
-			_socket->SendTo (msg->_endpoint_name, p.Data (), p.Size ());
+			send_done("/notify", msg->_endpoint_name);
 	
 			if (options->_verbose >= 2)
 			{
@@ -1109,41 +1087,343 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 
 		break;
 
-		case cmd_loadTexture:
-                {
-                    osc::ReceivedMessage::const_iterator arg = message->ArgumentsBegin();
+	case cmd_b_read:
+		{
+			osc::ReceivedMessage::const_iterator arg = message->ArgumentsBegin();
 	
-                    const char *path = 0;
-                    try
-			{
-                            path = (*(arg++)).AsString ();
 
-                            std::string tmp (path);
-                            if (options->_verbose >= 2)
-                                std::cout << "[OscHandler]: /loadTexture " << tmp << std::endl;
+			osc::int32 bufnum, starting_frame_in_file, num_frames, starting_frame_in_buffer, leave_file_open_p;
+					
+			const char *path = 0;
 
-                            QReadLocker locker (&scgraph->_read_write_lock);
-                            TexturePool::get_instance()->add_image(tmp, -1);
+			const void *completion_message;
+			unsigned long completion_message_size;
 
-                            //send_notifications ("/n_go", synth->_id);
-	
-			}
-                    catch (const char* error)
-			{
-                            if (path)
-                                std::cout << "[OscHandler]: Warning: Texture loading failed: (path: \"" << path << "\"). Reason: " << error << std::endl;
-			}
-                    catch (osc::Exception &e)
-			{
-                            std::cout << "[OscHandler]: Error while parsing message: /loadTexture: " << e.what () << ". TypeTags: " << message->TypeTags() << std::endl;
-			}
-                    //scgraph->unlock ();
-                }
+			try
+				{
+					bufnum = (*(arg++)).AsInt32 ();
+					path = (*(arg++)).AsString ();
+					starting_frame_in_file = (*(arg++)).AsInt32 ();
+					num_frames = (*(arg++)).AsInt32 ();
+					starting_frame_in_buffer = (*(arg++)).AsInt32 ();
+					leave_file_open_p = (*(arg++)).AsInt32 ();
+
+					std::string tmp (path);
+					if (options->_verbose >= 2)
+						std::cout << "[OscHandler]: /b_read " << tmp << std::endl;
+
+					TexturePool * tp = TexturePool::get_instance();
+
+					QReadLocker locker (&scgraph->_read_write_lock);
+					if(bufnum < tp->get_number_of_textures())
+						tp->change_image(tmp, bufnum);
+					else
+						tp->add_image(tmp, bufnum);
+
+					if (arg != message->ArgumentsEnd () && ((*arg).TypeTag () == 'b'))
+						{
+							// std::cout << (*arg).TypeTag () << std::endl;
+							(*arg++).AsBlob (completion_message, completion_message_size);
+
+							// std::cout << "ugha?" << std::endl;
+							osc::ReceivedPacket tmp_pack ((const char*)completion_message, completion_message_size);
+							osc::ReceivedMessage tmp_rec_msg (tmp_pack);
+
+							OscMessage *tmp_msg = new OscMessage (tmp_rec_msg, msg->_endpoint_name);
+							handle_message_locked (tmp_msg);
+							// ProcessPacket ((const char*)completion_message, completion_message_size, msg->_endpoint_name);
+
+						}
+
+
+					send_done("/b_read", msg->_endpoint_name);
+				}
+			catch (const char* error)
+				{
+					if (path)
+						std::cout << "[OscHandler]: Warning: Texture loading failed: (path: \"" << path << "\"). Reason: " << error << std::endl;
+				}
+			catch (osc::Exception &e)
+				{
+					std::cout << "[OscHandler]: Error while parsing message: /b_read: " << e.what () << ". TypeTags: " << message->TypeTags() << std::endl;
+				}
+			//scgraph->unlock ();
+		}
 		break;
 
-		case cmd_loadTextureDir:
+	case cmd_b_allocRead:
+		{
+			osc::ReceivedMessage::const_iterator arg = message->ArgumentsBegin();
+	
+			osc::int32 bufnum, starting_frame_in_file, num_frames;
 
+			const char *path = 0;
+
+			const void *completion_message;
+			unsigned long completion_message_size;
+
+			try
+				{
+					bufnum = (*(arg++)).AsInt32 ();
+					path = (*(arg++)).AsString ();
+					starting_frame_in_file = (*(arg++)).AsInt32 ();
+					num_frames = (*(arg++)).AsInt32 ();
+					std::string tmp (path);
+
+					if (options->_verbose >= 2)
+						std::cout << "[OscHandler]: /b_allocRead " << tmp << std::endl;
+
+					QReadLocker locker (&scgraph->_read_write_lock);
+					TexturePool::get_instance()->add_image(tmp, bufnum);
+
+					if (arg != message->ArgumentsEnd () && ((*arg).TypeTag () == 'b'))
+						{
+							(*arg++).AsBlob (completion_message,
+											 completion_message_size);
+
+							osc::ReceivedPacket tmp_pack ((const char*)
+														  completion_message, 
+														  completion_message_size);
+							osc::ReceivedMessage tmp_rec_msg (tmp_pack);
+
+							OscMessage *tmp_msg = new OscMessage 
+								(tmp_rec_msg,
+								 msg->_endpoint_name);
+							handle_message_locked (tmp_msg);
+						}
+
+					send_done("/b_allocRead", msg->_endpoint_name);				
+				}
+			catch (const char* error)
+				{
+					if (path)
+						std::cout << "[OscHandler]: Warning: Texture loading failed: (path: \"" << path << "\"). Reason: " << error << std::endl;
+				}
+			catch (osc::Exception &e)
+				{
+					std::cout << "[OscHandler]: Error while parsing message: /b_allocRead: " << e.what () << ". TypeTags: " << message->TypeTags() << std::endl;
+				}
+			//scgraph->unlock ();
+		}
 		break;
+
+	case cmd_b_query:
+		{
+			osc::ReceivedMessage::const_iterator arg = message->ArgumentsBegin();
+	
+			osc::int32 bufnum;
+			try
+				{
+					bufnum = (*(arg++)).AsInt32 ();
+					//TexturePool::get_instance()->add_image(tmp,
+					//bufnum);
+
+					TexturePool *tp = TexturePool::get_instance();
+				   
+					if(tp->get_number_of_textures() > bufnum) {
+						osc::OutboundPacketStream p (_message_buffer, SCGRAPH_OSC_MESSAGE_BUFFER_SIZE);
+
+						try
+							{
+								p << osc::BeginMessage ("/b_info") 
+								  << bufnum
+								  << tp->get_texture(bufnum)->_width // num frames
+								  << tp->get_texture(bufnum)->_height // num channels
+								  << 0 // sample rate
+								  << osc::EndMessage;
+	
+								_socket->SendTo (msg->_endpoint_name, p.Data (), p.Size ());
+							}
+						catch (osc::Exception &e)
+							{
+								std::cout << "[OscHandler]: Error: " << e.what () << std::endl;
+							}
+					
+						
+					}
+					else {
+						std::cout << "[OscHandler]: /b_query: texture id " << bufnum << " doesn't exist!" << std::endl;
+					}
+
+				}
+			catch (osc::Exception &e)
+				{
+					std::cout << "[OscHandler]: Error while parsing message: /b_query: " << e.what () << ". TypeTags: " << message->TypeTags() << std::endl;
+				}
+			//scgraph->unlock ();
+		}
+		break;
+
+
+	case cmd_b_zero:
+		{
+			osc::ReceivedMessage::const_iterator arg = message->ArgumentsBegin();
+	
+			osc::int32 bufnum;
+
+			const void *completion_message;
+			unsigned long completion_message_size;
+
+			try
+				{
+					bufnum = (*(arg++)).AsInt32 ();
+
+					if (options->_verbose >= 2)
+						std::cout << "[OscHandler]: /b_zero " << bufnum << std::endl;
+
+					boost::shared_ptr<Texture> texture = 
+						TexturePool::get_instance()->get_texture(bufnum);
+				
+					if(texture != NULL) {
+						texture->zero();
+						TexturePool::get_instance()->update();
+					}
+
+					if (arg != message->ArgumentsEnd () && ((*arg).TypeTag () == 'b'))
+						{
+							(*arg++).AsBlob (completion_message,
+											 completion_message_size);
+
+							osc::ReceivedPacket tmp_pack ((const char*)
+														  completion_message, 
+														  completion_message_size);
+							osc::ReceivedMessage tmp_rec_msg (tmp_pack);
+
+							OscMessage *tmp_msg = new OscMessage 
+								(tmp_rec_msg,
+								 msg->_endpoint_name);
+							handle_message_locked (tmp_msg);
+						}
+
+					send_done("/b_zero", msg->_endpoint_name);				
+				}
+			catch (osc::Exception &e)
+				{
+					std::cout << "[OscHandler]: Error while parsing message: /b_zero: " << e.what () << ". TypeTags: " << message->TypeTags() << std::endl;
+				}
+			//scgraph->unlock ();
+		}
+		break;
+	
+		case cmd_b_set:
+			{
+				osc::ReceivedMessage::const_iterator arg = message->ArgumentsBegin();
+
+				int bufnum;
+
+				int32_t color;
+				osc::int32 pindex;
+
+				try {
+					bufnum = (*(arg++)).AsInt32 ();
+
+					boost::shared_ptr<Texture> texture = TexturePool::get_instance()->get_texture(bufnum);
+				
+					if(texture != NULL) {
+						while (arg != message->ArgumentsEnd ())
+							{
+								pindex = (*(arg++)).AsInt32();
+								if((*arg).TypeTag () == 'i')
+									color = (*(arg++)).AsInt32();
+								else
+									color = (int32_t) (*(arg++)).AsFloat();
+
+								texture->set_pixel(pindex, color);
+							}
+						TexturePool::get_instance()->update();
+					}
+				}
+				catch (osc::Exception &e)
+					{
+						std::cout << "[OscHandler]: Error while parsing message: /b_set: " << e.what () << ". TypeTags: " << message->TypeTags() << std::endl;
+					}
+			}
+		break;
+		
+		case cmd_b_setn:
+			{
+				osc::ReceivedMessage::const_iterator arg = message->ArgumentsBegin();
+
+				int bufnum;
+
+				osc::int32 starting_index, num_samples;
+
+				int32_t color;
+
+				try {
+					bufnum = (*(arg++)).AsInt32 ();
+
+					boost::shared_ptr<Texture> texture = TexturePool::get_instance()->get_texture(bufnum);
+				
+					if(texture != NULL) {
+						while (arg != message->ArgumentsEnd ())
+							{
+								starting_index = (*(arg++)).AsInt32();
+								num_samples = (*(arg++)).AsInt32();
+
+								if((*arg).TypeTag () == 'i')
+									color = (*(arg++)).AsInt32();
+								else
+									color = (int32_t) (*(arg++)).AsFloat();
+
+
+								for(int i = 0; i < num_samples; i++) {
+									texture->set_pixel(starting_index + i, 
+													   color);
+								}
+							}
+						TexturePool::get_instance()->update();
+					}
+				}
+				catch (osc::Exception &e)
+					{
+						std::cout << "[OscHandler]: Error while parsing message: /b_setn: " << e.what () << ". TypeTags: " << message->TypeTags() << std::endl;
+					}
+			}
+		break;
+	   
+
+		case cmd_b_fill:
+		{
+			osc::ReceivedMessage::const_iterator arg = message->ArgumentsBegin();
+
+			int bufnum;
+
+			osc::int32 starting_index, num_samples;
+			int32_t color;
+
+			try {
+				bufnum = (*(arg++)).AsInt32 ();
+
+				boost::shared_ptr<Texture> texture = TexturePool::get_instance()->get_texture(bufnum);
+				
+				if(texture != NULL) {
+
+					while (arg != message->ArgumentsEnd ())
+						{
+							starting_index = (*(arg++)).AsInt32();
+							num_samples = (*(arg++)).AsInt32();
+
+							if((*arg).TypeTag () == 'i')
+								color = (*(arg++)).AsInt32();
+							else
+								color = (int32_t) (*(arg++)).AsFloat();
+
+							texture->fill(starting_index,
+										  num_samples,
+										  color);
+						}
+					TexturePool::get_instance()->update();
+				}
+			}
+			catch (osc::Exception &e)
+				{
+					std::cout << "[OscHandler]: Error while parsing message: /b_fill: " << e.what () << ". TypeTags: " << message->TypeTags() << std::endl;
+				}
+		}
+		break;
+
+
 
 		default:
 		{
@@ -1159,6 +1439,25 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 	}
 
 	// std::cout << "handle message lcoked end" << std::endl;
+}
+
+void OscHandler::send_done (std::string command, IpEndpointName endpoint)
+{
+
+	osc::OutboundPacketStream p (_message_buffer, SCGRAPH_OSC_MESSAGE_BUFFER_SIZE);
+
+	try
+		{
+			p << osc::BeginMessage ("/done") 
+			  << command.c_str()
+			  << osc::EndMessage;
+	
+			_socket->SendTo (endpoint, p.Data (), p.Size ());
+		}
+	catch (osc::Exception &e)
+		{
+			std::cout << "[OscHandler]: Error: " << e.what () << std::endl;
+		}
 }
 
 void OscHandler::handle_message (OscMessage *message)

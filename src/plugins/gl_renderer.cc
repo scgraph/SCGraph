@@ -109,14 +109,16 @@ GLRenderWidget::GLRenderWidget (QWidget *parent, GLRenderer *renderer) :
 	makeCurrent();
 	//_lastFrame = new QGLFramebufferObject(1024,1024);
 
-	boost::shared_ptr<Texture> _lastFrame(new Texture (1024, 1024, 4));
+	boost::shared_ptr<Texture> _lastFrame(new Texture (1024, 1024, 4, true));
 	//setAutoBufferSwap(false);
 }
 
 
 void GLRenderWidget::resizeGL (int w, int h)
 {
+	makeCurrent();
 	glViewport(0, 0, (GLint)w, (GLint)h);
+	glClear(GL_COLOR_BUFFER_BIT);
 }
 
 
@@ -683,7 +685,7 @@ void GLRenderer::draw_face (const Face &face)
 			   && face._texture_index < _texture_handles.size())
 				{
 					glEnable (GL_TEXTURE_2D);
-					//std::cout << _texture_handles[face._texture_index] << std::endl;
+					// std::cout << _texture_handles[face._texture_index] << std::endl;
 					glBindTexture (GL_TEXTURE_2D, 
 								   _texture_handles[face._texture_index]);
 				}
@@ -1107,6 +1109,11 @@ void GLRenderer::really_process_g (double delta_t)
 	if (!_ready)
 		return;
 
+	if (*_control_ins[WIREFRAME_MODE] > 0.5)
+		{
+			glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
+		}
+
 	// TODO find a better place for this
 	if (_max_feedback_frames == (SCGRAPH_QT_GL_RENDERER_MAXMAX_FEEDBACK_FRAMES + 1))
 		change_feedback_frames();
@@ -1358,6 +1365,7 @@ void GLRenderer::really_process_g (double delta_t)
 
 	//glAccum (GL_MULT, 0.5);
 	//glAccum (GL_RETURN, 1.0);
+
 
 	if (_feedback > 0) {
 							/*glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16, 

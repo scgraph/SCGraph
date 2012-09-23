@@ -9,4 +9,9 @@ GColor : UGen {
 		^GColor.gr(in, this.asArray)
 	}
 
+	asInt {
+		var fl = 0;
+		this.asArray255.asInteger.do{ |i,ind| fl = fl + (i << (8 * ind)); };
+		^fl;
+	}
 }

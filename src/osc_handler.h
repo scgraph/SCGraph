@@ -95,16 +95,14 @@ enum {
 	cmd_verbose = 55,
 	cmd_graphicsRate = 56,
 	cmd_controlRate = 57,
-	cmd_loadTexture = 58,
-	cmd_loadTextureDir = 59,
-	cmd_loadShaderProgram = 60,
-	cmd_clearShaderPrograms = 61,
+	cmd_loadShaderProgram = 58,
+	cmd_clearShaderPrograms = 59,
 
-	cmd_addString = 62,
-	cmd_changeString = 63,
-	cmd_setFont = 64,
+	cmd_addString = 60,
+	cmd_changeString = 61,
+	cmd_setFont = 62,
 
-	NUMBER_OF_COMMANDS = 63
+	NUMBER_OF_COMMANDS = 61
 };
 
 class OscMessage : public QObject
@@ -151,6 +149,8 @@ class OscHandler : public QThread, public osc::OscPacketListener
 
 		/* used to send notifications to clients */
 		void send_notifications (std::string path, int id);
+
+		void send_done (std::string command, IpEndpointName endpoint);
 		/* inherited from QThread */
 		void run ();
 

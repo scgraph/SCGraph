@@ -14,12 +14,17 @@
 /** a texture image in RGBA format with unsigned chars as data */
 struct Texture
 {
-	Texture (int width, int height, int channels);
+	Texture (int width, int height, int channels, bool zero);
 	~Texture ();
 
 	int _width, _height, _channels;
 	unsigned char *_data;
 	QImage _img;
+
+	void set_pixel(unsigned int pindex, int32_t color);
+	void fill(uint32_t starting_index, uint32_t num_samples, int32_t color);
+
+	void zero();
 };
 
 class TexturePool : public QObject
@@ -46,11 +51,14 @@ class TexturePool : public QObject
 		static TexturePool *get_instance ();
 
 		unsigned int get_number_of_textures ();
+
 		boost::shared_ptr<Texture> get_texture (unsigned int index);
 
 		/** if the index is -1, we simply add it to the end of the list */
 		unsigned int add_image (const std::string &path, unsigned int index);
 		unsigned int change_image (const std::string &path, unsigned int index);
+
+		void update();
 
 	signals:
 		void texture_added (unsigned int index);

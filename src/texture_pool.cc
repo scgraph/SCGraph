@@ -2,6 +2,7 @@
 
 #include "options.h"
 
+
 #include <sstream>
 #include <iostream>
 #include <cmath>
@@ -11,48 +12,15 @@
 
 #include <cstring>
 
-Texture::Texture (int width, int height, int channels, bool zero = true)
+extern "C"
 {
-	_width = width; _height = height; _channels = channels;
-
-	_data = new unsigned char [width * height * channels];
-
-	if(zero)
-		this->zero();
+#define __STDC_CONSTANT_MACROS // for UINT64_C
+#include <libavcodec/avcodec.h>
+#include <libavformat/avformat.h>
+#include <libswscale/swscale.h>
 }
 
-
-Texture::~Texture ()
-{
-	delete[] _data;
-}
-
-void Texture::fill (uint32_t starting_index, uint32_t num_samples, int32_t color)
-{
-	for(int i = 0; i < num_samples; i++) {
-		set_pixel(starting_index + i, 
-				  color);
-	}
-}
-
-void Texture::zero ()
-{
-	memset (_data, 0, _width * _height * _channels);
-}
-
-void Texture::set_pixel(unsigned int pindex, int32_t color)
-{
-	if(pindex < (_width * _height)) {
-		int tmpIndex = 4 * pindex;
-		_data[tmpIndex]     = (unsigned char) (color & 0xFF);
-		_data[tmpIndex + 1] = (unsigned char) ((color >> 8) & 0xFF);
-		_data[tmpIndex + 2] = (unsigned char) ((color >> 16) & 0xFF);
-		_data[tmpIndex + 3] = (unsigned char) ((color >> 25) & 0xFF);
-	}
-	else {
-		std::cout << "[TexturePool]: coordinate out of range!"  << std::endl;
-	}
-}
+typedef boost::shared_ptr< AbstractTexture > AbstractTexturePtr;
 
 TexturePool *TexturePool::_instance = 0;
 
@@ -68,7 +36,20 @@ TexturePool::TexturePool ()
 {
 	Options *options = Options::get_instance ();
 
+	// Register all formats and codecs
+	av_register_all();
+	
+	qRegisterMetaType<uint32_t>("uint32_t");
+	qRegisterMetaType<boost::shared_ptr<Texture> >("boost::shared_ptr<Texture>");
+
+	nextID = 0;
+
 	tokenize_path (options->_texture_path, &TexturePool::scan_directory);
+}
+
+
+uint32_t TexturePool::get_id() {
+	return nextID++;
 }
 
 void TexturePool::tokenize_path (const std::string &path, void (TexturePool::*function)(const std::string &directory))
@@ -149,19 +130,31 @@ void TexturePool::traverse_directory (const std::string &directory, void (Textur
 unsigned int TexturePool::add_image (const std::string &filename, unsigned int index)
 {
 	std::cout << "[TexturePool]: Adding texture: " << filename << std::endl;
-	boost::shared_ptr<Texture> tmp = load_image(filename);
+	AbstractTexturePtr tmp = boost::make_shared<ImageTexture>();
 
-	if(tmp) {
+	if(tmp->load(filename) == 0) {
 		_textures.push_back (tmp);
 			
 		//if (options->_verbose >= 2)
 		std::cout << "  [TexturePool]: New texture has index: " 
 				  << _textures.size() - 1 << std::endl;
 	
-		emit (textures_changed());
+		emit (texture_changed(_textures.size() - 1));
+	}
+	else {
+		AbstractTexturePtr tmp = boost::make_shared<VideoTexture>();
+		if(tmp->load(filename) == 0) {
+			_textures.push_back (tmp);
+
+			std::cout << "  [TexturePool]: New video texture has index: " 
+					  << _textures.size() - 1 << std::endl;
+	
+			emit (texture_changed(_textures.size() - 1));
+		}
 	}
 	return _textures.size() - 1;
 }
+
 
 void TexturePool::add_image (const std::string &filename)
 {
@@ -170,99 +163,23 @@ void TexturePool::add_image (const std::string &filename)
 
 unsigned int TexturePool::change_image (const std::string &filename, unsigned int index)
 {
-	change_image(filename, index);
-	boost::shared_ptr<Texture> tmp = load_image(filename);
-
-	if(tmp) {
+	AbstractTexturePtr tmp = boost::make_shared<ImageTexture>();
+	if(tmp->load(filename) == 0) {
 		if(index < _textures.size()) {
+
+			// TODO TODO TODO
 			_textures[index] = tmp;
-			
+
 			std::cout << "  [TexturePool]: Changed texture at index " 
 					  << index << std::endl;
 	
-		emit (textures_changed());
+		emit (texture_changed(index));
 		}
 	}
 
 	return _textures.size() - 1;
 }
 
-boost::shared_ptr<Texture> TexturePool::load_image (const std::string &filename)
-{
-	Options *options = Options::get_instance ();
-
-	try
-	{
-
-		const char * tmp = filename.c_str();
-		QImage image(tmp);
-
-		if(image.isNull()) {
-			std::cout << "  [TexturePool]: Unrecognized Image Format. No texture loaded." 
-					  << std::endl;
-			std::cout << "                 Supported Formats:";
-			for (int i = 0; i < QImageReader::supportedImageFormats().size(); ++i)
-			{
-				std::cout << " " << QImageReader::supportedImageFormats().at(i).data();
-			}
-			std::cout << "." << std::endl;
-		}
-		else
-		{
-			int im_width, im_height, tex_width, tex_height;
-
-			if(image.isNull()) 
-				{
-				std::cout 
-					<< 	"  [TexturePool]: Unable to convert image to GL format. No texture loaded." 
-					<< std::endl;
-				}
-			else
-				{		
-					im_width = image.width();
-					im_height = image.height();
-
-					tex_width =  (int)pow(2,(int)ceil(log2(im_width)));
-					tex_height = (int)pow(2,(int)ceil(log2(im_height)));
-
-					boost::shared_ptr<Texture> t(new Texture (tex_width, tex_height, 4));
-
-					if (options->_verbose >= 2)
-						{
-							std::cout << "  [TexturePool]: Texture Width/Height: " << tex_width 
-									  << "/" << tex_height << std::endl;
-							std::cout << "  [TexturePool]: Image source Width/Height: " << im_width 
-									  << "/" << im_height << std::endl;
-						}
-
-					// std::cout << width << " " << height << std::endl;
-	
-					for (int i = 0; i < im_width; ++i)
-						{
-							for (int j = 0; j < im_height; ++j)
-								{
-									// swap image
-									QRgb color = image.pixel(i,im_height - j - 1);
-
-									int tmpIndex = 4 * (tex_width * j + i);
-									t->_data[tmpIndex]     = (unsigned char) qRed(color);
-									t->_data[tmpIndex + 1] = (unsigned char) qGreen(color);
-									t->_data[tmpIndex + 2] = (unsigned char) qBlue(color);
-									t->_data[tmpIndex + 3] = (unsigned char) qAlpha(color);
-								}
-						}
-
-					return t;
-				}
-		}
-	}
-	catch (const char* error)
-	{
-		std::cout << "[TexturePool]: Problem loading texture: " 
-				  << error  << std::endl;
-	}
-	// emit(texture_added(_textures.size () - 1));
-}
 
 TexturePool::~TexturePool ()
 {
@@ -270,24 +187,40 @@ TexturePool::~TexturePool ()
 }
 
 
+void TexturePool::delete_textures_at_id(uint32_t id) {
+	_tmp_textures.remove(id);
+	emit(delete_texture(id));
+}
+
+void TexturePool::update_tmp_texture(uint32_t id, boost::shared_ptr<Texture> texture)
+{
+	_tmp_textures.insert(id, texture);
+	//std::cout << "[TexturePool] updating tmp texture" << std::endl;
+	emit(change_tmp_texture(id));
+}
+
+void TexturePool::loaded_tmp_texture(uint32_t id) {
+	emit(texture_loaded(id));
+}
 
 unsigned int TexturePool::get_number_of_textures ()
 {
 	return _textures.size ();
 }
 
-boost::shared_ptr<Texture> TexturePool::get_texture (unsigned int index)
+boost::optional<boost::shared_ptr<AbstractTexture> > TexturePool::get_texture (unsigned int index)
 {
 	if(index < _textures.size())
-		return _textures[index];
+		return boost::optional<boost::shared_ptr<AbstractTexture> >(_textures[index]);
 	else
 		{
-			std::cout << "[TexturePool]: texture doesn't exist!"  << std::endl;
+			//std::cout << "[TexturePool]: texture doesn't exist!"  << std::endl;
+			return boost::optional<boost::shared_ptr<AbstractTexture> >();
 		}
 }
 
 
-void TexturePool::update ()
+void TexturePool::update_texture (unsigned int index)
 {
-	emit (textures_changed());
+	emit (texture_changed(index));
 }

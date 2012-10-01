@@ -19,6 +19,7 @@
 
 #include <QtCore/QObject>
 #include <QtCore/QEvent>
+#include <QtCore/QHash>
 
 #include <QtGui/QApplication>
 #include <QtGui/QMouseEvent>
@@ -200,6 +201,8 @@ class GLRenderer : public QObject, public GUnit, public GraphicsVisitor, public 
 	std::vector<GLuint>
                       _texture_handles;
 
+	QHash<uint32_t, GLuint> _tmp_texture_handles;
+
 	std::vector<GLuint>
                       _past_frame_handles;
 	boost::shared_ptr<Texture> _lastFrame;
@@ -220,6 +223,7 @@ class GLRenderer : public QObject, public GUnit, public GraphicsVisitor, public 
 
 	shader_uniforms_map_t _shader_uniforms;
 
+	void upload_texture (uint32_t id);
 
 	void do_material (const Material &material);
 	void do_light (const Light &light);
@@ -261,6 +265,8 @@ class GLRenderer : public QObject, public GUnit, public GraphicsVisitor, public 
 		void keyPressEvent (QKeyEvent *event);
 		void keyReleaseEvent (QKeyEvent *event);
 
+		GLuint upload_texture(boost::shared_ptr<Texture> const & texture);
+
 		void set_done_action (int done_action);
 
 		void setup_texture (size_t index);
@@ -277,8 +283,11 @@ class GLRenderer : public QObject, public GUnit, public GraphicsVisitor, public 
 		double _delta_t;
 
 	public slots:
-		void add_texture (unsigned int index);
-		void change_textures ();
+		void init_textures ();
+		void change_texture (unsigned int index);
+		void change_tmp_texture (uint32_t id);
+		void delete_tmp_texture (uint32_t index);
+		void delete_texture(uint32_t id);
 
 	public slots:
 		void add_shader_program (unsigned int index);

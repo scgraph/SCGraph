@@ -3,6 +3,7 @@
 Face::Face (GeometryType) :
 	//_per_vertex_colors (false),
 	_texture_index (0),
+	_frame_id (0),
 	_thickness (1.0),
 	_culling (0)
 {
@@ -22,6 +23,7 @@ Face::Face (const Face &f)
 
 	_texture_coordinates = f._texture_coordinates;
 	_texture_index = f._texture_index;
+	_frame_id = f._frame_id;
 
 	_normals = f._normals;
 

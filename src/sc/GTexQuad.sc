@@ -11,6 +11,7 @@ GTexQuad : UGen {
 			tex_coord3 = [1,1], 
 			tex_coord4 = [0,1], 
 			tex_index = 0,
+		frame_index = 0,
 			normal = [0, 0, 1];
 
 		^this.multiNew(
@@ -24,6 +25,7 @@ GTexQuad : UGen {
 			tex_coord3[0], tex_coord3[1], 
 			tex_coord4[0], tex_coord4[1], 
 			tex_index, 
+			frame_index,
 			normal[0], normal[0], normal[0]
 		);
 	}

@@ -166,7 +166,7 @@ void GLRenderWidget::initializeGL ()
 		std::cout << "[GGLRenderer]: Warning: shader objects extension missing" << std::endl;
 	}
 #endif
-	_renderer->change_textures();
+	_renderer->init_textures();
 
 #ifdef HAVE_SHADERS
 	_renderer->change_shader_programs();
@@ -286,7 +286,7 @@ GLRenderer::GLRenderer () :
 	_gl_light_indexes[6] = GL_LIGHT6;
 	_gl_light_indexes[7] = GL_LIGHT7;
 
-	// std::cout << "[GLRenderer]: constructor" << std::endl;
+	//std::cout << "[GLRenderer]: constructor" << std::endl;
 
 	// set up display texts
 	font.setPixelSize(10);
@@ -330,12 +330,26 @@ GLRenderer::GLRenderer () :
 						  SCGRAPH_QT_GL_RENDERER_DEFAULT_HEIGHT);
 	_main_window->show ();
 
+	TexturePool *texture_pool = TexturePool::get_instance ();
 
-	connect (TexturePool::get_instance (), 
-			 SIGNAL (textures_changed()), 
+	connect (texture_pool, 
+			 SIGNAL (texture_changed(unsigned int)), 
 			 this, 
-			 SLOT(change_textures()), 
+			 SLOT(change_texture(unsigned int)), 
 			 Qt::QueuedConnection);
+
+	connect (texture_pool, 
+			 SIGNAL (change_tmp_texture(uint32_t)), 
+			 this, 
+			 SLOT(change_tmp_texture(uint32_t)), 
+			 Qt::QueuedConnection);
+
+	connect (texture_pool, 
+			 SIGNAL (delete_texture(uint32_t)), 
+			 this, 
+			 SLOT(delete_tmp_texture(uint32_t)),
+			 Qt::QueuedConnection);
+
 	connect (ShaderPool::get_instance (), 
 			 SIGNAL (shader_programs_changed()), 
 			 this, 
@@ -351,38 +365,6 @@ GLRenderer::GLRenderer () :
 #endif
 	_ready = true;
 }
-
-void GLRenderer::setup_texture (size_t index)
-{
-	_gl_widget->makeCurrent();
-
-	TexturePool *texture_pool = TexturePool::get_instance ();
-
-	glBindTexture (GL_TEXTURE_2D, _texture_handles[index]);
-
-}
-
-void GLRenderer::add_texture (unsigned int index)
-{
-	_gl_widget->makeCurrent();
-
-	// TODO: error handling for gl texture calls
-	_texture_handles.push_back (0);
-	glGenTextures (1, &_texture_handles[_texture_handles.size () - 1]);
-
-	setup_texture (index);
-}
-
-void GLRenderer::clear_textures ()
-{
-	_gl_widget->makeCurrent();
-
-		/* we make everything new here :) */
-	glDeleteTextures (_texture_handles.size (), &_texture_handles[0]);
-
-	_texture_handles.clear ();
-}
-
 
 
 void GLRenderer::compile_and_link_shader_program(unsigned int index, ShaderPool::ShaderProgram *s) {
@@ -508,57 +490,60 @@ void GLRenderer::add_shader_program (unsigned int index) {
 	// GLenum my_program = glCreateProgramObjectARB();
 }
 
-void GLRenderer::change_textures ()
+
+void GLRenderer::setup_texture (size_t index)
 {
 	_gl_widget->makeCurrent();
-
-	clear_textures ();
-
+	std::cout << "setup_texture" << std::endl;
 	TexturePool *texture_pool = TexturePool::get_instance ();
 
-	for (size_t i = 0; i < texture_pool->get_number_of_textures (); ++i)
-	{
-		_texture_handles.push_back(0);
-		glGenTextures (1, &_texture_handles[i]);
-		glBindTexture (GL_TEXTURE_2D, _texture_handles[i]);
+	glBindTexture (GL_TEXTURE_2D, _texture_handles[index]);
 
-		/** use texture proxy to test if we can load this texture */
-		glTexImage2D 
-		(
-			GL_PROXY_TEXTURE_2D,
-			0, // level
-			4, // internal format
-			texture_pool->get_texture(i)->_width,
-			texture_pool->get_texture(i)->_height,
-			0, // border
-			GL_RGBA,
-			GL_UNSIGNED_BYTE,
-			0// texture_pool->get_texture(i)->_data
-		);
+}
 
-		GLint width;
+GLuint GLRenderer::upload_texture(boost::shared_ptr<Texture> const & texture)
+{
+	GLuint tmp;
+	glGenTextures (1, &tmp);
+	glBindTexture (GL_TEXTURE_2D, tmp);
 
-		glGetTexLevelParameteriv(GL_PROXY_TEXTURE_2D, 0, GL_TEXTURE_WIDTH, &width);
+	GLenum color_format;
+	if(texture->_channels == 4)
+		color_format = GL_RGBA;
+	else
+		color_format = GL_RGB;
 
-		if (width == 0) 
-		{ /* Can't use that texture */ 
-			std::cout << "[TexturePool]: Warning: Can't upload texture " 
-					  << i << ". Proxy call to glTexImage2D failed" 
-					  << std::endl;
-		}
+	// use texture proxy to test if we can load this texture 
+	glTexImage2D (GL_PROXY_TEXTURE_2D,
+				  0, // level
+				  texture->_channels, // internal format
+				  texture->_width,
+				  texture->_height,
+				  0, // border
+				  color_format,
+				  GL_UNSIGNED_BYTE,
+				  0);
 
-		glTexImage2D 
-		(
-			GL_TEXTURE_2D,
-			0, // level
-			4, // internal format
-			texture_pool->get_texture(i)->_width,
-			texture_pool->get_texture(i)->_height,
-			0, // border
-			GL_RGBA,
-			GL_UNSIGNED_BYTE,
-			texture_pool->get_texture(i)->_data
-		);
+	GLint width;
+
+	glGetTexLevelParameteriv(GL_PROXY_TEXTURE_2D, 0, GL_TEXTURE_WIDTH, &width);
+
+	if (width == 0) { // Can't use that texture 
+		std::cout << "[TexturePool]: Warning: Can't upload texture " 
+				  << tmp << ". Proxy call to glTexImage2D failed" 
+				  << std::endl;
+	}
+	else {
+		glTexImage2D(
+					 GL_TEXTURE_2D,
+					 0, // level
+					 texture->_channels, // internal format
+					 texture->_width,
+					 texture->_height,
+					 0, // border
+					 color_format,
+					 GL_UNSIGNED_BYTE,
+					 texture->_data);
 
 		glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 
@@ -569,7 +554,90 @@ void GLRenderer::change_textures ()
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	}
+	return tmp;
 }
+
+void GLRenderer::upload_texture(uint32_t id) {
+	TexturePool *texture_pool = TexturePool::get_instance ();
+	if(texture_pool->_tmp_textures.contains(id)) {
+		boost::shared_ptr<Texture> t = texture_pool->_tmp_textures.value(id);
+
+		//std::cout << "loading frame" << std::endl;
+		_tmp_texture_handles.insert(id, 0);
+		GLuint tmp = upload_texture(t);
+		_tmp_texture_handles.insert(id, tmp);
+		texture_pool->loaded_tmp_texture(id);
+	}
+	else {
+		std::cout << "[GLREnderer] no such frame " << id << std::endl;
+	}
+}
+
+void GLRenderer::clear_textures ()
+{
+	_gl_widget->makeCurrent();
+
+	// we make everything new here :)
+	glDeleteTextures (_texture_handles.size (), &_texture_handles[0]);
+	
+	_texture_handles.clear ();
+}
+
+void GLRenderer::delete_texture (GLuint handle) {
+	_gl_widget->makeCurrent();
+	glDeleteTextures(1, &handle);
+}
+
+void GLRenderer::change_texture (unsigned int index) {
+	while(_texture_handles.size() <= index)
+		_texture_handles.push_back(-1);
+
+	if(_texture_handles[index] != -1)
+		delete_texture(_texture_handles[index]);
+
+	TexturePool *texture_pool = TexturePool::get_instance ();
+
+	boost::optional<boost::shared_ptr<AbstractTexture> > t = texture_pool->get_texture(index);
+	if(t && !((*t)->isVideo())) {
+		std::cout << "tex: " << (*t)->_texture << std::endl;
+		_texture_handles[index] = upload_texture((*t)->_texture);		
+	}
+}
+
+void GLRenderer::change_tmp_texture(uint32_t id) {
+	// std::cout << "[GLRenderer] changing tmp texture " << id << std::endl;
+	if(_tmp_texture_handles.contains(id)) {
+		delete_texture(_tmp_texture_handles.value(id));
+	}
+	upload_texture(id);
+}
+
+void GLRenderer::delete_tmp_texture(uint32_t id) {
+	if(_tmp_texture_handles.contains(id))
+		delete_texture(_tmp_texture_handles.value(id));
+}
+
+void GLRenderer::init_textures () {
+	_gl_widget->makeCurrent();
+	clear_textures ();
+
+	TexturePool *texture_pool = TexturePool::get_instance ();
+
+	for (size_t i = 0; i < texture_pool->get_number_of_textures (); ++i) {
+		_texture_handles.push_back(-1);
+		
+		boost::optional<boost::shared_ptr<AbstractTexture> > t = texture_pool->get_texture(i);
+		if(t && !(*t)->isVideo()) 
+			_texture_handles[i] = upload_texture((*t)->_texture);		
+	}
+	
+	QHashIterator<uint32_t, boost::shared_ptr<Texture> > i(texture_pool->_tmp_textures);
+	while (i.hasNext()) {
+		i.next();
+		upload_texture(i.key());
+	}
+}
+
 
 
 void GLRenderer::change_feedback_frames ()
@@ -615,9 +683,15 @@ void GLRenderer::clear_feedback_frames ()
 
 GLRenderer::~GLRenderer ()
 {
-	std::cout << "[GLRenderer]: destructor" << std::endl;
+	//std::cout << "[GLRenderer]: destructor" << std::endl;
 
 	clear_textures ();
+
+	foreach(GLuint handle, _tmp_texture_handles)
+		glDeleteTextures(1, &handle);
+
+	_tmp_texture_handles.clear();
+
 	clear_feedback_frames ();
 
 	delete _gl_widget;
@@ -629,88 +703,85 @@ void GLRenderer::do_face (const Face& face)
 	glColor4fv (&face._face_color._c[0]);
 
 	// std::cout << face._texture_coordinates.size () << " " << *_control_ins[TEXTURING] << " " << face._texture_index << std::endl;
-	if ((face._colors.size () > 0) && (face._texture_coordinates.size () > 0) && (*_control_ins[TEXTURING] > 0.5))
-	{
+	if ((face._colors.size () > 0) && (face._texture_coordinates.size () > 0) && (*_control_ins[TEXTURING] > 0.5)) {
 		//std::cout << "1" << std::endl;
-		for (size_t i = 0; i < face._vertices.size (); ++i)
-		{
+		for (size_t i = 0; i < face._vertices.size (); ++i)	{
 			glColor4fv (&face._colors[i]._c[0]);
 			glNormal3fv (&face._normals[i]._c[0]);
 			glTexCoord2fv (&face._texture_coordinates[i]._c[0]);
 			glVertex3fv (&face._vertices[i]._c[0]);
 		}
 	}
-	else if ((face._colors.size () == 0) && (face._texture_coordinates.size () > 0) && (*_control_ins[TEXTURING] > 0.5))
-	{
+	else if ((face._colors.size () == 0) && (face._texture_coordinates.size () > 0) && (*_control_ins[TEXTURING] > 0.5)) {
 		//std::cout << "2" << std::endl;
 		for (size_t i = 0; i < face._vertices.size (); ++i)
-		{
-			glNormal3fv (&face._normals[i]._c[0]);
-			glTexCoord2fv (&face._texture_coordinates[i]._c[0]);
-			glVertex3fv (&face._vertices[i]._c[0]);
-		}
+			{
+				glNormal3fv (&face._normals[i]._c[0]);
+				glTexCoord2fv (&face._texture_coordinates[i]._c[0]);
+				glVertex3fv (&face._vertices[i]._c[0]);
+			}
 	}
-	else if (face._colors.size () > 0 && (face._texture_coordinates.size () == 0 || *_control_ins[TEXTURING] < 0.5))
-	{
+	else if (face._colors.size () > 0 && (face._texture_coordinates.size () == 0 || *_control_ins[TEXTURING] < 0.5)) {
 		//std::cout << "3" << std::endl;
 		for (size_t i = 0; i < face._vertices.size (); ++i)
-		{
-			glColor4fv (&face._colors[i]._c[0]);
-			glNormal3fv (&face._normals[i]._c[0]);
-			glVertex3fv (&face._vertices[i]._c[0]);
-		}
+			{
+				glColor4fv (&face._colors[i]._c[0]);
+				glNormal3fv (&face._normals[i]._c[0]);
+				glVertex3fv (&face._vertices[i]._c[0]);
+			}
 	}
-	else
-	{
+	else {
 		//std::cout << "4" << std::endl;
 		for (size_t i = 0; i < face._vertices.size (); ++i)
-		{
-			glNormal3fv (&face._normals[i]._c[0]);
-			glVertex3fv (&face._vertices[i]._c[0]);
-		}
+			{
+				glNormal3fv (&face._normals[i]._c[0]);
+				glVertex3fv (&face._vertices[i]._c[0]);
+			}
 	}
 }
 
 
-void GLRenderer::draw_face (const Face &face)
-{
+void GLRenderer::draw_face (const Face &face) {
+	TexturePool *texture_pool = TexturePool::get_instance ();
+
 	/* if lighting is enabled at this point, then select the material */
 	if (*_control_ins[LIGHTING] > 0.5)
 		do_material (face._material);
 
-	if (*_control_ins[TEXTURING] > 0.5 
-		&& face._texture_coordinates.size () > 0) 
-		{
-			if(face._texture_index >= 0 		
-			   && face._texture_index < _texture_handles.size())
-				{
-					glEnable (GL_TEXTURE_2D);
-					// std::cout << _texture_handles[face._texture_index] << std::endl;
+	if (*_control_ins[TEXTURING] > 0.5 && face._texture_coordinates.size () > 0) {
+		if(face._texture_index >= 0 		
+		   && face._texture_index < _texture_handles.size()) {
+			glEnable (GL_TEXTURE_2D);
+
+			if((*texture_pool->get_texture(face._texture_index))->isVideo() == true) {
+				if(_tmp_texture_handles.contains(face._frame_id)) {
 					glBindTexture (GL_TEXTURE_2D, 
-								   _texture_handles[face._texture_index]);
+								   _tmp_texture_handles.value(face._frame_id, 0));
 				}
-			else
-				{
-					if(face._texture_index < 0)
-						{
-							_feedback = std::min<unsigned int>(
-															   face._texture_index * -1, 
-															   _max_feedback_frames);
-							//std::cout << face._texture_index << std::endl;
-							glEnable (GL_TEXTURE_2D);
-							glBindTexture(GL_TEXTURE_2D, 
-										  _past_frame_handles[
-															  (_max_feedback_frames 
-															   - _feedback 
-															   + _fbcounter) 
-															  % _max_feedback_frames]);
-						}
-					else
-						{
-							glDisable (GL_TEXTURE_2D);
-						}
-				}
+			}
+			else if(_texture_handles[face._texture_index] != -1)
+				glBindTexture (GL_TEXTURE_2D, 
+							   _texture_handles[face._texture_index]);
 		}
+		else {
+			if(face._texture_index < 0)	{
+				_feedback = std::min<unsigned int>(
+												   face._texture_index * -1, 
+												   _max_feedback_frames);
+				//std::cout << face._texture_index << std::endl;
+				glEnable (GL_TEXTURE_2D);
+				glBindTexture(GL_TEXTURE_2D, 
+							  _past_frame_handles[
+												  (_max_feedback_frames 
+												   - _feedback 
+												   + _fbcounter) 
+												  % _max_feedback_frames]);
+			}
+			else {
+				glDisable (GL_TEXTURE_2D);
+			}
+		}
+	}
 	else 
 		{
 			glDisable (GL_TEXTURE_2D);
@@ -720,7 +791,7 @@ void GLRenderer::draw_face (const Face &face)
 	// TODO: fix per vertex color for lines
 
 	switch (face._geometry_type)
-	{
+		{
 		case Face::POINTS:
 			if (*_control_ins[LIGHTING] > 0.5)
 				glDisable (GL_LIGHTING);
@@ -734,9 +805,7 @@ void GLRenderer::draw_face (const Face &face)
 
 
 			for (size_t i = 0; i < face._vertices.size (); ++i)
-			{
 				glVertex3fv (&face._vertices[i]._c[0]);
-			}
 
 			glEnd ();
 
@@ -744,7 +813,7 @@ void GLRenderer::draw_face (const Face &face)
 
 			if (*_control_ins[LIGHTING] > 0.5)
 				glEnable (GL_LIGHTING);
-		break;
+			break;
 
 		case Face::LINES:
 			if (*_control_ins[LIGHTING] > 0.5)
@@ -757,15 +826,13 @@ void GLRenderer::draw_face (const Face &face)
 			glColor4fv (&face._face_color._c[0]);
 
 			for (size_t i = 0; i < face._vertices.size (); ++i)
-			{
 				glVertex3fv (&face._vertices[i]._c[0]);
-			}
 
 			glEnd ();
 
 			if (*_control_ins[LIGHTING] > 0.5)
 				glEnable (GL_LIGHTING);
-		break;
+			break;
 
 		case Face::LINE_STRIP:
 			if (*_control_ins[LIGHTING] > 0.5)
@@ -778,15 +845,13 @@ void GLRenderer::draw_face (const Face &face)
 			glColor4fv (&face._face_color._c[0]);
 
 			for (size_t i = 0; i < face._vertices.size (); ++i)
-			{
 				glVertex3fv (&face._vertices[i]._c[0]);
-			}
 
 			glEnd ();
 
 			if (*_control_ins[LIGHTING] > 0.5)
 				glEnable (GL_LIGHTING);
-		break;
+			break;
 
 		case Face::LINE_LOOP:
 			if (*_control_ins[LIGHTING] > 0.5)
@@ -799,15 +864,13 @@ void GLRenderer::draw_face (const Face &face)
 			glColor4fv (&face._face_color._c[0]);
 
 			for (size_t i = 0; i < face._vertices.size (); ++i)
-			{
 				glVertex3fv (&face._vertices[i]._c[0]);
-			}
 
 			glEnd ();
 
 			if (*_control_ins[LIGHTING] > 0.5)
 				glEnable (GL_LIGHTING);
-		break;
+			break;
 
 		case Face::TRIANGLES:
 			glBegin (GL_TRIANGLES);
@@ -815,7 +878,7 @@ void GLRenderer::draw_face (const Face &face)
 			do_face (face);
 
 			glEnd ();
-		break;
+			break;
 
 		case Face::QUADS:
 			glBegin (GL_QUADS);
@@ -823,7 +886,7 @@ void GLRenderer::draw_face (const Face &face)
 			do_face (face);
 
 			glEnd ();
-		break;
+			break;
 
 		case Face::TRIANGLE_STRIP:
 			glBegin (GL_TRIANGLE_STRIP);
@@ -831,7 +894,7 @@ void GLRenderer::draw_face (const Face &face)
 			do_face (face);
 
 			glEnd ();
-		break;
+			break;
 
 		case Face::TRIANGLE_FAN:
 			glBegin (GL_TRIANGLE_FAN);
@@ -839,7 +902,7 @@ void GLRenderer::draw_face (const Face &face)
 			do_face (face);
 
 			glEnd ();
-		break;
+			break;
 
 		case Face::QUAD_STRIP:
 			glBegin (GL_QUAD_STRIP);
@@ -847,7 +910,7 @@ void GLRenderer::draw_face (const Face &face)
 			do_face (face);
 
 			glEnd ();
-		break;
+			break;
 
 		case Face::POLYGON:
 			glBegin (GL_POLYGON);
@@ -855,12 +918,12 @@ void GLRenderer::draw_face (const Face &face)
 			do_face (face);
 
 			glEnd ();
-		break;
+			break;
 
 		default:
 
-		break;
-	}
+			break;
+		}
 
 	glEnd ();
 
@@ -1106,6 +1169,7 @@ void GLRenderer::process_g (double delta_t)
 
 void GLRenderer::really_process_g (double delta_t)
 {
+
 	if (!_ready)
 		return;
 

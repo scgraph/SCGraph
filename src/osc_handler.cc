@@ -1210,25 +1210,24 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 	case cmd_b_query:
 		{
 			osc::ReceivedMessage::const_iterator arg = message->ArgumentsBegin();
-	
 			osc::int32 bufnum;
-			try
-				{
+			try	{
 					bufnum = (*(arg++)).AsInt32 ();
 					//TexturePool::get_instance()->add_image(tmp,
 					//bufnum);
 
 					TexturePool *tp = TexturePool::get_instance();
-				   
-					if(tp->get_number_of_textures() > bufnum) {
-						osc::OutboundPacketStream p (_message_buffer, SCGRAPH_OSC_MESSAGE_BUFFER_SIZE);
+					boost::optional<boost::shared_ptr<AbstractTexture> > t = tp->get_texture(bufnum);
 
+					if(t) {
+						osc::OutboundPacketStream p (_message_buffer, SCGRAPH_OSC_MESSAGE_BUFFER_SIZE);
+						
 						try
 							{
 								p << osc::BeginMessage ("/b_info") 
 								  << bufnum
-								  << tp->get_texture(bufnum)->_width // num frames
-								  << tp->get_texture(bufnum)->_height // num channels
+								  << (*t)->get_width() // num frames
+								  << (*t)->get_height() // num channels
 								  << 0 // sample rate
 								  << osc::EndMessage;
 	
@@ -1243,7 +1242,7 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 					}
 					else {
 						std::cout << "[OscHandler]: /b_query: texture id " << bufnum << " doesn't exist!" << std::endl;
-					}
+						}
 
 				}
 			catch (osc::Exception &e)
@@ -1271,12 +1270,12 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 					if (options->_verbose >= 2)
 						std::cout << "[OscHandler]: /b_zero " << bufnum << std::endl;
 
-					boost::shared_ptr<Texture> texture = 
+					boost::optional<boost::shared_ptr<AbstractTexture> > texture = 
 						TexturePool::get_instance()->get_texture(bufnum);
 				
-					if(texture != NULL) {
-						texture->zero();
-						TexturePool::get_instance()->update();
+					if(texture) {
+						(*texture)->zero();
+						TexturePool::get_instance()->update_texture(bufnum);
 					}
 
 					if (arg != message->ArgumentsEnd () && ((*arg).TypeTag () == 'b'))
@@ -1317,9 +1316,9 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 				try {
 					bufnum = (*(arg++)).AsInt32 ();
 
-					boost::shared_ptr<Texture> texture = TexturePool::get_instance()->get_texture(bufnum);
+					boost::optional<boost::shared_ptr<AbstractTexture> > texture = TexturePool::get_instance()->get_texture(bufnum);
 				
-					if(texture != NULL) {
+					if(texture) {
 						while (arg != message->ArgumentsEnd ())
 							{
 								pindex = (*(arg++)).AsInt32();
@@ -1328,9 +1327,9 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 								else
 									color = (int32_t) (*(arg++)).AsFloat();
 
-								texture->set_pixel(pindex, color);
+								(*texture)->set_pixel(pindex, color);
 							}
-						TexturePool::get_instance()->update();
+						TexturePool::get_instance()->update_texture(bufnum);
 					}
 				}
 				catch (osc::Exception &e)
@@ -1353,9 +1352,9 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 				try {
 					bufnum = (*(arg++)).AsInt32 ();
 
-					boost::shared_ptr<Texture> texture = TexturePool::get_instance()->get_texture(bufnum);
+					boost::optional<boost::shared_ptr<AbstractTexture> > texture = TexturePool::get_instance()->get_texture(bufnum);
 				
-					if(texture != NULL) {
+					if(texture) {
 						while (arg != message->ArgumentsEnd ())
 							{
 								starting_index = (*(arg++)).AsInt32();
@@ -1368,11 +1367,11 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 
 
 								for(int i = 0; i < num_samples; i++) {
-									texture->set_pixel(starting_index + i, 
+									(*texture)->set_pixel(starting_index + i, 
 													   color);
 								}
 							}
-						TexturePool::get_instance()->update();
+						TexturePool::get_instance()->update_texture(bufnum);
 					}
 				}
 				catch (osc::Exception &e)
@@ -1395,9 +1394,9 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 			try {
 				bufnum = (*(arg++)).AsInt32 ();
 
-				boost::shared_ptr<Texture> texture = TexturePool::get_instance()->get_texture(bufnum);
+				boost::optional<boost::shared_ptr<AbstractTexture> > texture = TexturePool::get_instance()->get_texture(bufnum);
 				
-				if(texture != NULL) {
+				if(texture) {
 
 					while (arg != message->ArgumentsEnd ())
 						{
@@ -1409,11 +1408,11 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 							else
 								color = (int32_t) (*(arg++)).AsFloat();
 
-							texture->fill(starting_index,
+							(*texture)->fill(starting_index,
 										  num_samples,
 										  color);
 						}
-					TexturePool::get_instance()->update();
+					TexturePool::get_instance()->update_texture(bufnum);
 				}
 			}
 			catch (osc::Exception &e)

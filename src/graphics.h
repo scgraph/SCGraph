@@ -18,7 +18,7 @@
 #include "transformation_command.h"
 
 //#include "graphics_visitor.h"
-class GraphicsVisitor;
+struct GraphicsVisitor;
 
 #include <boost/shared_ptr.hpp>
 

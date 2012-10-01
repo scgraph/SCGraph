@@ -5,8 +5,6 @@
 
 class FrameRate : public GUnit
 {
-	float _value;
-
 	public:
 		FrameRate ();
 		~FrameRate ();

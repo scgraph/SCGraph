@@ -58,12 +58,12 @@ option(JACK "Build with jack support for the FFT UGen")
 
 
 ################################################################################
-option(VIDEO "Support video loading (needs libavcodec)")
+option(VIDEO "Support video loading (needs ffmpeg)" ON)
 
 if(VIDEO)
-  find_package(LibAvCodec)
-  if (NOT AvCodec_FOUND)
-	message(STATUS "libavcodec not found. video loading disabled")
+  find_package(FFmpeg REQUIRED SWSCALE AVFORMAT AVCODEC AVUTIL)
+  if (NOT FFMPEG_FOUND)
+	message(STATUS "ffmpeg not found. video loading disabled")
 	set(VIDEO, false)
   endif()
 endif(VIDEO)

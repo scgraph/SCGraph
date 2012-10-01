@@ -12,10 +12,12 @@ find_package(Threads)
 ################################################################################
 
 set(scgraph_srcs main cow_ptr transformation_command
-transformation_command_visitor graphics_visitor obj_loader loader_3d
-buffer_pool matrix node_tree synth node group options scgraph synthdef
-control_loop graphic_loop synthdef_file util synthdef_pool plugin_pool
- plugin unit  osc_handler graphics tree in_out control graphics_bus material face color_rgba vector_3d hvector_3d vector_2d sc_unit_wrapper sc__unit texture_pool ui_pool shader_pool)
+  transformation_command_visitor graphics_visitor obj_loader loader_3d
+  buffer_pool matrix node_tree synth node group options scgraph synthdef
+  control_loop graphic_loop synthdef_file util synthdef_pool plugin_pool
+  plugin unit  osc_handler graphics tree in_out control graphics_bus material face color_rgba 
+  vector_3d hvector_3d vector_2d sc_unit_wrapper sc__unit texture texture_pool ui_pool 
+  shader_pool)
 
 
 # configure a header file to pass some of the CMake settings
@@ -103,7 +105,7 @@ set(scgraph_srcs ${scgraph_srcs} string_pool)
 # qt-specific stuff
 
 set(scgraph_moc_hdrs graphics.h graphic_loop.h osc_handler.h
-texture_pool.h shader_pool.h string_pool.h)
+  texture.h texture_pool.h shader_pool.h string_pool.h)
 
 # add some useful macros and variables
 INCLUDE( ${QT_USE_FILE} )
@@ -111,6 +113,12 @@ INCLUDE( ${QT_USE_FILE} )
 # this will run moc:
 QT4_WRAP_CPP( scgraph_moc_srcs ${scgraph_moc_hdrs} )
 qt4_add_resources( scgraph_rcc resources.qrc )
+
+
+################################################################################
+# video support
+
+include_directories(${FFMPEG_INCLUDE_DIR})
 
 ################################################################################
 # sc includes
@@ -141,8 +149,8 @@ endif(APPLE)
 ### build and link
 
 add_executable( scgraph ${scgraph_srcs} 
-		${scgraph_moc_srcs}
-		${scgraph_rcc} )
+  ${scgraph_moc_srcs}
+  ${scgraph_rcc} )
 
 if(APPLE)
   TARGET_LINK_LIBRARIES( scgraph 
@@ -152,6 +160,7 @@ if(APPLE)
     ${OPENGL_LIBRARIES}
 	${FREETYPE_LIBRARIES}
 	${FTGL_LIBRARIES}
+	${FFMPEG_LIBRARIES}
     scsynth
     stdc++
     m
@@ -159,12 +168,13 @@ if(APPLE)
     -Wl,-bind_at_load
     )
 elseif(LINUX)
-TARGET_LINK_LIBRARIES( scgraph 
+  TARGET_LINK_LIBRARIES( scgraph 
     ${CMAKE_THREAD_LIBS_INIT}
     -L${SC3_LIBRARY_PATH}
     ${OPENGL_LIBRARIES}
 	${FREETYPE_LIBRARIES}
 	${FTGL_LIBRARIES}
+	${FFMPEG_LIBRARIES}
     scsynth
     stdc++
     ${QT_LIBRARIES} 
@@ -176,12 +186,13 @@ TARGET_LINK_LIBRARIES( scgraph
     dl
     )
 else(APPLE)
-TARGET_LINK_LIBRARIES( scgraph 
+  TARGET_LINK_LIBRARIES( scgraph 
     ${CMAKE_THREAD_LIBS_INIT}
     -L${SC3_LIBRARY_PATH}
     ${OPENGL_LIBRARIES}
 	${FREETYPE_LIBRARIES}
 	${FTGL_LIBRARIES}
+	${FFMPEG_LIBRARIES}
     scsynth
     stdc++
     ${QT_LIBRARIES} 

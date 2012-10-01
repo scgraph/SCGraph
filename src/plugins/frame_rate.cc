@@ -27,8 +27,7 @@ extern "C"
 }
 
 
-FrameRate::FrameRate () :
-	_value (1.0)
+FrameRate::FrameRate ()
 {
 
 }
@@ -40,6 +39,5 @@ FrameRate::~FrameRate ()
 
 void FrameRate::process_c (double delta_t)
 {
-	Options *options = Options::get_instance ();
-	_control_outs[0] = options->_graphics_rate;
+	_control_outs[0] = Options::get_instance()->_graphics_rate;
 }

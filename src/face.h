@@ -30,6 +30,7 @@ struct Face : public DeepCopyable
 
 	/** this indicates which texture to use */
 	int               _texture_index;
+	uint32_t               _frame_id;
 
 	/** use this color vector if you use per vertex color.
 	    in the other case use the per face color below.

@@ -106,6 +106,8 @@ class VideoTexture : public QObject, public AbstractTexture {
 int _tex_width;
 int _tex_height;
 
+SwsContext *_ctxt;
+
  public:
 	VideoTexture();
 	~VideoTexture();

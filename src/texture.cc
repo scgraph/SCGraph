@@ -277,6 +277,7 @@ int VideoTexture::load(const std::string &filename) {
 	int             i;
     _pCodecCtx = NULL;
     _pCodec = NULL;
+	_ctxt = NULL;
     AVFrame         *pFrame = NULL; 
     AVPacket        packet;
     int             frameFinished;
@@ -372,21 +373,23 @@ int VideoTexture::really_get_frame(uint32_t texquad_id, uint32_t frame)
 						return -1;
 					}
 				
-					SwsContext* ctxt = 
-						sws_getContext(pFrame->width, pFrame->height, 
-									   static_cast<enum PixelFormat>(pFrame->format), 
-									   pFrame->width, pFrame->height,
-									   PIX_FMT_RGB24, SWS_BILINEAR,
-									   NULL, NULL, NULL);
+					_ctxt = 
+						sws_getCachedContext(_ctxt,
+											 pFrame->width, pFrame->height, 
+											 static_cast<enum PixelFormat>(pFrame->format), 
+											 pFrame->width, pFrame->height,
+											 PIX_FMT_RGB24, 
+											 SWS_BILINEAR,
+											 NULL, NULL, NULL);
 
-					if (ctxt == NULL) {
+					if (_ctxt == NULL) {
 						std::cout << "[VideoTexture] Error while calling sws_getContext" << std::endl;
 					}
 
 					// Convert the image from its native
 					// format to RGB
 
-					if((err = sws_scale(ctxt, pFrame->data, pFrame->linesize, 
+					if((err = sws_scale(_ctxt, pFrame->data, pFrame->linesize, 
 										0, pFrame->height, pic.data, pic.linesize)) != 0) {
 						boost::shared_ptr<Texture> t(new Texture (_tex_width, _tex_height,
 																  3, true));

@@ -103,7 +103,8 @@ class VideoTexture : public QObject, public AbstractTexture {
 	int             _videoStream;
 	AVCodecContext  *_pCodecCtx;
 	AVCodec         *_pCodec;
-int64_t _timebase;
+int _tex_width;
+int _tex_height;
 
  public:
 	VideoTexture();

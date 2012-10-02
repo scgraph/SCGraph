@@ -322,7 +322,10 @@ int VideoTexture::load(const std::string &filename) {
 		// Open codec
 		if((err = avcodec_open2(_pCodecCtx, _pCodec, NULL))<0)
 			return err;
-		
+
+		_tex_width =  (int)pow(2,(int)ceil(log2(_pCodecCtx->width)));
+		_tex_height = (int)pow(2,(int)ceil(log2(_pCodecCtx->height)));
+			
 		return 0;
 	}
 }
@@ -333,7 +336,6 @@ int VideoTexture::really_get_frame(uint32_t texquad_id, uint32_t frame)
     int             frameFinished;
     int             numBytes;
     AVFrame         *pFrame = NULL; 
-	int tex_width, tex_height;
 
 	int err = 0;
 
@@ -386,14 +388,12 @@ int VideoTexture::really_get_frame(uint32_t texquad_id, uint32_t frame)
 
 					if((err = sws_scale(ctxt, pFrame->data, pFrame->linesize, 
 										0, pFrame->height, pic.data, pic.linesize)) != 0) {
-						tex_width =  (int)pow(2,(int)ceil(log2(pFrame->width)));
-						tex_height = (int)pow(2,(int)ceil(log2(pFrame->height)));
-						boost::shared_ptr<Texture> t(new Texture (tex_width, tex_height,
+						boost::shared_ptr<Texture> t(new Texture (_tex_width, _tex_height,
 																  3, true));
 
 						for (int i = 0; i < pFrame->width; ++i) {
 							for(int j = 0; j < pFrame->height; ++j) {
-								int tmpIndex = 3 * (tex_width * j + i);
+								int tmpIndex = 3 * (_tex_width * j + i);
 								int picIndex = 3 * (pFrame->width * (pFrame->height - j - 1) + i);
 								t->_data[tmpIndex] = *(pic.data[0] + picIndex);
 								t->_data[tmpIndex+1] = *(pic.data[0] + picIndex + 1);

@@ -192,11 +192,10 @@ void TexturePool::delete_textures_at_id(uint32_t id) {
 	emit(delete_texture(id));
 }
 
-void TexturePool::update_tmp_texture(uint32_t id, boost::shared_ptr<Texture> texture)
+void TexturePool::update_tmp_texture(uint32_t id, bool samep)
 {
-	_tmp_textures.insert(id, texture);
 	//std::cout << "[TexturePool] updating tmp texture" << std::endl;
-	emit(change_tmp_texture(id));
+	emit(change_tmp_texture(id, samep));
 }
 
 void TexturePool::loaded_tmp_texture(uint32_t id) {

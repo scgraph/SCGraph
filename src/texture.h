@@ -115,12 +115,12 @@ SwsContext *_ctxt;
 	int get_height();
 	int get_channels();
 double get_framerate();
-
-uint32_t get_num_frames();
+ 
+ uint32_t get_num_frames();
 
 	int load(const std::string &filename);
 	void get_frame(uint32_t tex_id, uint32_t frame);
-	int really_get_frame(uint32_t texquad_id, uint32_t frame);
+	int really_get_frame(uint32_t texquad_id, uint32_t frame, bool samep, boost::shared_ptr<Texture> &texture);
 
 	bool isVideo();
 

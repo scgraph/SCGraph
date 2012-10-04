@@ -64,14 +64,14 @@ class TexturePool : public QObject {
 
 		void update_texture(unsigned int index);
 
-		void update_tmp_texture(uint32_t id, boost::shared_ptr<Texture> texture);
+		void update_tmp_texture(uint32_t id, bool samep);
 
 	signals:
 		void texture_loaded (uint32_t id);
 		void texture_changed (unsigned int index);
 
 		void delete_texture (uint32_t id);
-		void change_tmp_texture (uint32_t id);
+		void change_tmp_texture (uint32_t id, bool samep);
 };
 
 #endif

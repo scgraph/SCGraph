@@ -339,9 +339,9 @@ GLRenderer::GLRenderer () :
 			 Qt::QueuedConnection);
 
 	connect (texture_pool, 
-			 SIGNAL (change_tmp_texture(uint32_t)), 
+			 SIGNAL (change_tmp_texture(uint32_t, bool)), 
 			 this, 
-			 SLOT(change_tmp_texture(uint32_t)), 
+			 SLOT(change_tmp_texture(uint32_t, bool)), 
 			 Qt::QueuedConnection);
 
 	connect (texture_pool, 
@@ -501,11 +501,9 @@ void GLRenderer::setup_texture (size_t index)
 
 }
 
-GLuint GLRenderer::upload_texture(boost::shared_ptr<Texture> const & texture)
-{
-	GLuint tmp;
-	glGenTextures (1, &tmp);
-	glBindTexture (GL_TEXTURE_2D, tmp);
+
+inline void GLRenderer::upload_texture(boost::shared_ptr<Texture> const & texture, GLuint handle) {
+	glBindTexture (GL_TEXTURE_2D, handle);
 
 	GLenum color_format;
 	if(texture->_channels == 4)
@@ -530,7 +528,7 @@ GLuint GLRenderer::upload_texture(boost::shared_ptr<Texture> const & texture)
 
 	if (width == 0) { // Can't use that texture 
 		std::cout << "[TexturePool]: Warning: Can't upload texture " 
-				  << tmp << ". Proxy call to glTexImage2D failed" 
+				  << handle << ". Proxy call to glTexImage2D failed" 
 				  << std::endl;
 	}
 	else {
@@ -554,22 +552,34 @@ GLuint GLRenderer::upload_texture(boost::shared_ptr<Texture> const & texture)
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	}
+}
+
+GLuint GLRenderer::upload_texture(boost::shared_ptr<Texture> const & texture)
+{
+	GLuint tmp;
+	glGenTextures (1, &tmp);
+	upload_texture(texture, tmp);
 	return tmp;
 }
 
-void GLRenderer::upload_texture(uint32_t id) {
+void GLRenderer::upload_texture(uint32_t id, bool samep) {
 	TexturePool *texture_pool = TexturePool::get_instance ();
 	if(texture_pool->_tmp_textures.contains(id)) {
 		boost::shared_ptr<Texture> t = texture_pool->_tmp_textures.value(id);
 
-		//std::cout << "loading frame" << std::endl;
-		_tmp_texture_handles.insert(id, 0);
-		GLuint tmp = upload_texture(t);
-		_tmp_texture_handles.insert(id, tmp);
+		if(samep) {
+			upload_texture(t, _tmp_texture_handles.value(id));
+		}
+		else {
+			//std::cout << "loading frame" << std::endl;
+			_tmp_texture_handles.insert(id, 0);
+			GLuint tmp = upload_texture(t);
+			_tmp_texture_handles.insert(id, tmp);
+		}
 		texture_pool->loaded_tmp_texture(id);
 	}
 	else {
-		std::cout << "[GLREnderer] no such frame " << id << std::endl;
+		std::cout << "[GLRenderer] No such frame at ID " << id << std::endl;
 	}
 }
 
@@ -604,12 +614,12 @@ void GLRenderer::change_texture (unsigned int index) {
 	}
 }
 
-void GLRenderer::change_tmp_texture(uint32_t id) {
+void GLRenderer::change_tmp_texture(uint32_t id, bool samep) {
 	// std::cout << "[GLRenderer] changing tmp texture " << id << std::endl;
-	if(_tmp_texture_handles.contains(id)) {
+	if(_tmp_texture_handles.contains(id) && (!samep)) {
 		delete_texture(_tmp_texture_handles.value(id));
 	}
-	upload_texture(id);
+	upload_texture(id, samep);
 }
 
 void GLRenderer::delete_tmp_texture(uint32_t id) {
@@ -634,7 +644,7 @@ void GLRenderer::init_textures () {
 	QHashIterator<uint32_t, boost::shared_ptr<Texture> > i(texture_pool->_tmp_textures);
 	while (i.hasNext()) {
 		i.next();
-		upload_texture(i.key());
+		upload_texture(i.key(), false);
 	}
 }
 
@@ -1123,7 +1133,6 @@ void GLRenderer::visitCullingConst (const Culling *c)
 		case Culling::Off:
 			glDisable (GL_CULL_FACE);
 		break;
-
 		case Culling::Front:
 			glEnable (GL_CULL_FACE);
 			glCullFace (GL_FRONT);

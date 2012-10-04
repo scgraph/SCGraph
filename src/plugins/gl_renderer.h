@@ -223,7 +223,7 @@ class GLRenderer : public QObject, public GUnit, public GraphicsVisitor, public 
 
 	shader_uniforms_map_t _shader_uniforms;
 
-	void upload_texture (uint32_t id);
+	void upload_texture (uint32_t id, bool samep);
 
 	void do_material (const Material &material);
 	void do_light (const Light &light);
@@ -267,6 +267,9 @@ class GLRenderer : public QObject, public GUnit, public GraphicsVisitor, public 
 
 		GLuint upload_texture(boost::shared_ptr<Texture> const & texture);
 
+		inline void upload_texture(boost::shared_ptr<Texture> const & texture, 
+								   GLuint handle);
+
 		void set_done_action (int done_action);
 
 		void setup_texture (size_t index);
@@ -285,7 +288,7 @@ class GLRenderer : public QObject, public GUnit, public GraphicsVisitor, public 
 	public slots:
 		void init_textures ();
 		void change_texture (unsigned int index);
-		void change_tmp_texture (uint32_t id);
+		void change_tmp_texture (uint32_t id, bool samep);
 		void delete_tmp_texture (uint32_t index);
 		void delete_texture(uint32_t id);
 

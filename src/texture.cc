@@ -262,27 +262,6 @@ int VideoTexture::get_channels() {
 	return 3;
 }
 
-void VideoTexture::get_frame(uint32_t tex_id, uint32_t frame) {
-	bool samep = false;
-	TexturePool *tp = TexturePool::get_instance ();
-	if(tp->_tmp_textures.contains(tex_id) 
-	   && (tp->_tmp_textures.value(tex_id)->_width == _tex_width)
-	   && (tp->_tmp_textures.value(tex_id)->_height == _tex_height)) {
-		samep = true;
-	}
-	else {
-		boost::shared_ptr<Texture> t(new Texture (_tex_width, 
-												  _tex_height,
-												  3, true));
-		tp->_tmp_textures.insert(tex_id, t);
-	}
-	QFuture<void> future = QtConcurrent::run(this,
-											 &VideoTexture::really_get_frame,
-											 tex_id, frame, samep,
-											 tp->_tmp_textures.value(tex_id));
-}
-
-
 int VideoTexture::load(const std::string &filename) {
 	_filename = filename;
 	Options *options = Options::get_instance ();
@@ -345,99 +324,141 @@ int VideoTexture::load(const std::string &filename) {
 	}
 }
 
-int VideoTexture::really_get_frame(uint32_t texquad_id, uint32_t frame, bool samep, boost::shared_ptr<Texture> &t)
+void VideoTexture::processing_done() {
+	if(!_decode_queue.isEmpty()) {
+		_future = QtConcurrent::run(this,
+									&VideoTexture::really_get_frame,
+									_decode_queue);
+		_decode_queue.clear();
+	}
+}
+
+void VideoTexture::get_frame(uint32_t tex_id, uint32_t frame) {
+	_decode_queue.enqueue(std::pair<uint32_t, uint32_t> (tex_id, frame));
+	if(!_future.isRunning())
+		processing_done();
+}
+
+int VideoTexture::really_get_frame(QQueue<std::pair <uint32_t, uint32_t> > queue)
 {
 	AVPacket        packet;
     int             frameFinished;
     int             numBytes;
     AVFrame         *pFrame = NULL; 
-
+	uint32_t texquad_id, frame;
+	uint32_t last_frame;
+	int frames = 0;
 	int err = 0;
 
-	if((err = avformat_seek_file(_pFormatCtx, _videoStream, 
-								 frame, frame, frame + 10,
-								 AVSEEK_FLAG_FRAME)) < 0) {
-		std::cout << "[VideoTexture] Error while seeking " 
-				  << frame << " error: " << err <<  "." << std::endl;
-		TexturePool::get_instance()->update_tmp_texture(texquad_id, samep);
-		return -1;
-	} else {
-
-		avcodec_flush_buffers(_pCodecCtx);
-
-		// Allocate video frame
-		pFrame=avcodec_alloc_frame();
-
-  		// Read frame and save it as Texture
-		int frames = 0;
-		while((av_read_frame(_pFormatCtx, &packet)==0) && (frames < 1)) {
-			// Is this a packet from the video stream?
-			if(packet.stream_index==_videoStream) {
-				// Decode video frame
-				err = avcodec_decode_video2(_pCodecCtx, pFrame, &frameFinished, 
-											&packet);
-
-				// Did we get a video frame?
-				if((err > 0) && frameFinished) {
-					frames++;
-
-					AVPicture pic;
-					err = avpicture_alloc(&pic, PIX_FMT_RGB24, pFrame->width, pFrame->height);
-					if(err < 0) {
-						std::cout << "[VideoTexture] allocation failed" << std::endl;
-						TexturePool::get_instance()->update_tmp_texture(texquad_id, samep);
-						return -1;
-					}
-				
-					_ctxt = 
-						sws_getCachedContext(_ctxt,
-											 pFrame->width, pFrame->height, 
-											 static_cast<enum PixelFormat>(pFrame->format), 
-											 pFrame->width, pFrame->height,
-											 PIX_FMT_RGB24, 
-											 SWS_BILINEAR,
-											 NULL, NULL, NULL);
-
-					if (_ctxt == NULL) {
-						std::cout << "[VideoTexture] Error while calling sws_getContext" << std::endl;
-					}
-
-					// Convert the image from its native
-					// format to RGB
-
-					if((err = sws_scale(_ctxt, pFrame->data, pFrame->linesize, 
-										0, pFrame->height, pic.data, pic.linesize)) != 0) {
-						if(samep)
-							t->zero();
-						
-						for (int i = 0; i < pFrame->width; ++i) {
-							for(int j = 0; j < pFrame->height; ++j) {
-								int tmpIndex = 3 * (_tex_width * j + i);
-								int picIndex = 3 * (pFrame->width * (pFrame->height - j - 1) + i);
-								t->_data[tmpIndex] = *(pic.data[0] + picIndex);
-								t->_data[tmpIndex+1] = *(pic.data[0] + picIndex + 1);
-								t->_data[tmpIndex+2] = *(pic.data[0] + picIndex + 2);
-							}
-						}
-						std::cout << "[Texture] processed frame " << frame << std::endl;
-
-						TexturePool::get_instance()->update_tmp_texture(texquad_id, samep);
-					}
-					else {
-						std::cout << "[VideoTexture] Couldn't process frame " 
-								  << frames << " error: " << err <<  "." << std::endl;
-					}
-					avpicture_free(&pic);
-				}
-			}
-			// Free the packet that was allocated by av_read_frame
-			av_free_packet(&packet);
+	while(!queue.isEmpty()) {
+		std::pair<uint32_t, uint32_t> tmp = queue.dequeue();
+		texquad_id = tmp.first;
+		frame = tmp.second;
+		
+		bool samep = false;
+		TexturePool *tp = TexturePool::get_instance ();
+		if(tp->_tmp_textures.contains(texquad_id) 
+		   && (tp->_tmp_textures.value(texquad_id)->_width == _tex_width)
+		   && (tp->_tmp_textures.value(texquad_id)->_height == _tex_height)) {
+			samep = true;
 		}
-		// Free the YUV frame
-		if(pFrame != NULL)
-			av_free(pFrame);
+		else {
+			boost::shared_ptr<Texture> tmp(new Texture (_tex_width, 
+													  _tex_height,
+													  3, true));
+			tp->_tmp_textures.insert(texquad_id, tmp);
+		}
+
+		boost::shared_ptr<Texture> t = tp->_tmp_textures.value(texquad_id);
+
+		if(last_frame != (frame - 1)) {
+			err = avformat_seek_file(_pFormatCtx, _videoStream, 
+									 frame, frame, frame + 10,
+									 AVSEEK_FLAG_FRAME);
+			if(err >= 0) {
+				avcodec_flush_buffers(_pCodecCtx); }
+			else {
+				std::cout << "[VideoTexture] Error while seeking " 
+						  << frame << " error: " << err <<  "." << std::endl;
+				TexturePool::get_instance()->update_tmp_texture(texquad_id, samep);
+			}
+		}
+		
+		if(err >= 0) {
+			// Allocate video frame
+			pFrame=avcodec_alloc_frame();
+
+			// Read frame and save it as Texture
+			frames = 0;
+			while((av_read_frame(_pFormatCtx, &packet)==0) && (frames < 1)) {
+				// Is this a packet from the video stream?
+				if(packet.stream_index==_videoStream) {
+					// Decode video frame
+					err = avcodec_decode_video2(_pCodecCtx, pFrame, &frameFinished, 
+												&packet);
+
+					// Did we get a video frame?
+					if((err > 0) && frameFinished) {
+						frames++;
+
+						AVPicture pic;
+						err = avpicture_alloc(&pic, PIX_FMT_RGB24, pFrame->width, pFrame->height);
+						if(err < 0) {
+							std::cout << "[VideoTexture] allocation failed" << std::endl;
+							TexturePool::get_instance()->update_tmp_texture(texquad_id, samep);
+							return -1;
+						}
+				
+						_ctxt = 
+							sws_getCachedContext(_ctxt,
+												 pFrame->width, pFrame->height, 
+												 static_cast<enum PixelFormat>(pFrame->format), 
+												 pFrame->width, pFrame->height,
+												 PIX_FMT_RGB24, 
+												 SWS_BILINEAR,
+												 NULL, NULL, NULL);
+
+						if (_ctxt == NULL) {
+							std::cout << "[VideoTexture] Error while calling sws_getContext" << std::endl;
+						}
+
+						// Convert the image from its native
+						// format to RGB
+
+						if((err = sws_scale(_ctxt, pFrame->data, pFrame->linesize, 
+											0, pFrame->height, pic.data, pic.linesize)) != 0) {
+							if(samep)
+								t->zero();
+						
+							for (int i = 0; i < pFrame->width; ++i) {
+								for(int j = 0; j < pFrame->height; ++j) {
+									int tmpIndex = 3 * (_tex_width * j + i);
+									int picIndex = 3 * (pFrame->width * (pFrame->height - j - 1) + i);
+									t->_data[tmpIndex] = *(pic.data[0] + picIndex);
+									t->_data[tmpIndex+1] = *(pic.data[0] + picIndex + 1);
+									t->_data[tmpIndex+2] = *(pic.data[0] + picIndex + 2);
+								}
+							}
+							//std::cout << "[Texture] processed frame " << frame << std::endl;
+
+							TexturePool::get_instance()->update_tmp_texture(texquad_id, samep);
+						}
+						else {
+							std::cout << "[VideoTexture] Couldn't process frame " 
+									  << frames << " error: " << err <<  "." << std::endl;
+						}
+						avpicture_free(&pic);
+					}
+				}
+				// Free the packet that was allocated by av_read_frame
+				av_free_packet(&packet);
+			}
+			// Free the YUV frame
+			if(pFrame != NULL)
+				av_free(pFrame);
+		}
 	}
+	processing_done();
 	return 0;
 }
-
 

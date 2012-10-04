@@ -8,6 +8,7 @@
 
 #include <QtCore/QObject>
 #include <QtCore/QHash>
+#include <QtCore/QQueue>
 #include <QtGui/QImage>
 #include <QtGui/QImageReader>
 #include <QtGui/QColor>
@@ -105,9 +106,12 @@ class VideoTexture : public QObject, public AbstractTexture {
 	AVCodec         *_pCodec;
 int _tex_width;
 int _tex_height;
+QFuture<int> _future;
+QQueue<std::pair <uint32_t, uint32_t> >  _decode_queue;
 
 SwsContext *_ctxt;
 
+ void processing_done();
  public:
 	VideoTexture();
 	~VideoTexture();
@@ -120,7 +124,7 @@ double get_framerate();
 
 	int load(const std::string &filename);
 	void get_frame(uint32_t tex_id, uint32_t frame);
-	int really_get_frame(uint32_t texquad_id, uint32_t frame, bool samep, boost::shared_ptr<Texture> &texture);
+	int really_get_frame(QQueue<std::pair <uint32_t, uint32_t> > queue);
 
 	bool isVideo();
 

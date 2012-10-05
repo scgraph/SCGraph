@@ -11,6 +11,7 @@ extern "C"
 {
 	int process_c (jack_nframes_t frames, void *arg)
 	{
+
 		assert (sizeof (JackClient*) == sizeof (void*));
 
 		JackClient *tmp;
@@ -19,6 +20,13 @@ extern "C"
 		// std::cout << "woo" << std::endl;
 		return tmp->process (frames);
 	}
+
+	void jack_shutdown (void *arg)
+	{
+		std::cout << "jack shutting down" << std::endl;
+	}
+
+
 }
 
 
@@ -27,6 +35,7 @@ JackClient::JackClient (int num_of_ports, const std::string &jack_name) :
 {
 	Options *options = Options::get_instance ();
 
+	int err;
 
 	jack_status_t jack_status;
 	jack_options_t  jack_options = JackNullOption;
@@ -60,9 +69,36 @@ JackClient::JackClient (int num_of_ports, const std::string &jack_name) :
 
 	_fft_plan = fftwf_plan_dft_r2c_1d (_buffer_size, _fft_in_buffer, _fft_out_buffer, FFTW_MEASURE);
 
-	jack_set_process_callback (_client, process_c, this);
+	err = jack_set_process_callback (_client, process_c, this);
+	if(err != 0) {
+		std::cout << "[JackClient] set process callback error: " << err 
+				  << std::endl;
+	}
 
-	jack_activate (_client);
+	jack_on_shutdown (_client, jack_shutdown, this);
+
+	err = jack_activate (_client);
+	if(err != 0)
+		std::cout << "[JackClient] activate error: " << err << std::endl;
+	else if(options->_verbose >= 1)
+		std::cout << "[JackClient] activated"  << std::endl;
+
+	const char **ports;
+	if ((ports = jack_get_ports (_client, NULL, NULL, 
+								 JackPortIsPhysical|JackPortIsOutput)) == NULL) {
+		std::cout << "[JackClient] Cannot find any physical capture ports" 
+				  << std::endl;
+	}
+ 
+
+	int i = 0;
+	const char * port = ports[i];
+	while((port != NULL) && (i < _ports.size())) {
+		if (jack_connect (_client, ports[i], jack_port_name (_ports[i])) != 0) {
+			std::cout << "[JackClient] cannot connect input ports" << std::endl;
+		}
+		port = ports[i++];
+	}
 }
 
 JackClient::~JackClient ()
@@ -138,7 +174,7 @@ int JackClient::process (jack_nframes_t frames)
 		}
 		_mutex.unlock ();
 	}
-	return 1;
+	return 0;
 }
 
 #endif

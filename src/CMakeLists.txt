@@ -79,6 +79,11 @@ if(JACK)
   endif()
 
   set(scgraph_srcs ${scgraph_srcs} jack_client)
+
+  include_directories(${FFTW3F_INCLUDE_DIR})
+  include_directories(${JACK_INCLUDE_DIRS})
+
+  add_definitions(-DHAVE_JACK)
 endif()
 
 ################################################################################
@@ -161,6 +166,8 @@ if(APPLE)
 	${FREETYPE_LIBRARIES}
 	${FTGL_LIBRARIES}
 	${FFMPEG_LIBRARIES}
+	${JACK_LIBRARIES}
+	${FFTW3F_LIBRARY}
     scsynth
     stdc++
     m
@@ -175,6 +182,8 @@ elseif(LINUX)
 	${FREETYPE_LIBRARIES}
 	${FTGL_LIBRARIES}
 	${FFMPEG_LIBRARIES}
+	${JACK_LIBRARIES}
+	${FFTW3F_LIBRARY}
     scsynth
     stdc++
     ${QT_LIBRARIES} 
@@ -193,6 +202,8 @@ else(APPLE)
 	${FREETYPE_LIBRARIES}
 	${FTGL_LIBRARIES}
 	${FFMPEG_LIBRARIES}
+	${JACK_LIBRARIES}
+	${FFTW3F_LIBRARY}
     scsynth
     stdc++
     ${QT_LIBRARIES} 

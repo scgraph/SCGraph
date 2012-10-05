@@ -19,13 +19,7 @@ INCLUDE( ${QT_USE_FILE} )
 ### want jack?
 
 if (JACK)
-  include_directories(${FFTW3F_INCLUDE_DIR})
-  include_directories(${JACK_INCLUDE_DIRS})
-
-  add_definitions(-DHAVE_JACK)
-
   list(APPEND plugins_srcs freq_amp)
-  list(APPEND plugins_moc_srcs freq_amp.h) ##???
 endif()
 
 
@@ -58,6 +52,8 @@ if(APPLE)
   set(CMAKE_SHARED_MODULE_SUFFIX ".bundle")
 endif(APPLE)
 
+message(STATUS ${JACK_LIBRARIES})
+
 ################################################################################
 ### link qt, build, link and install
 
@@ -68,25 +64,25 @@ foreach(plugin ${plugins_srcs})
   add_library(${plugin} MODULE ${plugin} ${${plugin}_moc_src})
   if(APPLE)
     target_link_libraries(${plugin}
-      -bundle 
-      -fPIC 
-      "-undefined dynamic_lookup")
+	  -bundle 
+	  -fPIC 
+	  "-undefined dynamic_lookup")
   elseif(LINUX)
     target_link_libraries(${plugin} 
-      -shared 
-      -fpic 
-      -export-dynamic 
-      -rdynamic 
-      dl
-      "")
+	  -shared 
+	  -fpic 
+	  -export-dynamic 
+	  -rdynamic 
+	  dl
+	  "")
   else(APPLE)
     target_link_libraries(${plugin} 
-      -shared 
-      -fpic 
-      -export-dynamic 
-      -rdynamic 
-      dl
-      "")
+	  -shared 
+	  -fpic 
+	  -export-dynamic 
+	  -rdynamic 
+	  dl
+	  "")
   endif(APPLE)
   install(FILES ${CMAKE_BINARY_DIR}/src/plugins/${plugin}${CMAKE_SHARED_MODULE_SUFFIX}
     DESTINATION "lib/scgraph/plugins/")

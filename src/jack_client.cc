@@ -114,6 +114,9 @@ float JackClient::get_frequency (int port, float freq)
 {
 	float ret = 0;
 
+	float freqRatio = std::min(std::max((double) freq, 1.0),
+							   (_sample_rate * 0.5)) / (_sample_rate * 0.5);
+
 	if (_ports.empty () || port > ((int)_ports.size() - 1))
 		return 0;
 
@@ -124,10 +127,7 @@ float JackClient::get_frequency (int port, float freq)
 	{
 		
 		//int bin = 1 + (int)(((_buffer_size/2)+1)/2 * freq/(_sample_rate/2.0));
-		if (freq < 0) freq = 0;
-		if (freq > 1) freq = 1;
-
-		int bin = (int)(freq * (_buffer_size-1));
+		int bin = (int)(freqRatio * (_buffer_size-1));
 
 		ret = (1.0 / sqrt(((_buffer_size/2)+1))) * sqrt (buffer[bin][0] *  buffer[bin][0] + buffer[bin][1] *  buffer[bin][1]);
 

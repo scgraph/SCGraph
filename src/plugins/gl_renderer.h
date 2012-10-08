@@ -140,7 +140,6 @@ class GLRenderer : public QObject, public GUnit, public GraphicsVisitor, public 
 		FOG_COLOR = 28,
 		TEXTURING = 32,
 		MAXFEEDBACKFRAMES = 33,
-		WIREFRAME_MODE = 34
 	};
 
 	GLMainWindow     *_main_window;

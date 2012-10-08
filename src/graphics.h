@@ -192,6 +192,9 @@ struct Text : Transformation
 
 	Material  _material;
 
+	RenderMode _render_mode;
+	float _thickness;
+
 	virtual void accept(GraphicsVisitor* v);
 	virtual void acceptConst(GraphicsVisitor* v) const;
 

@@ -34,9 +34,6 @@ GGLRenderer : UGen {
 		
 		max_feedback_frames  = 10,
 
-		wireframe_mode = 0; // 0 - off, 1 = on
-		
-
 		^this.multiNewList([
 			'audio',
 			in, 
@@ -60,8 +57,7 @@ GGLRenderer : UGen {
 			fog_niceness, 
 			fog_color[0], fog_color[1], fog_color[2], fog_color[3], 
 			texturing,
-			max_feedback_frames,
-			wireframe_mode
+			max_feedback_frames
 		]);
 	}
 }

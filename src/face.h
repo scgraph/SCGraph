@@ -9,15 +9,19 @@
 #include <vector>
 #include "cow_ptr.h"
 
+enum RenderMode { NORMAL, WIREFRAME } ;
+
 /** This class represents a face of a graphics object */
 struct Face : public DeepCopyable
 {
 	/** these types correspond to OpenGL types for vertices */
   enum GeometryType {POINTS, LINES, LINE_STRIP, LINE_LOOP, TRIANGLES, 
-		     QUADS, TRIANGLE_STRIP, TRIANGLE_FAN, QUAD_STRIP,
+					 QUADS, TRIANGLE_STRIP, TRIANGLE_FAN, QUAD_STRIP,
 					 POLYGON};
-
+  
 	GeometryType _geometry_type;
+
+	RenderMode _render_mode;
 
 	/** the vertices of the face. For every vertex you need a normal, too */ 
 	std::vector<Vector3D>      _vertices;
@@ -36,6 +40,7 @@ struct Face : public DeepCopyable
 	    in the other case use the per face color below.
 	     if this is nonempty it has to have the same size as _vertices */
 	std::vector<ColorRGBA>     _colors;
+	float _alpha_mul;
 
 	/** set to true if you want to specify colors per vertex */
 	//bool                       _per_vertex_colors;

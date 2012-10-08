@@ -82,9 +82,6 @@ Toggles texturing (0 - off, 1 = on)
 argument::max_feedback_frames
 Specifies the maximum number of past frames to save for use in a LINK::Classes/GFBTexQuad::.
 
-argument::wireframe_mode
-Toggles wireframe mode painting.
-
 EXAMPLES::
 
 Boot a scgraph server:

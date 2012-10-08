@@ -1,0 +1,48 @@
+class:: GRenderMode
+summary:: Set the rendering mode of the input
+related:: Reference/scgraph
+categories::  SCGraph>Texture
+
+
+Description::
+Set the rendering mode of the input
+
+classmethods::
+
+method::gr
+argument::in
+
+
+argument::render_mode
+change the rendering mode (0 = normal rendering, 1 = wireframe rendering)
+
+argument::strength
+line strength in wireframe mode
+
+EXAMPLES::
+
+Boot a scgraph server:
+
+code::
+g = GServer.default;
+g.boot;
+::
+
+Stack some cubes and change their rendering mode in sequence:
+
+code::
+
+x = { GGLRenderer.gr(
+	7.collect{ |i| 
+		GRenderMode.gr(
+			Color.rand.gr(
+				GRotate.gr(
+					GCube.gr((i * 0.5) + 1), 
+					IRand(0,1!3), LFSaw.kr(0.1 + (i * 0.01)) * 360)),
+			LFPulse.kr(0.5 + (i * 0.01), iphase: (i * 0.1), width: 0.95).unipolar
+		) }.sum, 
+	culling: 0) }.play(g);
+
+x.free;
+
+::

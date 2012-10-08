@@ -39,7 +39,11 @@ g.sendMsg("/changeString", 0, "Good day, text!");
 
 
 // display the string with ID 0, with a font size of 1, with the loaded font
-SynthDef(\text, {
-	GGLRenderer.gr(GText.gr(1, 0));
-}).play(g);
+x = { GGLRenderer.gr(GText.gr(1, 0)); }.play(g);
+
+x.free;
+
+// also nice in wireframe mode
+x = { GGLRenderer.gr(GRenderMode.gr(GText.gr(1, 0), 1), culling:0); }.play(g);
+
 ::

@@ -8,7 +8,7 @@ endif()
 ################################################################################
 ### sources
 
-set(plugins_srcs bordered_rectangle buf_info_ugens circle cube frame_rate gl_renderer model translate rotate stretch binary_op sum3 sum4 mul_add color light line points triangle rectangle polygon quad text blending lighting culling tube transformation material shader_program)
+set(plugins_srcs bordered_rectangle buf_info_ugens circle cube frame_rate gl_renderer model translate rotate stretch binary_op sum3 sum4 mul_add color light line points triangle rectangle polygon quad text blending lighting culling tube transformation material shader_program render_mode)
 
 ################################################################################
 ### qt

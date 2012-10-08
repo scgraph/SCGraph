@@ -754,7 +754,15 @@ void GLRenderer::do_face (const Face& face)
 void GLRenderer::draw_face (const Face &face) {
 	TexturePool *texture_pool = TexturePool::get_instance ();
 
-	/* if lighting is enabled at this point, then select the material */
+	if (face._render_mode == WIREFRAME) {
+		glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
+		glLineWidth (face._thickness);
+	}
+	else {
+		glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
+	}
+
+	// if lighting is enabled at this point, then select the material
 	if (*_control_ins[LIGHTING] > 0.5)
 		do_material (face._material);
 
@@ -1160,6 +1168,14 @@ void GLRenderer::visitTextConst (const Text *t)
 
 	glScalef(0.2,0.2,0.2);
 
+	if (t->_render_mode == WIREFRAME) {
+		glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
+		glLineWidth (t->_thickness);
+	}
+	else {
+		glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
+	}
+
 	StringPool *str = StringPool::get_instance();
 	str->_font->FaceSize(t->_fontsize);
 	str->_font->Render(t->_text.c_str());
@@ -1181,11 +1197,6 @@ void GLRenderer::really_process_g (double delta_t)
 
 	if (!_ready)
 		return;
-
-	if (*_control_ins[WIREFRAME_MODE] > 0.5)
-		{
-			glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
-		}
 
 	// TODO find a better place for this
 	if (_max_feedback_frames == (SCGRAPH_QT_GL_RENDERER_MAXMAX_FEEDBACK_FRAMES + 1))

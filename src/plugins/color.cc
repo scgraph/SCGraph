@@ -40,7 +40,6 @@ void GColor::visitGeometry (Geometry *g)
 	ColorRGBA color (*_control_ins[1], *_control_ins[2], *_control_ins[3], *_control_ins[4]);
 
 	//std::cout << "[GColor]: Destructor" << std::endl;
-
 	for (size_t i = 0; i < g->_faces.size (); ++i)
 	{
 		if (g->_faces[i]->_colors.size () > 0)

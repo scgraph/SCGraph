@@ -269,8 +269,8 @@ int VideoTexture::load(const std::string &filename) {
 	_pFormatCtx = NULL;
 	int             i;
     _pCodecCtx = NULL;
-    _pCodec = NULL;
 	_ctxt = NULL;
+	_pCodec = NULL;
     AVFrame         *pFrame = NULL; 
     AVPacket        packet;
     int             frameFinished;
@@ -295,23 +295,36 @@ int VideoTexture::load(const std::string &filename) {
 		// TODO make this verbose
 		av_dump_format(_pFormatCtx, 0, _filename.c_str(), false);
 
-		// Find the first video stream
+
 		_videoStream=-1;
-		for(i=0; i<_pFormatCtx->nb_streams; i++)
-			if(_pFormatCtx->streams[i]->codec->codec_type==AVMEDIA_TYPE_VIDEO) {
-				_videoStream=i;
-				break;
-			}
 
-		if(_videoStream==-1)
-			return -1; // Didn't find a video stream
-		// Get a pointer to the codec context for the video stream
-		_pCodecCtx=_pFormatCtx->streams[_videoStream]->codec;
+		// try to find the "best" stream
+		_videoStream = av_find_best_stream(_pFormatCtx, AVMEDIA_TYPE_VIDEO, 
+										   -1, -1, 
+										   &_pCodec, NULL);
 
-		// Find the decoder for the video stream
-		_pCodec=avcodec_find_decoder(_pCodecCtx->codec_id);
-		if(_pCodec==NULL)
-			return -1; // Codec not found
+		if(_videoStream >= 0) {
+			_pCodecCtx=_pFormatCtx->streams[_videoStream]->codec;
+		}
+		else {
+			// if that failed, find the first video stream
+			std::cout << "[VideoTexture] Find first stream for " << _filename << std::endl; 
+			for(i=0; i<_pFormatCtx->nb_streams; i++)
+				if(_pFormatCtx->streams[i]->codec->codec_type==AVMEDIA_TYPE_VIDEO) {
+					_videoStream=i;
+					break;
+				}
+
+			if(_videoStream==-1)
+				return -1; // Didn't find a video stream
+			// Get a pointer to the codec context for the video stream
+			_pCodecCtx=_pFormatCtx->streams[_videoStream]->codec;
+
+			// Find the decoder for the video stream
+			_pCodec=avcodec_find_decoder(_pCodecCtx->codec_id);
+			if(_pCodec==NULL)
+				return -1; // Codec not found
+		}
 
 		// Open codec
 		if((err = avcodec_open2(_pCodecCtx, _pCodec, NULL))<0)

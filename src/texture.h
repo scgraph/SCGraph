@@ -28,70 +28,70 @@ extern "C"
 
 class Texture
 {
-public: 
-Texture (int width, int height, int channels, bool zero);
-~Texture ();
+ public: 
+	Texture (int width, int height, int channels, bool zero);
+	~Texture ();
 
-int _width, _height, _channels;
+	int _width, _height, _channels;
 
-void set_pixel(unsigned int pindex, int32_t color);
-void fill(uint32_t starting_index, uint32_t num_samples, int32_t color);
+	void set_pixel(unsigned int pindex, int32_t color);
+	void fill(uint32_t starting_index, uint32_t num_samples, int32_t color);
 
 
-unsigned char *_data;
+	unsigned char *_data;
 
-void zero();
+	void zero();
 };
 
 
 class AbstractTexture
 {
 
-public:
-AbstractTexture();
-virtual ~AbstractTexture();
+ public:
+	AbstractTexture();
+	virtual ~AbstractTexture();
 
-boost::shared_ptr<Texture> _texture;
-
-
-virtual void get_frame(uint32_t tex_id, uint32_t frame);
-//virtual void really_get_frame(uint32_t tex_id, uint32_t frame);
-virtual int get_width();
-virtual int get_height();
-virtual int get_channels();
-
-virtual double get_framerate();
-virtual uint32_t get_num_frames();
+	boost::shared_ptr<Texture> _texture;
 
 
-virtual unsigned char * get_data();
+	virtual void get_frame(uint32_t tex_id, uint32_t frame);
+	//virtual void really_get_frame(uint32_t tex_id, uint32_t frame);
+	virtual int get_width();
+	virtual int get_height();
+	virtual int get_channels();
+
+	virtual double get_framerate();
+	virtual uint32_t get_num_frames();
+
+
+	virtual unsigned char * get_data();
 	
- virtual bool isVideo();
+	virtual bool isVideo();
 
-virtual void zero();
-virtual void set_pixel(unsigned int pindex, int32_t color);
-virtual void fill(uint32_t starting_index, uint32_t num_samples, int32_t color);
-virtual int load(const std::string &filename);
+	virtual void zero();
+	virtual void set_pixel(unsigned int pindex, int32_t color);
+	virtual void fill(uint32_t starting_index, uint32_t num_samples, int32_t color);
+	virtual int load(const std::string &filename);
 };
 
 
 class ImageTexture : public AbstractTexture {
 
-std::string _filename;
+	std::string _filename;
 
-public:
- ImageTexture();
-~ImageTexture();
+ public:
+	ImageTexture();
+	~ImageTexture();
 
-int get_width();
-int get_height();
-int get_channels();
+	int get_width();
+	int get_height();
+	int get_channels();
 
-void fill(uint32_t starting_index, uint32_t num_samples, int32_t color);
-void zero();
-void set_pixel(unsigned int pindex, int32_t color);
-unsigned char * get_data();
-int load(const std::string &filename);
+	void fill(uint32_t starting_index, uint32_t num_samples, int32_t color);
+	void zero();
+	void set_pixel(unsigned int pindex, int32_t color);
+	unsigned char * get_data();
+	int load(const std::string &filename);
 };
 
 class VideoTexture : public QObject, public AbstractTexture {
@@ -104,31 +104,30 @@ class VideoTexture : public QObject, public AbstractTexture {
 	int             _videoStream;
 	AVCodecContext  *_pCodecCtx;
 	AVCodec         *_pCodec;
-int _tex_width;
-int _tex_height;
-QFuture<int> _future;
-QQueue<std::pair <uint32_t, uint32_t> >  _decode_queue;
+	int _tex_width;
+	int _tex_height;
+	QFuture<int> _future;
+	QQueue<std::pair <uint32_t, uint32_t> >  _decode_queue;
 
-SwsContext *_ctxt;
+	SwsContext *_ctxt;
 
- void processing_done();
+	void processing_done();
  public:
 	VideoTexture();
 	~VideoTexture();
 	int get_width();
 	int get_height();
 	int get_channels();
-double get_framerate();
+	double get_framerate();
  
- uint32_t get_num_frames();
+	QMutex _queue_mutex;
+	uint32_t get_num_frames();
 
 	int load(const std::string &filename);
 	void get_frame(uint32_t tex_id, uint32_t frame);
-	int really_get_frame(QQueue<std::pair <uint32_t, uint32_t> > queue);
+	int really_get_frame();
 
 	bool isVideo();
-
-
 
  signals:
 	void update_tmp_texture(uint32_t id, boost::shared_ptr<Texture> texture);

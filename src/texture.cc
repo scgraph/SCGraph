@@ -338,21 +338,26 @@ int VideoTexture::load(const std::string &filename) {
 }
 
 void VideoTexture::processing_done() {
+	_queue_mutex.lock();
 	if(!_decode_queue.isEmpty()) {
+		_queue_mutex.unlock();
 		_future = QtConcurrent::run(this,
-									&VideoTexture::really_get_frame,
-									_decode_queue);
-		_decode_queue.clear();
+									&VideoTexture::really_get_frame);
+	}
+	else {
+		_queue_mutex.unlock();
 	}
 }
 
 void VideoTexture::get_frame(uint32_t tex_id, uint32_t frame) {
+	_queue_mutex.lock();
 	_decode_queue.enqueue(std::pair<uint32_t, uint32_t> (tex_id, frame));
+	_queue_mutex.unlock();
 	if(!_future.isRunning())
 		processing_done();
 }
 
-int VideoTexture::really_get_frame(QQueue<std::pair <uint32_t, uint32_t> > queue)
+int VideoTexture::really_get_frame()
 {
 	AVPacket        packet;
     int             frameFinished;
@@ -363,10 +368,18 @@ int VideoTexture::really_get_frame(QQueue<std::pair <uint32_t, uint32_t> > queue
 	int frames = 0;
 	int err = 0;
 
-	while(!queue.isEmpty()) {
-		std::pair<uint32_t, uint32_t> tmp = queue.dequeue();
-		texquad_id = tmp.first;
-		frame = tmp.second;
+	for(;;) {
+		_queue_mutex.lock();
+		if(!_decode_queue.isEmpty()) {
+			std::pair<uint32_t, uint32_t> tmp = _decode_queue.dequeue();
+			_queue_mutex.unlock();
+			texquad_id = tmp.first;
+			frame = tmp.second;
+		}
+		else {
+			_queue_mutex.unlock();
+			break;
+		}
 		
 		bool samep = false;
 		TexturePool *tp = TexturePool::get_instance ();

@@ -101,6 +101,8 @@ class ScGraph : public QApplication
 		pthread_mutex_t            _graphic_mutex;
 #endif
 
+		double _delta_t;
+
 		void start ();
 		void stop ();
 

@@ -51,6 +51,8 @@ ScGraph::ScGraph (int argc, char *argv[]) : QApplication(argc, argv)
 			std::cout << "[ScGraph]: Error creating persistent synth from synthdef file: " << options->_persistent_synthdef_filenames[i] << std::endl;
 		}
 	}
+
+	_delta_t = 1.0/options->_graphics_rate;
 }
 
 ScGraph* ScGraph::get_instance ()
@@ -166,6 +168,8 @@ void ScGraph::run_one_graphics_cycle (double delta_t)
 	// pthread_mutex_lock (&_main_mutex);
 	// QReadLocker locker (&_read_write_lock);
 	// _read_write_lock.lockForRead();
+	_delta_t = delta_t;
+
 	lock_for_read();
 
 	for (size_t i = 0; i < _graphics_busses.size (); ++i)

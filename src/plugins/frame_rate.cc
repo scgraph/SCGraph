@@ -3,7 +3,7 @@
 #include <iostream>
 #include <cmath>
 
-#include "../options.h"
+#include "../scgraph.h"
 
 extern "C"
 {
@@ -39,5 +39,5 @@ FrameRate::~FrameRate ()
 
 void FrameRate::process_c (double delta_t)
 {
-	_control_outs[0] = Options::get_instance()->_graphics_rate;
+	_control_outs[0] = 1.0/ScGraph::get_instance()->_delta_t;
 }

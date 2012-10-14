@@ -19,11 +19,13 @@ GUnit::~GUnit ()
 void GUnit::process_g (double delta_t)
 {
 	throw ("[GUnit]: Error: This unit does not have a graphics rate processing function");
+	_control_outs[0] = 0;
 }
 
 void GUnit::process_c (double delta_t)
 {
 	throw ("[GUnit]: Error: This unit does not have a control rate processing function");
+	_control_outs[0] = 0;
 }
 
 int GUnit::get_done_action ()

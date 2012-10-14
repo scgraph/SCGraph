@@ -1,17 +1,17 @@
 + In {
-	*gr {|... args|
-		^this.ar(*args)
+	*gr { arg bus = 0, numChannels = 1;
+		^this.ar(bus, numChannels)
 	}
 }
 
 + Out {
-	*gr {|... args|
-		^this.ar(*args)
+	*gr { arg bus, channelsArray;
+		^this.ar(bus, channelsArray)
 	}
 }
 
 + ReplaceOut {
-	*gr {|... args|
-		^this.ar(*args)
+	*gr { arg bus, channelsArray;
+		^this.ar(bus, channelsArray)
 	}
 }

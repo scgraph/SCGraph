@@ -1,4 +1,4 @@
-FrameRate : UGen {
+FrameRate : GraphicsUGen {
 	*kr { 
 		^this.multiNew('control');
 	}

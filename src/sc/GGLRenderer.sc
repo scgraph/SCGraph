@@ -1,4 +1,4 @@
-GGLRenderer : UGen {
+GGLRenderer : GraphicsUGen {
 	*gr	{ 
 		arg 
 		in,
@@ -32,7 +32,7 @@ GGLRenderer : UGen {
 
 		texturing  = 0,         // 0 - off, 1 = on
 		
-		max_feedback_frames  = 10,
+		max_feedback_frames  = 10;
 
 		^this.multiNewList([
 			'audio',
@@ -59,6 +59,10 @@ GGLRenderer : UGen {
 			texturing,
 			max_feedback_frames
 		]);
+	}
+
+	checkInputs {
+		^this.checkAllInputs(1);
 	}
 }
 

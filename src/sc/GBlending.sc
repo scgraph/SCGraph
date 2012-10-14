@@ -1,4 +1,4 @@
-GBlending : UGen
+GBlending : GraphicsUGen
 {
 	*symbolToInt
 	{
@@ -31,5 +31,9 @@ GBlending : UGen
 		dstbf = this.symbolToInt(dstBlendFunction);
 
 		^this.multiNew ('audio', on, srcbf, dstbf);
+	}
+
+	checkInputs {
+		^this.checkAllInputs(0)
 	}
 }

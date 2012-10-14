@@ -4,6 +4,7 @@
 
 #include "../texture_pool.h"
 #include "../options.h"
+#include "../scgraph.h"
 
 
 
@@ -40,6 +41,7 @@ Recorder::Recorder () :
 	QDateTime datetime = QDateTime::currentDateTime();
 	_path.append(datetime.toString("yyyyMMdd-hhmmss-zzz-"));
 	_path.append(QString("%1").arg(options->_graphics_rate, 0, 10));
+	//_path.append(QString("%1").arg((double) (1.0/ScGraph::get_instance()->_delta_t), 0, 10));
 	_path.append("fps-frame-");
 	
 	_format = "jpg";
@@ -129,8 +131,6 @@ void GLRenderWidget::paintGL ()
 
 	if(_recording)
 		_recorder.nextFrame(grabFrameBuffer());
-	//	if(_feedback)
-	//	_lastFrame = QGLWidget::convertToGLFormat(grabFrameBuffer());
 }
 
 void GLRenderWidget::initializeGL ()
@@ -313,11 +313,6 @@ GLRenderer::GLRenderer () :
 			  << "SHIFT-UPARROW - up"
 			  << "SHIFT-DOWNARROW - down";
 
-
-	/*_max_feedback_frames = 
-		std::min<unsigned int>((unsigned int) *_control_ins[MAXFEEDBACKFRAMES], 
-							   SCGRAPH_QT_GL_RENDERER_MAXMAX_FEEDBACK_FRAMES);
-	*/
 	_main_window = new GLMainWindow (this);
 	_gl_widget	 = new GLRenderWidget (_main_window, this);
 	_main_window->setCentralWidget (_gl_widget);
@@ -1122,6 +1117,7 @@ void GLRenderer::visitBlendingConst (const Blending *b)
 {
 	if ((b->_on) && (*_control_ins[TRANSPARENCY] > 0.5))
 	{
+		//std::cout << "on" << std::endl;
 		glEnable (GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glShadeModel(GL_FLAT);

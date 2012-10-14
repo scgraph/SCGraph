@@ -20,6 +20,42 @@ extern "C"
 #include <libswscale/swscale.h>
 }
 
+extern "C"
+{
+int ffmpeg_lock_callback(void **mutex, enum AVLockOp op);
+}
+
+int ffmpeg_lock_callback(void **mutex, enum AVLockOp op)
+{
+	static QMutex m;
+
+	switch(op)
+		{
+		case AV_LOCK_CREATE:
+			{
+				*mutex = &m;
+				break;
+			}
+		case AV_LOCK_OBTAIN:
+			{
+				((QMutex*)(*mutex))->lock();
+				break;
+			}
+		case AV_LOCK_RELEASE:
+			{
+				((QMutex*)(*mutex))->unlock();
+				break;
+			}
+		case AV_LOCK_DESTROY:
+			{
+				*mutex = 0;
+				break;
+			}
+		}
+
+	return 0;
+} 
+
 typedef boost::shared_ptr< AbstractTexture > AbstractTexturePtr;
 
 TexturePool *TexturePool::_instance = 0;
@@ -39,6 +75,8 @@ TexturePool::TexturePool ()
 	// Register all formats and codecs
 	av_register_all();
 	
+	av_lockmgr_register(&ffmpeg_lock_callback); 
+
 	qRegisterMetaType<uint32_t>("uint32_t");
 	qRegisterMetaType<boost::shared_ptr<Texture> >("boost::shared_ptr<Texture>");
 

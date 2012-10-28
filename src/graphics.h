@@ -23,8 +23,9 @@ struct GraphicsVisitor;
 #include <boost/shared_ptr.hpp>
 
 
-/** the superclass for all graphics objects. Every subclass has to reimplement the
-    accept method to call the appropriate method in the visitor (see graphics_visitor.h) */
+// the superclass for all graphics objects. Every subclass has to reimplement the
+//  accept method to call the appropriate method in the visitor 
+// (see graphics_visitor.h)
 struct Graphics : public DeepCopyable
 {
 	virtual void accept(GraphicsVisitor* v) = 0;
@@ -63,7 +64,7 @@ struct Geometry : public Transformation
 
 
 
-/** a light source */
+// a light source
 struct Light : public Transformation
 {
 	// bool _dirty;
@@ -108,7 +109,7 @@ struct Command : public Graphics
 	}
 };
 
-/** a command to control transparency details */
+// a command to control transparency details
 struct Blending : public Command
 {
 	bool _on;
@@ -123,7 +124,7 @@ struct Blending : public Command
 	}
 };
 
-/** a command to control Lighting details */
+// a command to control Lighting details
 struct Lighting : public Command
 {
 	bool _on;
@@ -136,7 +137,6 @@ struct Lighting : public Command
 	}
 };
 
-/** a command to control Lighting details */
 struct ShaderProgram : public Command
 {
 	bool _on;
@@ -151,7 +151,7 @@ struct ShaderProgram : public Command
 };
 
 
-/** a command to control Lighting details */
+// a command to control uniforms of a shader
 struct ShaderUniform : public Command
 {
 	//unsigned int _program_index;
@@ -167,7 +167,7 @@ struct ShaderUniform : public Command
 };
 
 
-/** a command to control Culling details */
+// a command to control Culling details
 struct Culling : public Command
 {
 	enum CullingMode {Off = 0, Front = 1, Back = 2, Both = 3};

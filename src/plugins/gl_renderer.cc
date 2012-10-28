@@ -1008,10 +1008,10 @@ void GLRenderer::visitShaderUniformConst (const ShaderUniform *s)
 
 	//std::cout << "current shader program index: " << _current_shader_program << " uniform index: " << s->_uniform_index << std::endl;
 
-
 	// TODO: Make more efficient..
 	// std::cout << "values.size(): " << s->_values.size() << " uniform index: " << s->_uniform_index << " first value: " << s->_values[0] <<  std::endl;
-	if (_shader_uniforms.find(_current_shader_program) == _shader_uniforms.end()) {
+	if (_shader_uniforms.find(_current_shader_program) 
+		== _shader_uniforms.end()) {
 		// std::cout << "[GGLRenderer] No uniform at index " << s->_uniform_index 
 		//		  << " for shader " << _current_shader_program << "!" << std::endl;
 		return;
@@ -1096,8 +1096,7 @@ void GLRenderer::visitTransformationConst (const Transformation *t)
 	{
 		(*it)->acceptConst (this);
 	}
-	//glMultMatrixf (g->_transformation_matrix.get_coefficients());
-
+	// glMultMatrixf (g->_transformation_matrix.get_coefficients());
 }
 
 
@@ -1121,6 +1120,10 @@ void GLRenderer::visitBlendingConst (const Blending *b)
 		glEnable (GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glShadeModel(GL_FLAT);
+
+		///// evil workaround to fix blending
+		glDisable(GL_CULL_FACE);
+		glDisable(GL_DEPTH_TEST);
 	}
 	else
 	{
@@ -1198,8 +1201,8 @@ void GLRenderer::really_process_g (double delta_t)
 	if (_max_feedback_frames == (SCGRAPH_QT_GL_RENDERER_MAXMAX_FEEDBACK_FRAMES + 1))
 		change_feedback_frames();
 
-	/* first thing to do */
-	//_gl_widget->makeCurrent ();
+	// first thing to do 
+	// _gl_widget->makeCurrent ();
 
 #ifndef HAVE_SHADERS
 	// deactivate shaders
@@ -1369,7 +1372,7 @@ void GLRenderer::really_process_g (double delta_t)
 	else
 		glDisable (GL_FOG);
 
-	/* set up camera position and view direction */
+	// set up camera position and view direction
 	glMatrixMode(GL_PROJECTION);
 
 	glLoadIdentity();
@@ -1377,13 +1380,15 @@ void GLRenderer::really_process_g (double delta_t)
 	if (*_control_ins[PERSPECTIVE] > 0.5)
 	{
 		gluPerspective (*_control_ins[FOV],
-						(GLfloat)_gl_widget->width() / (GLfloat)_gl_widget->height(),
+						(GLfloat)_gl_widget->width() 
+						/ (GLfloat)_gl_widget->height(),
 						*_control_ins[NEAR_PLANE], 
 						*_control_ins[FAR_PLANE]);
 	}
 	else
 	{
-		float ratio = (GLfloat)_gl_widget->width() / (GLfloat)_gl_widget->height();
+		float ratio = (GLfloat)_gl_widget->width() 
+			/ (GLfloat)_gl_widget->height();
 
 		glOrtho (-1.0 * ratio, 1.0 * ratio, 
 				 -1.0, 1.0,
@@ -1407,7 +1412,7 @@ void GLRenderer::really_process_g (double delta_t)
 			  *_control_ins[UP + 1],
 			  *_control_ins[UP + 2]);
 
-	/* turn off all lights first so they can be reenabled on demand later */
+	// turn off all lights first so they can be reenabled on demand later
 	if (*_control_ins[LIGHTING] > 0.5)
 	{
 		glEnable (GL_NORMALIZE);
@@ -1429,23 +1434,22 @@ void GLRenderer::really_process_g (double delta_t)
 
 	glMatrixMode (GL_MODELVIEW);
 
-	/* this does the gruntwork) */
+	// this does the gruntwork)
 	if (_graphics_ins[0])
 	{
-		//std::cout << "iterating over graphics ins" << std::endl;
+		// std::cout << "iterating over graphics ins" << std::endl;
 		for (size_t i = 0; i < _graphics_ins[0]->_graphics.size (); ++i)
 		{
 			if (_graphics_ins[0]->_graphics[i].inspect())
 			{
-				//std::cout << "graphics in!!" << std::endl;
+				// std::cout << "graphics in!!" << std::endl;
 				_graphics_ins[0]->_graphics[i]->acceptConst(this);
 			}
 		}
 	}
 
-	//glAccum (GL_MULT, 0.5);
-	//glAccum (GL_RETURN, 1.0);
-
+	// glAccum (GL_MULT, 0.5);
+	// glAccum (GL_RETURN, 1.0);
 
 	if (_feedback > 0) {
 							/*glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16, 

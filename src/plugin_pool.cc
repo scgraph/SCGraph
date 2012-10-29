@@ -357,12 +357,33 @@ boost::shared_ptr<GUnit> PluginPool::create_unit (const std::string &name, int s
 		return unit;	
 	}
 
+	if (name == "InFeedback")
+	{
+		boost::shared_ptr<GUnit> unit (new InFeedback ());
+
+		return unit;
+		}
+
 	if (name == "In")
 	{
 		boost::shared_ptr<GUnit> unit (new In ());
 
 		return unit;
 		}
+
+	if (name == "XFade2")
+	{
+		boost::shared_ptr<GUnit> unit (new XFade2 ());
+
+		return unit;
+		}
+
+	if (name == "XOut")
+	{
+		boost::shared_ptr<GUnit> unit (new XOut ());
+
+		return unit;
+	}
 
 	if (name == "Out")
 	{

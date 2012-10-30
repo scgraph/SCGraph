@@ -13,7 +13,7 @@
 
 + XFade2 {
 	*gr { arg inA, inB = 0.0, pan = 0.0, level = 1.0;
-		^this.ar(inA, inB = 0.0, pan = 0.0, level = 1.0)
+		^this.ar(inA, inB, pan, level)
 	}
 }
 

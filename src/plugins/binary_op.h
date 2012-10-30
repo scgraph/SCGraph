@@ -19,7 +19,6 @@ class BinaryOp : public GUnit, public GraphicsVisitor
 		virtual void process_c (double delta_t);
 };
 
-#endif
 
 
 class MulAdd : public GUnit, public GraphicsVisitor
@@ -34,3 +33,5 @@ class MulAdd : public GUnit, public GraphicsVisitor
 		virtual void process_g (double delta_t);
 		virtual void process_c (double delta_t);
 };
+
+#endif

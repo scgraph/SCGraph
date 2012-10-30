@@ -89,6 +89,9 @@ class ScGraph
 		std::vector <GraphicsBus>
 		                           _graphics_busses;
 
+		std::vector <GraphicsBus>
+		                           _past_graphics_busses;
+
 		std::vector<boost::shared_ptr<GSynth> >
 		                           _persistent_synths;
 

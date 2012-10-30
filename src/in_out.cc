@@ -30,15 +30,15 @@ void In::process_c (double delta_t)
 void InFeedback::process_g (double delta_t)
 {
 	ScGraph *scgraph = ScGraph::get_instance ();
-	// TODO feedback
+
 	if(!((size_t)(*_control_ins[0]) >= Options::get_instance ()->_graphics_busses)) 
 		_bus = (size_t)(*_control_ins[0]);
 																				   
 	_graphics_outs[0]._graphics.clear();
 
-	for (size_t i = 0; i < scgraph->_graphics_busses[_bus]._graphics.size (); ++i)
+	for (size_t i = 0; i < scgraph->_past_graphics_busses[_bus]._graphics.size (); ++i)
 		{
-			_graphics_outs[0]._graphics.push_back(scgraph->_graphics_busses[_bus]._graphics[i]);
+			_graphics_outs[0]._graphics.push_back(scgraph->_past_graphics_busses[_bus]._graphics[i]);
 		}
 }
 

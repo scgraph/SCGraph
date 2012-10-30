@@ -29,6 +29,7 @@ ScGraph::ScGraph (int argc, char *argv[])
 
 	for (size_t i = 0; i < options->_graphics_busses; ++i)
 	{
+		_past_graphics_busses.push_back (GraphicsBus());
 		_graphics_busses.push_back (GraphicsBus());
 	}
 
@@ -164,6 +165,8 @@ void ScGraph::run_one_graphics_cycle (double delta_t)
 	_delta_t = delta_t;
 
 	lock_for_read();
+
+	_past_graphics_busses.swap(_graphics_busses);
 
 	for (size_t i = 0; i < _graphics_busses.size (); ++i)
 	{

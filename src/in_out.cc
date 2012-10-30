@@ -90,8 +90,8 @@ void XOut::process_g (double delta_t)
 	// TODO fade
 	if(*_control_ins[1] > 0.5) {
 		scgraph->_graphics_busses[_bus]._graphics.clear();
-		for (size_t i = 0; i < _graphics_ins[1]->_graphics.size (); ++i) {
-				scgraph->_graphics_busses[_bus]._graphics.push_back (_graphics_ins[1]->_graphics[i]);
+		for (size_t i = 0; i < _graphics_ins[2]->_graphics.size (); ++i) {
+				scgraph->_graphics_busses[_bus]._graphics.push_back (_graphics_ins[2]->_graphics[i]);
 			}
 	}
 }

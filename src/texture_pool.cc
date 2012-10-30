@@ -74,7 +74,10 @@ TexturePool::TexturePool ()
 
 	// Register all formats and codecs
 	av_register_all();
-	
+
+	if(options->_verbose > 0)
+		std::cout << "[TexturePool]: all video formats registered." << std::endl;
+
 	av_lockmgr_register(&ffmpeg_lock_callback); 
 
 	qRegisterMetaType<uint32_t>("uint32_t");

@@ -166,12 +166,11 @@ void ScGraph::run_one_graphics_cycle (double delta_t)
 
 	lock_for_read();
 
-	_past_graphics_busses.swap(_graphics_busses);
-
-	for (size_t i = 0; i < _graphics_busses.size (); ++i)
+	for (size_t i = 0; i < _past_graphics_busses.size (); ++i)
 	{
-		_graphics_busses[i].clear ();
+		_past_graphics_busses[i].clear ();
 	}
+	_past_graphics_busses.swap(_graphics_busses);
 
 	for (Tree::Tree<NodePtr>::Iterator it = _node_tree.begin (); it != _node_tree.end (); ++it)
 	{

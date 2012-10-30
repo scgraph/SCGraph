@@ -2,6 +2,7 @@
 #define SCGRAOH_INOUT_HH
 
 #include "unit.h"
+#include "graphics_visitor.h"
 
 class In : public GUnit
 {
@@ -37,8 +38,10 @@ class InFeedback : public GUnit
 };
 
 
-class XFade2 : public GUnit
+class XFade2 : public GUnit, public GraphicsVisitor
 {
+	float _factor;
+
  public:
 	XFade2 () :
 	_bus (0)
@@ -47,6 +50,9 @@ class XFade2 : public GUnit
 			// cow_ptr<GraphicsBus> b (new GraphicsBus);
 			// _graphics_outs.push_back (b);
 		}
+
+		void visitGeometry (Geometry *g);
+		void visitText (Text *t);
 
 	size_t _bus;
 	void process_g (double delta_t);
@@ -70,14 +76,19 @@ class Out : public GUnit
 };
 
 
-class XOut : public GUnit
+class XOut : public GUnit, public GraphicsVisitor
 {
+	float _factor;
+
  public:
 	XOut () :
 	_bus (0)
 		{
 			/* we have no outputs, thus, nothing to do */
 		}
+		void visitGeometry (Geometry *g);
+		void visitText (Text *t);
+
 
 	size_t _bus;
 	void process_g (double delta_t);

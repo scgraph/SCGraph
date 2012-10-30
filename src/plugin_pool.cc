@@ -357,6 +357,13 @@ boost::shared_ptr<GUnit> PluginPool::create_unit (const std::string &name, int s
 		return unit;	
 	}
 
+	if (name == "TrigControl")
+	{
+		boost::shared_ptr<GUnit> unit (new TrigControl (special_index));
+
+		return unit;	
+	}
+
 	if (name == "InFeedback")
 	{
 		boost::shared_ptr<GUnit> unit (new InFeedback ());

@@ -45,6 +45,12 @@ int main (int argc, char *argv[])
 	/* create QApplication object before option object so it can 
 	   modify the argument list */
 	QApplication qapp (argc, argv);
+	QIcon icon;
+	icon.addFile(":icons/scgraph-cube-128");
+	icon.addFile(":icons/scgraph-cube-48");
+	icon.addFile(":icons/scgraph-cube-32");
+	icon.addFile(":icons/scgraph-cube-16");
+	qapp.setWindowIcon(icon);
 
 	/* pretty much everything else needs access to this. Especially stuff in 
 	   ScGraph:: */
@@ -66,7 +72,6 @@ int main (int argc, char *argv[])
 		std::cout << "[Main]: Up and running..." << std::endl;
 
 	scgraph->start ();
-
 	qapp.exec ();
 
 	if (options->_verbose)

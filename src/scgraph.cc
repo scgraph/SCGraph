@@ -10,7 +10,7 @@
 ScGraph *ScGraph::_instance = 0;
 
 
-ScGraph::ScGraph (int argc, char *argv[]) : QApplication(argc, argv) 
+ScGraph::ScGraph (int argc, char *argv[])
 {
 #ifdef HAVE_JACK
 	try {
@@ -19,13 +19,6 @@ ScGraph::ScGraph (int argc, char *argv[]) : QApplication(argc, argv)
 		_jack_client = boost::shared_ptr<JackClient>();
 	}
 #endif
-
-	QIcon icon;
-	icon.addFile(":icons/scgraph-cube-128");
-	icon.addFile(":icons/scgraph-cube-48");
-	icon.addFile(":icons/scgraph-cube-32");
-	icon.addFile(":icons/scgraph-cube-16");
-	setWindowIcon(icon);
 
 	// _instance = this;
 	Options *options = Options::get_instance ();

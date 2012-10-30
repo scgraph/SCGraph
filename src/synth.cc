@@ -26,7 +26,7 @@ GSynth::GSynth (boost::shared_ptr<GSynthDef> synthdef, int id) :
 
 		boost::shared_ptr<GUnit> unit = PluginPool->create_unit (name, _synthdef->_ugen_specs[i]._special_index, this);
 
-//		if (unit.get() == 0) std::cout << "AAAAARGH" << std::endl;
+		if (unit.get() == 0) std::cout << "AAAAARGH" << std::endl;
 
 		if (name == "Control")
 		{

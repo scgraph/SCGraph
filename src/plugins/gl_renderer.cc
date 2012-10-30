@@ -104,13 +104,6 @@ GLRenderWidget::GLRenderWidget (QWidget *parent, GLRenderer *renderer) :
 	setMouseTracking (true);
 	setFocusPolicy (Qt::StrongFocus);
 
-	QGLFormat f = format();
-	f.setDoubleBuffer(true);
-	setFormat(f);
-
-	makeCurrent();
-	//_lastFrame = new QGLFramebufferObject(1024,1024);
-
 	boost::shared_ptr<Texture> _lastFrame(new Texture (1024, 1024, 4, true));
 	//setAutoBufferSwap(false);
 }
@@ -239,7 +232,7 @@ GLMainWindow::GLMainWindow (GLRenderer *renderer) :
 	QMainWindow (),
 	_renderer (renderer)
 {
-	
+
 }
 
 
@@ -271,6 +264,22 @@ GLRenderer::GLRenderer () :
 	_max_feedback_frames (SCGRAPH_QT_GL_RENDERER_MAXMAX_FEEDBACK_FRAMES + 1),
 	_window_title("[ScGraph]: GGLRenderer - Press F1 for help")
 {
+
+	_main_window = new GLMainWindow(this);
+    _gl_widget = new GLRenderWidget(_main_window, this);
+
+	_main_window->setCentralWidget(_gl_widget);
+
+	_main_window->setAttribute (Qt::WA_DeleteOnClose, false);
+	_main_window->setAttribute (Qt::WA_QuitOnClose, false);
+
+	_main_window->setWindowTitle (_window_title);
+	_main_window->resize (SCGRAPH_QT_GL_RENDERER_DEFAULT_WIDTH,
+						  SCGRAPH_QT_GL_RENDERER_DEFAULT_HEIGHT);
+
+    _main_window->show();
+
+
 	_rot_y = 0;
 	_rot_x = 0;
  
@@ -313,17 +322,6 @@ GLRenderer::GLRenderer () :
 			  << "SHIFT-UPARROW - up"
 			  << "SHIFT-DOWNARROW - down";
 
-	_main_window = new GLMainWindow (this);
-	_gl_widget	 = new GLRenderWidget (_main_window, this);
-	_main_window->setCentralWidget (_gl_widget);
-
-	_main_window->setAttribute (Qt::WA_DeleteOnClose, false);
-	_main_window->setAttribute (Qt::WA_QuitOnClose, false);
-
-	_main_window->setWindowTitle (_window_title);
-	_main_window->resize (SCGRAPH_QT_GL_RENDERER_DEFAULT_WIDTH,
-						  SCGRAPH_QT_GL_RENDERER_DEFAULT_HEIGHT);
-	_main_window->show ();
 
 	TexturePool *texture_pool = TexturePool::get_instance ();
 
@@ -358,7 +356,7 @@ GLRenderer::GLRenderer () :
 
 	change_shader_programs();
 #endif
-	_ready = true;
+    _ready = true;
 }
 
 

@@ -6,6 +6,8 @@
 
 #include <signal.h>
 
+#include <QtOpenGL/QGLFormat>
+
 #include "options.h"
 #include "plugin_pool.h"
 #include "texture_pool.h"
@@ -51,6 +53,11 @@ int main (int argc, char *argv[])
 	icon.addFile(":icons/scgraph-cube-32");
 	icon.addFile(":icons/scgraph-cube-16");
 	qapp.setWindowIcon(icon);
+
+
+	QGLFormat f;
+	f.setDoubleBuffer(true);
+	QGLFormat::setDefaultFormat(f);
 
 	/* pretty much everything else needs access to this. Especially stuff in 
 	   ScGraph:: */

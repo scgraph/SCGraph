@@ -115,7 +115,7 @@ void OscHandler::ProcessMessage (const osc::ReceivedMessage& message, const IpEn
 
 void OscHandler::send_notifications (std::string path, int id)
 {
-	if (_notifications.size () == 0)
+	if (_notifications.empty())
 		return;
 
 	ScGraph *scgraph = ScGraph::get_instance ();

@@ -53,13 +53,13 @@ void InFeedback::process_c (double delta_t)
 
 void XFade2::visitGeometry (Geometry *g) {
 	for (size_t i = 0; i < g->_faces.size (); ++i) {
-		if (g->_faces[i]->_colors.size () > 0) {
+		if (g->_faces[i]->_colors.empty()) {
+			g->_faces[i].touch()->_face_color.scale_alpha(_factor);
+		}
+		else {
 			for (size_t j = 0; j < g->_faces[i]->_colors.size (); ++j) {
 				g->_faces[i].touch()->_colors[j].scale_alpha(_factor);
 			}
-		}
-		else {
-			g->_faces[i].touch()->_face_color.scale_alpha(_factor);
 		}
 	}
 }
@@ -99,13 +99,13 @@ void XFade2::process_c (double delta_t)
 
 void XOut::visitGeometry (Geometry *g) {
 	for (size_t i = 0; i < g->_faces.size (); ++i) {
-		if (g->_faces[i]->_colors.size () > 0) {
+		if (g->_faces[i]->_colors.empty()) {
+			g->_faces[i].touch()->_face_color.scale_alpha(_factor);
+		}
+		else {
 			for (size_t j = 0; j < g->_faces[i]->_colors.size (); ++j) {
 				g->_faces[i].touch()->_colors[j].scale_alpha(_factor);
 			}
-		}
-		else {
-			g->_faces[i].touch()->_face_color.scale_alpha(_factor);
 		}
 	}
 }

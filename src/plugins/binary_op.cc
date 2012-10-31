@@ -44,13 +44,13 @@ BinaryOp::~BinaryOp ()
 
 void BinaryOp::visitGeometry (Geometry *g) {
 	for (size_t i = 0; i < g->_faces.size (); ++i) {
-		if (g->_faces[i]->_colors.size () > 0) {
+		if (g->_faces[i]->_colors.empty()) {
+			g->_faces[i].touch()->_face_color.scale_alpha((float) *_control_ins[1]);
+		}
+		else {
 			for (size_t j = 0; j < g->_faces[i]->_colors.size (); ++j) {
 				g->_faces[i].touch()->_colors[j].scale_alpha((float) *_control_ins[1]);
 			}
-		}
-		else {
-			g->_faces[i].touch()->_face_color.scale_alpha((float) *_control_ins[1]);
 		}
 	}
 }
@@ -135,24 +135,15 @@ MulAdd::~MulAdd ()
 }
 
 void MulAdd::visitGeometry (Geometry *g) {
-
 	for (size_t i = 0; i < g->_faces.size (); ++i) {
-		if (g->_faces[i]->_colors.size () > 0) {
-			for (size_t j = 0; j < g->_faces[i]->_colors.size (); ++j) {
-				g->_faces[i].touch()->_colors[j]
-					.scale_alpha((float) *_control_ins[1]);
-			}
+		if (g->_faces[i]->_colors.empty()) {
+			g->_faces[i].touch()->_face_color.scale_alpha((float) *_control_ins[1]);
 		}
 		else {
-				std::cout <<  "[MulAdd]: " 
-						  << g->_faces[i].touch()->_face_color._c[3] 
-						  << std::endl;	
-				g->_faces[i].touch()->_face_color
-					.scale_alpha((float) *_control_ins[1]);
-				std::cout <<  "[MulAdd]: " 
-						  << g->_faces[i].touch()->_face_color._c[3] 
-						  << std::endl;	
+			for (size_t j = 0; j < g->_faces[i]->_colors.size (); ++j) {
+				g->_faces[i].touch()->_colors[j].scale_alpha((float) *_control_ins[1]);
 			}
+		}
 	}
 }
 

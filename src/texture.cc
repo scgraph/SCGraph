@@ -158,8 +158,6 @@ int ImageTexture::load(const std::string &filename) {
 			return -1;
 		}
 		else {
-			int im_width, im_height, tex_width, tex_height;
-
 			if(image.isNull()) {
 				std::cout 
 					<< "  [TexturePool]: Unable to convert image to GL format."
@@ -168,6 +166,8 @@ int ImageTexture::load(const std::string &filename) {
 				return -1;
 			}
 			else {		
+				int im_width, im_height, tex_width, tex_height;
+
 				im_width = image.width();
 				im_height = image.height();
 
@@ -210,7 +210,16 @@ int ImageTexture::load(const std::string &filename) {
 	return -1;
 }
 
-VideoTexture::VideoTexture () {
+VideoTexture::VideoTexture () :
+	_pFormatCtx(NULL),
+	_videoStream(-1),
+    _pCodecCtx(NULL),
+	_pCodec(NULL),
+	_tex_width(0),
+	_tex_height(0),
+	_ctxt(NULL)
+{
+
 }
 
 VideoTexture::~VideoTexture() {
@@ -264,19 +273,10 @@ int VideoTexture::get_channels() {
 
 int VideoTexture::load(const std::string &filename) {
 	_filename = filename;
-	Options *options = Options::get_instance ();
 
-	_pFormatCtx = NULL;
-	int             i;
-    _pCodecCtx = NULL;
-	_ctxt = NULL;
-	_pCodec = NULL;
     AVFrame         *pFrame = NULL; 
     AVPacket        packet;
     int             frameFinished;
-    int             numBytes;
-
-	int tex_width, tex_height;
 
 	int err = 0;
 
@@ -295,9 +295,6 @@ int VideoTexture::load(const std::string &filename) {
 		// TODO make this verbose
 		av_dump_format(_pFormatCtx, 0, _filename.c_str(), false);
 
-
-		_videoStream=-1;
-
 		// try to find the "best" stream
 		_videoStream = av_find_best_stream(_pFormatCtx, AVMEDIA_TYPE_VIDEO, 
 										   -1, -1, 
@@ -309,7 +306,7 @@ int VideoTexture::load(const std::string &filename) {
 		else {
 			// if that failed, find the first video stream
 			std::cout << "[VideoTexture] Find first stream for " << _filename << std::endl; 
-			for(i=0; i<_pFormatCtx->nb_streams; i++)
+			for(size_t i=0; i<_pFormatCtx->nb_streams; i++)
 				if(_pFormatCtx->streams[i]->codec->codec_type==AVMEDIA_TYPE_VIDEO) {
 					_videoStream=i;
 					break;
@@ -361,7 +358,6 @@ int VideoTexture::really_get_frame()
 {
 	AVPacket        packet;
     int             frameFinished;
-    int             numBytes;
     AVFrame         *pFrame = NULL; 
 	uint32_t texquad_id, frame;
 	uint32_t last_frame;

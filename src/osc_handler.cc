@@ -1001,7 +1001,7 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 				    // ignore array starts and ends
 				    // for now
 				    // FIX: handle arrays of values etc.
-				    arg++;
+				    ++arg;
 				  }
 			}
 		}

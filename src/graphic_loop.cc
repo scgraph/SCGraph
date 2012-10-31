@@ -50,12 +50,10 @@ void GraphicLoop::timer_callback ()
 	Options *options = Options::get_instance ();
 	ScGraph *scgraph = ScGraph::get_instance ();
 
-	int ret;
-
 	if (_first_time)
 	{
 		_first_time = false;
-		ret = gettimeofday (&_tv, 0);
+		int ret = gettimeofday (&_tv, 0);
 		if (ret == -1)	
 		{
 			std::cout << "[GraphicLoop]: Error: gettimeofday () failed. Exiting... " << std::endl;

@@ -84,20 +84,20 @@ JackClient::JackClient (int num_of_ports, const std::string &jack_name) :
 		std::cout << "[JackClient] activated"  << std::endl;
 
 	const char **ports;
-	if ((ports = jack_get_ports (_client, NULL, NULL, 
+	if (&(ports = jack_get_ports (_client, NULL, NULL, 
 								 JackPortIsPhysical|JackPortIsOutput)) == NULL) {
 		std::cout << "[JackClient] Cannot find any physical capture ports" 
 				  << std::endl;
 	}
- 
-
-	int i = 0;
-	const char * port = ports[i];
-	while((port != NULL) && (i < _ports.size())) {
-		if (jack_connect (_client, ports[i], jack_port_name (_ports[i])) != 0) {
-			std::cout << "[JackClient] cannot connect input ports" << std::endl;
+	else {
+		int i = 0;
+		const char * port = ports[i];
+		while((port != NULL) && (i < _ports.size())) {
+			if (jack_connect (_client, ports[i], jack_port_name (_ports[i])) != 0) {
+				std::cout << "[JackClient] cannot connect input ports" << std::endl;
+			}
+			port = ports[i++];
 		}
-		port = ports[i++];
 	}
 }
 

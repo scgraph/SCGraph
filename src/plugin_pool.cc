@@ -531,7 +531,7 @@ Unit *PluginPool::create_sc_unit (const std::string &name, int special_index, in
 		}
 	}
 
-	return (Unit*)mem;
+	return reinterpret_cast<Unit*>(mem);
 }
 
 

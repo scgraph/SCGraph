@@ -259,10 +259,10 @@ GLRenderer::GLRenderer () :
 	_forward (0),
 	_sideward (0),
 	_upward (0),
-	_fbcounter (0),
+	_window_title("[ScGraph]: GGLRenderer - Press F1 for help"),
 	_feedback (0),
-	_max_feedback_frames (SCGRAPH_QT_GL_RENDERER_MAXMAX_FEEDBACK_FRAMES + 1),
-	_window_title("[ScGraph]: GGLRenderer - Press F1 for help")
+	_fbcounter (0),
+	_max_feedback_frames (SCGRAPH_QT_GL_RENDERER_MAXMAX_FEEDBACK_FRAMES + 1)
 {
 
 	_main_window = new GLMainWindow(this);
@@ -488,10 +488,8 @@ void GLRenderer::setup_texture (size_t index)
 {
 	_gl_widget->makeCurrent();
 	std::cout << "setup_texture" << std::endl;
-	TexturePool *texture_pool = TexturePool::get_instance ();
 
 	glBindTexture (GL_TEXTURE_2D, _texture_handles[index]);
-
 }
 
 
@@ -705,24 +703,28 @@ void GLRenderer::do_face (const Face& face)
 {
 	glColor4fv (&face._face_color._c[0]);
 
-	// std::cout << face._texture_coordinates.size () << " " << *_control_ins[TEXTURING] << " " << face._texture_index << std::endl;
-	if ((face._colors.size () > 0) && (face._texture_coordinates.size () > 0) && (*_control_ins[TEXTURING] > 0.5)) {
-		//std::cout << "1" << std::endl;
-		for (size_t i = 0; i < face._vertices.size (); ++i)	{
-			glColor4fv (&face._colors[i]._c[0]);
-			glNormal3fv (&face._normals[i]._c[0]);
-			glTexCoord2fv (&face._texture_coordinates[i]._c[0]);
-			glVertex3fv (&face._vertices[i]._c[0]);
-		}
-	}
-	else if ((face._colors.size () == 0) && (face._texture_coordinates.size () > 0) && (*_control_ins[TEXTURING] > 0.5)) {
-		//std::cout << "2" << std::endl;
-		for (size_t i = 0; i < face._vertices.size (); ++i)
-			{
+	// std::cout << face._texture_coordinates.size () << " " <<
+	// *_control_ins[TEXTURING] << " " << face._texture_index <<
+	// std::endl;
+	if((*_control_ins[TEXTURING] > 0.5) && (face._texture_coordinates.size () > 0)) {
+		if (face._colors.size () > 0) {
+			//std::cout << "1" << std::endl;
+			for (size_t i = 0; i < face._vertices.size (); ++i)	{
+				glColor4fv (&face._colors[i]._c[0]);
 				glNormal3fv (&face._normals[i]._c[0]);
 				glTexCoord2fv (&face._texture_coordinates[i]._c[0]);
 				glVertex3fv (&face._vertices[i]._c[0]);
 			}
+		}
+		else {
+			//std::cout << "2" << std::endl;
+			for (size_t i = 0; i < face._vertices.size (); ++i)
+				{
+					glNormal3fv (&face._normals[i]._c[0]);
+					glTexCoord2fv (&face._texture_coordinates[i]._c[0]);
+					glVertex3fv (&face._vertices[i]._c[0]);
+				}
+		}
 	}
 	else if (face._colors.size () > 0 && (face._texture_coordinates.size () == 0 || *_control_ins[TEXTURING] < 0.5)) {
 		//std::cout << "3" << std::endl;

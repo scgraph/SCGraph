@@ -157,7 +157,7 @@ void GSynth::process_c (double delta_t)
 	}
 }
 
-int GSynth::get_done_action ()
+const int GSynth::get_done_action ()
 {
 	return _done_action;
 }

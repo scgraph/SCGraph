@@ -6,24 +6,6 @@
 
 #include "../transformation_command.h"
 
-Translate::Translate () :
-	_t(new Translation)
-{
-
-}
-
-Translate::~Translate ()
-{
-
-}
-
-void Translate::visitTransformation (Transformation *t)
-{
-	_t.touch()->_translation_vector = Vector3D (*_control_ins[1], *_control_ins[2], *_control_ins[3]);
-	t->_commands.push_back (_t);
-}
-
-
 extern "C"
 {
 	GUnit *create (size_t index, int special_index)
@@ -44,6 +26,24 @@ extern "C"
 			return 0;
 	}
 }
+
+Translate::Translate () :
+	_t(new Translation)
+{
+
+}
+
+Translate::~Translate ()
+{
+
+}
+
+void Translate::visitTransformation (Transformation *t)
+{
+	_t.touch()->_translation_vector = Vector3D (*_control_ins[1], *_control_ins[2], *_control_ins[3]);
+	t->_commands.push_back (_t);
+}
+
 
 void Translate::process_g (double delta_t)
 {

@@ -27,7 +27,7 @@ class GUnit
 
 		virtual void process_g (double delta_t);
 
-		int get_done_action ();
+		const int get_done_action ();
 
 		/** the in's are set to point to the connected
 			outs */

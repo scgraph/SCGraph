@@ -183,24 +183,23 @@ void ScGraph::run_one_graphics_cycle (double delta_t)
 
 	/* do the doneActions */
 	lock_for_write();
-	if (_done_actions.size () != 0)
-	{
-		// _read_write_lock.lockForWrite();
-		//QWriteLocker locker (&_read_write_lock);
 
-		for 
+	// _read_write_lock.lockForWrite();
+	//QWriteLocker locker (&_read_write_lock);
+
+	for 
 		(
-			std::vector<std::pair<int, int> >::iterator it = _done_actions.begin();
-			it != _done_actions.end (); 
-			++it
-		) {
-			// std::cout << "scgraph: done_action" << std::endl;
-			_node_tree.done_action ((*it).first, (*it).second);
-		}
-
-		_done_actions.clear ();
-		// _read_write_lock.unlock();
+		 std::vector<std::pair<int, int> >::iterator it = _done_actions.begin();
+		 it != _done_actions.end (); 
+		 ++it
+		 ) {
+		// std::cout << "scgraph: done_action" << std::endl;
+		_node_tree.done_action ((*it).first, (*it).second);
 	}
+	
+	_done_actions.clear ();
+	// _read_write_lock.unlock();
+
 	unlock();
 
 	lock_for_read();

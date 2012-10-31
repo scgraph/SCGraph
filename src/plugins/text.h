@@ -12,8 +12,6 @@ class Textfield : public GUnit
 {
 	cow_ptr<Text> _t;
 
-	unsigned int _index;
-
 	public:
 		Textfield ();
 		~Textfield ();

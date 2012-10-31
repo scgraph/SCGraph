@@ -35,7 +35,7 @@ class GSynth : public GNode
 
 		void set_running (bool on_off);
 
-		int get_done_action ();
+		const int get_done_action ();
 		void set_done_action (int done_action);
 
 		void c_set (int control_index, float value);

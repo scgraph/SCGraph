@@ -113,7 +113,10 @@ void GLRenderWidget::resizeGL (int w, int h)
 {
 	makeCurrent();
 	glViewport(0, 0, (GLint)w, (GLint)h);
-	glClear(GL_COLOR_BUFFER_BIT);
+   	glClear(GL_COLOR_BUFFER_BIT);
+	swapBuffers();
+	glViewport(0, 0, (GLint)w, (GLint)h);
+   	glClear(GL_COLOR_BUFFER_BIT);
 }
 
 
@@ -726,7 +729,7 @@ void GLRenderer::do_face (const Face& face)
 				}
 		}
 	}
-	else if (face._colors.size () > 0 && (face._texture_coordinates.size () == 0 || *_control_ins[TEXTURING] < 0.5)) {
+	else if (face._colors.size () > 0 && (face._texture_coordinates.empty() || (*_control_ins[TEXTURING] < 0.5))) {
 		//std::cout << "3" << std::endl;
 		for (size_t i = 0; i < face._vertices.size (); ++i)
 			{

@@ -68,89 +68,68 @@ boost::shared_ptr<GSynth> NodeTree::s_new (const std::string &synth_name, int id
 
 	_last_id = new_id;
 
-	boost::shared_ptr<GSynth> synth (new GSynth (scgraph->_synthdef_pool.get_synthdef (synth_name), new_id));
+	Tree::Node<NodePtr> *target_node;
+	if((add_action == 0) || (add_action == 1)) {
+		target_node = find_group_by_id (add_target_id);
+		if (!target_node)
+			throw("[NodeTree]: Warning: Target group doesn't exist! NOT adding synth!");
+	}
+	else if((add_action > 1) && (add_action < 5)) {
+		target_node = find_node_by_id (add_target_id);
+		if (!target_node)
+			throw("[NodeTree]: Warning: Target node doesn't exist! NOT adding synth!");
+	}
+	else {
+		throw ("[NodeTree]: Bad add_action");
+	}
 
-	switch (add_action)
-	{
-		case 0:
+	boost::shared_ptr<GSynth> synth 
+		(new GSynth (scgraph->_synthdef_pool.get_synthdef (synth_name), new_id));
+
+	Tree::Node<NodePtr> *new_node = new Tree::Node<NodePtr> (synth);
+
+	_node_map[new_id] = new_node;
+
+	switch(add_action)
 		{
-			Tree::Node<NodePtr> *target_group = find_group_by_id (add_target_id);
-
-			if (!target_group)
-				throw("[NodeTree]: Warning: Target group doesn't exist! NOT adding synth!");
-
-			Tree::Node<NodePtr> *new_node = new Tree::Node<NodePtr> (synth);
-			_node_map[new_id] = new_node;
-			target_group->push_front (new_node);
-		}
-		break;
+		case 0:
+			{
+				target_node->push_front (new_node);
+			}
+			break;
 
 		case 1:
-		{
-			Tree::Node<NodePtr> *target_group = find_group_by_id (add_target_id);
-
-			if (!target_group)
-				throw("[NodeTree]: Warning: Target group doesn't exist! NOT adding synth!");
-
-			Tree::Node<NodePtr> *new_node = new Tree::Node<NodePtr> (synth);
-			_node_map[new_id] = new_node;
-			target_group->push_back (new_node);
-
-		}
-		break;
+			{
+				target_node->push_back (new_node);
+			}
+			break;
 
 		case 2:
-		{
-			Tree::Node<NodePtr> *target_node = find_node_by_id (add_target_id);
-
-			if (!target_node)
-				throw("[NodeTree]: Warning: Target node doesn't exist! NOT adding synth!");
-
-			Tree::Node<NodePtr> *new_node = new Tree::Node<NodePtr> (synth);
-			_node_map[new_id] = new_node;
-			target_node->insert (new_node, true);
-		}
-		break;
+			{
+				target_node->insert (new_node, true);
+			}
+			break;
 
 		case 3:
-		{
-			Tree::Node<NodePtr> *target_node = find_node_by_id (add_target_id);
-
-			if (!target_node)
-				throw("[NodeTree]: Warning: Target node doesn't exist! NOT adding synth!");
-
-			Tree::Node<NodePtr> *new_node = new Tree::Node<NodePtr> (synth);
-			_node_map[new_id] = new_node;
-			target_node->insert (new_node, false);
-		}
-		break;
+			{
+				target_node->insert (new_node, false);
+			}
+			break;
 
 		case 4:
-		{
-			Tree::Node<NodePtr> *target_node = find_node_by_id (add_target_id);
-
-			if (!target_node)
-				throw("[NodeTree]: Warning: Target node doesn't exist! NOT adding synth!");
-
-			Tree::Node<NodePtr> *new_node = new Tree::Node<NodePtr> (synth);
-			_node_map[new_id] = new_node;
-			target_node->insert (new_node, true);
-			delete target_node;
+			{
+				target_node->insert (new_node, true);
+				delete target_node;
+			}
+			break;
 		}
-		break;
-
-		default:
-			throw ("[NodeTree]: Bad add_action");
-		break;
-
-	}
 
 	Options *options = Options::get_instance ();
 	if (options->_verbose >= 2)
-	{
-		dump (_tree.get_root ());
-		std::cout << std::endl;
-	}
+		{
+			dump (_tree.get_root ());
+			std::cout << std::endl;
+		}
 
 	return synth;
 }
@@ -413,6 +392,7 @@ void NodeTree::n_free (int id)
 
 void NodeTree::n_set (int id, const std::string &param_name, float value)
 {
+
 	Tree::Node<NodePtr> *node = find_synth_by_id (id);
 	if (node)
 	{

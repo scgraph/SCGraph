@@ -1,7 +1,7 @@
 - Requirements:
 
- - Qt 4.2+          (http://trolltech.com)
- - SuperCollider 3.5 (http://supercollider.sf.net) 
+ - Qt 4.6+          (http://trolltech.com)
+ - SuperCollider 3.6 (http://supercollider.sf.net) 
    - You need to build scsynth as shared library (cmake -DLIBSCSYNTH=1 ..)
  - Boost            (http://www.boost.org/)
  - CMake            (http://www.cmake.org/)
@@ -11,6 +11,10 @@
 
  Most of these should be available in all major linux distros. 
  On Mac OS X you will have to do some tracking down and installing.
+
+- Soon to be optional requirements:
+ - ffmpeg
+ - ftgl
 
 - Optional Dependencies
 

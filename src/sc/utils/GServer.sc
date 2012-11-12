@@ -122,13 +122,13 @@ GServerOptions : ServerOptions
 
 	init {
 		// set the right defaults for a GServer
+		numAudioBusChannels = 10;
+		numPrivateAudioBusChannels = 9;
+		numOutputBusChannels = 1;
 		numControlBusChannels = 1024;
 		numInputBusChannels = 0;
-		numOutputBusChannels = 1;
 		
 		protocol = \udp;
-
-		numPrivateAudioBusChannels = 15;
 	}
 
 	protocol_ {
@@ -138,7 +138,8 @@ GServerOptions : ServerOptions
 	pathsAsExports {
 		var o = "";
 
-		[synthDefPath, "SCGRAPH_SYNTHDEF_PATH",
+		[
+			synthDefPath, "SCGRAPH_SYNTHDEF_PATH",
 			texturePath, "SCGRAPH_TEXTURE_PATH",
 			shaderPath, "SCGRAPH_SHADER_PATH",
 			pluginPath, "SCGRAPH_PLUGIN_PATH",
@@ -198,4 +199,9 @@ GServerOptions : ServerOptions
 	numGraphicsBusChannels {
 		^numPrivateAudioBusChannels + numInputBusChannels + numOutputBusChannels
 	}
+
+	numAudioBusChannels {
+		^this.numGraphicsBusChannels()
+	}
+
 }

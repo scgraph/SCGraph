@@ -28,12 +28,12 @@ GSynth::GSynth (boost::shared_ptr<GSynthDef> synthdef, int id) :
 
 		if (unit.get() == 0) std::cout << "AAAAARGH" << std::endl;
 
-		if (name == "Control")
+		if ((name == "Control") || (name == "TrigControl") || (name == "LagControl") || (name == "AudioControl"))
 		{
 			unit->_control_ins.push_back (&_parameters[0]);
 
-			/* an empty graphics bus reference, since there's no constants nor
-		       controls at graphics rate */
+			// an empty graphics bus reference, since there's no constants nor
+		    // controls at graphics rate 
 			unit->_graphics_ins.push_back (0);
 		}
 
@@ -77,7 +77,7 @@ GSynth::GSynth (boost::shared_ptr<GSynthDef> synthdef, int id) :
 
 GSynth::~GSynth ()
 {
-	//std::cout << "[GSynth]: Destructor" << std::endl;
+    //std::cout << "[GSynth]: Destructor" << std::endl;
 }
 
 void GSynth::set_running (bool on_off)
@@ -92,11 +92,11 @@ void GSynth::c_set (int control_index, float value)
 
 void GSynth::c_set (const char *control_name, float value)
 {
+
 	for (size_t i = 0; i < _synthdef->_param_names.size(); ++i)
 	{
 		if (std::string(_synthdef->_param_names[i]._name) == std::string (control_name))
 		{
-			// std::cout << "match: " << _synthdef->_param_names[i]._name << std::endl;
 			c_set (_synthdef->_param_names[i]._index, value);
 		}
 	}

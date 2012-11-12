@@ -350,7 +350,7 @@ boost::shared_ptr<GUnit> PluginPool::create_unit (const std::string &name, int s
 	if (options->_verbose >= 3)
 		std::cout << "[PluginPool]: Creating unit (name: \"" << name << "\")" << std::endl;
 
-	if (name == "Control")
+	if ((name == "Control") || (name == "LagControl") || (name == "AudioControl"))
 	{
 		boost::shared_ptr<GUnit> unit (new Control (special_index));
 

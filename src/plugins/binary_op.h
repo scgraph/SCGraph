@@ -6,6 +6,7 @@
 
 class BinaryOp : public GUnit, public GraphicsVisitor
 {
+	float _factor;
 	int _special_index;
 
 	public:

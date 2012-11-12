@@ -144,6 +144,9 @@ UgenSpec::UgenSpec (unsigned char **data, unsigned long int size)
 
 	_calculation_rate = read_int8_t (data);
 
+	if(_name.compare("Control") == 0)
+		_calculation_rate = 1;
+
 	if (options->_verbose >= 3)
 		std::cout << "    calculation_rate: " << (int)_calculation_rate << std::endl;
 

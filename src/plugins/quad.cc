@@ -68,8 +68,7 @@ void Quad::process_g (double delta_t)
 {
 	_graphics_outs[0]._graphics.clear();
 
-	// std::cout << "texquad" << std::endl;
-	_graphics_outs[0]._graphics.clear();
+	// std::cout << "Quad" << std::endl;
 
 	for (size_t i = 0; i < 3; ++i)
 		{
@@ -79,7 +78,7 @@ void Quad::process_g (double delta_t)
 					*_control_ins[i + (j * 3)];
 
 				_g.touch()->_faces[0].touch()->_normals[j]._c[i] = 
-					*_control_ins[i+21];
+					*_control_ins[i+12];
 			}
 		}
 
@@ -153,7 +152,6 @@ void TexQuad::process_g (double delta_t) {
 	_graphics_outs[0]._graphics.clear();
 
 	// std::cout << "[TexQuad] process_g" << std::endl;
-	_graphics_outs[0]._graphics.clear();
 
 	for (size_t i = 0; i < 3; ++i) {
 		for (size_t j = 0; j < 4; ++j) {

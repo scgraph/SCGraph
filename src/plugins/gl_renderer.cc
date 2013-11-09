@@ -650,8 +650,9 @@ void GLRenderer::change_feedback_frames ()
 
 	// TODO texture size?
 
-	_max_feedback_frames = std::min<unsigned int>((unsigned int) *_control_ins[MAXFEEDBACKFRAMES], 
-												  SCGRAPH_QT_GL_RENDERER_MAXMAX_FEEDBACK_FRAMES);
+	_max_feedback_frames = std::max<unsigned int>(1, 
+												  std::min<unsigned int>((unsigned int) *_control_ins[MAXFEEDBACKFRAMES], 
+																		 SCGRAPH_QT_GL_RENDERER_MAXMAX_FEEDBACK_FRAMES));
 
 	// empty data to initialize the texture
 	std::vector<GLubyte> emptyData(1024 * 1024 * 4, 0);

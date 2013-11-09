@@ -35,8 +35,7 @@ extern "C"
 }
 
 
-BufFrameRate::BufFrameRate () :
-	_value (1.0)
+BufFrameRate::BufFrameRate ()
 {
 
 }
@@ -60,8 +59,7 @@ void BufFrameRate::process_c (double delta_t)
 }
 
 
-BufFrames::BufFrames () :
-	_value (1.0)
+BufFrames::BufFrames ()
 {
 
 }

@@ -5,8 +5,6 @@
 
 class BufFrameRate : public GUnit
 {
-	float _value;
-
 	public:
 		BufFrameRate ();
 		~BufFrameRate ();
@@ -17,8 +15,6 @@ class BufFrameRate : public GUnit
 
 class BufFrames : public GUnit
 {
-	float _value;
-
 	public:
 		BufFrames ();
 		~BufFrames ();

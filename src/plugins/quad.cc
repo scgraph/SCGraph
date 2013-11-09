@@ -48,7 +48,7 @@ Quad::Quad () :
 
 	// face.touch()->_material._emissive_color._c[0] = 1.0;
 
-	for (size_t i; i < 4; ++i) 
+	for (size_t i = 0; i < 4; ++i)
 		{
 			face.touch()->_vertices.push_back (Vector3D ());
 			face.touch()->_normals.push_back (Vector3D (0,0,1));

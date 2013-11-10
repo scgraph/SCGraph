@@ -4,8 +4,8 @@
 #include "../unit.h"
 #include "../string_pool.h"
 
-#include <QString.h>
-#include <QFont.h>
+#include <QString>
+#include <QFont>
 
 
 class Textfield : public GUnit

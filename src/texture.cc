@@ -299,7 +299,7 @@ int VideoTexture::load(const std::string &filename) {
 		// try to find the "best" stream
 		_videoStream = av_find_best_stream(_pFormatCtx, AVMEDIA_TYPE_VIDEO, 
 										   -1, -1, 
-										   &_pCodec, NULL);
+										   &_pCodec, 0);
 
 		if(_videoStream >= 0) {
 			_pCodecCtx=_pFormatCtx->streams[_videoStream]->codec;

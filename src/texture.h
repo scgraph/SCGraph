@@ -106,6 +106,9 @@ class VideoTexture : public QObject, public AbstractTexture {
 	AVCodec         *_pCodec;
 	int _tex_width;
 	int _tex_height;
+
+	uint32_t _last_frame;
+
 	QFuture<int> _future;
 	QQueue<std::pair <uint32_t, uint32_t> >  _decode_queue;
 

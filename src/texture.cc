@@ -217,6 +217,7 @@ VideoTexture::VideoTexture () :
 	_pCodec(NULL),
 	_tex_width(0),
 	_tex_height(0),
+	_last_frame(0),
 	_ctxt(NULL)
 {
 
@@ -305,7 +306,10 @@ int VideoTexture::load(const std::string &filename) {
 		}
 		else {
 			// if that failed, find the first video stream
-			std::cout << "[VideoTexture] Find first stream for " << _filename << std::endl; 
+			std::cout << "[VideoTexture] Find first stream for " 
+					  << _filename 
+					  << std::endl; 
+
 			for(size_t i=0; i<_pFormatCtx->nb_streams; i++)
 				if(_pFormatCtx->streams[i]->codec->codec_type==AVMEDIA_TYPE_VIDEO) {
 					_videoStream=i;
@@ -314,6 +318,7 @@ int VideoTexture::load(const std::string &filename) {
 
 			if(_videoStream==-1)
 				return -1; // Didn't find a video stream
+
 			// Get a pointer to the codec context for the video stream
 			_pCodecCtx=_pFormatCtx->streams[_videoStream]->codec;
 
@@ -360,7 +365,6 @@ int VideoTexture::really_get_frame()
     int             frameFinished;
     AVFrame         *pFrame = NULL; 
 	uint32_t texquad_id, frame;
-	uint32_t last_frame;
 	int frames = 0;
 	int err = 0;
 
@@ -393,7 +397,7 @@ int VideoTexture::really_get_frame()
 
 		boost::shared_ptr<Texture> t = tp->_tmp_textures.value(texquad_id);
 
-		if(last_frame != (frame - 1)) {
+		if(_last_frame != (frame - 1)) {
 			err = avformat_seek_file(_pFormatCtx, _videoStream, 
 									 frame, frame, frame + 10,
 									 AVSEEK_FLAG_FRAME);
@@ -405,6 +409,8 @@ int VideoTexture::really_get_frame()
 				TexturePool::get_instance()->update_tmp_texture(texquad_id, samep);
 			}
 		}
+
+		_last_frame = frame;
 		
 		if(err >= 0) {
 			// Allocate video frame
@@ -424,9 +430,11 @@ int VideoTexture::really_get_frame()
 						frames++;
 
 						AVPicture pic;
-						err = avpicture_alloc(&pic, PIX_FMT_RGB24, pFrame->width, pFrame->height);
+						err = avpicture_alloc(&pic, PIX_FMT_RGB24, 
+											  pFrame->width, pFrame->height);
 						if(err < 0) {
-							std::cout << "[VideoTexture] allocation failed" << std::endl;
+							std::cout << "[VideoTexture] allocation failed" 
+									  << std::endl;
 							TexturePool::get_instance()->update_tmp_texture(texquad_id, samep);
 							return -1;
 						}
@@ -448,26 +456,30 @@ int VideoTexture::really_get_frame()
 						// format to RGB
 
 						if((err = sws_scale(_ctxt, pFrame->data, pFrame->linesize, 
-											0, pFrame->height, pic.data, pic.linesize)) != 0) {
+											0, pFrame->height, 
+											pic.data, pic.linesize)) != 0) {
 							if(samep)
 								t->zero();
 						
 							for (int i = 0; i < pFrame->width; ++i) {
 								for(int j = 0; j < pFrame->height; ++j) {
 									int tmpIndex = 3 * (_tex_width * j + i);
-									int picIndex = 3 * (pFrame->width * (pFrame->height - j - 1) + i);
+									int picIndex = 3 * (pFrame->width 
+														* (pFrame->height - j - 1) + i);
 									t->_data[tmpIndex] = *(pic.data[0] + picIndex);
 									t->_data[tmpIndex+1] = *(pic.data[0] + picIndex + 1);
 									t->_data[tmpIndex+2] = *(pic.data[0] + picIndex + 2);
 								}
 							}
+
 							//std::cout << "[Texture] processed frame " << frame << std::endl;
 
 							TexturePool::get_instance()->update_tmp_texture(texquad_id, samep);
 						}
 						else {
 							std::cout << "[VideoTexture] Couldn't process frame " 
-									  << frames << " error: " << err <<  "." << std::endl;
+									  << frames << " error: " << err <<  "." 
+									  << std::endl;
 						}
 						avpicture_free(&pic);
 					}

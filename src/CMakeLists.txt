@@ -124,8 +124,6 @@ INCLUDE( ${QT_USE_FILE} )
 QT4_WRAP_CPP( scgraph_moc_srcs ${scgraph_moc_hdrs} )
 qt4_add_resources( scgraph_rcc resources.qrc )
 
-include_directories(${QT_INCLUDE_DIR})
-
 ################################################################################
 # video support
 

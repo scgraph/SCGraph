@@ -16,8 +16,7 @@ set(scgraph_srcs main cow_ptr transformation_command
   buffer_pool matrix node_tree synth node group options scgraph synthdef
   control_loop graphic_loop synthdef_file util synthdef_pool plugin_pool
   plugin unit  osc_handler graphics tree in_out control graphics_bus material face color_rgba 
-  vector_3d hvector_3d vector_2d sc_unit_wrapper sc__unit texture texture_pool ui_pool 
-  shader_pool)
+  vector_3d hvector_3d vector_2d sc_unit_wrapper sc__unit texture texture_pool shader_pool)
 
 
 # configure a header file to pass some of the CMake settings
@@ -125,6 +124,7 @@ INCLUDE( ${QT_USE_FILE} )
 QT4_WRAP_CPP( scgraph_moc_srcs ${scgraph_moc_hdrs} )
 qt4_add_resources( scgraph_rcc resources.qrc )
 
+include_directories(${QT_INCLUDE_DIR})
 
 ################################################################################
 # video support

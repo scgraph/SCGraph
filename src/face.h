@@ -6,6 +6,8 @@
 #include "vector_3d.h"
 #include "vector_2d.h"
 
+#include <stdint.h>
+
 #include <vector>
 #include "cow_ptr.h"
 

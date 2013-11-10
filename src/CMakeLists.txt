@@ -26,6 +26,12 @@ set(scgraph_srcs main cow_ptr transformation_command
 #   "${PROJECT_SOURCE_DIR}/src/main.h.in"
 #   "${PROJECT_BINARY_DIR}/src/main.h"
 #   )
+################################################################################
+# set flag for SuperCollider 3.6
+
+if(SC3_VERSION_36)
+  add_definitions(-DSC36)
+endif(SC3_VERSION_36)
 
 ################################################################################
 # add glew

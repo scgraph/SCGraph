@@ -51,6 +51,8 @@ endif()
 option(SHADERS "Build with experimental vertex and fragment shader support" ON)
 option(JACK "Build with jack support for the FFT UGen")
 
+option(SC3_VERSION_36 "Build for SuperCollider 3.6" ON)
+
 # option(QUARKS "Install plugins as quarks")
 # option(OSX_PACKAGE "Package dmg for Apple")
 # option(IN_PLACE_BUILD "Build and install in cmake build folder" ON)

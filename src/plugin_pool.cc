@@ -9,8 +9,7 @@
 #endif
 
 #include <stdlib.h>
-
-#include <stdlib.h>
+#include <stdarg.h>
 
 #include <sstream>
 #include <iostream>
@@ -31,9 +30,13 @@
 
 #include <SC_InterfaceTable.h>
 #include <SC_Node.h>
-#include <SC_Group.h>
 #include <SC_World.h>
 #include <SC_Graph.h>
+
+#ifdef SC36
+#include <SC_Group.h>
+#endif
+
 
 #include "sc__unit.h"
 

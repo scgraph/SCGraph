@@ -101,6 +101,8 @@ GLRenderWidget::GLRenderWidget (QWidget *parent, GLRenderer *renderer) :
 	_renderer (renderer),
 	_recording (false)
 {
+	_glew_context = GLEWContext();
+
 	setMouseTracking (true);
 	setFocusPolicy (Qt::StrongFocus);
 
@@ -135,7 +137,8 @@ void GLRenderWidget::initializeGL ()
 	glDepthFunc(GL_LEQUAL);
 	glClearDepth(1.0); 
 	glEnable(GL_BLEND);
-	resizeGL (SCGRAPH_QT_GL_RENDERER_DEFAULT_WIDTH, SCGRAPH_QT_GL_RENDERER_DEFAULT_HEIGHT);
+	resizeGL (SCGRAPH_QT_GL_RENDERER_DEFAULT_WIDTH,
+			  SCGRAPH_QT_GL_RENDERER_DEFAULT_HEIGHT);
 
 	//_glew_context = glewGetContext();
 	glewContext = getGlewContext();
@@ -228,7 +231,10 @@ void GLRenderWidget::keyReleaseEvent (QKeyEvent *event)
 	_renderer->keyReleaseEvent (event);
 }
 
-GLEWContext *GLRenderWidget::getGlewContext() { return &_glew_context; }
+GLEWContext *GLRenderWidget::getGlewContext() 
+{ 
+	return &_glew_context; 
+}
 
 
 GLMainWindow::GLMainWindow (GLRenderer *renderer) :
@@ -249,11 +255,17 @@ void GLMainWindow::closeEvent (QCloseEvent *event)
 
 GLRenderer::GLRenderer () :
 	_ready (false),
+	_transformation_matrix (Matrix()),
+	_rotation_matrix (Matrix()),
 	_show_info (false),
 	_show_help (false),
 	_full_screen (false),
 	_window_decorations (true),
 	_mouse_down (false),
+	_cur_mouse_x(0),
+	_cur_mouse_y(0),
+	_ren_mouse_x(0),
+	_ren_mouse_y(0),
 	_shift_key_down (false),
 	_up_key_down (false),
 	_down_key_down (false),
@@ -262,12 +274,16 @@ GLRenderer::GLRenderer () :
 	_forward (0),
 	_sideward (0),
 	_upward (0),
+	_rot_x (0),
+	_rot_y (0),
 	_window_title("[ScGraph]: GGLRenderer - Press F1 for help"),
+	font (QFont()),
 	_feedback (0),
 	_fbcounter (0),
-	_max_feedback_frames (SCGRAPH_QT_GL_RENDERER_MAXMAX_FEEDBACK_FRAMES + 1)
+	_max_feedback_frames (SCGRAPH_QT_GL_RENDERER_MAXMAX_FEEDBACK_FRAMES + 1),
+	_current_shader_program (0),
+	_delta_t(0.1)
 {
-
 	_main_window = new GLMainWindow(this);
     _gl_widget = new GLRenderWidget(_main_window, this);
 
@@ -281,10 +297,6 @@ GLRenderer::GLRenderer () :
 						  SCGRAPH_QT_GL_RENDERER_DEFAULT_HEIGHT);
 
     _main_window->show();
-
-
-	_rot_y = 0;
-	_rot_x = 0;
  
 	_transformation_matrix.set_identity ();
 	_rotation_matrix.set_identity ();

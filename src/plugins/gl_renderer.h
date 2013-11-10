@@ -81,7 +81,7 @@ class GLRenderWidget : public QGLWidget
 	GLEWContext _glew_context;
 
 	public:
-		GLEWContext *getGlewContext();
+	GLEWContext *getGlewContext();
 
 	public:
 		GLRenderWidget (QWidget *parent, GLRenderer *renderer);
@@ -113,7 +113,10 @@ class GLMainWindow : public QMainWindow
 #define SCGRAPH_QT_GL_RENDERER_DEFAULT_HEIGHT       480
 #define SCGRAPH_QT_GL_RENDERER_MAXMAX_FEEDBACK_FRAMES       1024
 
-class GLRenderer : public QObject, public GUnit, public GraphicsVisitor, public TransformationCommandVisitor
+class GLRenderer : public QObject, 
+	public GUnit, 
+	public GraphicsVisitor, 
+	public TransformationCommandVisitor
 {
 	Q_OBJECT
 
@@ -192,8 +195,6 @@ class GLRenderer : public QObject, public GUnit, public GraphicsVisitor, public 
 	unsigned int _fbcounter;
 	unsigned int _max_feedback_frames;
 
-	void draw_face (const Face &face);
-
 	std::map <int, int> 
 	                  _gl_light_indexes;
 
@@ -204,7 +205,6 @@ class GLRenderer : public QObject, public GUnit, public GraphicsVisitor, public 
 
 	std::vector<GLuint>
                       _past_frame_handles;
-	boost::shared_ptr<Texture> _lastFrame;
 
 	// first is program handle, second is vector of shader handles
 	typedef 
@@ -221,6 +221,9 @@ class GLRenderer : public QObject, public GUnit, public GraphicsVisitor, public 
 	std::map<unsigned int, std::vector<GLint> > shader_uniforms_map_t;
 
 	shader_uniforms_map_t _shader_uniforms;
+
+
+	void draw_face (const Face &face);
 
 	void upload_texture (uint32_t id, bool samep);
 
@@ -282,6 +285,8 @@ class GLRenderer : public QObject, public GUnit, public GraphicsVisitor, public 
 		void setup_shader_programs();
 		void clear_shader_program(unsigned int intex);
 		void clear_shader_programs();
+
+
 		double _delta_t;
 
 	public slots:

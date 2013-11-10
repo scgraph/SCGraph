@@ -5,9 +5,8 @@
 
 GPlugin::GPlugin (const std::string &filename)
 {
-	const char *error  = dlerror();
 	_dl = dlopen (filename.c_str (), RTLD_NOW | RTLD_GLOBAL );
-	error = dlerror ();
+	const char *error = error = dlerror ();
 	if (error)
 	{
 		throw (std::string("[GPlugin]: Error: dlopen failed! \n    Reason: ") + std::string (error));
@@ -20,7 +19,6 @@ GPlugin::GPlugin (const std::string &filename)
 
 	// _create = (Unit* (*)(size_t, int))dlsym (_dl, "create");
 
-	error = dlerror ();
 	ptr = dlsym (_dl, "create");
 	error = dlerror ();
 	if (error)
@@ -30,7 +28,6 @@ GPlugin::GPlugin (const std::string &filename)
 	}
 	memcpy (&_create, &ptr, sizeof (ptr));
 
-	error = dlerror ();
 	ptr = dlsym (_dl, "get_num_of_units");
 	error = dlerror ();
 	if (error)
@@ -40,7 +37,6 @@ GPlugin::GPlugin (const std::string &filename)
 	}
 	memcpy (&_get_num_of_units, &ptr, sizeof (ptr));
 
-	error = dlerror ();
 	ptr = dlsym (_dl, "get_unit_name");
 	error = dlerror ();
 	if (error)

@@ -11,7 +11,11 @@
 #include "options.h"
 #include "plugin_pool.h"
 #include "texture_pool.h"
+
+#ifdef HAVE_FTGL
 #include "string_pool.h"
+#endif
+
 #include "scgraph.h"
 
 bool signalled_again = false;
@@ -67,7 +71,9 @@ int main (int argc, char *argv[])
 
 	PluginPool::get_instance ();
 
+#ifdef HAVE_FTGL
 	StringPool::get_instance ();
+#endif
 
 	ScGraph *scgraph = ScGraph::get_instance (argc, argv);
 

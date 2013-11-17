@@ -3,7 +3,10 @@
 
 #include "shader_pool.h"
 #include "texture_pool.h"
+
+#ifdef HAVE_FTGL
 #include "string_pool.h"
+#endif
 
 #include <iostream>
 #include <stdexcept>
@@ -331,6 +334,7 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 		}
 		break;
 
+#ifdef HAVE_FTGL
 		case cmd_setFont:
 			{
 				osc::ReceivedMessage::const_iterator arg = message->ArgumentsBegin();
@@ -429,6 +433,7 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 			}
 			
 		break;
+#endif
 
 		case cmd_clearShaderPrograms:
 		{

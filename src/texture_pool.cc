@@ -12,6 +12,7 @@
 
 #include <cstring>
 
+#ifdef HAVE_FFMPEG
 extern "C"
 {
 #define __STDC_CONSTANT_MACROS // for UINT64_C
@@ -55,6 +56,7 @@ int ffmpeg_lock_callback(void **mutex, enum AVLockOp op)
 
 	return 0;
 } 
+#endif
 
 typedef boost::shared_ptr< AbstractTexture > AbstractTexturePtr;
 
@@ -72,6 +74,7 @@ TexturePool::TexturePool ()
 {
 	Options *options = Options::get_instance ();
 
+#ifdef HAVE_FFMPEG
 	// Register all formats and codecs
 	av_register_all();
 
@@ -79,6 +82,7 @@ TexturePool::TexturePool ()
 		std::cout << "[TexturePool]: all video formats registered." << std::endl;
 
 	av_lockmgr_register(&ffmpeg_lock_callback); 
+#endif
 
 	qRegisterMetaType<uint32_t>("uint32_t");
 	qRegisterMetaType<boost::shared_ptr<Texture> >("boost::shared_ptr<Texture>");
@@ -182,6 +186,7 @@ unsigned int TexturePool::add_image (const std::string &filename, unsigned int i
 	
 		emit (texture_changed(_textures.size() - 1));
 	}
+#ifdef HAVE_FFMPEG
 	else {
 		AbstractTexturePtr tmp = boost::make_shared<VideoTexture>();
 		if(tmp->load(filename) == 0) {
@@ -193,6 +198,8 @@ unsigned int TexturePool::add_image (const std::string &filename, unsigned int i
 			emit (texture_changed(_textures.size() - 1));
 		}
 	}
+#endif
+
 	return _textures.size() - 1;
 }
 

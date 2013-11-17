@@ -7,6 +7,9 @@
 
 #include "texture.h"
 
+#ifdef HAVE_FFMPEG
+#include "video_texture.h"
+#endif
 
 #include <vector>
 #include <string>

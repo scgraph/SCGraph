@@ -9,7 +9,9 @@
 #include "../graphics_visitor.h"
 #include "../texture_pool.h"
 
+#ifdef HAVE_FTGL
 #include "../string_pool.h"
+#endif
 
 #include <map>
 
@@ -248,6 +250,7 @@ class GLRenderer : public QObject,
 		virtual void visitLightingConst (const Lighting *l);
 		virtual void visitBlendingConst (const Blending *b);
 		virtual void visitCullingConst (const Culling *c);
+
 		virtual void visitTextConst (const Text *c);
 
 		virtual void visitShaderProgramConst (const ShaderProgram *c);

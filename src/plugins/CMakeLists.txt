@@ -8,12 +8,27 @@ endif()
 ################################################################################
 ### sources
 
-set(plugins_srcs bordered_rectangle buf_info_ugens circle cube frame_rate gl_renderer model translate rotate stretch binary_op sum3 sum4 mul_add color light line points triangle rectangle polygon quad text blending lighting culling tube transformation material shader_program render_mode)
+set(plugins_srcs 
+  buf_info_ugens frame_rate render_mode shader_program
+  gl_renderer model 
+  translate rotate stretch transformation
+  binary_op sum3 sum4 mul_add 
+  color material light blending lighting culling
+  line points triangle circle cube tube 
+  bordered_rectangle rectangle polygon quad)
 
 ################################################################################
 ### qt
 # add some useful macros and variables
 INCLUDE( ${QT_USE_FILE} )
+
+################################################################################
+### text
+
+if (TEXT)
+  list(APPEND plugins_srcs text)
+endif()
+
 
 ################################################################################
 ### want jack?
@@ -33,7 +48,6 @@ include_directories(${SC3_SOURCES_PATH}/include/common)
 include_directories(${SC3_SOURCES_PATH}/include/server) # for SC_Group.h
 
 include_directories(${SC3_SOURCES_PATH}/external_libraries/libsndfile)
-#include_directories(${SC3_SOURCES_PATH}/external_libraries/oscpack/)
 
 include_directories(../glew)
 include_directories(../oscpack)
@@ -84,6 +98,8 @@ foreach(plugin ${plugins_srcs})
 	  dl
 	  "")
   endif(APPLE)
-  install(FILES ${CMAKE_BINARY_DIR}/src/plugins/${plugin}${CMAKE_SHARED_MODULE_SUFFIX}
+
+  install(FILES
+	${CMAKE_BINARY_DIR}/src/plugins/${plugin}${CMAKE_SHARED_MODULE_SUFFIX}
     DESTINATION "lib/scgraph/plugins/")
 endforeach(plugin)

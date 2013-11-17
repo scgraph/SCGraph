@@ -8,6 +8,7 @@ find_package(PkgConfig)
 
 find_package(Threads)
 
+find_package(Boost)
 
 ################################################################################
 
@@ -15,8 +16,11 @@ set(scgraph_srcs main cow_ptr transformation_command
   transformation_command_visitor graphics_visitor obj_loader loader_3d
   buffer_pool matrix node_tree synth node group options scgraph synthdef
   control_loop graphic_loop synthdef_file util synthdef_pool plugin_pool
-  plugin unit  osc_handler graphics tree in_out control graphics_bus material face color_rgba 
-  vector_3d hvector_3d vector_2d sc_unit_wrapper sc__unit texture texture_pool shader_pool)
+  plugin unit  osc_handler graphics tree in_out control graphics_bus 
+  material face color_rgba 
+  vector_3d hvector_3d vector_2d 
+  sc_unit_wrapper sc__unit texture
+  texture_pool shader_pool)
 
 
 # configure a header file to pass some of the CMake settings
@@ -37,7 +41,7 @@ endif(SC3_VERSION_36)
 
 include_directories(glew)
 
-set(scgraph_srcs ${scgraph_srcs} glew/glew)
+list(APPEND scgraph_srcs glew/glew)
 
 add_definitions(-DGLEW_MX)
 
@@ -54,11 +58,11 @@ set(oscpack_srcs
   oscpack/ip/IpEndpointName )
 
 if(LINUX OR APPLE)
-  set(oscpack_srcs ${oscpack_srcs}
+  list(APPEND oscpack_srcs
     oscpack/ip/posix/NetworkingUtils 
     oscpack/ip/posix/UdpSocket)
 else()
-  set(oscpack_srcs ${oscpack_srcs}
+  list(APPEND oscpack_srcs
     oscpack/ip/win32/NetworkingUtils 
     oscpack/ip/win32/UdpSocket)
 endif()
@@ -80,10 +84,10 @@ if(JACK)
   endif()
 
   if (!FFTW3F_FOUND)
-    message(SEND_ERROR "Cannot find libfftw3f")
+    message(SEND_ERROR "Cannot find libfftw3f!")
   endif()
 
-  set(scgraph_srcs ${scgraph_srcs} jack_client)
+  list(APPEND scgraph_srcs jack_client)
 
   include_directories(${FFTW3F_INCLUDE_DIR})
   include_directories(${JACK_INCLUDE_DIRS})
@@ -94,28 +98,60 @@ endif()
 ################################################################################
 # text support
 
-find_package(FTGL)
+if(TEXT)
+  find_package(FTGL)
 
-find_package(Freetype)
+  find_package(Freetype)
 
-if (!FTGL_FOUND)
-  message(SEND_ERROR "Cannot find FTGL!")
+  if(!FTGL_FOUND)
+	message(SEND_ERROR "FTGL not found. Text support disabled.")
+  elseif(!FREETYPE_FOUND)
+	message(SEND_ERROR "Freetype not found. Text support disabled.")
+  endif()
+
+  message(STATUS "Compiling with text support.")
+
+  include_directories(${FREETYPE_INCLUDE_DIRS})
+  include_directories(${FTGL_INCLUDE_DIR})
+
+  # # work around bug in current homebrew version of ftgl
+  # if(APPLE) 
+  # 	  include_directories(${FREETYPE_INCLUDE_DIRS}/freetype2)
+  # endif()
+
+  add_definitions(-DHAVE_FTGL)
+
+  list(APPEND scgraph_moc_hdrs string_pool.h)
+
+  list(APPEND scgraph_srcs string_pool)
 endif()
 
-if (!FREETYPE_FOUND)
-  message(SEND_ERROR "Cannot find freetype!")
+################################################################################
+# video support
+
+if(VIDEO)
+  find_package(FFmpeg REQUIRED SWSCALE AVFORMAT AVCODEC AVUTIL)
+
+  if (NOT FFMPEG_FOUND)
+	message(SEND_ERROR "ffmpeg not found. video loading disabled")
+  endif()
+
+  message(STATUS "Compiling with video support.")
+
+  include_directories(${FFMPEG_INCLUDE_DIR})
+  add_definitions(-DHAVE_FFMPEG)
+
+  list(APPEND scgraph_srcs video_texture)
+
+  list(APPEND scgraph_moc_hdrs video_texture.h)
 endif()
-
-include_directories(${FREETYPE_INCLUDE_DIRS})
-include_directories(${FTGL_INCLUDE_DIR})
-
-set(scgraph_srcs ${scgraph_srcs} string_pool)
 
 ################################################################################
 # qt-specific stuff
 
-set(scgraph_moc_hdrs graphics.h graphic_loop.h osc_handler.h
-  texture.h texture_pool.h shader_pool.h string_pool.h)
+list(APPEND scgraph_moc_hdrs
+  graphics.h graphic_loop.h osc_handler.h
+  texture_pool.h shader_pool.h)
 
 # add some useful macros and variables
 INCLUDE( ${QT_USE_FILE} )
@@ -125,17 +161,11 @@ QT4_WRAP_CPP( scgraph_moc_srcs ${scgraph_moc_hdrs} )
 qt4_add_resources( scgraph_rcc resources.qrc )
 
 ################################################################################
-# video support
-
-include_directories(${FFMPEG_INCLUDE_DIR})
-
-################################################################################
 # sc includes
 
 include_directories(${SC3_SOURCES_PATH}/common)
 include_directories(${SC3_SOURCES_PATH}/plugin_interface)
 
-include_directories(${SC3_SOURCES_PATH}/include/server) # for SC_Group.h
 include_directories(${SC3_SOURCES_PATH}/include/plugin_interface)
 include_directories(${SC3_SOURCES_PATH}/include/common)
 
@@ -143,7 +173,10 @@ include_directories(${SC3_SOURCES_PATH}/server/plugins) # for FFT_UGens.h
 
 include_directories(${SC3_SOURCES_PATH}/external_libraries/libsndfile)
 
-################################################################################
+if(SC_VERSION_36)
+  # for SC_Group.h
+  include_directories(${SC3_SOURCES_PATH}/include/server)
+endif()
 
 add_definitions(
   -DSC3_PLUGIN_PATH="${SC3_PLUGIN_PATH}"
@@ -153,6 +186,10 @@ if(APPLE)
   add_definitions(-DSC_DARWIN)
 endif(APPLE)
 
+################################################################################
+### boost
+
+include_directories(${Boost_INCLUDE_DIRS})
 
 ################################################################################
 ### build and link
@@ -161,58 +198,32 @@ add_executable( scgraph ${scgraph_srcs}
   ${scgraph_moc_srcs}
   ${scgraph_rcc} )
 
+target_link_libraries(scgraph 
+  ${QT_LIBRARIES} 
+  ${CMAKE_THREAD_LIBS_INIT}
+  -L${SC3_LIBRARY_PATH}
+  ${OPENGL_LIBRARIES}
+  ${FREETYPE_LIBRARIES}
+  ${FTGL_LIBRARIES}
+  ${FFMPEG_LIBRARIES}
+  ${JACK_LIBRARIES}
+  ${FFTW3F_LIBRARY}
+  scsynth
+  stdc++
+  m
+  oscpack)
+
 if(APPLE)
-  TARGET_LINK_LIBRARIES( scgraph 
-    ${QT_LIBRARIES} 
-    ${CMAKE_THREAD_LIBS_INIT}
-    -L${SC3_LIBRARY_PATH}
-    ${OPENGL_LIBRARIES}
-	${FREETYPE_LIBRARIES}
-	${FTGL_LIBRARIES}
-	${FFMPEG_LIBRARIES}
-	${JACK_LIBRARIES}
-	${FFTW3F_LIBRARY}
-    scsynth
-    stdc++
-    m
-    oscpack
-    -Wl,-bind_at_load
-    )
+  target_link_libraries(scgraph
+	-Wl,-bind_at_load)
 elseif(LINUX)
   TARGET_LINK_LIBRARIES( scgraph 
-    ${CMAKE_THREAD_LIBS_INIT}
-    -L${SC3_LIBRARY_PATH}
-    ${OPENGL_LIBRARIES}
-	${FREETYPE_LIBRARIES}
-	${FTGL_LIBRARIES}
-	${FFMPEG_LIBRARIES}
-	${JACK_LIBRARIES}
-	${FFTW3F_LIBRARY}
-    scsynth
-    stdc++
-    ${QT_LIBRARIES} 
-    m
-    oscpack
     -Wl,--export-dynamic 
     GLU 
     -rdynamic 
-    dl
-    )
+    dl)
 else(APPLE)
   TARGET_LINK_LIBRARIES( scgraph 
-    ${CMAKE_THREAD_LIBS_INIT}
-    -L${SC3_LIBRARY_PATH}
-    ${OPENGL_LIBRARIES}
-	${FREETYPE_LIBRARIES}
-	${FTGL_LIBRARIES}
-	${FFMPEG_LIBRARIES}
-	${JACK_LIBRARIES}
-	${FFTW3F_LIBRARY}
-    scsynth
-    stdc++
-    ${QT_LIBRARIES} 
-    m
-    oscpack
     -Wl,--export-dynamic 
     GLU 
     -rdynamic 

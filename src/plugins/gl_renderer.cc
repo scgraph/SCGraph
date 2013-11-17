@@ -1171,6 +1171,7 @@ void GLRenderer::visitCullingConst (const Culling *c)
 	}
 }
 
+
 void GLRenderer::visitTextConst (const Text *t)
 {
 	glPushMatrix();
@@ -1191,12 +1192,15 @@ void GLRenderer::visitTextConst (const Text *t)
 		glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
 	}
 
+#ifdef HAVE_FTGL
 	StringPool *str = StringPool::get_instance();
 	str->_font->FaceSize(t->_fontsize);
 	str->_font->Render(t->_text.c_str());
+#endif
 
 	glPopMatrix();
 }
+
 
 void GLRenderer::process_g (double delta_t)
 {

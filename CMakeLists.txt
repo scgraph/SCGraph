@@ -40,7 +40,7 @@ find_package(SuperCollider3)
 if (NOT SC3_SOURCES_FOUND)
 	message(SEND_ERROR "Cannot find SuperCollider3 headers. Please set the variable SC3_SOURCES_PATH.")
 else()
-	message(STATUS "Using SC source located at ${SC3_SOURCES_PATH}")
+	message(STATUS "Using SC source located at ${SC3_SOURCES_PATH}.")
 endif()
 
 ################################################################################
@@ -60,15 +60,36 @@ option(SC3_VERSION_36 "Build for SuperCollider 3.6" ON)
 
 
 ################################################################################
-option(VIDEO "Support video loading (needs ffmpeg)" ON)
+option(VIDEO "Support video loading (needs ffmpeg)" OFF)
 
 if(VIDEO)
   find_package(FFmpeg REQUIRED SWSCALE AVFORMAT AVCODEC AVUTIL)
   if (NOT FFMPEG_FOUND)
 	message(STATUS "ffmpeg not found. video loading disabled")
-	set(VIDEO, false)
+	set(VIDEO OFF)
+  else()
+	message(STATUS "Compiling with video support.")
   endif()
-endif(VIDEO)
+endif()
+
+option(TEXT "Support displaying text with FTGL" OFF)
+
+if(TEXT)
+  find_package(FTGL)
+
+  find_package(Freetype)
+
+  if(!FTGL_FOUND)
+	message(STATUS "FTGL not found. Text support disabled.")
+	set(TEXT OFF)
+  elseif(!FREETYPE_FOUND)
+	message(STATUS "Freetype not found. Text support disabled.")
+	set(TEXT OFF)
+  else()
+	message(STATUS "Compiling with text support.")
+  endif()
+endif()
+
 
 # # osx `make install' defaults into cmake_build/SC3-plugins directory
 # if (APPLE AND IN_PLACE_BUILD)

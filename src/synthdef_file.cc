@@ -29,6 +29,7 @@ GSynthDefFile::GSynthDefFile (const std::string &filename)
 	construct_from_blob (tmp, num);
 
 	delete[] tmp;
+	fclose(deffile);
 }
 
 GSynthDefFile::GSynthDefFile (unsigned char *data, unsigned long int size)

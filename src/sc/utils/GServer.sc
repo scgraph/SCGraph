@@ -18,6 +18,14 @@ GServer : Server {
 		default = GServer.new(\graphics, NetAddr("127.0.0.1", 37291));
 	}
 
+	// same as Server.sc, but don't try to create the default group
+	initTree {
+		nodeAllocator = NodeIDAllocator(clientID, options.initialNodeID);
+		//this.sendMsg("/g_new", 1, 0, 0);
+		tree.value(this);
+		ServerTree.run(this);
+	}
+
 	// same as in Server.sc, but without SHM
 	boot { arg startAliveThread=true, recover=false;
 		var resp;
@@ -114,13 +122,13 @@ GServerOptions : ServerOptions
 
 	init {
 		// set the right defaults for a GServer
+		numAudioBusChannels = 10;
+		numPrivateAudioBusChannels = 9;
+		numOutputBusChannels = 1;
 		numControlBusChannels = 1024;
 		numInputBusChannels = 0;
-		numOutputBusChannels = 1;
 		
 		protocol = \udp;
-
-		numPrivateAudioBusChannels = 15;
 	}
 
 	protocol_ {
@@ -130,7 +138,8 @@ GServerOptions : ServerOptions
 	pathsAsExports {
 		var o = "";
 
-		[synthDefPath, "SCGRAPH_SYNTHDEF_PATH",
+		[
+			synthDefPath, "SCGRAPH_SYNTHDEF_PATH",
 			texturePath, "SCGRAPH_TEXTURE_PATH",
 			shaderPath, "SCGRAPH_SHADER_PATH",
 			pluginPath, "SCGRAPH_PLUGIN_PATH",
@@ -190,4 +199,9 @@ GServerOptions : ServerOptions
 	numGraphicsBusChannels {
 		^numPrivateAudioBusChannels + numInputBusChannels + numOutputBusChannels
 	}
+
+	numAudioBusChannels {
+		^this.numGraphicsBusChannels()
+	}
+
 }

@@ -4,6 +4,7 @@
 
 #include "../texture_pool.h"
 #include "../options.h"
+#include "../scgraph.h"
 
 
 
@@ -40,6 +41,7 @@ Recorder::Recorder () :
 	QDateTime datetime = QDateTime::currentDateTime();
 	_path.append(datetime.toString("yyyyMMdd-hhmmss-zzz-"));
 	_path.append(QString("%1").arg(options->_graphics_rate, 0, 10));
+	//_path.append(QString("%1").arg((double) (1.0/ScGraph::get_instance()->_delta_t), 0, 10));
 	_path.append("fps-frame-");
 	
 	_format = "jpg";
@@ -99,19 +101,24 @@ GLRenderWidget::GLRenderWidget (QWidget *parent, GLRenderer *renderer) :
 	_renderer (renderer),
 	_recording (false)
 {
+	_glew_context = GLEWContext();
+
 	setMouseTracking (true);
 	setFocusPolicy (Qt::StrongFocus);
 
-	QGLFormat f = format();
-	f.setDoubleBuffer(true);
-	setFormat(f);
+	boost::shared_ptr<Texture> _lastFrame(new Texture (1024, 1024, 4, true));
 	//setAutoBufferSwap(false);
 }
 
 
 void GLRenderWidget::resizeGL (int w, int h)
 {
+	makeCurrent();
 	glViewport(0, 0, (GLint)w, (GLint)h);
+   	glClear(GL_COLOR_BUFFER_BIT);
+	swapBuffers();
+	glViewport(0, 0, (GLint)w, (GLint)h);
+   	glClear(GL_COLOR_BUFFER_BIT);
 }
 
 
@@ -119,6 +126,7 @@ void GLRenderWidget::paintGL ()
 {
 	// makeCurrent ();
 	_renderer->really_process_g(_renderer->_delta_t);
+
 	if(_recording)
 		_recorder.nextFrame(grabFrameBuffer());
 }
@@ -129,7 +137,8 @@ void GLRenderWidget::initializeGL ()
 	glDepthFunc(GL_LEQUAL);
 	glClearDepth(1.0); 
 	glEnable(GL_BLEND);
-	resizeGL (SCGRAPH_QT_GL_RENDERER_DEFAULT_WIDTH, SCGRAPH_QT_GL_RENDERER_DEFAULT_HEIGHT);
+	resizeGL (SCGRAPH_QT_GL_RENDERER_DEFAULT_WIDTH,
+			  SCGRAPH_QT_GL_RENDERER_DEFAULT_HEIGHT);
 
 	//_glew_context = glewGetContext();
 	glewContext = getGlewContext();
@@ -156,7 +165,7 @@ void GLRenderWidget::initializeGL ()
 		std::cout << "[GGLRenderer]: Warning: shader objects extension missing" << std::endl;
 	}
 #endif
-	_renderer->change_textures();
+	_renderer->init_textures();
 
 #ifdef HAVE_SHADERS
 	_renderer->change_shader_programs();
@@ -180,6 +189,11 @@ void GLRenderWidget::mouseReleaseEvent (QMouseEvent *event)
 void GLRenderWidget::mouseMoveEvent (QMouseEvent *event)
 {
 	_renderer->mouseMoveEvent (event);
+}
+
+void GLRenderWidget::mouseDoubleClickEvent (QMouseEvent *event)
+{
+	_renderer->mouseDoubleClickEvent (event);
 }
 
 
@@ -217,14 +231,17 @@ void GLRenderWidget::keyReleaseEvent (QKeyEvent *event)
 	_renderer->keyReleaseEvent (event);
 }
 
-GLEWContext *GLRenderWidget::getGlewContext() { return &_glew_context; }
+GLEWContext *GLRenderWidget::getGlewContext() 
+{ 
+	return &_glew_context; 
+}
 
 
 GLMainWindow::GLMainWindow (GLRenderer *renderer) :
 	QMainWindow (),
 	_renderer (renderer)
 {
-	
+
 }
 
 
@@ -238,11 +255,17 @@ void GLMainWindow::closeEvent (QCloseEvent *event)
 
 GLRenderer::GLRenderer () :
 	_ready (false),
+	_transformation_matrix (Matrix()),
+	_rotation_matrix (Matrix()),
 	_show_info (false),
 	_show_help (false),
 	_full_screen (false),
 	_window_decorations (true),
 	_mouse_down (false),
+	_cur_mouse_x(0),
+	_cur_mouse_y(0),
+	_ren_mouse_x(0),
+	_ren_mouse_y(0),
 	_shift_key_down (false),
 	_up_key_down (false),
 	_down_key_down (false),
@@ -251,10 +274,29 @@ GLRenderer::GLRenderer () :
 	_forward (0),
 	_sideward (0),
 	_upward (0),
-	_window_title("[ScGraph]: GGLRenderer - Press F1 for help")
+	_rot_x (0),
+	_rot_y (0),
+	_window_title("[ScGraph]: GGLRenderer - Press F1 for help"),
+	font (QFont()),
+	_feedback (0),
+	_fbcounter (0),
+	_max_feedback_frames (SCGRAPH_QT_GL_RENDERER_MAXMAX_FEEDBACK_FRAMES + 1),
+	_current_shader_program (0),
+	_delta_t(0.1)
 {
-	_rot_y = 0;
-	_rot_x = 0;
+	_main_window = new GLMainWindow(this);
+    _gl_widget = new GLRenderWidget(_main_window, this);
+
+	_main_window->setCentralWidget(_gl_widget);
+
+	_main_window->setAttribute (Qt::WA_DeleteOnClose, false);
+	_main_window->setAttribute (Qt::WA_QuitOnClose, false);
+
+	_main_window->setWindowTitle (_window_title);
+	_main_window->resize (SCGRAPH_QT_GL_RENDERER_DEFAULT_WIDTH,
+						  SCGRAPH_QT_GL_RENDERER_DEFAULT_HEIGHT);
+
+    _main_window->show();
  
 	_transformation_matrix.set_identity ();
 	_rotation_matrix.set_identity ();
@@ -268,61 +310,69 @@ GLRenderer::GLRenderer () :
 	_gl_light_indexes[6] = GL_LIGHT6;
 	_gl_light_indexes[7] = GL_LIGHT7;
 
-	// std::cout << "[GLRenderer]: constructor" << std::endl;
+	//std::cout << "[GLRenderer]: constructor" << std::endl;
 
-	_main_window = new GLMainWindow (this);
-	_gl_widget	 = new GLRenderWidget (_main_window, this);
-	_main_window->setCentralWidget (_gl_widget);
+	// set up display texts
+	font.setPixelSize(10);
 
-	_main_window->setAttribute (Qt::WA_DeleteOnClose, false);
-	_main_window->setAttribute (Qt::WA_QuitOnClose, false);
+	directions << "eye" << "center" << "up";
 
-	_main_window->setWindowTitle (_window_title);
-	_main_window->resize (SCGRAPH_QT_GL_RENDERER_DEFAULT_WIDTH, SCGRAPH_QT_GL_RENDERER_DEFAULT_HEIGHT);
-	_main_window->show ();
+	axisnames << "x" << "y" << "z";
 
-	connect (TexturePool::get_instance (), SIGNAL (textures_changed()), this, SLOT(change_textures()), Qt::QueuedConnection);
-	connect (ShaderPool::get_instance (), SIGNAL (shader_programs_changed()), this, SLOT(change_shader_programs()), Qt::QueuedConnection);
+	offsets.append(EYE);
+	offsets.append(CENTER);
+	offsets.append(UP);
+
+	helptexts << "F1 or H - this help"
+			  << "Clicking the little X - kill the node containing this GLRenderer"
+			  << "R - reset view"		
+			  << "I - show info"
+			  << "F or double click - toggle fullscreen"
+			  << "S - screenshot"
+			  << "M - toggle recording"
+			  << "UPARROW - forward"
+			  << "DOWNARROW - backward"
+			  << "RIGHTARROW - right"
+			  << "LEFTARROW - left"
+			  << "SHIFT-UPARROW - up"
+			  << "SHIFT-DOWNARROW - down";
+
+
+	TexturePool *texture_pool = TexturePool::get_instance ();
+
+	connect (texture_pool, 
+			 SIGNAL (texture_changed(unsigned int)), 
+			 this, 
+			 SLOT(change_texture(unsigned int)), 
+			 Qt::QueuedConnection);
+
+	connect (texture_pool, 
+			 SIGNAL (change_tmp_texture(uint32_t, bool)), 
+			 this, 
+			 SLOT(change_tmp_texture(uint32_t, bool)), 
+			 Qt::QueuedConnection);
+
+	connect (texture_pool, 
+			 SIGNAL (delete_texture(uint32_t)), 
+			 this, 
+			 SLOT(delete_tmp_texture(uint32_t)),
+			 Qt::QueuedConnection);
+
+	connect (ShaderPool::get_instance (), 
+			 SIGNAL (shader_programs_changed()), 
+			 this, 
+			 SLOT(change_shader_programs()), 
+			 Qt::QueuedConnection);
+
+	//	_gl_widget->makeCurrent();
 
 #if 0
 	change_textures ();
 
 	change_shader_programs();
 #endif
-	_ready = true;
+    _ready = true;
 }
-
-void GLRenderer::setup_texture (size_t index)
-{
-	_gl_widget->makeCurrent();
-
-	TexturePool *texture_pool = TexturePool::get_instance ();
-
-	glBindTexture (GL_TEXTURE_2D, _texture_handles[index]);
-
-}
-
-void GLRenderer::add_texture (unsigned int index)
-{
-	_gl_widget->makeCurrent();
-
-	// TODO: error handling for gl texture calls
-	_texture_handles.push_back (0);
-	glGenTextures (1, &_texture_handles[_texture_handles.size () - 1]);
-
-	setup_texture (index);
-}
-
-void GLRenderer::clear_textures ()
-{
-	_gl_widget->makeCurrent();
-
-		/* we make everything new here :) */
-	glDeleteTextures (_texture_handles.size (), &_texture_handles[0]);
-
-	_texture_handles.clear ();
-}
-
 
 
 void GLRenderer::compile_and_link_shader_program(unsigned int index, ShaderPool::ShaderProgram *s) {
@@ -395,8 +445,11 @@ void GLRenderer::compile_and_link_shader_program(unsigned int index, ShaderPool:
 
 	glGetInfoLogARB(my_program, 100000, &length, (GLcharARB *)log);
 
-	std::cout << "[GGLRenderer]: Shader log:" << std::endl << log << std::endl << "[GGLRenderer]: Shader log end." << std::endl;
+	std::cout << "[GGLRenderer]: Shader log:" << std::endl 
+			  << log << std::endl 
+			  << "[GGLRenderer]: Shader log end." << std::endl;
 
+	// deactivate new shader
 	glUseProgramObjectARB(0);
 #endif
 }
@@ -445,57 +498,56 @@ void GLRenderer::add_shader_program (unsigned int index) {
 	// GLenum my_program = glCreateProgramObjectARB();
 }
 
-void GLRenderer::change_textures ()
+
+void GLRenderer::setup_texture (size_t index)
 {
 	_gl_widget->makeCurrent();
+	std::cout << "setup_texture" << std::endl;
 
-	clear_textures ();
+	glBindTexture (GL_TEXTURE_2D, _texture_handles[index]);
+}
 
-	TexturePool *texture_pool = TexturePool::get_instance ();
 
-	for (size_t i = 0; i < texture_pool->get_number_of_textures (); ++i)
-	{
-		_texture_handles.push_back(0);
-		glGenTextures (1, &_texture_handles[i]);
-		glBindTexture (GL_TEXTURE_2D, _texture_handles[i]);
+inline void GLRenderer::upload_texture(boost::shared_ptr<Texture> const & texture, GLuint handle) {
+	glBindTexture (GL_TEXTURE_2D, handle);
 
-		/** use texture proxy to test if we can load this texture */
-		glTexImage2D 
-		(
-			GL_PROXY_TEXTURE_2D,
-			0, // level
-			4, // internal format
-			texture_pool->get_texture(i)->_width,
-			texture_pool->get_texture(i)->_height,
-			0, // border
-			GL_RGBA,
-			GL_UNSIGNED_BYTE,
-			0// texture_pool->get_texture(i)->_data
-		);
+	GLenum color_format;
+	if(texture->_channels == 4)
+		color_format = GL_RGBA;
+	else
+		color_format = GL_RGB;
 
-		GLint width;
+	// use texture proxy to test if we can load this texture 
+	glTexImage2D (GL_PROXY_TEXTURE_2D,
+				  0, // level
+				  texture->_channels, // internal format
+				  texture->_width,
+				  texture->_height,
+				  0, // border
+				  color_format,
+				  GL_UNSIGNED_BYTE,
+				  0);
 
-		glGetTexLevelParameteriv(GL_PROXY_TEXTURE_2D, 0, GL_TEXTURE_WIDTH, &width);
+	GLint width;
 
-		if (width == 0) 
-		{ /* Can't use that texture */ 
-			std::cout << "[TexturePool]: Warning: Can't upload texture " 
-					  << i << ". Proxy call to glTexImage2D failed" 
-					  << std::endl;
-		}
+	glGetTexLevelParameteriv(GL_PROXY_TEXTURE_2D, 0, GL_TEXTURE_WIDTH, &width);
 
-		glTexImage2D 
-		(
-			GL_TEXTURE_2D,
-			0, // level
-			4, // internal format
-			texture_pool->get_texture(i)->_width,
-			texture_pool->get_texture(i)->_height,
-			0, // border
-			GL_RGBA,
-			GL_UNSIGNED_BYTE,
-			texture_pool->get_texture(i)->_data
-		);
+	if (width == 0) { // Can't use that texture 
+		std::cout << "[TexturePool]: Warning: Can't upload texture " 
+				  << handle << ". Proxy call to glTexImage2D failed" 
+				  << std::endl;
+	}
+	else {
+		glTexImage2D(
+					 GL_TEXTURE_2D,
+					 0, // level
+					 texture->_channels, // internal format
+					 texture->_width,
+					 texture->_height,
+					 0, // border
+					 color_format,
+					 GL_UNSIGNED_BYTE,
+					 texture->_data);
 
 		glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 
@@ -508,10 +560,156 @@ void GLRenderer::change_textures ()
 	}
 }
 
+GLuint GLRenderer::upload_texture(boost::shared_ptr<Texture> const & texture)
+{
+	GLuint tmp;
+	glGenTextures (1, &tmp);
+	upload_texture(texture, tmp);
+	return tmp;
+}
+
+void GLRenderer::upload_texture(uint32_t id, bool samep) {
+	TexturePool *texture_pool = TexturePool::get_instance ();
+	if(texture_pool->_tmp_textures.contains(id)) {
+		boost::shared_ptr<Texture> t = texture_pool->_tmp_textures.value(id);
+
+		if(samep) {
+			upload_texture(t, _tmp_texture_handles.value(id));
+		}
+		else {
+			//std::cout << "loading frame" << std::endl;
+			_tmp_texture_handles.insert(id, 0);
+			GLuint tmp = upload_texture(t);
+			_tmp_texture_handles.insert(id, tmp);
+		}
+		texture_pool->loaded_tmp_texture(id);
+	}
+	else {
+		std::cout << "[GLRenderer] No such frame at ID " << id << std::endl;
+	}
+}
+
+void GLRenderer::clear_textures ()
+{
+	_gl_widget->makeCurrent();
+
+	// we make everything new here :)
+	glDeleteTextures (_texture_handles.size (), &_texture_handles[0]);
+	
+	_texture_handles.clear ();
+}
+
+void GLRenderer::delete_texture (GLuint handle) {
+	_gl_widget->makeCurrent();
+	glDeleteTextures(1, &handle);
+}
+
+void GLRenderer::change_texture (unsigned int index) {
+	while(_texture_handles.size() <= index)
+		_texture_handles.push_back(-1);
+
+	if(_texture_handles[index] != -1)
+		delete_texture(_texture_handles[index]);
+
+	TexturePool *texture_pool = TexturePool::get_instance ();
+
+	boost::optional<boost::shared_ptr<AbstractTexture> > t = texture_pool->get_texture(index);
+	if(t && !((*t)->isVideo())) {
+		std::cout << "tex: " << (*t)->_texture << std::endl;
+		_texture_handles[index] = upload_texture((*t)->_texture);		
+	}
+}
+
+void GLRenderer::change_tmp_texture(uint32_t id, bool samep) {
+	// std::cout << "[GLRenderer] changing tmp texture " << id << std::endl;
+	if(_tmp_texture_handles.contains(id) && (!samep)) {
+		delete_texture(_tmp_texture_handles.value(id));
+	}
+	upload_texture(id, samep);
+}
+
+void GLRenderer::delete_tmp_texture(uint32_t id) {
+	if(_tmp_texture_handles.contains(id))
+		delete_texture(_tmp_texture_handles.value(id));
+}
+
+void GLRenderer::init_textures () {
+	_gl_widget->makeCurrent();
+	clear_textures ();
+
+	TexturePool *texture_pool = TexturePool::get_instance ();
+
+	for (size_t i = 0; i < texture_pool->get_number_of_textures (); ++i) {
+		_texture_handles.push_back(-1);
+		
+		boost::optional<boost::shared_ptr<AbstractTexture> > t = texture_pool->get_texture(i);
+		if(t && !(*t)->isVideo()) 
+			_texture_handles[i] = upload_texture((*t)->_texture);		
+	}
+	
+	QHashIterator<uint32_t, boost::shared_ptr<Texture> > i(texture_pool->_tmp_textures);
+	while (i.hasNext()) {
+		i.next();
+		upload_texture(i.key(), false);
+	}
+}
+
+
+
+void GLRenderer::change_feedback_frames ()
+{
+	_gl_widget->makeCurrent();
+
+	// TODO texture size?
+
+	_max_feedback_frames = std::max<unsigned int>(1, 
+												  std::min<unsigned int>((unsigned int) *_control_ins[MAXFEEDBACKFRAMES], 
+																		 SCGRAPH_QT_GL_RENDERER_MAXMAX_FEEDBACK_FRAMES));
+
+	// empty data to initialize the texture
+	std::vector<GLubyte> emptyData(1024 * 1024 * 4, 0);
+	
+	for (size_t i = 0; i < _max_feedback_frames; i++) {
+		_past_frame_handles.push_back(0);
+		glGenTextures(1, &_past_frame_handles[i]);
+		glBindTexture(GL_TEXTURE_2D, _past_frame_handles[i]);
+
+		glTexSubImage2D(GL_TEXTURE_2D, 
+						0, 0, 0, 1024, 1024, 
+						GL_RGBA, GL_UNSIGNED_BYTE, &emptyData[0]);
+		glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+
+		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+		
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	}
+}
+
+
+void GLRenderer::clear_feedback_frames ()
+{
+	_gl_widget->makeCurrent();
+
+	glDeleteTextures (_past_frame_handles.size (), &_past_frame_handles[0]);
+
+	_past_frame_handles.clear ();
+}
+
 GLRenderer::~GLRenderer ()
 {
-	std::cout << "[GLRenderer]: destructor" << std::endl;
+	//std::cout << "[GLRenderer]: destructor" << std::endl;
+
 	clear_textures ();
+
+	foreach(GLuint handle, _tmp_texture_handles)
+		glDeleteTextures(1, &handle);
+
+	_tmp_texture_handles.clear();
+
+	clear_feedback_frames ();
 
 	delete _gl_widget;
 	delete _main_window;
@@ -521,73 +719,108 @@ void GLRenderer::do_face (const Face& face)
 {
 	glColor4fv (&face._face_color._c[0]);
 
-	// std::cout << face._texture_coordinates.size () << " " << *_control_ins[TEXTURING] << " " << face._texture_index << std::endl;
-	if ((face._colors.size () > 0) && (face._texture_coordinates.size () > 0) && (*_control_ins[TEXTURING] > 0.5))
-	{
-		//std::cout << "1" << std::endl;
-		for (size_t i = 0; i < face._vertices.size (); ++i)
-		{
-			glColor4fv (&face._colors[i]._c[0]);
-			glNormal3fv (&face._normals[i]._c[0]);
-			glTexCoord2fv (&face._texture_coordinates[i]._c[0]);
-			glVertex3fv (&face._vertices[i]._c[0]);
+	// std::cout << face._texture_coordinates.size () << " " <<
+	// *_control_ins[TEXTURING] << " " << face._texture_index <<
+	// std::endl;
+	if((*_control_ins[TEXTURING] > 0.5) && (face._texture_coordinates.size () > 0)) {
+		if (face._colors.size () > 0) {
+			//std::cout << "1" << std::endl;
+			for (size_t i = 0; i < face._vertices.size (); ++i)	{
+				glColor4fv (&face._colors[i]._c[0]);
+				glNormal3fv (&face._normals[i]._c[0]);
+				glTexCoord2fv (&face._texture_coordinates[i]._c[0]);
+				glVertex3fv (&face._vertices[i]._c[0]);
+			}
+		}
+		else {
+			//std::cout << "2" << std::endl;
+			for (size_t i = 0; i < face._vertices.size (); ++i)
+				{
+					glNormal3fv (&face._normals[i]._c[0]);
+					glTexCoord2fv (&face._texture_coordinates[i]._c[0]);
+					glVertex3fv (&face._vertices[i]._c[0]);
+				}
 		}
 	}
-	else if ((face._colors.size () == 0) && (face._texture_coordinates.size () > 0) && (*_control_ins[TEXTURING] > 0.5))
-	{
-		//std::cout << "2" << std::endl;
-		for (size_t i = 0; i < face._vertices.size (); ++i)
-		{
-			glNormal3fv (&face._normals[i]._c[0]);
-			glTexCoord2fv (&face._texture_coordinates[i]._c[0]);
-			glVertex3fv (&face._vertices[i]._c[0]);
-		}
-	}
-	else if (face._colors.size () > 0 && (face._texture_coordinates.size () == 0 || *_control_ins[TEXTURING] < 0.5))
-	{
+	else if (face._colors.size () > 0 && (face._texture_coordinates.empty() || (*_control_ins[TEXTURING] < 0.5))) {
 		//std::cout << "3" << std::endl;
 		for (size_t i = 0; i < face._vertices.size (); ++i)
-		{
-			glColor4fv (&face._colors[i]._c[0]);
-			glNormal3fv (&face._normals[i]._c[0]);
-			glVertex3fv (&face._vertices[i]._c[0]);
-		}
+			{
+				glColor4fv (&face._colors[i]._c[0]);
+				glNormal3fv (&face._normals[i]._c[0]);
+				glVertex3fv (&face._vertices[i]._c[0]);
+			}
 	}
-	else
-	{
+	else {
 		//std::cout << "4" << std::endl;
 		for (size_t i = 0; i < face._vertices.size (); ++i)
-		{
-			glNormal3fv (&face._normals[i]._c[0]);
-			glVertex3fv (&face._vertices[i]._c[0]);
-		}
+			{
+				glNormal3fv (&face._normals[i]._c[0]);
+				glVertex3fv (&face._vertices[i]._c[0]);
+			}
 	}
 }
 
 
-void GLRenderer::draw_face (const Face &face)
-{
-	/* if lighting is enabled at this point, then select the material */
+void GLRenderer::draw_face (const Face &face) {
+	TexturePool *texture_pool = TexturePool::get_instance ();
+
+	if (face._render_mode == WIREFRAME) {
+		glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
+		glLineWidth (face._thickness);
+	}
+	else {
+		glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
+	}
+
+	// if lighting is enabled at this point, then select the material
 	if (*_control_ins[LIGHTING] > 0.5)
 		do_material (face._material);
 
-	// TODO: optimize this switch into a std::map<int, int>
+	if (*_control_ins[TEXTURING] > 0.5 && face._texture_coordinates.size () > 0) {
+		if(face._texture_index >= 0 		
+		   && face._texture_index < _texture_handles.size()) {
+			glEnable (GL_TEXTURE_2D);
+
+			if((*texture_pool->get_texture(face._texture_index))->isVideo() == true) {
+				if(_tmp_texture_handles.contains(face._frame_id)) {
+					glBindTexture (GL_TEXTURE_2D, 
+								   _tmp_texture_handles.value(face._frame_id, 0));
+				}
+			}
+			else if(_texture_handles[face._texture_index] != -1)
+				glBindTexture (GL_TEXTURE_2D, 
+							   _texture_handles[face._texture_index]);
+		}
+		else {
+			if(face._texture_index < 0)	{
+				_feedback = std::min<unsigned int>(
+												   face._texture_index * -1, 
+												   _max_feedback_frames);
+				//std::cout << face._texture_index << std::endl;
+				glEnable (GL_TEXTURE_2D);
+				glBindTexture(GL_TEXTURE_2D, 
+							  _past_frame_handles[
+												  (_max_feedback_frames 
+												   - _feedback 
+												   + _fbcounter) 
+												  % _max_feedback_frames]);
+			}
+			else {
+				glDisable (GL_TEXTURE_2D);
+			}
+		}
+	}
+	else 
+		{
+			glDisable (GL_TEXTURE_2D);
+			// std::cout << "disable" << std::endl;
+		}
+
 	// TODO: fix per vertex color for lines
 
-	if (*_control_ins[TEXTURING] > 0.5 && face._texture_coordinates.size () > 0 && face._texture_index < _texture_handles.size())
-	{
-		glEnable (GL_TEXTURE_2D);
-		//std::cout << _texture_handles[face._texture_index] << std::endl;
-		glBindTexture (GL_TEXTURE_2D, _texture_handles[face._texture_index]);
-	}
-	else
-	{
-		glDisable (GL_TEXTURE_2D);
-		// std::cout << "disable" << std::endl;
-	}
-
 	switch (face._geometry_type)
-	{
+		{
 		case Face::POINTS:
 			if (*_control_ins[LIGHTING] > 0.5)
 				glDisable (GL_LIGHTING);
@@ -601,9 +834,7 @@ void GLRenderer::draw_face (const Face &face)
 
 
 			for (size_t i = 0; i < face._vertices.size (); ++i)
-			{
 				glVertex3fv (&face._vertices[i]._c[0]);
-			}
 
 			glEnd ();
 
@@ -611,7 +842,7 @@ void GLRenderer::draw_face (const Face &face)
 
 			if (*_control_ins[LIGHTING] > 0.5)
 				glEnable (GL_LIGHTING);
-		break;
+			break;
 
 		case Face::LINES:
 			if (*_control_ins[LIGHTING] > 0.5)
@@ -624,15 +855,13 @@ void GLRenderer::draw_face (const Face &face)
 			glColor4fv (&face._face_color._c[0]);
 
 			for (size_t i = 0; i < face._vertices.size (); ++i)
-			{
 				glVertex3fv (&face._vertices[i]._c[0]);
-			}
 
 			glEnd ();
 
 			if (*_control_ins[LIGHTING] > 0.5)
 				glEnable (GL_LIGHTING);
-		break;
+			break;
 
 		case Face::LINE_STRIP:
 			if (*_control_ins[LIGHTING] > 0.5)
@@ -645,15 +874,13 @@ void GLRenderer::draw_face (const Face &face)
 			glColor4fv (&face._face_color._c[0]);
 
 			for (size_t i = 0; i < face._vertices.size (); ++i)
-			{
 				glVertex3fv (&face._vertices[i]._c[0]);
-			}
 
 			glEnd ();
 
 			if (*_control_ins[LIGHTING] > 0.5)
 				glEnable (GL_LIGHTING);
-		break;
+			break;
 
 		case Face::LINE_LOOP:
 			if (*_control_ins[LIGHTING] > 0.5)
@@ -666,15 +893,13 @@ void GLRenderer::draw_face (const Face &face)
 			glColor4fv (&face._face_color._c[0]);
 
 			for (size_t i = 0; i < face._vertices.size (); ++i)
-			{
 				glVertex3fv (&face._vertices[i]._c[0]);
-			}
 
 			glEnd ();
 
 			if (*_control_ins[LIGHTING] > 0.5)
 				glEnable (GL_LIGHTING);
-		break;
+			break;
 
 		case Face::TRIANGLES:
 			glBegin (GL_TRIANGLES);
@@ -682,7 +907,7 @@ void GLRenderer::draw_face (const Face &face)
 			do_face (face);
 
 			glEnd ();
-		break;
+			break;
 
 		case Face::QUADS:
 			glBegin (GL_QUADS);
@@ -690,7 +915,7 @@ void GLRenderer::draw_face (const Face &face)
 			do_face (face);
 
 			glEnd ();
-		break;
+			break;
 
 		case Face::TRIANGLE_STRIP:
 			glBegin (GL_TRIANGLE_STRIP);
@@ -698,7 +923,7 @@ void GLRenderer::draw_face (const Face &face)
 			do_face (face);
 
 			glEnd ();
-		break;
+			break;
 
 		case Face::TRIANGLE_FAN:
 			glBegin (GL_TRIANGLE_FAN);
@@ -706,7 +931,7 @@ void GLRenderer::draw_face (const Face &face)
 			do_face (face);
 
 			glEnd ();
-		break;
+			break;
 
 		case Face::QUAD_STRIP:
 			glBegin (GL_QUAD_STRIP);
@@ -714,7 +939,7 @@ void GLRenderer::draw_face (const Face &face)
 			do_face (face);
 
 			glEnd ();
-		break;
+			break;
 
 		case Face::POLYGON:
 			glBegin (GL_POLYGON);
@@ -722,12 +947,12 @@ void GLRenderer::draw_face (const Face &face)
 			do_face (face);
 
 			glEnd ();
-		break;
+			break;
 
 		default:
 
-		break;
-	}
+			break;
+		}
 
 	glEnd ();
 
@@ -799,10 +1024,10 @@ void GLRenderer::visitShaderUniformConst (const ShaderUniform *s)
 
 	//std::cout << "current shader program index: " << _current_shader_program << " uniform index: " << s->_uniform_index << std::endl;
 
-
 	// TODO: Make more efficient..
 	// std::cout << "values.size(): " << s->_values.size() << " uniform index: " << s->_uniform_index << " first value: " << s->_values[0] <<  std::endl;
-	if (_shader_uniforms.find(_current_shader_program) == _shader_uniforms.end()) {
+	if (_shader_uniforms.find(_current_shader_program) 
+		== _shader_uniforms.end()) {
 		// std::cout << "[GGLRenderer] No uniform at index " << s->_uniform_index 
 		//		  << " for shader " << _current_shader_program << "!" << std::endl;
 		return;
@@ -844,7 +1069,7 @@ void GLRenderer::visitShaderUniformConst (const ShaderUniform *s)
 		break;
 	}
 	// lookup attribute
-	//GLint attribute = glGetAttribLocation(_shader_program[s->_index]first, _shader_programs[s->_index].second->_attributes
+	//GLint attribute = glGetAttribLocation(_shader_program[s->_index].first, _shader_programs[s->_index].second->_attributes
 #endif
 }
 
@@ -887,8 +1112,7 @@ void GLRenderer::visitTransformationConst (const Transformation *t)
 	{
 		(*it)->acceptConst (this);
 	}
-	//glMultMatrixf (g->_transformation_matrix.get_coefficients());
-
+	// glMultMatrixf (g->_transformation_matrix.get_coefficients());
 }
 
 
@@ -908,9 +1132,14 @@ void GLRenderer::visitBlendingConst (const Blending *b)
 {
 	if ((b->_on) && (*_control_ins[TRANSPARENCY] > 0.5))
 	{
+		//std::cout << "on" << std::endl;
 		glEnable (GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glShadeModel(GL_FLAT);
+
+		///// evil workaround to fix blending
+		glDisable(GL_CULL_FACE);
+		glDisable(GL_DEPTH_TEST);
 	}
 	else
 	{
@@ -927,7 +1156,6 @@ void GLRenderer::visitCullingConst (const Culling *c)
 		case Culling::Off:
 			glDisable (GL_CULL_FACE);
 		break;
-
 		case Culling::Front:
 			glEnable (GL_CULL_FACE);
 			glCullFace (GL_FRONT);
@@ -943,22 +1171,58 @@ void GLRenderer::visitCullingConst (const Culling *c)
 	}
 }
 
+
+void GLRenderer::visitTextConst (const Text *t)
+{
+	glPushMatrix();
+
+	if (*_control_ins[LIGHTING] > 0.5)
+		do_material (t->_material);
+
+	visitTransformationConst (t);
+	glColor4fv (&(t->_color._c[0]));
+
+	glScalef(0.2,0.2,0.2);
+
+	if (t->_render_mode == WIREFRAME) {
+		glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
+		glLineWidth (t->_thickness);
+	}
+	else {
+		glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
+	}
+
+#ifdef HAVE_FTGL
+	StringPool *str = StringPool::get_instance();
+	str->_font->FaceSize(t->_fontsize);
+	str->_font->Render(t->_text.c_str());
+#endif
+
+	glPopMatrix();
+}
+
+
 void GLRenderer::process_g (double delta_t)
 {
 	_delta_t = delta_t;
 	glewContext = _gl_widget->getGlewContext();
+
 	_gl_widget->updateGL();
 }
 
 
 void GLRenderer::really_process_g (double delta_t)
 {
+
 	if (!_ready)
 		return;
 
-	/* first thing to do */
-	//_gl_widget->makeCurrent ();
+	// TODO find a better place for this
+	if (_max_feedback_frames == (SCGRAPH_QT_GL_RENDERER_MAXMAX_FEEDBACK_FRAMES + 1))
+		change_feedback_frames();
 
+	// first thing to do 
+	// _gl_widget->makeCurrent ();
 
 #ifndef HAVE_SHADERS
 	// deactivate shaders
@@ -1128,20 +1392,28 @@ void GLRenderer::really_process_g (double delta_t)
 	else
 		glDisable (GL_FOG);
 
-	/* set up camera position and view direction */
+	// set up camera position and view direction
 	glMatrixMode(GL_PROJECTION);
 
 	glLoadIdentity();
 
 	if (*_control_ins[PERSPECTIVE] > 0.5)
 	{
-		gluPerspective (*_control_ins[FOV], (GLfloat)_gl_widget->width()/(GLfloat)_gl_widget->height(), *_control_ins[NEAR_PLANE], *_control_ins[FAR_PLANE]);
+		gluPerspective (*_control_ins[FOV],
+						(GLfloat)_gl_widget->width() 
+						/ (GLfloat)_gl_widget->height(),
+						*_control_ins[NEAR_PLANE], 
+						*_control_ins[FAR_PLANE]);
 	}
 	else
 	{
-		float ratio = (GLfloat)_gl_widget->width()/(GLfloat)_gl_widget->height();
+		float ratio = (GLfloat)_gl_widget->width() 
+			/ (GLfloat)_gl_widget->height();
 
-		glOrtho (-1.0 *ratio, 1.0 * ratio, -1.0, 1.0, *_control_ins[NEAR_PLANE], *_control_ins[FAR_PLANE]);
+		glOrtho (-1.0 * ratio, 1.0 * ratio, 
+				 -1.0, 1.0,
+				 *_control_ins[NEAR_PLANE], 
+				 *_control_ins[FAR_PLANE]);
 	}
 
 	glMatrixMode (GL_MODELVIEW);
@@ -1150,20 +1422,17 @@ void GLRenderer::really_process_g (double delta_t)
 
 	glMultMatrixf (_transformation_matrix.get_coefficients ());
 
-	gluLookAt
-	(
-		*_control_ins[EYE + 0],
-		*_control_ins[EYE + 1],
-		*_control_ins[EYE + 2],
-		*_control_ins[CENTER + 0],
-		*_control_ins[CENTER + 1],
-		*_control_ins[CENTER + 2],
-		*_control_ins[UP + 0],
-		*_control_ins[UP + 1],
-		*_control_ins[UP + 2]
-	);
+	gluLookAt(*_control_ins[EYE + 0],
+			  *_control_ins[EYE + 1],
+			  *_control_ins[EYE + 2],
+			  *_control_ins[CENTER + 0],
+			  *_control_ins[CENTER + 1],
+			  *_control_ins[CENTER + 2],
+			  *_control_ins[UP + 0],
+			  *_control_ins[UP + 1],
+			  *_control_ins[UP + 2]);
 
-	/* turn off all lights first so they can be reenabled on demand later */
+	// turn off all lights first so they can be reenabled on demand later
 	if (*_control_ins[LIGHTING] > 0.5)
 	{
 		glEnable (GL_NORMALIZE);
@@ -1185,147 +1454,73 @@ void GLRenderer::really_process_g (double delta_t)
 
 	glMatrixMode (GL_MODELVIEW);
 
-	/* this does the gruntwork) */
+	// this does the gruntwork)
 	if (_graphics_ins[0])
 	{
-		//std::cout << "iterating over graphics ins" << std::endl;
+		// std::cout << "iterating over graphics ins" << std::endl;
 		for (size_t i = 0; i < _graphics_ins[0]->_graphics.size (); ++i)
 		{
 			if (_graphics_ins[0]->_graphics[i].inspect())
 			{
-				//std::cout << "graphics in!!" << std::endl;
+				// std::cout << "graphics in!!" << std::endl;
 				_graphics_ins[0]->_graphics[i]->acceptConst(this);
 			}
 		}
 	}
 
-	//glAccum (GL_MULT, 0.5);
-	//glAccum (GL_RETURN, 1.0);
+	// glAccum (GL_MULT, 0.5);
+	// glAccum (GL_RETURN, 1.0);
+
+	if (_feedback > 0) {
+							/*glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16, 
+							  0, 0,
+							  (int)pow(2,(int)ceil(log2(_gl_widget->width()))),
+							  (int)pow(2,(int)ceil(log2(_gl_widget->height()))), 
+							  0);*/
+		glActiveTexture(_past_frame_handles[_fbcounter]);
+		glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16, 0, 0, 
+						 _gl_widget->width(), _gl_widget->height(), 0);
+		//std::cout << "GL error message:" << glGetError() << std::endl; 
+		_feedback = 0;
+	}
+	_fbcounter = (_fbcounter + 1) % _max_feedback_frames;
 
 	glDisable (GL_LIGHTING);
 
 	if (_show_help)
 	{
-		std::stringstream stream;
-
-		QFont font;
-		font.setPixelSize (10);
-
 		int y_offset = 20;
 
 		glColor3f (1, 1, 1);
 
-		_gl_widget->renderText (10, y_offset, "F1 or H - this help");
-		y_offset += 13;
-
-		_gl_widget->renderText (10, y_offset, "Clicking the little X - kill the node containing this GLRenderer");
-		y_offset += 13;
-
-		_gl_widget->renderText (10, y_offset, "R - reset view");
-		y_offset += 13;
-
-		_gl_widget->renderText (10, y_offset, "I - show info");
-		y_offset += 13;
-
-		_gl_widget->renderText (10, y_offset, "F - toggle fullscreen");
-		y_offset += 13;
-
-		_gl_widget->renderText (10, y_offset, "S - screenshot");
-		y_offset += 13;
-
-		_gl_widget->renderText (10, y_offset, "M - toggle recording");
-		y_offset += 13;
-
-		_gl_widget->renderText (10, y_offset, "UPARROW - forward");
-		y_offset += 13;
-
-		_gl_widget->renderText (10, y_offset, "DOWNARROW - backward");
-		y_offset += 13;
-
-		_gl_widget->renderText (10, y_offset, "RIGHTARROW - right");
-		y_offset += 13;
-
-		_gl_widget->renderText (10, y_offset, "LEFTARROW - left");
-		y_offset += 13;
-
-		_gl_widget->renderText (10, y_offset, "SHIFT-UPARROW - up");
-		y_offset += 13;
-
-		_gl_widget->renderText (10, y_offset, "SHIFT-DOWNARROW - down");
-		y_offset += 13;
+		QStringList::const_iterator constIterator;
+		for (constIterator = helptexts.constBegin(); 
+			 _show_help && (constIterator != helptexts.constEnd());
+			 ++constIterator)
+			{
+				_gl_widget->renderText (10, y_offset, *constIterator, font);
+				y_offset += 13;
+			}
 	}
 
 	if (_show_info)
 	{
 		_show_help = false;
 
-		std::stringstream stream;
-
-		QFont font;
-		font.setPixelSize (10);
-
-		int y_offset = 20;
-
 		glColor3f (1, 1, 1);
 
-		stream << "eye_x: " << *_control_ins[EYE + 0];
-		_gl_widget->renderText (10, y_offset, stream.str ().c_str ());
-		stream.str ("");
-		stream.clear ();
-		y_offset += 13;
-
-		stream << "eye_y: " << *_control_ins[EYE + 1];
-		_gl_widget->renderText (10, y_offset, stream.str ().c_str ());
-		stream.str ("");
-		stream.clear ();
-		y_offset += 13;
-
-		stream << "eye_z: " << *_control_ins[EYE + 2];
-		_gl_widget->renderText (10, y_offset, stream.str ().c_str ());
-		stream.str ("");
-		stream.clear ();
-		y_offset += 13;
-
-		stream << "center_x: " << *_control_ins[CENTER + 0];
-		_gl_widget->renderText (10, y_offset, stream.str ().c_str ());
-		stream.str ("");
-		stream.clear ();
-		y_offset += 13;
-
-		stream << "center_y: " << *_control_ins[CENTER + 1];
-		_gl_widget->renderText (10, y_offset, stream.str ().c_str ());
-		stream.str ("");
-		stream.clear ();
-		y_offset += 13;
-
-		stream << "center_z: " << *_control_ins[CENTER + 2];
-		_gl_widget->renderText (10, y_offset, stream.str ().c_str ());
-		stream.str ("");
-		stream.clear ();
-		y_offset += 13;
-
-		stream << "up_x: " << *_control_ins[UP + 0];
-		_gl_widget->renderText (10, y_offset, stream.str ().c_str ());
-		stream.str ("");
-		stream.clear ();
-		y_offset += 13;
-
-		stream << "up_y: " << *_control_ins[UP + 1];
-		_gl_widget->renderText (10, y_offset, stream.str ().c_str ());
-		stream.str ("");
-		stream.clear ();
-		y_offset += 13;
-
-		stream << "up_z: " << *_control_ins[UP + 2];
-		_gl_widget->renderText (10, y_offset, stream.str ().c_str ());
-		stream.str ("");
-		stream.clear ();
-		y_offset += 13;
-
-		// glLoadIdentity ();
-		glColor3f (1, 1, 1);
-		// std::cout << stream.str ().c_str ();
-		_gl_widget->renderText (y_offset, 20, stream.str ().c_str ());
+		for(unsigned char dir = 0; _show_info && (dir < 3); dir++) {
+			for(unsigned char axis = 0; _show_info && (axis < 3); axis++) {
+				if(_show_info)
+					_gl_widget->renderText(10, 
+									   ((dir * 3) + (axis + 1)) * 13, 
+									   QString("%1_%2: %3")
+									   .arg(directions.at(dir))
+									   .arg(axisnames.at(axis))
+									   .arg(*_control_ins[offsets.at(dir) + axis]),
+									   font);
+			}
+		}
 	}
 
 	//if(_gl_widget->doubleBuffer()) _gl_widget->swapBuffers ();
@@ -1348,10 +1543,18 @@ void GLRenderer::mouseReleaseEvent (QMouseEvent *event)
 
 void GLRenderer::mouseMoveEvent (QMouseEvent *event)
 {
-	
-
 	_cur_mouse_x = event->x();
 	_cur_mouse_y = event->y();
+	event->ignore ();
+}
+
+void GLRenderer::mouseDoubleClickEvent (QMouseEvent *event)
+{
+	_full_screen = !_full_screen;
+	if (_full_screen)
+		_main_window->showFullScreen ();
+	else
+		_main_window->showNormal ();
 	event->ignore ();
 }
 
@@ -1403,23 +1606,19 @@ void GLRenderer::keyPressEvent (QKeyEvent *event)
 		break;
 
 		case Qt::Key_S: 
-		{
-			if(event->isAutoRepeat() == false) {
+			if(event->isAutoRepeat() == false)
 				_gl_widget->makeScreenshot();			
-			}
+
 			event->accept ();
 			return;
-		}
 		break;
 
 		case Qt::Key_M: 
-		{
-			if(event->isAutoRepeat() == false) {
+			if(event->isAutoRepeat() == false) 
 				_gl_widget->toggleRecording();
-			}
+
 			event->accept ();
 			return;
-		}
 		break;
 	
 		case Qt::Key_I:
@@ -1452,6 +1651,17 @@ void GLRenderer::keyPressEvent (QKeyEvent *event)
 			event->accept ();
 			return;
 		break;
+
+		case Qt::Key_Escape:
+			if (_full_screen)
+				{
+					_full_screen = !_full_screen;
+					_main_window->showNormal ();
+				}
+			event->accept ();
+			return;
+		break;
+
 	
 	}
 	event->ignore ();

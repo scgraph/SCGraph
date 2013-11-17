@@ -3,6 +3,9 @@
 
 #include "../unit.h"
 
+#include <QtCore/QObject>
+
+
 class Quad : public GUnit
 {
 	cow_ptr<Geometry> _g;
@@ -14,15 +17,38 @@ class Quad : public GUnit
 		virtual void process_g (double delta_t);
 };
 
-class TexQuad : public GUnit
+class TexQuad : public QObject, public GUnit
+{
+	Q_OBJECT
+
+	cow_ptr<Geometry> _g;
+
+	uint32_t _texquad_id_a, _texquad_id_b;
+	int _tex_index_a, _tex_index_b, _frame_index_a, _frame_index_b;
+	int _last_frame_index, _last_tex_index;
+	bool _flip;
+	bool _processing;
+
+ public:
+	TexQuad ();
+	~TexQuad ();
+
+	virtual void process_g (double delta_t);
+
+	public slots:
+		void flip(uint32_t tex_id);
+};
+
+class FBTexQuad : public GUnit
 {
 	cow_ptr<Geometry> _g;
 
 	public:
-		TexQuad ();
-		~TexQuad ();
+		FBTexQuad ();
+		~FBTexQuad ();
 
 		virtual void process_g (double delta_t);
 };
+
 
 #endif

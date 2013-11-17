@@ -13,6 +13,8 @@ struct Material
 	ColorRGBA _emissive_color;
 
 	Material ();
+
+	void scale_alpha(float factor);
 };
 
 #endif

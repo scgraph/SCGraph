@@ -51,12 +51,12 @@ void ObjLoader::read_file (const std::string &file_name)
 		}
 		else if (linetype == "vn")
 		{
-			// std::cout << "normal" << std::endl;
+		   std::cout << "normal" << std::endl;
 			Vector3D v;
 			stream >> v._c[0] >> v._c[1] >> v._c[2];
 			_normals.push_back (v);
 		}
-		else if (linetype == "f")
+		else if (linetype == "f" || linetype == "fo")
 		{
 			cow_ptr<Face> face (new Face(Face::POLYGON));
 			while (stream.good ())
@@ -68,10 +68,8 @@ void ObjLoader::read_file (const std::string &file_name)
 				if (tmp.length() == 0)
 					break;
 
-				size_t pos1;
-				pos1 = tmp.find('/');
-				size_t pos2;
-				pos2 = tmp.find('/', pos1 + 1);
+				size_t pos1 = tmp.find('/');
+				size_t pos2 = tmp.find('/', pos1 + 1);
 
 				// std::cout << (int)pos1 << " " << (int)pos2 << " " << (int)pos3 << std::endl;
 

@@ -2,18 +2,17 @@
 #include "graphics_visitor.h"
 
 
-/** the superclass for all graphics objects */
-Graphics::~Graphics ()
+// the superclass for all graphics objects
+Graphics::~Graphics()
 {
 }
 
-Graphics::Graphics () 
+Graphics::Graphics() 
 {
-
 }
 
 
-Transformation::Transformation ()
+Transformation::Transformation()
 {
 }
 
@@ -28,15 +27,16 @@ void Transformation::acceptConst(GraphicsVisitor* v) const
 }
 
 #if 0
-Transformation *Transformation::clone ()
+Transformation *Transformation::clone()
 {
-	Transformation *t = new Transformation ();
+	Transformation *t = new Transformation();
 
 	t->_commands = _commands;
 
 	return t;
 }
 #endif
+
 
 void Geometry::accept(GraphicsVisitor* v)
 {
@@ -48,23 +48,24 @@ void Geometry::acceptConst(GraphicsVisitor* v) const
 }
 
 #if 0
-Geometry *Geometry::clone ()
+Geometry *Geometry::clone()
 {
-	Geometry *g = new Geometry ();
+	Geometry *g = new Geometry();
 
 	g->_commands = _commands;
 
-	for (size_t i = 0; i < _faces.size (); ++i)
+	for(size_t i = 0; i < _faces.size(); ++i)
 	{
-		cow_ptr<Face> p (new Face (*(_faces[i])));
-		g.touch()->_faces.push_back (p);
+		cow_ptr<Face> p(new Face(*(_faces[i])));
+		g.touch()->_faces.push_back(p);
 	}
 
 	return g;
 }
 #endif
 
-/** a light source */
+
+// a light source
 void Light::accept(GraphicsVisitor* v)
 {
 		v->visitLight(this);
@@ -75,9 +76,9 @@ void Light::acceptConst(GraphicsVisitor* v) const
 }
 
 #if 0
-Light *Light::clone ()
+Light *Light::clone()
 {
-	Light *l = new Light ();
+	Light *l = new Light();
 
 	l->_commands = _commands;
 
@@ -103,6 +104,7 @@ Light *Light::clone ()
 }
 #endif
 
+
 void Command::accept(GraphicsVisitor* v)
 {
 	v->visitGraphics(this);
@@ -114,13 +116,14 @@ void Command::acceptConst(GraphicsVisitor* v) const
 }
 
 #if 0
-Command *Command::clone ()
+Command *Command::clone()
 {
-	Command *c = new Command ();
+	Command *c = new Command();
 
 	return c;
 }
 #endif
+
 
 void Lighting::accept(GraphicsVisitor* v)
 {
@@ -139,18 +142,15 @@ void ShaderProgram::accept(GraphicsVisitor* v)
 	v->visitShaderProgram(this);
 }
 
-
 void ShaderProgram::acceptConst(GraphicsVisitor* v) const
 {
 	v->visitShaderProgramConst(this);
 }
 
-
 void ShaderUniform::accept(GraphicsVisitor* v)
 {
 	v->visitShaderUniform(this);
 }
-
 
 void ShaderUniform::acceptConst(GraphicsVisitor* v) const
 {
@@ -162,6 +162,7 @@ void Blending::accept(GraphicsVisitor* v)
 {
 	v->visitBlending(this);
 }
+
 void Blending::acceptConst(GraphicsVisitor* v) const
 {
 	v->visitBlendingConst(this);
@@ -172,9 +173,19 @@ void Culling::accept(GraphicsVisitor* v)
 {
 	v->visitCulling(this);
 }
+
 void Culling::acceptConst(GraphicsVisitor* v) const
 {
 	v->visitCullingConst(this);
 }
 
 
+void Text::accept(GraphicsVisitor* v)
+{
+	v->visitText(this);
+}
+
+void Text::acceptConst(GraphicsVisitor* v) const
+{
+	v->visitTextConst(this);
+}

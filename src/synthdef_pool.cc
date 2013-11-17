@@ -83,7 +83,7 @@ void SynthDefPool::add_synthdef_dir (const std::string &directory)
 
 	/* then we scan the directory recursively */
 	struct dirent *dirent;
-	while ((dirent = readdir (dir)))
+	while ((dirent = readdir(dir)))
 	{
 		if ((std::string (dirent->d_name) == std::string (".")) || (std::string (dirent->d_name) == std::string ("..")))
 			continue;

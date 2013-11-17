@@ -6,9 +6,16 @@
 
 #include <signal.h>
 
+#include <QtOpenGL/QGLFormat>
+
 #include "options.h"
 #include "plugin_pool.h"
 #include "texture_pool.h"
+
+#ifdef HAVE_FTGL
+#include "string_pool.h"
+#endif
+
 #include "scgraph.h"
 
 bool signalled_again = false;
@@ -44,6 +51,17 @@ int main (int argc, char *argv[])
 	/* create QApplication object before option object so it can 
 	   modify the argument list */
 	QApplication qapp (argc, argv);
+	QIcon icon;
+	icon.addFile(":icons/scgraph-cube-128");
+	icon.addFile(":icons/scgraph-cube-48");
+	icon.addFile(":icons/scgraph-cube-32");
+	icon.addFile(":icons/scgraph-cube-16");
+	qapp.setWindowIcon(icon);
+
+
+	QGLFormat f;
+	f.setDoubleBuffer(true);
+	QGLFormat::setDefaultFormat(f);
 
 	/* pretty much everything else needs access to this. Especially stuff in 
 	   ScGraph:: */
@@ -52,6 +70,10 @@ int main (int argc, char *argv[])
 	TexturePool::get_instance ();
 
 	PluginPool::get_instance ();
+
+#ifdef HAVE_FTGL
+	StringPool::get_instance ();
+#endif
 
 	ScGraph *scgraph = ScGraph::get_instance (argc, argv);
 
@@ -63,7 +85,6 @@ int main (int argc, char *argv[])
 		std::cout << "[Main]: Up and running..." << std::endl;
 
 	scgraph->start ();
-
 	qapp.exec ();
 
 	if (options->_verbose)

@@ -27,8 +27,7 @@ extern "C"
 }
 
 
-FreqAmp::FreqAmp () :
-	_value (1.0)
+FreqAmp::FreqAmp ()
 {
 
 }
@@ -42,8 +41,10 @@ void FreqAmp::process_c (double delta_t)
 {
 	ScGraph *scgraph = ScGraph::get_instance ();
 	if (scgraph->_jack_client.get() != 0) {
-		_control_outs[0] = scgraph->_jack_client->get_frequency ((int)*_control_ins[0], *_control_ins[1]);
+		_control_outs[0] = scgraph->_jack_client->get_frequency(
+																(int)*_control_ins[0], 
+																*_control_ins[1]);
 	} else {
-		_control_outs[0] = 0;
+		_control_outs[0] = 0.0;
 	}
 }

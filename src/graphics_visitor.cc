@@ -61,6 +61,13 @@ void GraphicsVisitor::visitGraphics (Graphics *g)
 }
 
 
+void GraphicsVisitor::visitText (Text *g)
+{
+	//visitGeometry(&(g->_geom));
+	// std::cout << "visitText" << std::endl;
+	visitTransformation(g);
+}
+
 
 
 
@@ -130,6 +137,13 @@ void GraphicsVisitor::visitLightConst (const Light *l)
 void GraphicsVisitor::visitGraphicsConst (const Graphics *g)
 {
 	// std::cout << "visitGraphics" << std::endl;
+}
+
+
+void GraphicsVisitor::visitTextConst (const Text *g)
+{
+	// std::cout << "visitText" << std::endl;
+	visitTransformationConst(g);
 }
 
 

@@ -37,12 +37,15 @@ GMaterial::~GMaterial ()
 
 void GMaterial::visitGeometry (Geometry *g)
 {
-	Material material;
-
 	for (size_t i = 0; i < g->_faces.size (); ++i)
 	{
 		g->_faces[i].touch()->_material = _material;
 	}
+}
+
+void GMaterial::visitText (Text *t)
+{
+	t->_material = _material;
 }
 
 void GMaterial::process_g (double delta_t)

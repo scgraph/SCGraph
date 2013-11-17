@@ -8,3 +8,8 @@ ColorRGBA::ColorRGBA (float r, float g, float b, float a)
 	_c[2] = b;
 	_c[3] = a;
 }
+
+void ColorRGBA::scale_alpha(float factor)
+{
+	_c[3] = (float) (_c[3] * factor);
+}

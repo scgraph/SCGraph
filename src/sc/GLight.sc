@@ -1,4 +1,4 @@
-GLight : UGen {
+GLight : GraphicsUGen {
 	*gr 
 	{ 
 		arg 
@@ -40,5 +40,9 @@ GLight : UGen {
 			linear_attenuation, 
 			quadratic_attenuation
 		);
+	}
+
+	checkInputs {
+		^this.checkAllInputs(0);
 	}
 }

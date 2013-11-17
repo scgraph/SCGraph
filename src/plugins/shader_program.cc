@@ -8,6 +8,7 @@ extern "C"
 	{
 		if (index == 0) return (GUnit*) new GShaderProgram (); 
 		if (index == 1) return (GUnit*) new GShaderUniform (); 
+		else std::cout << "[GShaderProgram]: wrong type!" << std::endl;
 	}
 
 	size_t get_num_of_units ()
@@ -54,16 +55,6 @@ void GShaderProgram::process_g (double delta_t)
 
 	_graphics_outs[0]._graphics.push_back(_l);
 }
-
-
-
-
-
-
-
-
-
-
 
 GShaderUniform::GShaderUniform () : 
 	_l(new ShaderUniform),

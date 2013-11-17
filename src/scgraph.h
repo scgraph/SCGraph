@@ -35,7 +35,7 @@
 /** this class implements the singleton pattern and is the global
  * access point for pretty much everything */
 
-class ScGraph : public QApplication
+class ScGraph
 {
 	// QMutex                            _main_mutex;
 
@@ -52,6 +52,7 @@ class ScGraph : public QApplication
 		static ScGraph* get_instance ();
 		static ScGraph* get_instance (int argc, char *argv[]);
 
+		/*
 		// reimplemented from QApplication so we can throw exceptions in slots
 		virtual bool notify(QObject * receiver, QEvent * event) {
 			try {
@@ -61,6 +62,7 @@ class ScGraph : public QApplication
 			}
 			return false;
 		}
+		*/
 
 	public:
 #ifdef HAVE_JACK
@@ -87,6 +89,9 @@ class ScGraph : public QApplication
 		std::vector <GraphicsBus>
 		                           _graphics_busses;
 
+		std::vector <GraphicsBus>
+		                           _past_graphics_busses;
+
 		std::vector<boost::shared_ptr<GSynth> >
 		                           _persistent_synths;
 
@@ -100,6 +105,8 @@ class ScGraph : public QApplication
 	
 		pthread_mutex_t            _graphic_mutex;
 #endif
+
+		double _delta_t;
 
 		void start ();
 		void stop ();

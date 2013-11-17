@@ -61,7 +61,7 @@ void ControlLoop::set_rate (int rate)
 
 void *c_control_thread_func (void *arg)
 {
-	return ((ControlLoop*)arg)->thread_func ();
+	return (reinterpret_cast<ControlLoop*>(arg))->thread_func ();
 }
 
 void *ControlLoop::thread_func ()

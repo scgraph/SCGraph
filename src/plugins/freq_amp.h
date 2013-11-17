@@ -5,8 +5,6 @@
 
 class FreqAmp : public GUnit
 {
-	float _value;
-
 	public:
 		FreqAmp ();
 		~FreqAmp ();

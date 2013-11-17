@@ -27,14 +27,14 @@ class GUnit
 
 		virtual void process_g (double delta_t);
 
-		int get_done_action ();
+		const int get_done_action ();
 
 		/** the in's are set to point to the connected
 			outs */
 		std::vector <float*>        _control_ins;
 		std::vector <GraphicsBus *> _graphics_ins;
 
-		/** the outs themselfs carry the value */
+		/** the outs themselves carry the value */
 		std::vector <float>        _control_outs;
 		std::vector <GraphicsBus>  _graphics_outs;
 };

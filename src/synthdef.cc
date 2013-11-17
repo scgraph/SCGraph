@@ -51,12 +51,12 @@ GSynthDef::GSynthDef (unsigned char **data, unsigned long int size)
 		std::cout << " name: " << _name << std::endl;
 
 	// the constants
-	int16_t num = read_int16_t (data);
+	uint32_t num = read_int32_t (data);
 
 	if (options->_verbose >= 3)
 		std::cout << " constants [" << num << "]: ";
 
-	for (int16_t i = 0; i < num; ++i)
+	for (uint32_t i = 0; i < num; ++i)
 	{
 		float tmp = read_float (data);
 		_constants.push_back (tmp);
@@ -69,12 +69,12 @@ GSynthDef::GSynthDef (unsigned char **data, unsigned long int size)
 		std::cout << std::endl;
 
 	// the parameters
-	num = read_int16_t (data);
+	num = read_int32_t (data);
 
 	if (options->_verbose >= 3)
 		std::cout << " parameters [" << num << "]: ";
 
-	for (int16_t i = 0; i < num; ++i)
+	for (uint32_t i = 0; i < num; ++i)
 	{
 		float tmp = read_float (data);
 		_parameters.push_back (tmp);
@@ -87,23 +87,23 @@ GSynthDef::GSynthDef (unsigned char **data, unsigned long int size)
 		std::cout << std::endl;
 
 	// the parameter names
-	num = read_int16_t (data);
+	num = read_int32_t (data);
 
 	if (options->_verbose >= 3)
 		std::cout << " parameter names [" << num << "]:" << std::endl;
 
-	for (int16_t i = 0; i < num; ++i)
+	for (uint32_t i = 0; i < num; ++i)
 	{
 		_param_names.push_back (ParamName (data, size - (*data - orig_data)));
 	}
 
 	// the ugen-specs
-	num = read_int16_t (data);
+	num = read_int32_t (data);
 
 	if (options->_verbose >= 3)
 		std::cout << " ugen specs [" << num << "]:" <<  std::endl;
 
-	for (int16_t i = 0; i < num; ++i)
+	for (uint32_t i = 0; i < num; ++i)
 	{
 		
 		if (options->_verbose >= 3)
@@ -118,7 +118,7 @@ ParamName::ParamName (unsigned char **data, unsigned long int size)
 	Options *options = Options::get_instance ();
 
 	_name = read_string (data);
-	_index = read_int16_t (data);
+	_index = read_int32_t (data);
 
 	if (options->_verbose >= 3)
 	{
@@ -144,21 +144,24 @@ UgenSpec::UgenSpec (unsigned char **data, unsigned long int size)
 
 	_calculation_rate = read_int8_t (data);
 
+	if(_name.compare("Control") == 0)
+		_calculation_rate = 1;
+
 	if (options->_verbose >= 3)
 		std::cout << "    calculation_rate: " << (int)_calculation_rate << std::endl;
 
-	int16_t num_ins = read_int16_t (data);
-	int16_t num_outs = read_int16_t (data);
+		uint32_t num_ins = read_int32_t (data);
+		uint32_t num_outs =read_int32_t (data);
 
 	_special_index = read_int16_t (data);
 
 	if (options->_verbose >= 3)
 		std::cout << "    num_ins: " << num_ins << " nums_outs: " << num_outs << " special_index: " << _special_index << std::endl;
 
-	for (int16_t i = 0; i < num_ins; ++i)
+	for (uint32_t i = 0; i < num_ins; ++i)
 		_input_specs.push_back (InputSpec (data, size - (*data - orig_data)));
 	
-	for (int16_t i = 0; i < num_outs; ++i)
+	for (uint32_t i = 0; i < num_outs; ++i)
 		_output_specs.push_back (OutputSpec (data, size - (*data - orig_data)));
 }
 
@@ -169,20 +172,20 @@ InputSpec::InputSpec (unsigned char **data, unsigned long int size)
 	if (options->_verbose >= 3)
 		std::cout << "   [InputSpec]:" << std::endl;
 
-	_index_of_ugen = read_int16_t (data);
+	_index_of_ugen = read_int32_t (data);
 
 	if (options->_verbose >= 3)
 		std::cout << "     index_of_ugen: " << _index_of_ugen;
 
 	if (_index_of_ugen == -1)
 	{
-		_index_of_constant = read_int16_t (data);
+		_index_of_constant = read_int32_t (data);
 		if (options->_verbose >= 3)
 			std::cout << "  index_of_constant: " << _index_of_constant;
 	}
 	else
 	{
-		_index_of_ugen_output = read_int16_t (data);
+		_index_of_ugen_output = read_int32_t (data);
 		if (options->_verbose >= 3)
 			std::cout << " index_of_ugen_output: " << _index_of_ugen_output;
 	}

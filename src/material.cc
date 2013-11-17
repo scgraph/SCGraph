@@ -13,3 +13,10 @@ Material::Material () :
 	}
 }
 
+void Material::scale_alpha(float factor) {
+	_ambient_reflection.scale_alpha(factor);
+	_diffuse_reflection.scale_alpha(factor);
+	_specular_reflection.scale_alpha(factor);
+	_emissive_color.scale_alpha(factor);
+}
+

@@ -10,7 +10,7 @@
 ScGraph *ScGraph::_instance = 0;
 
 
-ScGraph::ScGraph (int argc, char *argv[]) : QApplication(argc, argv) 
+ScGraph::ScGraph (int argc, char *argv[])
 {
 #ifdef HAVE_JACK
 	try {
@@ -19,13 +19,6 @@ ScGraph::ScGraph (int argc, char *argv[]) : QApplication(argc, argv)
 		_jack_client = boost::shared_ptr<JackClient>();
 	}
 #endif
-
-	QIcon icon;
-	icon.addFile(":icons/scgraph-cube-128");
-	icon.addFile(":icons/scgraph-cube-48");
-	icon.addFile(":icons/scgraph-cube-32");
-	icon.addFile(":icons/scgraph-cube-16");
-	setWindowIcon(icon);
 
 	// _instance = this;
 	Options *options = Options::get_instance ();
@@ -36,6 +29,7 @@ ScGraph::ScGraph (int argc, char *argv[]) : QApplication(argc, argv)
 
 	for (size_t i = 0; i < options->_graphics_busses; ++i)
 	{
+		_past_graphics_busses.push_back (GraphicsBus());
 		_graphics_busses.push_back (GraphicsBus());
 	}
 
@@ -51,6 +45,8 @@ ScGraph::ScGraph (int argc, char *argv[]) : QApplication(argc, argv)
 			std::cout << "[ScGraph]: Error creating persistent synth from synthdef file: " << options->_persistent_synthdef_filenames[i] << std::endl;
 		}
 	}
+
+	_delta_t = 1.0/options->_graphics_rate;
 }
 
 ScGraph* ScGraph::get_instance ()
@@ -166,12 +162,15 @@ void ScGraph::run_one_graphics_cycle (double delta_t)
 	// pthread_mutex_lock (&_main_mutex);
 	// QReadLocker locker (&_read_write_lock);
 	// _read_write_lock.lockForRead();
+	_delta_t = delta_t;
+
 	lock_for_read();
 
-	for (size_t i = 0; i < _graphics_busses.size (); ++i)
+	for (size_t i = 0; i < _past_graphics_busses.size (); ++i)
 	{
-		_graphics_busses[i].clear ();
+		_past_graphics_busses[i].clear ();
 	}
+	_past_graphics_busses.swap(_graphics_busses);
 
 	for (Tree::Tree<NodePtr>::Iterator it = _node_tree.begin (); it != _node_tree.end (); ++it)
 	{
@@ -184,24 +183,23 @@ void ScGraph::run_one_graphics_cycle (double delta_t)
 
 	/* do the doneActions */
 	lock_for_write();
-	if (_done_actions.size () != 0)
-	{
-		// _read_write_lock.lockForWrite();
-		//QWriteLocker locker (&_read_write_lock);
 
-		for 
+	// _read_write_lock.lockForWrite();
+	//QWriteLocker locker (&_read_write_lock);
+
+	for 
 		(
-			std::vector<std::pair<int, int> >::iterator it = _done_actions.begin();
-			it != _done_actions.end (); 
-			++it
-		) {
-			// std::cout << "scgraph: done_action" << std::endl;
-			_node_tree.done_action ((*it).first, (*it).second);
-		}
-
-		_done_actions.clear ();
-		// _read_write_lock.unlock();
+		 std::vector<std::pair<int, int> >::iterator it = _done_actions.begin();
+		 it != _done_actions.end (); 
+		 ++it
+		 ) {
+		// std::cout << "scgraph: done_action" << std::endl;
+		_node_tree.done_action ((*it).first, (*it).second);
 	}
+	
+	_done_actions.clear ();
+	// _read_write_lock.unlock();
+
 	unlock();
 
 	lock_for_read();

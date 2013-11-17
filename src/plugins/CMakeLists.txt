@@ -8,9 +8,14 @@ endif()
 ################################################################################
 ### sources
 
-set(plugins_srcs bordered_rectangle circle cube gl_renderer model translate rotate
-stretch binary_op sum3 sum4 mul_add color light line points triangle rectangle
-polygon quad blending lighting culling tube transformation material shader_program)
+set(plugins_srcs 
+  buf_info_ugens frame_rate render_mode shader_program
+  gl_renderer model 
+  translate rotate stretch transformation
+  binary_op sum3 sum4 mul_add 
+  color material light blending lighting culling
+  line points triangle circle cube tube 
+  bordered_rectangle rectangle polygon quad)
 
 ################################################################################
 ### qt
@@ -18,16 +23,18 @@ polygon quad blending lighting culling tube transformation material shader_progr
 INCLUDE( ${QT_USE_FILE} )
 
 ################################################################################
+### text
+
+if (TEXT)
+  list(APPEND plugins_srcs text)
+endif()
+
+
+################################################################################
 ### want jack?
 
 if (JACK)
-  include_directories(${FFTW3F_INCLUDE_DIR})
-  include_directories(${JACK_INCLUDE_DIRS})
-
-  add_definitions(-DHAVE_JACK)
-
   list(APPEND plugins_srcs freq_amp)
-  list(APPEND plugins_moc_srcs freq_amp.h) ##???
 endif()
 
 
@@ -41,7 +48,6 @@ include_directories(${SC3_SOURCES_PATH}/include/common)
 include_directories(${SC3_SOURCES_PATH}/include/server) # for SC_Group.h
 
 include_directories(${SC3_SOURCES_PATH}/external_libraries/libsndfile)
-#include_directories(${SC3_SOURCES_PATH}/external_libraries/oscpack/)
 
 include_directories(../glew)
 include_directories(../oscpack)
@@ -60,6 +66,8 @@ if(APPLE)
   set(CMAKE_SHARED_MODULE_SUFFIX ".bundle")
 endif(APPLE)
 
+message(STATUS ${JACK_LIBRARIES})
+
 ################################################################################
 ### link qt, build, link and install
 
@@ -70,26 +78,28 @@ foreach(plugin ${plugins_srcs})
   add_library(${plugin} MODULE ${plugin} ${${plugin}_moc_src})
   if(APPLE)
     target_link_libraries(${plugin}
-      -bundle 
-      -fPIC 
-      "-undefined dynamic_lookup")
+	  -bundle 
+	  -fPIC 
+	  "-undefined dynamic_lookup")
   elseif(LINUX)
     target_link_libraries(${plugin} 
-      -shared 
-      -fpic 
-      -export-dynamic 
-      -rdynamic 
-      dl
-      "")
+	  -shared 
+	  -fpic 
+	  -export-dynamic 
+	  -rdynamic 
+	  dl
+	  "")
   else(APPLE)
     target_link_libraries(${plugin} 
-      -shared 
-      -fpic 
-      -export-dynamic 
-      -rdynamic 
-      dl
-      "")
+	  -shared 
+	  -fpic 
+	  -export-dynamic 
+	  -rdynamic 
+	  dl
+	  "")
   endif(APPLE)
-  install(FILES ${CMAKE_BINARY_DIR}/src/plugins/${plugin}${CMAKE_SHARED_MODULE_SUFFIX}
+
+  install(FILES
+	${CMAKE_BINARY_DIR}/src/plugins/${plugin}${CMAKE_SHARED_MODULE_SUFFIX}
     DESTINATION "lib/scgraph/plugins/")
 endforeach(plugin)

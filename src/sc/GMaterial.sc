@@ -1,4 +1,4 @@
-GMaterial : UGen {
+GMaterial : GraphicsUGen {
 	*gr { arg 
 			in,
 			shinyness = 0,
@@ -17,6 +17,10 @@ GMaterial : UGen {
 			specular[0], specular[1], specular[2], specular[3], 
 			emissive[0], emissive[1], emissive[2], emissive[3]
 		);
+	}
+
+	checkInputs {
+		^this.checkAllInputs(1);
 	}
 }
 

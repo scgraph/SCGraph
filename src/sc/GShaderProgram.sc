@@ -1,4 +1,11 @@
-GShaderProgram : UGen
+ShaderUGen : GraphicsUGen
+{
+	checkInputs {
+		^this.checkAllInputs(0);
+	}
+}
+
+GShaderProgram : ShaderUGen
 {
 	*gr
 	{
@@ -9,7 +16,7 @@ GShaderProgram : UGen
 	}
 }
 
-GShaderUniform : UGen
+GShaderUniform : ShaderUGen
 {
 	*gr
 	{

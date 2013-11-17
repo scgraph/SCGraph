@@ -9,6 +9,10 @@
 #include "../graphics_visitor.h"
 #include "../texture_pool.h"
 
+#ifdef HAVE_FTGL
+#include "../string_pool.h"
+#endif
+
 #include <map>
 
 #include "../shader_pool.h"
@@ -17,6 +21,7 @@
 
 #include <QtCore/QObject>
 #include <QtCore/QEvent>
+#include <QtCore/QHash>
 
 #include <QtGui/QApplication>
 #include <QtGui/QMouseEvent>
@@ -27,12 +32,14 @@
 #include <QtGui/QImage>
 #include <QtCore/QDateTime>
 #include <QtCore/QString>
+#include <QtCore/QStringList>
 
 #include <QtCore/QFuture>
 #include <QtCore/QtConcurrentRun>		
 
 #include <QtOpenGL/QGLWidget>
-
+#include <QtOpenGL/QGLFramebufferObject>
+#include <QtGui/QPainter>
 
 void writeImage (QImage img);
 
@@ -63,18 +70,20 @@ class GLRenderWidget : public QGLWidget
 	void mousePressEvent (QMouseEvent *event);
 	void mouseReleaseEvent (QMouseEvent *event);
 	void mouseMoveEvent (QMouseEvent *event);
+	void mouseDoubleClickEvent (QMouseEvent *event);
 	void keyPressEvent (QKeyEvent *event);
 	void keyReleaseEvent (QKeyEvent *event);
 
 	GLenum _shader_program;
 
 	bool _recording;
-Recorder _recorder;
+
+	Recorder _recorder;
 
 	GLEWContext _glew_context;
 
 	public:
-		GLEWContext *getGlewContext();
+	GLEWContext *getGlewContext();
 
 	public:
 		GLRenderWidget (QWidget *parent, GLRenderer *renderer);
@@ -83,7 +92,6 @@ Recorder _recorder;
 		void initializeGL ();
 		void makeScreenshot ();
 		bool toggleRecording ();
-
 };
 
 class GLMainWindow : public QMainWindow
@@ -105,8 +113,12 @@ class GLMainWindow : public QMainWindow
 
 #define SCGRAPH_QT_GL_RENDERER_DEFAULT_WIDTH        640
 #define SCGRAPH_QT_GL_RENDERER_DEFAULT_HEIGHT       480
+#define SCGRAPH_QT_GL_RENDERER_MAXMAX_FEEDBACK_FRAMES       1024
 
-class GLRenderer : public QObject, public GUnit, public GraphicsVisitor, public TransformationCommandVisitor
+class GLRenderer : public QObject, 
+	public GUnit, 
+	public GraphicsVisitor, 
+	public TransformationCommandVisitor
 {
 	Q_OBJECT
 
@@ -131,7 +143,8 @@ class GLRenderer : public QObject, public GUnit, public GraphicsVisitor, public 
 		FOG_END = 26,
 		FOG_NICENESS = 27,
 		FOG_COLOR = 28,
-		TEXTURING = 32
+		TEXTURING = 32,
+		MAXFEEDBACKFRAMES = 33,
 	};
 
 	GLMainWindow     *_main_window;
@@ -176,14 +189,24 @@ class GLRenderer : public QObject, public GUnit, public GraphicsVisitor, public 
 
 	QString _window_title;
 
+	QStringList directions, axisnames, helptexts;
+	QList<int> offsets;
+	QFont font;
 
-	void draw_face (const Face &face);
+	unsigned int _feedback;
+	unsigned int _fbcounter;
+	unsigned int _max_feedback_frames;
 
 	std::map <int, int> 
 	                  _gl_light_indexes;
 
 	std::vector<GLuint>
                       _texture_handles;
+
+	QHash<uint32_t, GLuint> _tmp_texture_handles;
+
+	std::vector<GLuint>
+                      _past_frame_handles;
 
 	// first is program handle, second is vector of shader handles
 	typedef 
@@ -202,10 +225,17 @@ class GLRenderer : public QObject, public GUnit, public GraphicsVisitor, public 
 	shader_uniforms_map_t _shader_uniforms;
 
 
+	void draw_face (const Face &face);
+
+	void upload_texture (uint32_t id, bool samep);
+
 	void do_material (const Material &material);
 	void do_light (const Light &light);
 
 	void do_face (const Face& face);
+
+	void change_feedback_frames ();
+	void clear_feedback_frames ();
 
 	public:
 		GLRenderer ();
@@ -221,6 +251,8 @@ class GLRenderer : public QObject, public GUnit, public GraphicsVisitor, public 
 		virtual void visitBlendingConst (const Blending *b);
 		virtual void visitCullingConst (const Culling *c);
 
+		virtual void visitTextConst (const Text *c);
+
 		virtual void visitShaderProgramConst (const ShaderProgram *c);
 		virtual void visitShaderUniformConst (const ShaderUniform *c);
 
@@ -234,8 +266,14 @@ class GLRenderer : public QObject, public GUnit, public GraphicsVisitor, public 
 		void mousePressEvent (QMouseEvent *event);
 		void mouseReleaseEvent (QMouseEvent *event);
 		void mouseMoveEvent (QMouseEvent *event);
+		void mouseDoubleClickEvent (QMouseEvent *event);
 		void keyPressEvent (QKeyEvent *event);
 		void keyReleaseEvent (QKeyEvent *event);
+
+		GLuint upload_texture(boost::shared_ptr<Texture> const & texture);
+
+		inline void upload_texture(boost::shared_ptr<Texture> const & texture, 
+								   GLuint handle);
 
 		void set_done_action (int done_action);
 
@@ -250,11 +288,16 @@ class GLRenderer : public QObject, public GUnit, public GraphicsVisitor, public 
 		void setup_shader_programs();
 		void clear_shader_program(unsigned int intex);
 		void clear_shader_programs();
+
+
 		double _delta_t;
 
 	public slots:
-		void add_texture (unsigned int index);
-		void change_textures ();
+		void init_textures ();
+		void change_texture (unsigned int index);
+		void change_tmp_texture (uint32_t id, bool samep);
+		void delete_tmp_texture (uint32_t index);
+		void delete_texture(uint32_t id);
 
 	public slots:
 		void add_shader_program (unsigned int index);

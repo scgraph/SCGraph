@@ -9,8 +9,7 @@
 #endif
 
 #include <stdlib.h>
-
-#include <stdlib.h>
+#include <stdarg.h>
 
 #include <sstream>
 #include <iostream>
@@ -31,9 +30,13 @@
 
 #include <SC_InterfaceTable.h>
 #include <SC_Node.h>
-#include <SC_Group.h>
 #include <SC_World.h>
 #include <SC_Graph.h>
+
+#ifdef SC36
+#include <SC_Group.h>
+#endif
+
 
 #include "sc__unit.h"
 
@@ -350,12 +353,26 @@ boost::shared_ptr<GUnit> PluginPool::create_unit (const std::string &name, int s
 	if (options->_verbose >= 3)
 		std::cout << "[PluginPool]: Creating unit (name: \"" << name << "\")" << std::endl;
 
-	if (name == "Control")
+	if ((name == "Control") || (name == "LagControl") || (name == "AudioControl"))
 	{
 		boost::shared_ptr<GUnit> unit (new Control (special_index));
 
 		return unit;	
 	}
+
+	if (name == "TrigControl")
+	{
+		boost::shared_ptr<GUnit> unit (new TrigControl (special_index));
+
+		return unit;	
+	}
+
+	if (name == "InFeedback")
+	{
+		boost::shared_ptr<GUnit> unit (new InFeedback ());
+
+		return unit;
+		}
 
 	if (name == "In")
 	{
@@ -363,6 +380,20 @@ boost::shared_ptr<GUnit> PluginPool::create_unit (const std::string &name, int s
 
 		return unit;
 		}
+
+	if (name == "XFade2")
+	{
+		boost::shared_ptr<GUnit> unit (new XFade2 ());
+
+		return unit;
+		}
+
+	if (name == "XOut")
+	{
+		boost::shared_ptr<GUnit> unit (new XOut ());
+
+		return unit;
+	}
 
 	if (name == "Out")
 	{
@@ -503,7 +534,7 @@ Unit *PluginPool::create_sc_unit (const std::string &name, int special_index, in
 		}
 	}
 
-	return (Unit*)mem;
+	return reinterpret_cast<Unit*>(mem);
 }
 
 
@@ -566,13 +597,33 @@ bool fDefinePlugInCmd (const char *inCmdName, PlugInCmdFunc inFunc, void* inUser
 	return true;
 }
 
+extern char *itoa(int, char *, int);
+
 // call printf for debugging. should not use in finished code.
 int fPrint(const char *fmt, ...)
 {
-	std::cout << "[Warning]: fPrint() not supported" << std::endl;
+	va_list vargs;
+	va_start(vargs, fmt);
+	return vprintf(fmt, vargs);
+}
+/*
+int fPrint(const char *fmt, ...)
+{
+	//std::cout << "[Warning]: fPrint() not supported" << std::endl;
+
+	QString output = new QString(fmt);
+
+	va_list ap;
+    int j;
+    va_start(ap, count); //Requires the last fixed parameter (to get the address)
+    for(j=0; j<count; j++) {
+        va_arg(ap); //Requires the type to cast to.
+								 //Increments ap to the next argument.
+	}
+    va_end(ap);
 	return 0;
 }
-
+*/
 // get a seed for a random number generator
 int32 fRanSeed()
 {

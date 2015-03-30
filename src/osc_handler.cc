@@ -949,14 +949,14 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 				if (name)
 					std::cout << "[OscHandler]: Warning: Synth creation failed (SynthDef-name: \"" << name << "\"). Reason: " << error << std::endl;
 			}
-                        catch (const std::exception& ex) {
-                            if (name)
-                                std::cout << "[OscHandler]: Warning: Synth creation failed (SynthDef-name: \"" << name << "\"). Reason: " << ex.what() << std::endl;
-                        }
 			catch (osc::Exception &e)
 			{
 				std::cout << "[OscHandler]: Error while parsing message: /s_new: " << e.what () << ". TypeTags: " << message->TypeTags() << std::endl;
 			}
+                        catch (const std::exception& ex) {
+                            if (name)
+                                std::cout << "[OscHandler]: Warning: Synth creation failed (SynthDef-name: \"" << name << "\"). Reason: " << ex.what() << std::endl;
+                        }
 			//scgraph->unlock ();
 		}
 		break;

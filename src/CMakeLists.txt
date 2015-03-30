@@ -173,7 +173,7 @@ include_directories(${SC3_SOURCES_PATH}/server/plugins) # for FFT_UGens.h
 
 include_directories(${SC3_SOURCES_PATH}/external_libraries/libsndfile)
 
-if(SC_VERSION_36)
+if(SC3_VERSION_36)
   # for SC_Group.h
   include_directories(${SC3_SOURCES_PATH}/include/server)
 endif()

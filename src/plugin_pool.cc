@@ -436,7 +436,7 @@ boost::shared_ptr<GUnit> PluginPool::create_unit (const std::string &name, int s
 			return sc_unit;
 		}
 	}
-	throw (std::string (("[PluginPool]: Error: Could not find unit: ") + name).c_str ());
+	throw (std::runtime_error (("[PluginPool]: Error: Could not find unit: ") + name));
 }
 
 void PluginPool::add_sc_unit (boost::shared_ptr<ScUnit> unit)

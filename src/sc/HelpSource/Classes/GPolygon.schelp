@@ -1,0 +1,20 @@
+class:: GPolygon
+summary:: A polygon.
+related:: Reference/scgraph
+categories::  SCGraph>Primitives>2D
+
+
+Description::
+A polygon.
+
+
+classmethods::
+
+method::gr
+
+argument::vectors
+An array of multiple vectors of size 3.
+
+arguments::normal
+Normal for the face (also size 3).
+

@@ -1,0 +1,52 @@
+CLASS:: GServerOptions
+summary:: Encapsulates commandline and other options for a GServer
+categories:: SCGraph
+related:: Reference/scgraph, Classes/ServerOptions, Classes/GServer
+
+DESCRIPTION::
+Special ServerOptions for a GServer.
+
+
+CLASSMETHODS::
+
+
+INSTANCEMETHODS::
+
+METHOD:: protocol
+Return the network protocol used (always udp)
+
+METHOD:: controlRate
+An integer for the control rate in Hz.
+
+METHOD:: graphicsRate
+An integer for the graphics rate in frames per second (FPS).
+
+METHOD:: realtimePriority
+An integer representing the realtime priority of the server process.
+
+METHOD:: synthDefPath
+Path to the directory containing synthdef files.
+
+METHOD:: texturePath
+Path to a directory containing image files to load as textures.
+
+METHOD:: shaderPath
+Path to shader code (not yet implemented)
+
+METHOD:: pluginPath
+Path to the scgraph plugins (aka UGens).
+
+METHOD:: scPluginPath
+Path to scsynth plugins (aka UGens).
+
+METHOD:: persistentSynth
+A SynthDef file to load as persistent synth on server startup.
+
+METHOD:: verbosity
+Verbosity of server output. 0 is not verbose, 5 is maximum verbosity.
+
+EXAMPLES::
+
+code::
+
+::

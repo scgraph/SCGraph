@@ -1,0 +1,17 @@
+class:: GMaterial
+summary:: Material object
+related:: Reference/scgraph
+categories:: SCGraph>Texture
+
+
+Description::
+
+(all quadruples, except in and shinyness)
+
+
+classmethods::
+
+method::gr
+
+
+

@@ -1,0 +1,34 @@
+CLASS:: GServer
+summary:: Object representing an scgraph server application
+categories:: SCGraph
+related:: Reference/scgraph, Classes/Server, Classes/GServerOptions
+
+DESCRIPTION::
+Special object to manage SCGraph servers. 
+
+
+CLASSMETHODS::
+
+
+INSTANCEMETHODS::
+
+METHOD:: verbosity
+Verbosity of server output. 0 is not verbose, 5 is maximum verbosity.
+
+
+METHOD:: controlRate
+An integer for the control rate in Hz.
+
+METHOD:: graphicsRate
+An integer for the graphics rate in frames per second (FPS).
+
+METHOD:: loadTexture
+Load the given texture and give it a number.
+ARGUMENT:: path
+The path to the image file.
+
+
+EXAMPLES::
+
+code::
+::

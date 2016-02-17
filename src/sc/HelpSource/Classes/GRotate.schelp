@@ -1,0 +1,25 @@
+class:: GRotate
+summary:: Rotation around an axis
+related:: Reference/scgraph
+categories:: SCGraph>Positioning
+
+
+Description::
+A rotation around an axis (determined by a 3 component vector)
+by an angle. 
+
+classmethods::
+
+method::gr
+
+argument::in
+
+argument::axis
+
+3 component vector around which to turn.
+
+argument::angle
+
+Angle in degrees.
+
+

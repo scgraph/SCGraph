@@ -1,0 +1,120 @@
+title:: Shaders
+summary:: Using shaders in SCGraph
+categories:: SCGraph
+
+
+ScGraph allows to load GLSL programs onto the graphics card. To load a bunch 
+of shaders, pack them into a OSC Message of the format:
+
+code::
+["/loadShaderProgram", index, uniforms, source1, isVertex1, source2, isVertex2, ... ]
+::
+
+Here index is a number > 0 which is lateron used to refer to this program
+i.e. via the GShaderProgram unit.
+
+where source1 is a string representing the  the first shader source, 
+isVertex1 is indicating whether it's a vertex shader (1) or a fragment 
+shader (0). 
+
+The same applies to source2 and isVertex2.  All shaders in such a message 
+will be compiled and linked together into a single shader program which is 
+then pushed to the graphics card. Use the GShaderProgram UGen to activate a 
+shader program.
+
+uniforms is a string that holds uniform variable names.
+The uniforms have to point to uniform variable names in the global name-
+space of the shaders. Then later on it can be controlled with a 
+GShaderUniform GUnit (see Example below)
+
+
+Boot a scgraph server:
+
+code::
+g = GServer.default;
+g.boot;
+::
+
+
+Setup a GGLRenderer that shows something (and use below sendMsg commands to 
+send a simple shader program
+code::
+(
+{ GGLRenderer.gr(
+	GShaderProgram.gr(0,1) 
+	+ GShaderUniform.gr(0, [SinOsc.kr(1) * 0.5 + 0.5]) 
+	+ GTranslate.gr(GCube.gr,
+		[
+			SinOsc.kr(1.21212121),
+			SinOsc.kr(1,phase:1),
+			0])) 
+}.play(g)
+)
+::
+
+You can thus switch to different shader programs between different graphics objects
+which should allow for some funky effects
+
+This example sends a single fragment shader that colors all fragments with a 
+single color. The r component is determined by the value of the uniform x
+
+code::
+(
+g.sendMsg
+(
+"/loadShaderProgram", 
+0,
+"x",
+"
+uniform float x;
+void main()
+{
+gl_FragColor = vec4(x,0.9,0.1,1.0);
+}
+", 
+0);
+)
+::
+
+
+This example sends two shaders. The first one is a fragment
+shader from the previous example and the second one is a vertex shader
+that simply scales all objects
+
+code::
+(
+g.sendMsg
+(
+"/loadShaderProgram", 
+0,
+"",
+"
+void main()
+{
+gl_FragColor = vec4(0.1,0.9,0.1,1.0);
+}
+", 
+0,
+"
+void main(void)
+{
+vec4 a = gl_Vertex;
+a.x = a.x * 0.5;
+a.y = a.y * 0.5;
+a.z = a.z * 0.3;
+gl_Position = gl_ModelViewProjectionMatrix * a;
+}
+",
+1);
+)
+::
+
+Use this message to clear all shader programs
+
+code::
+(
+g.sendMsg(
+	"/clearShaderPrograms"
+);
+)
+::

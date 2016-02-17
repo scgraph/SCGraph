@@ -1,0 +1,20 @@
+class:: GShaderUniform
+summary:: Control uniforms.
+related:: Reference/scgraph, Reference/Shaders
+categories:: SCGraph>Texture
+
+Description::
+
+See link::Reference/Shaders::.
+
+classmethods::
+
+method::gr
+
+argument::in
+
+
+argument::values
+
+
+

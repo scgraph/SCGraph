@@ -1,0 +1,3 @@
+- fix race condition: some plugins need control rate loop to have
+  run at least once before graphics loop
+

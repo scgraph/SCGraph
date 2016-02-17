@@ -1,0 +1,24 @@
+class:: GStretch
+summary:: Simple scaling command
+related:: Reference/scgraph
+categories:: SCGraph>Positioning
+
+
+
+Description::
+A simple scaling command that stretches the input geometry objects
+in the three spatial directions respectively
+
+
+
+classmethods::
+
+method::gr
+
+argument::in
+
+
+argument::stretch_vector
+
+
+

@@ -1,0 +1,125 @@
+- Requirements:
+
+ - Qt 4.6+          (http://trolltech.com)
+ - SuperCollider 3.6 or newer (http://supercollider.sf.net) 
+   - You need to build scsynth as shared library (cmake -DLIBSCSYNTH=1 ..)
+ - Boost            (http://www.boost.org/)
+ - CMake            (http://www.cmake.org/)
+ - pkg-config       (http://pkgconfig.freedesktop.org/wiki/)
+ - Pthreads         (http://www.gnu.org/software/libc/)
+ - SndFile          (http://www.mega-nerd.com/libsndfile/)
+
+ Most of these should be available in all major linux distros. 
+ On Mac OS X you will have to do some tracking down and installing.
+
+- Optional requirements:
+
+ Audio analysis
+ If you want the JackClient (which can do fft analysis of audio input 
+ over a jack port), then you need:
+
+ - JACK             (http://jackaudio.org)
+ - FFTW3            (http://www.fftw.org/)
+
+ Video playback
+ - ffmpeg
+
+ Text rendering
+ - ftgl
+
+
+- How to build
+
+ If you installed any of the required packages from source, make sure that 
+ pkg-config finds the respective .pc file (e.g. for libsndfile and jack) by virtue 
+ of the PKG_CONFIG_PATH environment variable.
+ E. g. if you are on Mac OS X and use homebrew, make sure it's set to:
+    export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
+
+The build system uses cmake, so:
+
+create build directory:
+	   mkdir build
+
+	   cd build
+	   cmake ..
+
+cmake will probably fail to find some things. If it does, do 
+	  ccmake ..
+
+and edit the paths to point to:
+
+	SC3_SOURCES_PATH -> root directory of the supercollider source tree
+ 	SC3_LIBRARY_PATH -> directory which contains libscsynth (e.g. on a mac:
+	 /Applications/SuperCollider/SuperCollider.app/Contents/Resources)
+ 	SC3_PLUGIN_PATH -> directory containing the UGens (e. g. on a mac:
+	 /Applications/SuperCollider/SuperCollider.app/Contents/Resources/plugins)
+
+Then build and install the usual way:
+	 make
+	 make install
+
+- What to do if the build succeeded?
+
+Create these folders:
+
+	   ~/.scgraph/synthdefs
+ 	   ~/.scgraph/textures
+ 	   ~/.scgraph/textures/default
+
+Optionally set the env paths: in your ~/.bashrc add:
+
+   #scgraph
+   export SCGRAPH_SYNTHDEF_PATH=~/.scgraph/synthdefs
+   export SCGRAPH_TEXTURE_PATH=~/.scgraph/textures
+   export SCGRAPH_PLUGIN_PATH=/usr/local/lib/scgraph/plugins/
+
+You can also set/overwrite the paths and other options using the 
+GServerOptions class (see the helpfile).
+
+On OSX, copy or symlink the build/SCGraph folder to ~/Library/Application Support/SuperCollider/Extensions/
+
+On Linux, add the
+
+    $(PREFIX)/share/scgraph/sclang
+
+to your	sclang.cfg, so the classes get loaded in your SuperCollider installation.
+
+
+Open supercollider and do:
+
+(
+g = GServer.default;
+g.boot;
+)
+
+(
+{
+	var source;
+	source = GRotate.gr( GCube.gr(2), [0,1,0], SinOsc.kr(0.2).range(0, 360) );
+	GGLRenderer.gr(source);
+}.play(g);
+)
+
+Have a look at the examples in 
+
+$(PREFIX)/share/doc/examples/
+
+They show you how to make simple animations with scgraph.
+
+- Highlighting of .gr in emacs
+
+  If you want to have .gr highlighted like .kr and .ar in emacs sclang-mode, add this to e. g. your .emacs.d/init.el:
+
+  (add-hook 'sclang-mode-hook
+          '(lambda () (push "gr" sclang-font-lock-method-list))
+          t)
+
+- Caveats
+
+ Currently the linking doesn't work right on Mac OS X, so libscsynth is not found 
+ by the binary if it is run standalone. It works if you start the server from within
+ sclang (with the GServer class). If you want to run it standalone anyways, you can
+ fix this with:
+
+ install_name_tool -change libscsynth.1.dylib path/to/libscsynth.1.dylib path/to/scgraph

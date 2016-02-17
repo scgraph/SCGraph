@@ -1,0 +1,23 @@
+class:: GTransform
+summary:: General linear transform
+related:: Reference/scgraph
+categories:: SCGraph>Positioning
+
+
+Description::
+A general linear transform. The components are specified in Row-Major
+
+
+
+classmethods::
+
+method::gr
+
+argument::in
+
+
+argument::components
+
+
+
+

@@ -1,0 +1,146 @@
+title:: SCGraph
+summary:: A 3D graphics server for SuperCollider
+categories:: SCGraph
+
+2007, 2008 Florian Schmidt (originally implemented at Bielefeld University)
+
+image::blurred_cube_white_alpha.png::
+
+In May 2007 i completed my studies of Computer Science (naturwissenschaftliche Informatik) at the Neuroinformatics group of the Faculty of Technology of the University of Bielefeld by handing in my diploma thesis. The subject of the thesis was "Design and Implementation of a 3D Graphics Server". I was tutored by Till Bovermann, Thomas Hermann und Helge Ritter. In the course of the thesis i have developed ScGraph (short for "SuperCollider Graphics Server").
+
+section::Introduction
+
+The main idea was to apply the SuperCollider Server/Client architecture and usage paradigm to the domain of 3D graphics. Simply put (for those familiar with SuperCollider): 
+
+Instead of
+
+code::
+{SinOsc.ar}.play
+::
+
+we wanted to be able to do:
+
+code::
+{GCube.gr}.play
+::
+
+
+To achieve this, create a Graphics Server Representation:
+
+code::
+(
+g = GServer.default;
+
+g.boot;
+)
+::
+
+As a means to spawn a synth that outputs a 3D representation of a Cube ("gr" here means "graphics rate"). To reduce the implementation effort we decided to reuse the existing SynthDef (and related) classes. The SynthDef format and the OSC protocol of the graphics server is mainly unchanged from the original SuperCollider framework. In the graphics server graphics processing takes the place of audio rate processing, but keeping control rate processing.
+
+Actually, our example was a bit more involved:
+
+code::
+(
+SynthDef (\WobblingCube, {
+	var source;
+	source = GCube.gr(size: SinOsc.kr(freq: 0.5));
+	Out.gr(0, source);
+}).play(target: g);
+)
+::
+
+
+
+This example shows that the original SuperCollider control rate units are still usable (SinOsc.kr creates a control rate instance of the SinOsc unit). A cube is produced that changes its size periodically with a frequency of 0.5Hz.
+
+Actually above example wouldn’t produce anything visible yet. One major difference between ScGraph and ScSynth (the SuperCollider audio synthesis server) is that graphics buses, contrary to audio buses, are not connected to the equivalent of a soundcard. To see anything a special unit needs to be created: GGLRenderer. Here’s a more complete example that actually produces a window on the screen with some animated graphics.
+
+
+code::
+(
+SynthDef (\WobblingCube, {
+	var source;
+	source = GCube.gr(size: SinOsc.kr(freq: 0.5));
+	GGLRenderer.gr(source);
+}).play(target: g);
+) 
+::
+ 
+
+section::Central Data Structures
+
+tree::
+## renderer
+    tree::
+    ## code::GGLRenderer::
+    ## texture, etc 
+	    tree::
+		## link::Classes/GColor::	(note that there is also the convenience instance-method Color:gr)
+		## link::Classes/GBlending::
+		## link::Classes/GCulling::
+		## link::Classes/GLight::
+		## link::Classes/GLighting::
+		## link::Classes/GMaterial::
+		## link::Classes/GTexQuad::
+		## link::Classes/GShaderProgram::
+		## link::Classes/GShaderUniform::
+		:: 
+    ## positioning
+	    tree::
+		## link::Classes/GStretch::
+		## link::Classes/GRotate::
+		## link::Classes/GTransform::
+		## link::Classes/GTranslate::
+		## link::Classes/GFreqAmp::
+		::
+    ## graphics primitives 2d
+	    tree::
+		## link::Classes/GBorderedRectangle::
+		## link::Classes/GLine::
+		## link::Classes/GPoints::
+		## link::Classes/GPolygon::
+		## link::Classes/GQuad::
+		## link::Classes/GCircle::
+		## link::Classes/GRectangle::
+		## link::Classes/GTriangle::
+		::
+    ## graphics primitives 3d
+	    tree::
+		## link::Classes/GCube::
+		## link::Classes/GTube::
+		::    
+ 	## graphics bus access
+	    tree::
+		## link::Classes/In::
+		## link::Classes/Out::
+		## link::Classes/ReplaceOut::
+		::
+	::
+::
+
+section::Features
+
+list::
+## Should build on Linux as well as Mac OS X
+## SuperCollider OSC protocol (partly implemented)
+## SuperCollider SynthDef format
+## SuperCollider plugin loading to make use of control rate units
+## Support for geometry producing/consuming units (GUnits)
+## OpenGL rendering (although different renderers should in practice be possible to implement)
+## Lighting
+## Blending
+## Textures (preliminary, hack’ish)
+::
+
+section::License
+
+ScGraph uses the GNU General public license (GPL) version 2.
+
+section::Screenshots
+
+What's a program overview without screenshots? So here we go:
+
+image::scgraph_more_stuff.png::
+image::scgraph_crazy.png::
+image::scgraph_wiggling_blurred_cubes2.png::
+image::scgraph_funny_stuff.png::

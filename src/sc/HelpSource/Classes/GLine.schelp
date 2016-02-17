@@ -1,0 +1,20 @@
+class:: GLine
+summary:: A line from point vector1 to point vector2.
+related:: Reference/scgraph
+categories::  SCGraph>Primitives>2D
+
+
+Description::
+A line from point vector1 to point vector2. (GL_LINES)
+
+note:: If you have lighting enabled, specifying the color with link::Classes/GMaterial:: has no effect. Just use link::Classes/GColor:: for that.
+
+
+classmethods::
+
+method::gr
+
+argument::strength
+line thickness
+
+

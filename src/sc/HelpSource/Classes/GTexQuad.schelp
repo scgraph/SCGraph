@@ -1,0 +1,15 @@
+class:: GTexQuad
+summary:: A textured quad.
+related:: Reference/scgraph
+categories:: SCGraph>Texture
+
+Description::
+A textured quad.
+
+
+
+classmethods::
+
+method::gr
+
+

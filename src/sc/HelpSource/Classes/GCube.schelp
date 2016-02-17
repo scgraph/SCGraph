@@ -1,0 +1,54 @@
+class:: GCube
+summary:: render a GLCube in SCGraph
+related:: Reference/scgraph
+categories:: SCGraph>Primitives>3D
+
+Description::
+A Cube is always located at [0, 0, 0]. 
+
+
+classmethods::
+
+method::gr
+
+argument::size
+
+extent of the cube
+
+EXAMPLES::
+
+code::
+// simple example, just renders a (plain white) Cube at the origin of the coordinate system.
+g = GServer.default; // we do not have a GServer atm.
+g.boot;
+g.makeWindow;
+
+(
+x = {
+	var cube = GCube.gr(3);
+	GGLRenderer.gr(cube, lighting: 0)
+}.play(g)
+)
+
+g.freeAll
+
+
+// more complex example
+g = GServer.default; // we do not have a GServer atm.
+g.boot;
+g.makeWindow;
+
+(
+x = {
+	var cube, size, stuff;
+	
+	stuff = (1..10).collect{
+		size = 2 * Decay.kr(Dust.kr(0.5), 3);
+		GTranslate.gr(GColor.gr(GCube.gr(size), Color.rand.asArray), Array.fill(3, {1.0.rand}));
+	}.sum;
+
+	GGLRenderer.gr(stuff, lighting: 0)
+}.play(g);
+)
+g.freeAll;
+::

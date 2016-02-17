@@ -1,0 +1,19 @@
+class:: GRectangle
+summary:: A rectangle
+related:: Reference/scgraph
+categories:: SCGraph>Primitives>2D
+
+
+Description::
+
+
+
+
+classmethods::
+
+method::gr
+
+argument::width
+
+argument::height
+

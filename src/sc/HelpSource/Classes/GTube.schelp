@@ -1,0 +1,41 @@
+class:: GTube
+summary:: A 3D tube
+related:: Reference/scgraph
+categories:: SCGraph>Primitives>3D
+
+Description::
+A tube.
+
+
+classmethods::
+
+method::gr
+
+argument::size
+
+Extent of the tube
+
+argument::numSegments
+
+The number of segments the tube is composed of.
+
+
+EXAMPLES::
+
+
+Boot a scgraph server:
+
+code::
+g = GServer.default;
+g.boot;
+::
+
+Draw a tube and vary its number of segments.
+
+code::
+(
+{GGLRenderer.gr(
+	in: GRotate.gr(GTube.gr(3, LFTri.kr(0.1).range(3,30)), angle:40)
+)}.play(g)
+)
+::

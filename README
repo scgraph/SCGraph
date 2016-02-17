@@ -1,0 +1,61 @@
+This is a fork of Florian Paul Schmidt's project on Sourceforge ( http://sourceforge.net/projects/scgraph/ ). 
+
+For installation instructions please see the INSTALL file.
+
+-------------------------------------------------------------------------------.
+
+- What is ScGraph?
+
+ ScGraph is a graphics server following the SuperCollider3 OSC interface. Albeit with a changed semantics. Here's quick example code:
+
+// We "boot" the graphics server first
+g = GServer.default;
+g.boot;
+
+// Then we produce a SynthDef (a Synthesizer Definition) and send it to the 
+// server
+(
+SynthDef(\WobblingCube, {
+	Out.gr(0, 
+		GCube.gr(size: SinOsc.kr (freq: 0.5)));
+}).send(g);
+)
+
+
+// Tell the server to produce one instance of this Definition
+c = Synth(\WobblingCube, target: g);
+
+ This little example produces a cube in the origin which bouces about all three axes with a frequency of 0.5Hz. Ok, you don't see anything you say? Oh well try this:
+
+(
+SynthDef(\SimpleView, {
+	GGLRenderer.gr(In.gr(0));
+}).send(g);
+)
+
+v = Synth.tail(g, \SimpleView);
+
+ This Synth reads from the Graphics bus 0 and uses the GGLRenderer Ugen to produce an output window showing the graphics object on the bus. Note the difference to how we produced the first synth. The Synth.tail shortform indicates that the SimpleView is put at the tail of group g (aka the graphics server), while the Synth above was put to the head. 
+
+ If you want to know what kind of new units are supported, have look into either the class browser (all graphical units start with a capital "G") or into 
+
+ $PREFIX/share/scgraph/sc
+
+- How to build
+
+ See the file INSTALL
+
+
+- License
+
+ GPL2. See the file LICENSE for the detailed license text.
+
+
+Feedback, bugfixes and patches welcome..
+
+Florian Paul Schmidt
+(mista.tapas@gmx.net)
+
+
+Holger Ballweg
+(mortuos.plango@gmail.com)

@@ -1,0 +1,23 @@
+class:: GTranslate
+summary:: Translation in 3D space 
+related:: Reference/scgraph
+categories:: SCGraph>Positioning
+
+
+Description::
+
+A translation in 3D space by the respective vector components.
+
+
+
+classmethods::
+
+method::gr
+
+argument::in
+
+
+argument::displacement_vector
+
+
+

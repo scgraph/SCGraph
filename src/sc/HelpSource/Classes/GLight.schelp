@@ -1,0 +1,41 @@
+class:: GLight
+summary:: A light source.
+related:: Reference/scgraph, Classes/GLighting
+categories::SCGraph>Texture
+
+
+Description::
+
+A light source.
+
+
+classmethods::
+
+method::gr
+
+argument::index 
+
+argument::on
+
+if w != 0 the light is treated as positional (at homogenous coordinates x,y,z,w)
+
+argument::position 
+
+argument::spot_direction 
+
+argument::spot_exponent 
+
+argument::spot_cutoff
+
+argument::ambient_color
+
+argument::diffuse_color
+
+argument::specular_color
+
+argument::constant_attenuation
+
+argument::linear_attenuation
+
+argument::quadratic_attenuation
+

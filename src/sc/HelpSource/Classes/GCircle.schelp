@@ -1,0 +1,38 @@
+class:: GCircle
+summary:: A circle
+related:: Reference/scgraph
+categories:: SCGraph>Primitives>2D
+
+Description::
+A circle.
+
+
+classmethods::
+
+method::gr
+
+argument::numSegments
+
+The number of segments the circle is composed of.
+
+
+
+EXAMPLES::
+
+
+Boot a scgraph server:
+
+code::
+g = GServer.default;
+g.boot;
+::
+
+Draw a circle and vary its number of segments.
+
+code::
+(
+{GGLRenderer.gr(
+	in: GRotate.gr(GCircle.gr(LFTri.kr(0.1).range(3,30)), angle:180)
+)}.play(g)
+)
+::

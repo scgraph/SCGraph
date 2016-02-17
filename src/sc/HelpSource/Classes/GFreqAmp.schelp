@@ -1,0 +1,59 @@
+class:: GFreqAmp
+summary:: Outputs the amplitude of the specified frequency
+related:: Reference/scgraph
+categories::  SCGraph>Positioning
+
+
+Description::
+
+Outputs the amplitude of the specified frequency at the input of the specified jack port.
+
+
+classmethods::
+
+method::kr
+
+argument::port
+
+Port number.
+
+argument::freq
+
+The frequency whose amplitude will be returned.
+
+
+EXAMPLES::
+
+
+code::
+g = GServer.default;
+g.boot;
+
+(
+SynthDef (\Spectrum, {
+	var bars;
+	var numBars = 6;
+	bars = Array.fill 
+	(
+		numBars, 
+		{
+			arg i; 
+			var freq, amp, height;
+			freq =  i.linexp(0,numBars, 50,2000);
+			amp = GFreqAmp.kr(port: 0,freq: freq) + 0.001;
+			height = 5 * (1 + (100 * Lag.kr (amp, 0.5))).log;
+		  	GTranslate.gr 
+			(
+				GRectangle.gr 
+				(
+					width: 1, 
+					height: height
+				), 
+				[2 * i - numBars, 0, 0]
+			);
+		}
+	).sum;
+	GGLRenderer.gr (bars, clear_mode: 1, clear_color: [0, 0.2, 0, 0.9]);
+}).play(g)
+)
+::

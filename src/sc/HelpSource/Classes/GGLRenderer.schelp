@@ -1,0 +1,133 @@
+class:: GGLRenderer
+summary:: A GL-Renderer
+related:: Reference/scgraph
+categories::  SCGraph>Renderer
+
+
+Description::
+
+A GL-Renderer
+
+
+classmethods::
+
+method::gr
+
+argument::in
+
+argument::clear_mode
+Specifies the clear mode (0 = clear to clear_color, 1 = alpha blend clear_color)
+
+argument::clear_color
+An Array that specifies the clear color ([R, G, B, A])
+
+argument::lighting
+Toggles lighting (0 = off, 1 = on)
+
+argument::culling
+Toggles culling (0 = off, 1 = on)
+
+
+argument::transparency
+Toggles transparency (0 = off, 1 = on)
+
+argument::perspective 
+Defines the perspective used (0 = orthographic, 1 = stereographic)
+
+argument::fov
+
+Field of view in degrees
+
+argument::near_plane
+
+Near viewing plane distance
+
+argument::far_plane
+
+Far viewing plane distance
+
+argument::eye
+
+Eye coordinates of viewer
+
+argument::center
+
+Coordinates of what we look at
+
+argument::up
+
+Up vector of viewer
+
+argument::fog
+Toggles fog (0 = off, 1 = on)
+
+argument::fog_mode
+Specifies the fog mode (0 = GL_LINEAR, 1 = GL_EXP, and 2 = GL_EXP2)
+
+argument::fog_density
+Specifies the fog density (a float between 0 and 1)
+
+argument::fog_start
+
+argument::fog_end  
+
+argument::fog_niceness
+Specifies the fog niceness (0 = don't care, 1 = fastest, 2 = nicest)
+
+argument::fog_color
+
+argument::texturing 
+Toggles texturing (0 - off, 1 = on)
+
+argument::max_feedback_frames
+Specifies the maximum number of past frames to save for use in a LINK::Classes/GFBTexQuad::.
+
+EXAMPLES::
+
+Boot a scgraph server:
+
+code::
+g = GServer.default;
+g.boot;
+::
+
+Example of a renderer that reads from Bus 0. You can "kill" the
+synth by closing the window. This renderer has central perspective
+turned off (useful for 2D stuff):
+
+code::
+{GGLRenderer.gr(in: In.gr(0), perspective: 0)}.play(g)
+::
+
+A renderer that reads from graphics bus 0 and features support for
+texturing, alpha blending and lighting:
+
+code::
+(
+{GGLRenderer.gr(
+	in: In.gr(0), 
+	texturing: 1,
+	transparency: 1,
+	lighting: 1
+)}.play(g)
+)
+::
+
+
+A simple example of a Synth that writes to a bus. Evaluate this after the above, 
+so the geometry producer is added to the head of the group and it gets to 
+create its output before the renderer tries to read it :)
+
+code::
+(
+SynthDef(\foo, 	{
+	Out.gr(
+		0, 
+		GColor.gr(
+			GQuad.gr,
+			[0.5 + (0.5 * SinOsc.kr(1.1, phase: 0.3)), 0.5 + (0.5 * SinOsc.kr(1.0)), 0, 0]
+		)
+	)
+}).play(g)
+)
+::

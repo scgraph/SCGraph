@@ -14,18 +14,20 @@
 #include <vector>
 #include <string>
 
-#include <QtCore/QObject>
-#include <QtCore/QHash>
+//#include <QtCore/QObject>
+//#include <QtCore/QHash>
+/*
 #include <QtGui/QImage>
 #include <QtGui/QImageReader>
 #include <QtGui/QColor>
 #include <QtOpenGL/QGLWidget>
-
+*/
 /** a texture image in RGBA format with unsigned chars as data */
 
 
-class TexturePool : public QObject {
-	Q_OBJECT
+class TexturePool //: public QObject
+{
+	//Q_OBJECT
 
 	static TexturePool *_instance;
 	std::vector <boost::shared_ptr<AbstractTexture> > _textures;
@@ -50,7 +52,7 @@ class TexturePool : public QObject {
 
 		unsigned int get_number_of_textures ();
 
-		QHash<uint32_t, boost::shared_ptr<Texture> > _tmp_textures;
+		//QHash<uint32_t, boost::shared_ptr<Texture> > _tmp_textures;
 
 		boost::optional<boost::shared_ptr<AbstractTexture> > get_texture (unsigned int index);
 
@@ -69,7 +71,7 @@ class TexturePool : public QObject {
 
 		void update_tmp_texture(uint32_t id, bool samep);
 
-	signals:
+	// TODO signals:
 		void texture_loaded (uint32_t id);
 		void texture_changed (unsigned int index);
 

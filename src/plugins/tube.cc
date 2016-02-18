@@ -28,7 +28,7 @@ extern "C"
 
 Tube::Tube () :
     _g(new Geometry),
-    _segments(32)
+    _segments(0)
 {
     cow_ptr<Face> face (new Face);
     face.touch()->_geometry_type = Face::QUAD_STRIP;
@@ -36,23 +36,7 @@ Tube::Tube () :
     // disable culling
     face.touch()->_culling = 0;
 
-    // face.touch()->_material._emissive_color._c[0] = 1.0;
-    float phi = 0;
-
-    for(int i=0; i <= _segments; i++) {
-	phi = TAU * ((float) i/(float) _segments);
-	face.touch()->_vertices.push_back (Vector3D (sin(phi), 
-						     cos(phi), -1));
-	face.touch()->_vertices.push_back (Vector3D (sin(phi), 
-						     cos(phi), 1));
-	phi = TAU * ((0.5 + (float) i)/(float) _segments);
-	face.touch()->_normals.push_back  (Vector3D (sin(phi), 
-						     cos(phi), 0));
-	face.touch()->_normals.push_back  (Vector3D (sin(phi), 
-						     cos(phi), 0));
-    }
-
-    face.touch()->_face_color = ColorRGBA (1,1,1,1);
+    face.touch()->_face_color = ofColor (1,1,1,1);
 
     _g.touch()->_faces.push_back (face);
 }
@@ -69,31 +53,35 @@ void Tube::process_g (double delta_t)
     _g.touch()->_commands.clear();
 
     if (_segments != (int) *_control_ins[1]) {
-	if(((int) *_control_ins[1]) > 2) {
-	    _segments = (int) *_control_ins[1];
+		if(((int) *_control_ins[1]) > 2) {
+			_segments = (int) *_control_ins[1];
 
-	    _g.touch()->_faces[0].touch()->_vertices.clear();
-	    _g.touch()->_faces[0].touch()->_normals.clear();
+			_g.touch()->_faces[0].touch()->_vertices.clear();
+			_g.touch()->_faces[0].touch()->_normals.clear();
 
-	    // face.touch()->_material._emissive_color._c[0] = 1.0;
-	    float phi = 0;
-	    for(int i=0; i <= _segments; i++) {
-		phi = TAU * ((float) i/(float) _segments);
-		_g.touch()->_faces[0].touch()->_vertices.push_back (Vector3D (sin(phi), 
-									      cos(phi), -1));
-		_g.touch()->_faces[0].touch()->_vertices.push_back (Vector3D (sin(phi), 
-									      cos(phi), 1));
-		phi = TAU * ((0.5 + (float) i)/(float) _segments);
-		_g.touch()->_faces[0].touch()->_normals.push_back  (Vector3D (sin(phi), 
-									      cos(phi), 0));
-		_g.touch()->_faces[0].touch()->_normals.push_back  (Vector3D (sin(phi), 
-									      cos(phi), 0));
-	    }
-	}
+			// face.touch()->_material._emissive_color._c[0] = 1.0;
+			float phi = 0;
+			for(int i=0; i <= _segments; i++) {
+				ofVec3f e;
+				phi = TAU * ((float) i/(float) _segments);
+				e = ofVec3f(sin(phi), cos(phi), -1);
+				_g.touch()->_faces[0].touch()->_vertices.push_back(e);
+				_g.touch()->_faces[0].touch()->_vertices.push_back(ofVec3f(e._c[0], 
+																			e._c[1],
+																			1));
+
+				phi = TAU * ((0.5 + (float) i)/(float) _segments);
+				e = ofVec3f(sin(phi), cos(phi), 0);
+				_g.touch()->_faces[0].touch()->_normals.push_back(e);
+				_g.touch()->_faces[0].touch()->_normals.push_back(ofVec3f(e._c[0], 
+																			e._c[1],
+																			0));
+			}
+		}
     }
 
     cow_ptr<Scale> cmd (new Scale);
-    cmd.touch()->_scaling_vector = Vector3D (*_control_ins[0],
+    cmd.touch()->_scaling_vector = ofVec3f (*_control_ins[0],
 					     *_control_ins[0], 
 					     *_control_ins[0]);
     _g.touch()->_commands.push_back(cmd);

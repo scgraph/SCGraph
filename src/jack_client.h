@@ -12,11 +12,11 @@
 
 #include <fftw3.h>
 
-#include <QtCore/QMutex>
+#include "ofThread.h"
 
 struct JackClient
 {
-	QMutex                      _mutex;
+	ofThread                      _mutex;
 
 	jack_client_t              *_client;
 	std::vector <jack_port_t*>  _ports;

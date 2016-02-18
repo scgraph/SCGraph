@@ -119,9 +119,11 @@ void GSynth::process_g (double delta_t)
 				if ((done_action = _units[i]->get_done_action ()) != 0)
 					_done_action = done_action;
 			}
-			catch (const char *e)
-			{
-				std::cout << "[GSynth]: Error while running process_g () of unit " << _synthdef->_ugen_specs[i]._name <<": Reason: " << e << std::endl;
+                        catch (const std::exception& ex) {
+                            std::cout << "[GSynth]: Error while running process_g () of unit "
+                                      << _synthdef->_ugen_specs[i]._name
+                                      << ": Reason: " << ex.what()
+                                      << std::endl;
 			}
 		}
 	}
@@ -149,9 +151,10 @@ void GSynth::process_c (double delta_t)
 				if ((done_action = _units[i]->get_done_action ()) != 0)
 					_done_action = done_action;
 			}
-			catch (const char *e)
-			{
-				std::cout << "[GSynth]: Error while running process_c () of unit " << _synthdef->_ugen_specs[i]._name <<": Reason: " << e << std::endl;
+                        catch (const std::exception& ex) {
+                            std::cout << "[GSynth]: Error while running process_c () of unit "
+                                      << _synthdef->_ugen_specs[i]._name
+                                      <<": Reason: " << ex.what() << std::endl;
 			}
 		}
 	}

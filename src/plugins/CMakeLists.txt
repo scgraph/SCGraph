@@ -14,7 +14,7 @@ set(plugins_srcs
   translate rotate stretch transformation
   binary_op sum3 sum4 mul_add 
   color material light blending lighting culling
-  line points triangle circle cube tube 
+  line points triangle circle cube tube sphere torus
   bordered_rectangle rectangle polygon quad)
 
 ################################################################################
@@ -45,7 +45,7 @@ include_directories(${CMAKE_BINARY_DIR})
 
 include_directories(${SC3_SOURCES_PATH}/include/plugin_interface)
 include_directories(${SC3_SOURCES_PATH}/include/common)
-include_directories(${SC3_SOURCES_PATH}/include/server) # for SC_Group.h
+include_directories(${SC3_SOURCES_PATH}/server/scsynth/) # for SC_Group.h
 
 include_directories(${SC3_SOURCES_PATH}/external_libraries/libsndfile)
 

@@ -37,7 +37,7 @@ Rotate::~Rotate ()
 void Rotate::visitTransformation (Transformation *t)
 {
 	boost::shared_ptr<Rotation> r (new Rotation);
-	_r.touch()->_rotation_vector = Vector3D (*_control_ins[1], *_control_ins[2], *_control_ins[3]);
+	_r.touch()->_rotation_vector = ofVec3f (*_control_ins[1], *_control_ins[2], *_control_ins[3]);
 	_r.touch()->_rotation_angle = *_control_ins[4];
 	t->_commands.push_back (_r);
 }

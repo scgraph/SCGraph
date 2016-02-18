@@ -3,7 +3,7 @@
 
 #define GL_GLEXT_PROTOTYPES 1
 
-#include "glew.h"
+//#include "glew.h"
 
 #include "../unit.h"
 #include "../graphics_visitor.h"
@@ -19,6 +19,11 @@
 
 #include "../transformation_command_visitor.h"
 
+#include "ofAppGlutWindow.h"
+#include "ofColor.h"
+#include "ofGraphics.h"
+#include "ofMaterial.h"
+/*
 #include <QtCore/QObject>
 #include <QtCore/QEvent>
 #include <QtCore/QHash>
@@ -40,7 +45,9 @@
 #include <QtOpenGL/QGLWidget>
 #include <QtOpenGL/QGLFramebufferObject>
 #include <QtGui/QPainter>
+*/
 
+/*
 void writeImage (QImage img);
 
 class Recorder
@@ -57,16 +64,15 @@ class Recorder
 	void nextFrame (QImage img);
 
 };
-
-
-class GLRenderer;
-
-class GLRenderWidget : public QGLWidget
+*/
+//class GLRenderer;
+/*
+class GLRenderWidget //: public QGLWidget
 {
-	Q_OBJECT
+	//Q_OBJECT
 
 	GLRenderer *_renderer;
-
+// TODO
 	void mousePressEvent (QMouseEvent *event);
 	void mouseReleaseEvent (QMouseEvent *event);
 	void mouseMoveEvent (QMouseEvent *event);
@@ -78,15 +84,15 @@ class GLRenderWidget : public QGLWidget
 
 	bool _recording;
 
-	Recorder _recorder;
+	//Recorder _recorder;
 
-	GLEWContext _glew_context;
-
-	public:
-	GLEWContext *getGlewContext();
+	// TODO GLEWContext _glew_context;
 
 	public:
-		GLRenderWidget (QWidget *parent, GLRenderer *renderer);
+	// TODO GLEWContext *getGlewContext();
+
+	public:
+		// TODO GLRenderWidget (QWidget *parent, GLRenderer *renderer);
 		void resizeGL (int w, int h);
 		void paintGL ();
 		void initializeGL ();
@@ -94,19 +100,19 @@ class GLRenderWidget : public QGLWidget
 		bool toggleRecording ();
 };
 
-class GLMainWindow : public QMainWindow
+class GLMainWindow //: public QMainWindow
 {
-	Q_OBJECT
+	//Q_OBJECT
 
 	GLRenderer *_renderer;
 
 	public:
 		GLMainWindow (GLRenderer *renderer);
 
-	public slots:
-		void closeEvent (QCloseEvent *e);
+	// TODO public slots:
+	// TODO	void closeEvent (QCloseEvent *e);
 };
-
+*/
 #define SCGRAPH_QT_GL_RENDERER_LOOK_AT_INDEX          7
 #define SCGRAPH_QT_GL_RENDERER_CLEAR_COLOR_INDEX (7 + 9)
 #define SCGRAPH_QT_GL_RENDERER_FOG_INDEX     (7 + 9 + 3)
@@ -115,12 +121,12 @@ class GLMainWindow : public QMainWindow
 #define SCGRAPH_QT_GL_RENDERER_DEFAULT_HEIGHT       480
 #define SCGRAPH_QT_GL_RENDERER_MAXMAX_FEEDBACK_FRAMES       1024
 
-class GLRenderer : public QObject, 
+class GLRenderer : public ofAppGlutWindow,
 	public GUnit, 
 	public GraphicsVisitor, 
 	public TransformationCommandVisitor
 {
-	Q_OBJECT
+	//Q_OBJECT
 
 	enum // keep track of these pesty indeces
 	{
@@ -146,10 +152,10 @@ class GLRenderer : public QObject,
 		TEXTURING = 32,
 		MAXFEEDBACKFRAMES = 33,
 	};
-
+/*
 	GLMainWindow     *_main_window;
 	GLRenderWidget   *_gl_widget;
-
+*/
 	bool _ready;
 
 	/* the transformation matrix for user input */
@@ -187,12 +193,12 @@ class GLRenderer : public QObject,
 	float             _rot_x;
 	float             _rot_y;
 
-	QString _window_title;
-
+	string _window_title;
+/* TODO
 	QStringList directions, axisnames, helptexts;
 	QList<int> offsets;
 	QFont font;
-
+*/
 	unsigned int _feedback;
 	unsigned int _fbcounter;
 	unsigned int _max_feedback_frames;
@@ -203,7 +209,7 @@ class GLRenderer : public QObject,
 	std::vector<GLuint>
                       _texture_handles;
 
-	QHash<uint32_t, GLuint> _tmp_texture_handles;
+	// TODO QHash<uint32_t, GLuint> _tmp_texture_handles;
 
 	std::vector<GLuint>
                       _past_frame_handles;
@@ -240,6 +246,10 @@ class GLRenderer : public QObject,
 	public:
 		GLRenderer ();
 		~GLRenderer ();
+    
+        void setup();
+        void update();
+        void draw();
 
 		virtual void process_g (double delta_t);
 		virtual void really_process_g (double delta_t);
@@ -261,14 +271,14 @@ class GLRenderer : public QObject,
 		virtual void visitScaleConst (const Scale *s);
 		virtual void visitLinearConst (const Linear *l);
 
-		void appendToWindowTitle (QString toAppend);
+		// TODO void appendToWindowTitle (QString toAppend);
 
-		void mousePressEvent (QMouseEvent *event);
-		void mouseReleaseEvent (QMouseEvent *event);
-		void mouseMoveEvent (QMouseEvent *event);
-		void mouseDoubleClickEvent (QMouseEvent *event);
-		void keyPressEvent (QKeyEvent *event);
-		void keyReleaseEvent (QKeyEvent *event);
+		void mousePressed(int x, int y, int button);
+		void mouseReleased(int x, int y, int button);
+		void mouseMoved(int x, int y );
+		// TODO void mouseDoubleClickEvent (QMouseEvent *event);
+		void keyPressed(int key);
+		void keyReleased(int key);
 
 		GLuint upload_texture(boost::shared_ptr<Texture> const & texture);
 
@@ -292,14 +302,14 @@ class GLRenderer : public QObject,
 
 		double _delta_t;
 
-	public slots:
+	// TODO public slots:
 		void init_textures ();
 		void change_texture (unsigned int index);
 		void change_tmp_texture (uint32_t id, bool samep);
 		void delete_tmp_texture (uint32_t index);
 		void delete_texture(uint32_t id);
 
-	public slots:
+	// TODO public slots:
 		void add_shader_program (unsigned int index);
 		void change_shader_programs ();
 };

@@ -3,15 +3,15 @@
 
 #include <cmath>
 
-struct Vector3D
+struct ofVec3f
 {
-	Vector3D (const Vector3D& v)
+	ofVec3f (const ofVec3f& v)
 	{
 		for (unsigned int i = 0; i < 3; ++i)
 			_c[i] = v._c[i];
 	}
 
-	Vector3D (float x = 0, float y = 0, float z = 0)
+	ofVec3f (float x = 0, float y = 0, float z = 0)
 	{
 		_c[0] = x;
 		_c[1] = y;
@@ -38,9 +38,9 @@ struct Vector3D
 	}
 
 	/** cross multiply this vector with v and return result */
-	Vector3D cross_product (const Vector3D &v)
+	ofVec3f cross_product (const ofVec3f &v)
 	{
-		Vector3D ret 
+		ofVec3f ret 
 		(
 			_c[1] * v._c[2] - _c[2] * v._c[1],
 			_c[2] * v._c[0] - _c[0] * v._c[2],

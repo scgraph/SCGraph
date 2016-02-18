@@ -38,17 +38,17 @@ float* Matrix::get_coefficients ()
 }
 
 
-void Matrix::set_axis_rotation (const Vector3D &axis, float angle)
+void Matrix::set_axis_rotation (const ofVec3f &axis, float angle)
 {
 	float cos_angle = cos (angle);
 	float one_minus_cos_angle = (1.0 - cos_angle);
 	float sin_angle = sin (angle);
 
-	float x = axis._c[0];
+	float x = axis[0];
 	float x_squared = x * x;
-	float y = axis._c[1];
+	float y = axis[1];
 	float y_squared = y * y;
-	float z = axis._c[2];
+	float z = axis[2];
 	float z_squared = z * z;
 	
 	at(0,0) = cos_angle + one_minus_cos_angle * x_squared;
@@ -128,10 +128,10 @@ void Matrix::dump ()
 	std::cout << std::endl;
 }
 
-void Matrix::add_translation (const Vector3D& vec)
+void Matrix::add_translation (const ofVec3f& vec)
 {
 	for (int i = 0; i < 3; ++i)
-		at(i, 3) += vec._c[i];
+		at(i, 3) += vec[i];
 }
 
 void Matrix::add_translation (float x, float y, float z)

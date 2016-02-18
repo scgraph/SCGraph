@@ -6,11 +6,15 @@
 #include <sstream>
 #include <iostream>
 #include <cmath>
+#include <stdexcept>
 
 #include <sys/types.h>
 #include <dirent.h>
 
 #include <cstring>
+
+#include "ofThread.h"
+#include "ofEvent.h"
 
 #ifdef HAVE_FFMPEG
 extern "C"
@@ -28,7 +32,7 @@ int ffmpeg_lock_callback(void **mutex, enum AVLockOp op);
 
 int ffmpeg_lock_callback(void **mutex, enum AVLockOp op)
 {
-	static QMutex m;
+	static ofThread m;
 
 	switch(op)
 		{
@@ -39,12 +43,12 @@ int ffmpeg_lock_callback(void **mutex, enum AVLockOp op)
 			}
 		case AV_LOCK_OBTAIN:
 			{
-				((QMutex*)(*mutex))->lock();
+				((ofThread*)(*mutex))->lock();
 				break;
 			}
 		case AV_LOCK_RELEASE:
 			{
-				((QMutex*)(*mutex))->unlock();
+				((ofThread*)(*mutex))->unlock();
 				break;
 			}
 		case AV_LOCK_DESTROY:
@@ -84,8 +88,8 @@ TexturePool::TexturePool ()
 	av_lockmgr_register(&ffmpeg_lock_callback); 
 #endif
 
-	qRegisterMetaType<uint32_t>("uint32_t");
-	qRegisterMetaType<boost::shared_ptr<Texture> >("boost::shared_ptr<Texture>");
+	//qRegisterMetaType<uint32_t>("uint32_t");
+	//qRegisterMetaType<boost::shared_ptr<Texture> >("boost::shared_ptr<Texture>");
 
 	nextID = 0;
 
@@ -119,10 +123,9 @@ void TexturePool::scan_directory (const std::string &directory)
 	{
 		traverse_directory (directory, &TexturePool::add_image);
 	}
-	catch (const char *e)
-	{
-		std::cout << "[TexturePool]: Failed to traverse directory. Reason: " << e << std::endl;
-	}
+        catch (const std::exception& ex) {
+            std::cout << "[TexturePool]: Failed to traverse directory. Reason: " << ex.what() << std::endl;
+        }
 }
 
 void TexturePool::traverse_directory (const std::string &directory, void (TexturePool::*function)(const std::string &filename))
@@ -135,7 +138,7 @@ void TexturePool::traverse_directory (const std::string &directory, void (Textur
 
 	DIR *dir = opendir (directory.c_str ());
 	if (!dir)
-		throw ("[TexturePool]: Couldn't read directory");
+            throw (std::runtime_error("[TexturePool]: Couldn't read directory"));
 
 
 	std::vector<std::string> filenames;
@@ -184,7 +187,7 @@ unsigned int TexturePool::add_image (const std::string &filename, unsigned int i
 		std::cout << "  [TexturePool]: New texture has index: " 
 				  << _textures.size() - 1 << std::endl;
 	
-		emit (texture_changed(_textures.size() - 1));
+		// TODO ofNotifyEvent(texture_changed, _textures.size() - 1);
 	}
 #ifdef HAVE_FFMPEG
 	else {
@@ -221,7 +224,7 @@ unsigned int TexturePool::change_image (const std::string &filename, unsigned in
 			std::cout << "  [TexturePool]: Changed texture at index " 
 					  << index << std::endl;
 	
-		emit (texture_changed(index));
+		// TODO ofNotifyEvent(texture_changed, index);
 		}
 	}
 
@@ -236,18 +239,18 @@ TexturePool::~TexturePool ()
 
 
 void TexturePool::delete_textures_at_id(uint32_t id) {
-	_tmp_textures.remove(id);
-	emit(delete_texture(id));
+	// TODO _tmp_textures.remove(id);
+	// TODO ofNotifyEvent(delete_texture, id);
 }
 
 void TexturePool::update_tmp_texture(uint32_t id, bool samep)
 {
 	//std::cout << "[TexturePool] updating tmp texture" << std::endl;
-	emit(change_tmp_texture(id, samep));
+	// TODO ofNotifyEvent(change_tmp_texture, id, samep);
 }
 
 void TexturePool::loaded_tmp_texture(uint32_t id) {
-	emit(texture_loaded(id));
+	// TODO ofNotifyEvent(texture_loaded, id);
 }
 
 unsigned int TexturePool::get_number_of_textures ()
@@ -269,5 +272,5 @@ boost::optional<boost::shared_ptr<AbstractTexture> > TexturePool::get_texture (u
 
 void TexturePool::update_texture (unsigned int index)
 {
-	emit (texture_changed(index));
+	// TODO ofNotifyEvent(texture_changed, index);
 }

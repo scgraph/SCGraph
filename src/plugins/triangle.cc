@@ -33,15 +33,15 @@ Triangle::Triangle () :
 
 	// face.touch()->_material._emissive_color._c[0] = 1.0;
 
-	face.touch()->_vertices.push_back (Vector3D ());
-	face.touch()->_vertices.push_back (Vector3D ());
-	face.touch()->_vertices.push_back (Vector3D ());
+	face.touch()->_vertices.push_back (ofVec3f ());
+	face.touch()->_vertices.push_back (ofVec3f ());
+	face.touch()->_vertices.push_back (ofVec3f ());
 
-	face.touch()->_normals.push_back (Vector3D ());
-	face.touch()->_normals.push_back (Vector3D ());
-	face.touch()->_normals.push_back (Vector3D ());
+	face.touch()->_normals.push_back (ofVec3f ());
+	face.touch()->_normals.push_back (ofVec3f ());
+	face.touch()->_normals.push_back (ofVec3f ());
 
-	face.touch()->_face_color = ColorRGBA (1,1,1,1);
+	face.touch()->_face_color = ofColor (1,1,1,1);
 
 	_g.touch()->_faces.push_back (face);
 }

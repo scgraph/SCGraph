@@ -1,7 +1,7 @@
 #ifndef SCGRAPH_TRANSFORMATION_COMMAND
 #define SCGRAPH_TRANSFORMATION_COMMAND
 
-#include "vector_3d.h"
+#include "ofVec3f.h"
 #include "matrix.h"
 #include "cow_ptr.h"
 
@@ -18,7 +18,7 @@ struct TransformationCommand : public DeepCopyable
 
 struct Translation : public TransformationCommand
 {
-	Vector3D _translation_vector;
+	ofVec3f _translation_vector;
 
 	void accept (TransformationCommandVisitor *v);
 	virtual Translation* deepCopy() {
@@ -29,7 +29,7 @@ void acceptConst (TransformationCommandVisitor *v) const;
 
 struct Rotation : public TransformationCommand
 {
-	Vector3D _rotation_vector;
+	ofVec3f _rotation_vector;
 	float    _rotation_angle;
 
 	void accept (TransformationCommandVisitor *v);
@@ -43,7 +43,7 @@ struct Rotation : public TransformationCommand
 
 struct Scale : public TransformationCommand
 {
-	Vector3D _scaling_vector;
+	ofVec3f _scaling_vector;
 
 	void accept (TransformationCommandVisitor *v);
 	void acceptConst (TransformationCommandVisitor *v) const;

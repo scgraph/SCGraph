@@ -34,7 +34,7 @@ Points::Points () :
 
 	// face->_material._emissive_color._c[0] = 1.0;
 
-	_f.touch()->_face_color = ColorRGBA (1,1,1,1);
+	_f.touch()->_face_color = ofColor (1,1,1,1);
 
 	//_g.touch()->_faces.push_back (face);
 }
@@ -51,7 +51,7 @@ void Points::process_g (double delta_t)
 	if (_first_time) {
 		_first_time = false;
 		for (size_t i = 0; i < (int)*_control_ins[1]; ++i) 
-			_f.touch()->_vertices.push_back(Vector3D());
+			_f.touch()->_vertices.push_back(ofVec3f());
 
 	}
 

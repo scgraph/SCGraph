@@ -1,9 +1,9 @@
 #ifndef SCGRAPH_FACE_HH
 #define SCGRAPH_FACE_HH
 
-#include "color_rgba.h"
+#include "ofColor.h"
 #include "material.h"
-#include "vector_3d.h"
+#include "ofVec3f.h"
 #include "vector_2d.h"
 
 #include <stdint.h>
@@ -26,9 +26,9 @@ struct Face : public DeepCopyable
 	RenderMode _render_mode;
 
 	/** the vertices of the face. For every vertex you need a normal, too */ 
-	std::vector<Vector3D>      _vertices;
+	std::vector<ofVec3f>      _vertices;
 
-	std::vector<Vector3D>      _normals;
+	std::vector<ofVec3f>      _normals;
 
 	/** if this vector is nonempty it has to have the same size
 	    as _vertices. if it's empty then no texture will be applied */
@@ -41,7 +41,7 @@ struct Face : public DeepCopyable
 	/** use this color vector if you use per vertex color.
 	    in the other case use the per face color below.
 	     if this is nonempty it has to have the same size as _vertices */
-	std::vector<ColorRGBA>     _colors;
+	std::vector<ofColor>     _colors;
 	float _alpha_mul;
 
 	/** set to true if you want to specify colors per vertex */
@@ -49,7 +49,7 @@ struct Face : public DeepCopyable
 
 	/** this is the single color used to draw the face when lighting
 	    is disabled and _per_vertex_colors is false */
-	ColorRGBA                  _face_color;
+	ofColor                  _face_color;
 
 
 	Material                   _material;

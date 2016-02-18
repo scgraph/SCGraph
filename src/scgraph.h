@@ -21,7 +21,7 @@
 #ifdef HAVE_JACK
 #include "jack_client.h"
 #endif
-
+/*
 #include <QtGui/QApplication>
 #include <QtCore/QTimer>
 #include <QtCore/QReadWriteLock>
@@ -29,15 +29,17 @@
 
 #include <QtGui/QWidget>
 #include <QtGui/QIcon>
-
+*/
 // #include <SuperCollider/plugin_interface/SC_InterfaceTable.h>
+
+#include "ofThread.h"
 
 /** this class implements the singleton pattern and is the global
  * access point for pretty much everything */
 
 class ScGraph
 {
-	// QMutex                            _main_mutex;
+	ofThread                            _main_mutex;
 
 	static ScGraph*                   _instance;
 
@@ -95,7 +97,7 @@ class ScGraph
 		std::vector<boost::shared_ptr<GSynth> >
 		                           _persistent_synths;
 
-		QReadWriteLock             _read_write_lock;
+		//QReadWriteLock             _read_write_lock;
 
 
 //		SC_InterfaceTable          _sc_interface_table;

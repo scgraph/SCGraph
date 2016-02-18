@@ -50,11 +50,11 @@ Quad::Quad () :
 
 	for (size_t i = 0; i < 4; ++i)
 		{
-			face.touch()->_vertices.push_back (Vector3D ());
-			face.touch()->_normals.push_back (Vector3D (0,0,1));
+			face.touch()->_vertices.push_back (ofVec3f ());
+			face.touch()->_normals.push_back (ofVec3f (0,0,1));
 		}
 	
-	face.touch()->_face_color = ColorRGBA (1,1,1,1);
+	face.touch()->_face_color = ofColor (1,1,1,1);
 
 	_g.touch()->_faces.push_back (face);
 }
@@ -121,12 +121,12 @@ TexQuad::TexQuad () :
 
 	for (int i = 0; i < 4; ++i)
 	{
-		face.touch()->_vertices.push_back (Vector3D ());
-		face.touch()->_normals.push_back (Vector3D ());
+		face.touch()->_vertices.push_back (ofVec3f ());
+		face.touch()->_normals.push_back (ofVec3f ());
 		face.touch()->_texture_coordinates.push_back (Vector2D());
 	}
 
-	face.touch()->_face_color = ColorRGBA (1,1,1,1);
+	face.touch()->_face_color = ofColor (1,1,1,1);
 	_g.touch()->_faces.push_back (face);
 
 }
@@ -225,12 +225,12 @@ FBTexQuad::FBTexQuad () :
 
 	for (int i = 0; i < 4; ++i)
 	{
-		face.touch()->_vertices.push_back (Vector3D ());
-		face.touch()->_normals.push_back (Vector3D ());
+		face.touch()->_vertices.push_back (ofVec3f ());
+		face.touch()->_normals.push_back (ofVec3f ());
 		face.touch()->_texture_coordinates.push_back (Vector2D());
 	}
 
-	face.touch()->_face_color = ColorRGBA (1,1,1,1);
+	face.touch()->_face_color = ofColor (1,1,1,1);
 
 	_g.touch()->_faces.push_back (face);
 }

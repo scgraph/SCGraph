@@ -1,7 +1,7 @@
 #ifndef SCGRAPH_MATRIX_HH
 #define SCGRAPH_MATRIX_HH
 
-#include "vector_3d.h"
+#include "ofVec3f.h"
 
 #include <vector>
 #include <iostream>
@@ -31,11 +31,11 @@ class Matrix
 
 		void set_identity ();
 
-		void set_axis_rotation (const Vector3D &axis, float angle);
+		void set_axis_rotation (const ofVec3f &axis, float angle);
 
 		void dump ();
 
-		void add_translation (const Vector3D& vec);
+		void add_translation (const ofVec3f& vec);
 
 		void add_translation (float x, float y, float z);
 

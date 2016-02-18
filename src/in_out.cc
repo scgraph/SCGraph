@@ -54,18 +54,18 @@ void InFeedback::process_c (double delta_t)
 void XFade2::visitGeometry (Geometry *g) {
 	for (size_t i = 0; i < g->_faces.size (); ++i) {
 		if (g->_faces[i]->_colors.empty()) {
-			g->_faces[i].touch()->_face_color.scale_alpha(_factor);
+			//g->_faces[i].touch()->_face_color.scale_alpha(_factor);
 		}
 		else {
 			for (size_t j = 0; j < g->_faces[i]->_colors.size (); ++j) {
-				g->_faces[i].touch()->_colors[j].scale_alpha(_factor);
+				//g->_faces[i].touch()->_colors[j].scale_alpha(_factor);
 			}
 		}
 	}
 }
 
 void XFade2::visitText (Text *t) {
-	t->_color.scale_alpha(_factor);
+	//t->_color.scale_alpha(_factor);
 }
 
 void XFade2::process_g (double delta_t)
@@ -100,18 +100,18 @@ void XFade2::process_c (double delta_t)
 void XOut::visitGeometry (Geometry *g) {
 	for (size_t i = 0; i < g->_faces.size (); ++i) {
 		if (g->_faces[i]->_colors.empty()) {
-			g->_faces[i].touch()->_face_color.scale_alpha(_factor);
+			// TODO g->_faces[i].touch()->_face_color.scale_alpha(_factor);
 		}
 		else {
 			for (size_t j = 0; j < g->_faces[i]->_colors.size (); ++j) {
-				g->_faces[i].touch()->_colors[j].scale_alpha(_factor);
+				// TODO g->_faces[i].touch()->_colors[j].scale_alpha(_factor);
 			}
 		}
 	}
 }
 
 void XOut::visitText (Text *t) {
-	t->_color.scale_alpha(_factor);
+	// TODO t->_color.scale_alpha(_factor);
 }
 
 void XOut::process_g (double delta_t)

@@ -49,27 +49,27 @@ void GLight::process_g (double delta_t)
 	_l.touch()->_position._c[2] = *_control_ins[4];
 	_l.touch()->_position._c[3] = *_control_ins[5];
 
-	_l.touch()->_spot_direction._c[0] = *_control_ins[6];
-	_l.touch()->_spot_direction._c[1] = *_control_ins[7];
-	_l.touch()->_spot_direction._c[2] = *_control_ins[8];
+	_l.touch()->_spot_direction[0] = *_control_ins[6];
+	_l.touch()->_spot_direction[1] = *_control_ins[7];
+	_l.touch()->_spot_direction[2] = *_control_ins[8];
 
 	_l.touch()->_spot_exponent = *_control_ins[9];
 	_l.touch()->_spot_cutoff = *_control_ins[10];
 
-	_l.touch()->_ambient_color._c[0] = *_control_ins[11];
-	_l.touch()->_ambient_color._c[1] = *_control_ins[12];
-	_l.touch()->_ambient_color._c[2] = *_control_ins[13];
-	_l.touch()->_ambient_color._c[3] = *_control_ins[14];
+	_l.touch()->_ambient_color[0] = *_control_ins[11];
+	_l.touch()->_ambient_color[1] = *_control_ins[12];
+	_l.touch()->_ambient_color[2] = *_control_ins[13];
+	_l.touch()->_ambient_color[3] = *_control_ins[14];
 
-	_l.touch()->_diffuse_color._c[0] = *_control_ins[15];
-	_l.touch()->_diffuse_color._c[1] = *_control_ins[16];
-	_l.touch()->_diffuse_color._c[2] = *_control_ins[17];
-	_l.touch()->_diffuse_color._c[3] = *_control_ins[18];
+	_l.touch()->_diffuse_color[0] = *_control_ins[15];
+	_l.touch()->_diffuse_color[1] = *_control_ins[16];
+	_l.touch()->_diffuse_color[2] = *_control_ins[17];
+	_l.touch()->_diffuse_color[3] = *_control_ins[18];
 
-	_l.touch()->_specular_color._c[0] = *_control_ins[19];
-	_l.touch()->_specular_color._c[1] = *_control_ins[20];
-	_l.touch()->_specular_color._c[2] = *_control_ins[21];
-	_l.touch()->_specular_color._c[3] = *_control_ins[22];
+	_l.touch()->_specular_color[0] = *_control_ins[19];
+	_l.touch()->_specular_color[1] = *_control_ins[20];
+	_l.touch()->_specular_color[2] = *_control_ins[21];
+	_l.touch()->_specular_color[3] = *_control_ins[22];
 
 	_l.touch()->_constant_attenuation = *_control_ins[23];
 	_l.touch()->_linear_attenuation = *_control_ins[24];

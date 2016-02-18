@@ -50,7 +50,7 @@ void Stretch::visitTransformation (Transformation *t)
 	t->_transformation_matrix = m.mul (stretch);
 #endif
 
-	_s.touch()->_scaling_vector = Vector3D (*_control_ins[1], *_control_ins[2], *_control_ins[3]);
+	_s.touch()->_scaling_vector = ofVec3f (*_control_ins[1], *_control_ins[2], *_control_ins[3]);
 	t->_commands.push_back (_s);
 
 }

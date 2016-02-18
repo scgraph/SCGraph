@@ -5,7 +5,7 @@
 #include "boost/optional.hpp"
 
 #include "plugins/quad.h"
-
+/*
 #include <QtCore/QObject>
 #include <QtCore/QHash>
 #include <QtCore/QQueue>
@@ -16,6 +16,9 @@
 
 #include <QtCore/QFuture>
 #include <QtCore/QtConcurrentRun>		
+ */
+
+#include "ofImage.h"
 
 extern "C"
 {

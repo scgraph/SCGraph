@@ -14,14 +14,16 @@
 #include <iostream>
 #include <cstdio>
 #include <sstream>
+#include <stdexcept>
 
 
-#include <QtOpenGL/QGLFormat>
+//#include <QtOpenGL/QGLFormat>
 
 /** 
 	A global variable, but don't blame me, blame the 
 	GLEW authors
 */
+/*
 GLEWContext *glewContext;
 
 extern "C" {
@@ -29,7 +31,8 @@ extern "C" {
 		return glewContext;
 	}
 }
-
+ */
+/*
 
 Recorder::Recorder () :
 	_current_frame (0)
@@ -59,8 +62,8 @@ void Recorder::writeFrame (QImage img)
 		// set quality to 95/100
 		img.save(tmp, 0, 95);
 	}
-	catch (const char* error) {
-		std::cout << "[Recorder]: " << error << std::endl;
+        catch (const std::exception& ex) {
+            std::cout << "[Recorder]: " << ex.what() << std::endl;
 	}
 }
 
@@ -91,11 +94,12 @@ void writeImage (QImage img)
 
 		std::cout << "[Screenshot] saved to " << path.toStdString() << std::endl;
 	}
-	catch (const char* error) {
-		std::cout << "[Screenshot]: " << error << std::endl;
+        catch (const std::exception& ex) {
+            std::cout << "[Screenshot]: " << ex.what() << std::endl;
 	}
 }
-
+*/
+/*
 GLRenderWidget::GLRenderWidget (QWidget *parent, GLRenderer *renderer) :
 	QGLWidget (parent),
 	_renderer (renderer),
@@ -146,7 +150,7 @@ void GLRenderWidget::initializeGL ()
 	GLenum err = glewInit();
 	if (GLEW_OK != err)
 	{
-		/* Problem: glewInit failed, something is seriously wrong. */
+		// Problem: glewInit failed, something is seriously wrong.
 		fprintf(stderr, "Error: %s\n", glewGetErrorString(err));
 	}
 #ifdef HAVE_SHADERS
@@ -251,6 +255,7 @@ void GLMainWindow::closeEvent (QCloseEvent *event)
 
 	((QEvent*)event)->ignore ();
 }
+*/
 
 
 GLRenderer::GLRenderer () :
@@ -277,26 +282,26 @@ GLRenderer::GLRenderer () :
 	_rot_x (0),
 	_rot_y (0),
 	_window_title("[ScGraph]: GGLRenderer - Press F1 for help"),
-	font (QFont()),
+	// TODO font (QFont()),
 	_feedback (0),
 	_fbcounter (0),
 	_max_feedback_frames (SCGRAPH_QT_GL_RENDERER_MAXMAX_FEEDBACK_FRAMES + 1),
 	_current_shader_program (0),
 	_delta_t(0.1)
 {
-	_main_window = new GLMainWindow(this);
-    _gl_widget = new GLRenderWidget(_main_window, this);
+	// TODO _main_window = new GLMainWindow(this);
+    // TODO _gl_widget = new GLRenderWidget(_main_window, this);
 
-	_main_window->setCentralWidget(_gl_widget);
+	// TODO _main_window->setCentralWidget(_gl_widget);
 
-	_main_window->setAttribute (Qt::WA_DeleteOnClose, false);
-	_main_window->setAttribute (Qt::WA_QuitOnClose, false);
+	// TODO _main_window->setAttribute (Qt::WA_DeleteOnClose, false);
+	// TODO _main_window->setAttribute (Qt::WA_QuitOnClose, false);
 
-	_main_window->setWindowTitle (_window_title);
-	_main_window->resize (SCGRAPH_QT_GL_RENDERER_DEFAULT_WIDTH,
+	setWindowTitle (_window_title);
+	setWindowShape (SCGRAPH_QT_GL_RENDERER_DEFAULT_WIDTH,
 						  SCGRAPH_QT_GL_RENDERER_DEFAULT_HEIGHT);
 
-    _main_window->show();
+    //_main_window->show();
  
 	_transformation_matrix.set_identity ();
 	_rotation_matrix.set_identity ();
@@ -312,6 +317,7 @@ GLRenderer::GLRenderer () :
 
 	//std::cout << "[GLRenderer]: constructor" << std::endl;
 
+    /* TODO
 	// set up display texts
 	font.setPixelSize(10);
 
@@ -336,10 +342,10 @@ GLRenderer::GLRenderer () :
 			  << "LEFTARROW - left"
 			  << "SHIFT-UPARROW - up"
 			  << "SHIFT-DOWNARROW - down";
-
+     */
 
 	TexturePool *texture_pool = TexturePool::get_instance ();
-
+/* TODO
 	connect (texture_pool, 
 			 SIGNAL (texture_changed(unsigned int)), 
 			 this, 
@@ -363,7 +369,7 @@ GLRenderer::GLRenderer () :
 			 this, 
 			 SLOT(change_shader_programs()), 
 			 Qt::QueuedConnection);
-
+*/
 	//	_gl_widget->makeCurrent();
 
 #if 0
@@ -501,10 +507,10 @@ void GLRenderer::add_shader_program (unsigned int index) {
 
 void GLRenderer::setup_texture (size_t index)
 {
-	_gl_widget->makeCurrent();
+	//_gl_widget->makeCurrent();
 	std::cout << "setup_texture" << std::endl;
 
-	glBindTexture (GL_TEXTURE_2D, _texture_handles[index]);
+	// TODO glBindTexture (GL_TEXTURE_2D, _texture_handles[index]);
 }
 
 
@@ -569,6 +575,7 @@ GLuint GLRenderer::upload_texture(boost::shared_ptr<Texture> const & texture)
 }
 
 void GLRenderer::upload_texture(uint32_t id, bool samep) {
+    /* TODO
 	TexturePool *texture_pool = TexturePool::get_instance ();
 	if(texture_pool->_tmp_textures.contains(id)) {
 		boost::shared_ptr<Texture> t = texture_pool->_tmp_textures.value(id);
@@ -587,20 +594,21 @@ void GLRenderer::upload_texture(uint32_t id, bool samep) {
 	else {
 		std::cout << "[GLRenderer] No such frame at ID " << id << std::endl;
 	}
+     */
 }
 
 void GLRenderer::clear_textures ()
 {
-	_gl_widget->makeCurrent();
+	// TODO _gl_widget->makeCurrent();
 
 	// we make everything new here :)
-	glDeleteTextures (_texture_handles.size (), &_texture_handles[0]);
+	// TODO glDeleteTextures (_texture_handles.size (), &_texture_handles[0]);
 	
 	_texture_handles.clear ();
 }
 
 void GLRenderer::delete_texture (GLuint handle) {
-	_gl_widget->makeCurrent();
+	// TODO _gl_widget->makeCurrent();
 	glDeleteTextures(1, &handle);
 }
 
@@ -622,21 +630,23 @@ void GLRenderer::change_texture (unsigned int index) {
 
 void GLRenderer::change_tmp_texture(uint32_t id, bool samep) {
 	// std::cout << "[GLRenderer] changing tmp texture " << id << std::endl;
+    /* TODO
 	if(_tmp_texture_handles.contains(id) && (!samep)) {
 		delete_texture(_tmp_texture_handles.value(id));
 	}
 	upload_texture(id, samep);
+     */
 }
 
 void GLRenderer::delete_tmp_texture(uint32_t id) {
-	if(_tmp_texture_handles.contains(id))
-		delete_texture(_tmp_texture_handles.value(id));
+	//if(_tmp_texture_handles.contains(id))
+		// TODO delete_texture(_tmp_texture_handles.value(id));
 }
 
 void GLRenderer::init_textures () {
-	_gl_widget->makeCurrent();
+	// TODO _gl_widget->makeCurrent();
 	clear_textures ();
-
+/* TODO
 	TexturePool *texture_pool = TexturePool::get_instance ();
 
 	for (size_t i = 0; i < texture_pool->get_number_of_textures (); ++i) {
@@ -652,13 +662,14 @@ void GLRenderer::init_textures () {
 		i.next();
 		upload_texture(i.key(), false);
 	}
+ */
 }
 
 
 
 void GLRenderer::change_feedback_frames ()
 {
-	_gl_widget->makeCurrent();
+	// TODO _gl_widget->makeCurrent();
 
 	// TODO texture size?
 
@@ -691,9 +702,9 @@ void GLRenderer::change_feedback_frames ()
 
 void GLRenderer::clear_feedback_frames ()
 {
-	_gl_widget->makeCurrent();
+	// TODO _gl_widget->makeCurrent();
 
-	glDeleteTextures (_past_frame_handles.size (), &_past_frame_handles[0]);
+	// TODO glDeleteTextures (_past_frame_handles.size (), &_past_frame_handles[0]);
 
 	_past_frame_handles.clear ();
 }
@@ -704,41 +715,44 @@ GLRenderer::~GLRenderer ()
 
 	clear_textures ();
 
-	foreach(GLuint handle, _tmp_texture_handles)
+	/* TODO
+     foreach(GLuint handle, _tmp_texture_handles)
 		glDeleteTextures(1, &handle);
 
 	_tmp_texture_handles.clear();
-
+*/
 	clear_feedback_frames ();
 
-	delete _gl_widget;
-	delete _main_window;
+	// TODO delete _gl_widget;
+	// TODO delete _main_window;
+    close();
 }
 
 void GLRenderer::do_face (const Face& face)
 {
-	glColor4fv (&face._face_color._c[0]);
-
+    // TODO glColor4iv (&face._face_color[0][0]);
+    ofSetColor(face._face_color[0]);
 	// std::cout << face._texture_coordinates.size () << " " <<
 	// *_control_ins[TEXTURING] << " " << face._texture_index <<
 	// std::endl;
+    /* TODO
 	if((*_control_ins[TEXTURING] > 0.5) && (face._texture_coordinates.size () > 0)) {
-		if (face._colors.size () > 0) {
+		if (face.colors.size () > 0) {
 			//std::cout << "1" << std::endl;
 			for (size_t i = 0; i < face._vertices.size (); ++i)	{
-				glColor4fv (&face._colors[i]._c[0]);
-				glNormal3fv (&face._normals[i]._c[0]);
-				glTexCoord2fv (&face._texture_coordinates[i]._c[0]);
-				glVertex3fv (&face._vertices[i]._c[0]);
+				glColor4fv (&face._colors[i][0]);
+				glNormal3fv (&face._normals[i][0]);
+				glTexCoord2fv (&face._texture_coordinates[i][0]);
+				glVertex3fv (&face._vertices[i]);
 			}
 		}
 		else {
 			//std::cout << "2" << std::endl;
 			for (size_t i = 0; i < face._vertices.size (); ++i)
 				{
-					glNormal3fv (&face._normals[i]._c[0]);
-					glTexCoord2fv (&face._texture_coordinates[i]._c[0]);
-					glVertex3fv (&face._vertices[i]._c[0]);
+					glNormal3fv (&face._normals[i][0]);
+					glTexCoord2fv (&face._texture_coordinates[i][0]);
+					glVertex3fv (&face._vertices[i][0]);
 				}
 		}
 	}
@@ -746,19 +760,20 @@ void GLRenderer::do_face (const Face& face)
 		//std::cout << "3" << std::endl;
 		for (size_t i = 0; i < face._vertices.size (); ++i)
 			{
-				glColor4fv (&face._colors[i]._c[0]);
-				glNormal3fv (&face._normals[i]._c[0]);
-				glVertex3fv (&face._vertices[i]._c[0]);
+				glColor4fv (&face._colors[i][0]);
+				glNormal3fv (&face._normals[i][0]);
+				glVertex3fv (&face._vertices[i][0]);
 			}
 	}
 	else {
 		//std::cout << "4" << std::endl;
 		for (size_t i = 0; i < face._vertices.size (); ++i)
 			{
-				glNormal3fv (&face._normals[i]._c[0]);
-				glVertex3fv (&face._vertices[i]._c[0]);
+				glNormal3fv (&face._normals[i][0]);
+				glVertex3fv (&face._vertices[i][0]);
 			}
 	}
+     */
 }
 
 
@@ -778,6 +793,7 @@ void GLRenderer::draw_face (const Face &face) {
 		do_material (face._material);
 
 	if (*_control_ins[TEXTURING] > 0.5 && face._texture_coordinates.size () > 0) {
+        /* TODO
 		if(face._texture_index >= 0 		
 		   && face._texture_index < _texture_handles.size()) {
 			glEnable (GL_TEXTURE_2D);
@@ -810,6 +826,7 @@ void GLRenderer::draw_face (const Face &face) {
 				glDisable (GL_TEXTURE_2D);
 			}
 		}
+         */
 	}
 	else 
 		{
@@ -830,11 +847,13 @@ void GLRenderer::draw_face (const Face &face) {
 
 			glBegin (GL_POINTS);
 
-			glColor4fv (&face._face_color._c[0]);
+                //glColor4fv (&face._face_color[0]);
+                ofSetColor(face._face_color);
 
 
 			for (size_t i = 0; i < face._vertices.size (); ++i)
-				glVertex3fv (&face._vertices[i]._c[0]);
+                ofPoint(face._vertices[i]);
+				//glVertex3fv (&0]);
 
 			glEnd ();
 
@@ -852,10 +871,11 @@ void GLRenderer::draw_face (const Face &face) {
 
 			glBegin (GL_LINES);
 
-			glColor4fv (&face._face_color._c[0]);
-
-			for (size_t i = 0; i < face._vertices.size (); ++i)
-				glVertex3fv (&face._vertices[i]._c[0]);
+                //glColor4fv (&face._face_color[0]);
+                ofSetColor(face._face_color);
+                
+            for (size_t i = 0; i < face._vertices.size (); ++i)
+				ofPoint(face._vertices[i]);
 
 			glEnd ();
 
@@ -871,10 +891,11 @@ void GLRenderer::draw_face (const Face &face) {
 
 			glBegin (GL_LINE_STRIP);
 
-			glColor4fv (&face._face_color._c[0]);
+                //glColor4fv (&face._face_color[0]);
+                ofSetColor(face._face_color);
 
 			for (size_t i = 0; i < face._vertices.size (); ++i)
-				glVertex3fv (&face._vertices[i]._c[0]);
+				ofPoint(face._vertices[i]);
 
 			glEnd ();
 
@@ -890,10 +911,11 @@ void GLRenderer::draw_face (const Face &face) {
 
 			glBegin (GL_LINE_LOOP);
 
-			glColor4fv (&face._face_color._c[0]);
+			//glColor4fv (&face._face_color[0]);
+            ofSetColor(face._face_color);
 
 			for (size_t i = 0; i < face._vertices.size (); ++i)
-				glVertex3fv (&face._vertices[i]._c[0]);
+				ofPoint(face._vertices[i]);
 
 			glEnd ();
 
@@ -962,11 +984,18 @@ void GLRenderer::draw_face (const Face &face) {
 void GLRenderer::do_material (const Material &material)
 {
 	// set material for face
-	glMaterialfv (GL_FRONT, GL_SPECULAR, material._specular_reflection._c);
-	glMaterialfv (GL_FRONT, GL_DIFFUSE, material._diffuse_reflection._c);
-	glMaterialfv (GL_FRONT, GL_AMBIENT, material._ambient_reflection._c);
-	glMaterialfv (GL_FRONT, GL_EMISSION, material._emissive_color._c);
-	glMaterialfv (GL_FRONT, GL_SHININESS, &material._shinyness);
+    ofMaterial ma;
+    ma.setSpecularColor(material._specular_reflection);
+    ma.setDiffuseColor(material._diffuse_reflection);
+    ma.setAmbientColor(material._ambient_reflection);
+    ma.setEmissiveColor(material._emissive_color);
+    ma.setShininess(material._shinyness);
+    /*
+	glMaterialfv (GL_FRONT, GL_SPECULAR, material._specular_reflection);
+	glMaterialfv (GL_FRONT, GL_DIFFUSE, material._diffuse_reflection);
+	glMaterialfv (GL_FRONT, GL_AMBIENT, material._ambient_reflection);
+	glMaterialfv (GL_FRONT, GL_EMISSION, material._emissive_color);
+	glMaterialfv (GL_FRONT, GL_SHININESS, &material._shinyness);*/
 }
 
 void GLRenderer::do_light (const Light &light)
@@ -979,14 +1008,14 @@ void GLRenderer::do_light (const Light &light)
 	}
 
 	glEnable (index);
-
-	glLightfv(index, GL_POSITION, &(light._position._c[0]));
-	glLightfv(index, GL_SPOT_DIRECTION, &(light._spot_direction._c[0]));
-	glLightfv(index, GL_AMBIENT, &(light._ambient_color._c[0]));
+/* TODO
+	glLightfv(index, GL_POSITION, &(light._position[0]));
+	glLightfv(index, GL_SPOT_DIRECTION, &(light._spot_direction[0]));
+	glLightfv(index, GL_AMBIENT, &(light._ambient_color[0]));
 	// std::cout << "am: " << light._ambient_color._c[0] << " " <<	light._ambient_color._c[1] << " " << light._ambient_color._c[2] << std::endl;
-	glLightfv(index, GL_DIFFUSE, &(light._diffuse_color._c[0]));
-	glLightfv(index, GL_SPECULAR, &(light._specular_color._c[0]));
-
+	glLightfv(index, GL_DIFFUSE, &(light._diffuse_color[0]));
+	glLightfv(index, GL_SPECULAR, &(light._specular_color[0]));
+*/
 	glLightf(index, GL_SPOT_EXPONENT, light._spot_exponent);
 	glLightf(index, GL_SPOT_CUTOFF, light._spot_cutoff);
 
@@ -1087,17 +1116,17 @@ void GLRenderer::visitGeometryConst (const Geometry *g)
 
 void GLRenderer::visitTranslationConst (const Translation *t)
 {
-	glTranslatef (t->_translation_vector._c[0], t->_translation_vector._c[1], t->_translation_vector._c[2]);
+	glTranslatef (t->_translation_vector[0], t->_translation_vector[1], t->_translation_vector[2]);
 }
 
 void GLRenderer::visitRotationConst (const Rotation *r)
 {
-	glRotatef (r->_rotation_angle, r->_rotation_vector._c[0], r->_rotation_vector._c[1], r->_rotation_vector._c[2]);
+	glRotatef (r->_rotation_angle, r->_rotation_vector[0], r->_rotation_vector[1], r->_rotation_vector[2]);
 }
 
 void GLRenderer::visitScaleConst (const Scale *s)
 {
-	glScalef (s->_scaling_vector._c[0], s->_scaling_vector._c[1], s->_scaling_vector._c[2]);
+	glScalef (s->_scaling_vector[0], s->_scaling_vector[1], s->_scaling_vector[2]);
 }
 
 void GLRenderer::visitLinearConst (const Linear *l)
@@ -1180,7 +1209,8 @@ void GLRenderer::visitTextConst (const Text *t)
 		do_material (t->_material);
 
 	visitTransformationConst (t);
-	glColor4fv (&(t->_color._c[0]));
+	//glColor4fv (&(t->_color[0]));
+    ofSetColor(t->_color);
 
 	glScalef(0.2,0.2,0.2);
 
@@ -1205,9 +1235,9 @@ void GLRenderer::visitTextConst (const Text *t)
 void GLRenderer::process_g (double delta_t)
 {
 	_delta_t = delta_t;
-	glewContext = _gl_widget->getGlewContext();
+	//TODO glewContext = _gl_widget->getGlewContext();
 
-	_gl_widget->updateGL();
+	//TODO _gl_widget->updateGL();
 }
 
 
@@ -1270,10 +1300,10 @@ void GLRenderer::really_process_g (double delta_t)
 
 	Matrix r;
 
-	r.set_axis_rotation (Vector3D(1,0,0), _rot_x);
+	r.set_axis_rotation (ofVec3f(1,0,0), _rot_x);
 	_rotation_matrix = _rotation_matrix.mul (r);
 
-	r.set_axis_rotation (Vector3D(0,1,0),  _rot_y);
+	r.set_axis_rotation (ofVec3f(0,1,0),  _rot_y);
 	_rotation_matrix = _rotation_matrix.mul (r);
 
 	_rotation_matrix.normalize ();
@@ -1400,15 +1430,17 @@ void GLRenderer::really_process_g (double delta_t)
 	if (*_control_ins[PERSPECTIVE] > 0.5)
 	{
 		gluPerspective (*_control_ins[FOV],
-						(GLfloat)_gl_widget->width() 
-						/ (GLfloat)_gl_widget->height(),
+                        // TODO: right measurements?
+						(GLfloat)getWidth()
+						/ (GLfloat)getHeight(),
 						*_control_ins[NEAR_PLANE], 
 						*_control_ins[FAR_PLANE]);
 	}
 	else
 	{
-		float ratio = (GLfloat)_gl_widget->width() 
-			/ (GLfloat)_gl_widget->height();
+        // TODO: right measurements?
+		float ratio = (GLfloat)getWidth()
+			/ (GLfloat)getHeight();
 
 		glOrtho (-1.0 * ratio, 1.0 * ratio, 
 				 -1.0, 1.0,
@@ -1478,15 +1510,15 @@ void GLRenderer::really_process_g (double delta_t)
 							  (int)pow(2,(int)ceil(log2(_gl_widget->height()))), 
 							  0);*/
 		glActiveTexture(_past_frame_handles[_fbcounter]);
-		glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16, 0, 0, 
-						 _gl_widget->width(), _gl_widget->height(), 0);
+		// TODO glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16, 0, 0,
+		// TODO 				 _gl_widget->width(), _gl_widget->height(), 0);
 		//std::cout << "GL error message:" << glGetError() << std::endl; 
 		_feedback = 0;
 	}
 	_fbcounter = (_fbcounter + 1) % _max_feedback_frames;
 
 	glDisable (GL_LIGHTING);
-
+/* TODO
 	if (_show_help)
 	{
 		int y_offset = 20;
@@ -1522,32 +1554,32 @@ void GLRenderer::really_process_g (double delta_t)
 			}
 		}
 	}
-
+*/
 	//if(_gl_widget->doubleBuffer()) _gl_widget->swapBuffers ();
 }
 
 
-void GLRenderer::mousePressEvent (QMouseEvent *event)
+void GLRenderer::mousePressed(int x, int y, int button)
 {
 	_mouse_down = true;
-	event->ignore ();
+	// TODO event->ignore ();
 }
 
 
-void GLRenderer::mouseReleaseEvent (QMouseEvent *event)
+void GLRenderer::mouseReleased(int x, int y, int button)
 {
 	_mouse_down = false;
-	event->ignore ();
+	// TODO event->ignore ();
 }
 
 
-void GLRenderer::mouseMoveEvent (QMouseEvent *event)
+void GLRenderer::mouseMoved(int x, int y )
 {
-	_cur_mouse_x = event->x();
-	_cur_mouse_y = event->y();
-	event->ignore ();
+	_cur_mouse_x = x;
+	_cur_mouse_y = y;
+	// TODO event->ignore ();
 }
-
+/* TODO
 void GLRenderer::mouseDoubleClickEvent (QMouseEvent *event)
 {
 	_full_screen = !_full_screen;
@@ -1555,13 +1587,14 @@ void GLRenderer::mouseDoubleClickEvent (QMouseEvent *event)
 		_main_window->showFullScreen ();
 	else
 		_main_window->showNormal ();
-	event->ignore ();
+	// TODO event->ignore ();
 }
+*/
 
-
-void GLRenderer::keyPressEvent (QKeyEvent *event)
+void GLRenderer::keyPressed(int key)
 {
-	switch (event->key ())
+    /* TODO
+	switch (key)
 	{
 		case Qt::Key_Up:
 			_up_key_down = true;
@@ -1664,12 +1697,14 @@ void GLRenderer::keyPressEvent (QKeyEvent *event)
 
 	
 	}
-	event->ignore ();
+     */
+	// TODO event->ignore ();
 }
 
 
-void GLRenderer::keyReleaseEvent (QKeyEvent *event)
+void GLRenderer::keyReleased(int key)
 {
+    /* TODO
 	switch (event->key ())
 	{
 		case Qt::Key_Up:
@@ -1703,6 +1738,7 @@ void GLRenderer::keyReleaseEvent (QKeyEvent *event)
 		break;
 	}
 	event->ignore ();
+     */
 }
 
 
@@ -1710,12 +1746,12 @@ void GLRenderer::set_done_action (int done_action)
 {
 	_done_action = done_action;
 }
-
+/* TODO
 void GLRenderer::appendToWindowTitle (QString toAppend)
 {
 	_main_window->setWindowTitle (_window_title + toAppend);
 }
-
+*/
 extern "C"
 {
 	GUnit *create (size_t index, int special_index)

@@ -4,6 +4,7 @@
 
 #include "texture_pool.h"
 
+#include <stdexcept>
 
 Texture::Texture (int width, int height, int channels, bool zero = true)
 {
@@ -143,22 +144,23 @@ int ImageTexture::load(const std::string &filename) {
 	try {
 
 		const char * tmp = _filename.c_str();
-		QImage image(tmp);
+        ofImage image = *new ofImage();
+        image.load(tmp);
 
-		if(image.isNull()) {
+		if(image.isAllocated()) {
 			// TODO put this somewhere else
 			std::cout << "  [TexturePool]: Unrecognized Image Format. No texture loaded." 
 					  << std::endl;
 			std::cout << "                 Supported Formats:";
-
+            /*
 			for (int i = 0; i < QImageReader::supportedImageFormats().size(); ++i)
 				std::cout << " " << QImageReader::supportedImageFormats().at(i).data();
-
+*/
 			std::cout << "." << std::endl;
 			return -1;
 		}
 		else {
-			if(image.isNull()) {
+			if(image.isAllocated()) {
 				std::cout 
 					<< "  [TexturePool]: Unable to convert image to GL format."
 					<< "No texture loaded." 
@@ -168,8 +170,8 @@ int ImageTexture::load(const std::string &filename) {
 			else {		
 				int im_width, im_height, tex_width, tex_height;
 
-				im_width = image.width();
-				im_height = image.height();
+				im_width = image.getWidth();
+				im_height = image.getHeight();
 
 				tex_width =  (int)pow(2,(int)ceil(log2(im_width)));
 				tex_height = (int)pow(2,(int)ceil(log2(im_height)));
@@ -188,13 +190,13 @@ int ImageTexture::load(const std::string &filename) {
 				for (int i = 0; i < im_width; ++i)	{
 					for (int j = 0; j < im_height; ++j)	{
 						// swap image
-						QRgb color = image.pixel(i,im_height - j - 1);
+						ofColor color = image.getColor(i,im_height - j - 1);
 
 						int tmpIndex = 4 * (tex_width * j + i);
-						t->_data[tmpIndex]     = (unsigned char) qRed(color);
-						t->_data[tmpIndex + 1] = (unsigned char) qGreen(color);
-						t->_data[tmpIndex + 2] = (unsigned char) qBlue(color);
-						t->_data[tmpIndex + 3] = (unsigned char) qAlpha(color);
+						t->_data[tmpIndex]     = (unsigned char) color[0];
+						t->_data[tmpIndex + 1] = (unsigned char) color[1];
+						t->_data[tmpIndex + 2] = (unsigned char) color[2];
+						t->_data[tmpIndex + 3] = (unsigned char) color[3];
 					}
 				}
 				_texture = t;
@@ -202,10 +204,9 @@ int ImageTexture::load(const std::string &filename) {
 			}
 		}
 	}
-	catch (const char* error)
-		{
-			std::cout << "[TexturePool]: Problem loading texture: " 
-					  << error  << std::endl;
-		}
+        catch (const std::exception& ex) {
+            std::cout << "[TexturePool]: Problem loading texture: " 
+                      << ex.what()  << std::endl;
+        }
 	return -1;
 }

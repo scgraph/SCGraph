@@ -11,8 +11,8 @@ GraphicLoop::GraphicLoop () :
 	_sum_delta_t (0),
 	_iteration_count (0)
 {
-	_timer  = new QTimer (this);
-	connect (_timer, SIGNAL (timeout()), this, SLOT (timer_callback()));
+	_timer  = new ofTimer ();
+	// TODO connect (_timer, SIGNAL (timeout()), this, SLOT (timer_callback()));
 }
 
 GraphicLoop::~GraphicLoop ()
@@ -20,11 +20,16 @@ GraphicLoop::~GraphicLoop ()
 	delete _timer;
 }
 
-void GraphicLoop::start ()
+void GraphicLoop::threadedFunction ()
 {
 	Options *options = Options::get_instance ();
 
-	_timer->start ((int)(1000 * 1.0/(float)options->_graphics_rate));
+	_timer->setPeriodicEvent((int)(1000 * 1.0/(float)options->_graphics_rate));
+    _timer->reset();
+    
+    while(isThreadRunning()) {
+        timer_callback();
+    }
 
 	if (options->_verbose >= 2)
 		std::cout << "[GraphicLoop]: Running!" << std::endl;
@@ -32,14 +37,15 @@ void GraphicLoop::start ()
 
 void GraphicLoop::set_rate (int rate)
 {
-	_timer->setInterval ((int)(1000 * (double)1/(double)rate));
+	_timer->setPeriodicEvent ((int)(1000 * (double)1/(double)rate));
+    _timer->reset();
 }
 
 void GraphicLoop::stop ()
 {
 	Options *options = Options::get_instance ();
 
-	_timer->stop ();
+	// TODO _timer->stop ();
 
 	if (options->_verbose >= 2)
 		std::cout << "[GraphicLoop]: Stopped!" << std::endl;
@@ -85,5 +91,7 @@ void GraphicLoop::timer_callback ()
 
 	++_iteration_count;
 	_tv = tv;
+    sleep((int)(1000 * 1.0/(float)options->_graphics_rate));
+    //_timer->waitNext();
 }
 

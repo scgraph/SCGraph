@@ -3,7 +3,7 @@
 
 #include "../unit.h"
 
-#include "../obj_loader.h"
+/*#include "../obj_loader.h"
 
 class Model : public GUnit
 {
@@ -15,5 +15,5 @@ class Model : public GUnit
 
 		virtual void process_g (double delta_t);
 };
-
+*/
 #endif

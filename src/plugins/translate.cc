@@ -40,7 +40,7 @@ Translate::~Translate ()
 
 void Translate::visitTransformation (Transformation *t)
 {
-	_t.touch()->_translation_vector = Vector3D (*_control_ins[1], *_control_ins[2], *_control_ins[3]);
+	_t.touch()->_translation_vector = ofVec3f (*_control_ins[1], *_control_ins[2], *_control_ins[3]);
 	t->_commands.push_back (_t);
 }
 

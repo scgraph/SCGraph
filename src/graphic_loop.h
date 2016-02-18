@@ -3,16 +3,16 @@
 #ifndef SCGRAPH_GRAPHIC_LOOP_HH
 #define SCGRAPH_GRAPHIC_LOOP_HH
 
-#include <QtCore/QObject>
-#include <QtCore/QTimer>
+//#include <QtCore/QObject>
+//#include <QtCore/QTimer>
 
 #include <sys/time.h>
+#include "ofTimer.h"
+#include "ofThread.h"
 
-class GraphicLoop : public QObject
+class GraphicLoop : public ofThread
 {
-	Q_OBJECT
-
-	QTimer        *_timer;
+	ofTimer        *_timer;
 	bool           _first_time;
 
 	double         _sum_delta_t;
@@ -30,8 +30,9 @@ class GraphicLoop : public QObject
 
 		void set_rate (int rate);
 
-	public slots:
+	//public slots:
 		void timer_callback ();
+    void threadedFunction();
 };
 
 #endif

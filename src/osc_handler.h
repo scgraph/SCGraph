@@ -10,14 +10,17 @@
 #include <ip/UdpSocket.h>
 
 #include <vector>
-
+/*
 #include <QtCore/QThread>
 #include <QtCore/QMetaType>
 #include <QtCore/QWaitCondition>
 #include <QtCore/QMutex>
-
+*/
 // FIXME: remove
 #include <iostream>
+
+#include "ofEvent.h"
+#include "ofThread.h"
 
 /* if you modify this, do the same to the command_name_to_int () method */
 enum {
@@ -105,11 +108,11 @@ enum {
 	NUMBER_OF_COMMANDS = 61
 };
 
-class OscMessage : public QObject
+class OscMessage //: public QObject
 {
-	Q_OBJECT
+	//Q_OBJECT
 	public:
-		OscMessage (const osc::ReceivedMessage& msg,  const IpEndpointName &endpoint_name) : 
+		OscMessage (const osc::ReceivedMessage& msg,  const osc::IpEndpointName &endpoint_name) :
 			_msg (msg),
 			_endpoint_name (endpoint_name) 
 		{
@@ -117,32 +120,33 @@ class OscMessage : public QObject
 		};
 
 		osc::ReceivedMessage _msg;
-		IpEndpointName       _endpoint_name;
+		osc::IpEndpointName       _endpoint_name;
 };	
 
 // FIXME: bad style
 #define SCGRAPH_OSC_MESSAGE_BUFFER_SIZE 15360
 
-class OscHandler : public QThread, public osc::OscPacketListener
+class OscHandler : public osc::OscPacketListener, public ofThread
 {
-	Q_OBJECT
+	//Q_OBJECT
 
-	UdpListeningReceiveSocket   *_socket;
+	osc::UdpListeningReceiveSocket   *_socket;
 	char                         _message_buffer [SCGRAPH_OSC_MESSAGE_BUFFER_SIZE];
 
 	/** a list of clients wishing to receive notifications by the server */
-	std::vector<IpEndpointName>  _notifications;
+	std::vector<osc::IpEndpointName>  _notifications;
 
-	QMutex                       _mutex;
+	pthread_mutex_t                       _mutex;
 
-	/*
-	QMutex                       _condition_mutex;
+	
+	ofThread                       _condition_mutex;
+    /*
 	QWaitCondition               _condition;
 	bool                         _handling_done;
 	*/
 
 	private:
-		void ProcessMessage (const osc::ReceivedMessage& message, const IpEndpointName& name);
+		void ProcessMessage (const osc::ReceivedMessage& message, const osc::IpEndpointName& name);
 		// void ProcessBundle (const osc::ReceivedBundle& b, const IpEndpointName& remoteEndpoint);
 
 		int command_name_to_int (const std::string& command_name);
@@ -150,22 +154,24 @@ class OscHandler : public QThread, public osc::OscPacketListener
 		/* used to send notifications to clients */
 		void send_notifications (std::string path, int id);
 
-		void send_done (std::string command, IpEndpointName endpoint);
+		void send_done (std::string command, osc::IpEndpointName endpoint);
 		/* inherited from QThread */
 		void run ();
+    
 
 	public:
 		OscHandler ();
 		~OscHandler ();
 
 		void stop ();
+        void threadedFunction();
 
 	/* slots to pass messages from the receiving thread to the QMain thread */
-	public slots:
+	//public slots:
 		void handle_message (OscMessage *message);
 		void handle_message_locked (OscMessage *message);
-	signals:
-		void message_received (OscMessage *message);
+	//signals:
+		ofEvent<OscMessage> message_received;
 };
 
 #endif

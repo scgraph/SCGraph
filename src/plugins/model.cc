@@ -1,7 +1,7 @@
 #include "model.h"
 
 #include <iostream>
-
+/*
 extern "C"
 {
     GUnit *create (size_t index, int special_index)
@@ -46,8 +46,9 @@ void Model::process_g (double delta_t)
 	_g.touch()->_commands.clear();
 
 	cow_ptr<Scale> cmd (new Scale);
-	cmd.touch()->_scaling_vector = Vector3D (*_control_ins[0], *_control_ins[0], *_control_ins[0]);
+	cmd.touch()->_scaling_vector = ofVec3f (*_control_ins[0], *_control_ins[0], *_control_ins[0]);
 	_g.touch()->_commands.push_back(cmd);
 
 	_graphics_outs[0]._graphics.push_back(cow_ptr<Geometry>(_g));
 }
+ */

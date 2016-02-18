@@ -3,7 +3,7 @@
 #include "options.h"
 
 #include "texture_pool.h"
-
+/*
 
 VideoTexture::VideoTexture () :
 	_pFormatCtx(NULL),
@@ -290,3 +290,4 @@ int VideoTexture::really_get_frame()
 	processing_done();
 	return 0;
 }
+*/

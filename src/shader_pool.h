@@ -6,13 +6,13 @@
 #include <string>
 #include <map>
 
-#include <QtCore/QObject>
+//#include <QtCore/QObject>
 
-#include "glew.h"
+#include "glew/glew.h"
 
-struct ShaderPool : public QObject
+struct ShaderPool //: public QObject
 {
-	Q_OBJECT
+	//Q_OBJECT
 
 	public:
 		struct ShaderProgram {
@@ -71,7 +71,7 @@ struct ShaderPool : public QObject
 	GLint get_uniform_float_location(unsigned int index);
 #endif
 
-	signals:
+	/// TODO signals:
 		void shader_program_added (unsigned int index);
 		void shader_programs_changed ();
 

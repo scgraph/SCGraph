@@ -33,19 +33,19 @@ BorderedRectangle::BorderedRectangle () :
 
 	// face->_material._emissive_color._c[0] = 1.0;
 
-	face.touch()->_vertices.push_back (Vector3D ());
-	face.touch()->_normals.push_back (Vector3D (0,0,1));
+	face.touch()->_vertices.push_back (ofVec3f ());
+	face.touch()->_normals.push_back (ofVec3f (0,0,1));
 
-	face.touch()->_vertices.push_back (Vector3D ());
-	face.touch()->_normals.push_back (Vector3D (0,0,1));
+	face.touch()->_vertices.push_back (ofVec3f ());
+	face.touch()->_normals.push_back (ofVec3f (0,0,1));
 
-	face.touch()->_vertices.push_back (Vector3D ());
-	face.touch()->_normals.push_back (Vector3D (0,0,1));
+	face.touch()->_vertices.push_back (ofVec3f ());
+	face.touch()->_normals.push_back (ofVec3f (0,0,1));
 
-	face.touch()->_vertices.push_back (Vector3D ());
-	face.touch()->_normals.push_back (Vector3D (0,0,1));
+	face.touch()->_vertices.push_back (ofVec3f ());
+	face.touch()->_normals.push_back (ofVec3f (0,0,1));
 
-	face.touch()->_face_color = ColorRGBA (1,1,1,1);
+	face.touch()->_face_color = ofColor (1,1,1,1);
 
 	_g.touch()->_faces.push_back (face);
 
@@ -53,17 +53,17 @@ BorderedRectangle::BorderedRectangle () :
 	cow_ptr<Face> outline (new Face);
 	outline.touch()->_geometry_type = Face::LINE_LOOP;
 
-	outline.touch()->_vertices.push_back (Vector3D ());
-	outline.touch()->_normals.push_back (Vector3D (0,0,1));
+	outline.touch()->_vertices.push_back (ofVec3f ());
+	outline.touch()->_normals.push_back (ofVec3f (0,0,1));
 
-	outline.touch()->_vertices.push_back (Vector3D ());
-	outline.touch()->_normals.push_back (Vector3D (0,0,1));
+	outline.touch()->_vertices.push_back (ofVec3f ());
+	outline.touch()->_normals.push_back (ofVec3f (0,0,1));
 
-	outline.touch()->_vertices.push_back (Vector3D ());
-	outline.touch()->_normals.push_back (Vector3D (0,0,1));
+	outline.touch()->_vertices.push_back (ofVec3f ());
+	outline.touch()->_normals.push_back (ofVec3f (0,0,1));
 
-	outline.touch()->_vertices.push_back (Vector3D ());
-	outline.touch()->_normals.push_back (Vector3D (0,0,1));
+	outline.touch()->_vertices.push_back (ofVec3f ());
+	outline.touch()->_normals.push_back (ofVec3f (0,0,1));
 	//_graphics_outs[0].touch()->_graphics.push_back(_g);
 
 	_g.touch()->_faces.push_back (outline);
@@ -97,7 +97,7 @@ void BorderedRectangle::process_g (double delta_t)
 	f->_vertices[3]._c[1] = (*_control_ins[1])/2.0;
 	f->_vertices[3]._c[2] = 0;
 
-	f->_face_color = ColorRGBA(
+	f->_face_color = ofColor(
 		(*_control_ins[3]),
 		(*_control_ins[4]),
 		(*_control_ins[5]),
@@ -123,7 +123,7 @@ void BorderedRectangle::process_g (double delta_t)
 	l->_vertices[3]._c[1] = (*_control_ins[1])/2.0;
 	l->_vertices[3]._c[2] = 0;
 
-	l->_face_color = ColorRGBA(
+	l->_face_color = ofColor(
 		(*_control_ins[7]),
 		(*_control_ins[8]),
 		(*_control_ins[9]),

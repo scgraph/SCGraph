@@ -27,7 +27,7 @@ extern "C"
 Textfield::Textfield () :
 	_t(new Text)
 {
-	_t.touch()->_color = ColorRGBA (1,1,1,1);
+	_t.touch()->_color = ofColor (1,1,1,1);
 
 	_t.touch()->_fontsize = 1 * 21;
 	

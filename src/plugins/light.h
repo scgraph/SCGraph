@@ -2,6 +2,7 @@
 #define SCGRAOH_LIGHT_HH
 
 #include "../unit.h"
+#include "ofColor.h"
 
 class GLight : public GUnit
 {

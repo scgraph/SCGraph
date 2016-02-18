@@ -3,7 +3,7 @@
 
 #include "../unit.h"
 
-#include <QtCore/QObject>
+//#include <QtCore/QObject>
 
 
 class Quad : public GUnit
@@ -17,9 +17,9 @@ class Quad : public GUnit
 		virtual void process_g (double delta_t);
 };
 
-class TexQuad : public QObject, public GUnit
+class TexQuad : public GUnit
 {
-	Q_OBJECT
+	//Q_OBJECT
 
 	cow_ptr<Geometry> _g;
 
@@ -35,7 +35,7 @@ class TexQuad : public QObject, public GUnit
 
 	virtual void process_g (double delta_t);
 
-	public slots:
+	//public slots:
 		void flip(uint32_t tex_id);
 };
 

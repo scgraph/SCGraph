@@ -222,7 +222,7 @@ void PluginPool::traverse_directory (const std::string &directory, void (PluginP
 {
 	DIR *dir = opendir (directory.c_str ());
 	if (!dir)
-		throw ("[PluginPool]: Couldn't read directory");
+            throw (std::runtime_error("[PluginPool]: Couldn't read directory"));
 
 	struct dirent *dirent;
 	while ((dirent = readdir (dir)))
@@ -255,9 +255,9 @@ void PluginPool::add_sc_plugin_dir (const std::string &directory)
 	{
 		traverse_directory (directory, &PluginPool::add_sc_plugin);
 	}
-	catch (const char *e)
-	{
-		std::cout << "[PluginPool]: Failed to add directory: " << directory << "  Reason: " << e << std::endl;
+        catch (const std::exception& ex) {
+            std::cout << "[PluginPool]: Failed to add SC plugin directory: " << directory
+                      << "  Reason: " << ex.what() << std::endl;
 	}
 }
 
@@ -275,9 +275,9 @@ void PluginPool::add_plugin_dir (const std::string &directory)
 	{
 		traverse_directory (directory, &PluginPool::add_plugin);
 	}
-	catch (const char *e)
-	{
-		std::cout << "[PluginPool]: Failed to add directory: " << directory << "  Reason: " << e << std::endl;
+        catch (const std::exception& ex) {
+            std::cout << "[PluginPool]: Failed to add plugin directory: " << directory
+                      << "  Reason: " << ex.what() << std::endl;
 	}
 }
 
@@ -295,7 +295,7 @@ void PluginPool::add_sc_plugin (const std::string &filename)
 		dl = dlopen (filename.c_str (), RTLD_NOW);
 		if (!dl)
 		{
-			throw (std::string("[ScPlugin]: Error: dlopen failed! \n    Reason: ") + std::string (dlerror()));
+                    throw (std::runtime_error(std::string("[ScPlugin]: Error: dlopen failed! \n    Reason: ") + std::string (dlerror())));
 		}
 	
 		// FIXME: this hack is due to -pedantic not working fine with dlsym
@@ -307,15 +307,15 @@ void PluginPool::add_sc_plugin (const std::string &filename)
 		if (!load)
 		{
 			dlclose (dl);
-			throw ("[ScPlugin]: Error: Couldn't find symbol \"load\". This doesn't look like a SuperCollider plugin");
+			throw (std::runtime_error("[ScPlugin]: Error: Couldn't find symbol \"load\". This doesn't look like a SuperCollider plugin"));
 		}
 		
 		load (_sc_interface_table);
 
 	}
-	catch (std::string e)
-	{
-		std::cout << "[PluginPool]: Error loading SuperCollider plugin: " << filename << "." << std::endl << "  Reason: " << e << std::endl;
+        catch (const std::exception& ex) {
+            std::cout << "[PluginPool]: Error loading SuperCollider plugin: " << filename << "." << std::endl
+                      << "  Reason: " << ex.what() << std::endl;
 	}
 }
 
@@ -331,9 +331,9 @@ void PluginPool::add_plugin (const std::string &filename)
 		boost::shared_ptr<GPlugin> plugin (new GPlugin (filename));
 		_plugins.push_back (plugin);
 	}
-	catch (std::string e)
-	{
-		std::cout << "[PluginPool]: Error loading Scgraph plugin: " << filename << "." << std::endl << "  Reason: " << e << std::endl;
+        catch (const std::exception& ex) {
+            std::cout << "[PluginPool]: Error loading Scgraph plugin: " << filename << "." << std::endl
+                      << "  Reason: " << ex.what() << std::endl;
 	}
 }
 

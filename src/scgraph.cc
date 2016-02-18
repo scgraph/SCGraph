@@ -6,6 +6,8 @@
 #include "synthdef_pool.h"
 
 #include <iostream>
+#include <stdexcept>
+#include "ofThread.h"
 
 ScGraph *ScGraph::_instance = 0;
 
@@ -71,10 +73,9 @@ ScGraph* ScGraph::get_instance (int argc, char *argv[])
 			_instance = new ScGraph (argc, argv);
 			return _instance;
 		}
-		catch (const char *e)
-		{
-			std::cout << "[ScGraph]: Error: Failed to create instance of ScGraph. Reason: " << e << std::endl;
-			exit (EXIT_FAILURE);
+                catch (const std::exception& ex) {
+                    std::cout << "[ScGraph]: Error: Failed to create instance of ScGraph. Reason: " << ex.what() << std::endl;
+                    exit (EXIT_FAILURE);
 		}
 	}
 	else
@@ -107,14 +108,14 @@ void ScGraph::stop ()
 
 void ScGraph::start ()
 {
-	// pthread_mutex_lock (&_main_mutex);
-	QWriteLocker locker (&_read_write_lock);
+	//pthread_mutex_lock (&_main_mutex);
+	// TODO QWriteLocker locker (&_read_write_lock);
 
-	_graphic_loop.start ();
-	_control_loop.start ();
-	_osc_handler.start ();
-
-	// pthread_mutex_unlock (&_main_mutex);
+	_graphic_loop.startThread(true);
+	_control_loop.startThread(true);
+    // start the thread
+    _osc_handler.startThread(true);    // blocking, non verbose
+	//pthread_mutex_unlock (&_main_mutex);
 }
 
 void ScGraph::run_one_control_cycle (double delta_t)
@@ -219,12 +220,12 @@ void ScGraph::c_set (size_t bus, float value)
 
 void  ScGraph::lock_for_read ()
 {
-	_read_write_lock.lockForRead ();
+	// TODO _read_write_lock.lockForRead ();
 }
 
 void  ScGraph::lock_for_write ()
 {
-	_read_write_lock.lockForWrite ();
+	// TODO _read_write_lock.lockForWrite ();
 }
 
 #if 0
@@ -236,7 +237,7 @@ void  ScGraph::lock ()
 
 void  ScGraph::unlock ()
 {
-	_read_write_lock.unlock ();
+	// TODO _read_write_lock.unlock ();
 }
 
 

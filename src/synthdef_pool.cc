@@ -6,6 +6,7 @@
 
 #include <sys/types.h>
 #include <dirent.h>
+#include <stdexcept>
 
 #include "scgraph.h"
 
@@ -20,7 +21,7 @@ boost::shared_ptr<GSynthDef> SynthDefPool::get_synthdef (const std::string &name
 {
 	if (_synthdefs.find (name) == _synthdefs.end ())
 	{
-		throw ("[SynthDefPool]: Error: SynthDef not found!");
+            throw (std::runtime_error("[SynthDefPool]: Error: SynthDef not found!"));
 	}
 	return _synthdefs [name];
 }
@@ -29,7 +30,7 @@ void SynthDefPool::d_free (const std::string &name)
 {
 	if (_synthdefs.find (name) == _synthdefs.end ())
 	{
-		throw ("[SynthDefPool]: Error: SynthDef not found!");
+            throw (std::runtime_error("[SynthDefPool]: Error: SynthDef not found!"));
 	}
 	_synthdefs.erase (name);	
 }
@@ -101,12 +102,9 @@ void SynthDefPool::add_synthdef_dir (const std::string &directory)
 				for (size_t i = 0; i < file._synthdefs.size (); ++i)
 					add_synthdef (file._synthdefs [i]);
 			}
-			catch (const char *s)
-			{
-				std::cout << "[SynthDefPool]: Error: " << s << std::endl;
+                        catch (const std::exception& ex) {
+                            std::cout << "[SynthDefPool]: Error: " << ex.what() << std::endl;
 			}
-		
-
 		}
 	}
 

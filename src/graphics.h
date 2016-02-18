@@ -6,11 +6,11 @@
 #include <iostream>
 
 #include "hvector_3d.h"
-#include "vector_3d.h"
+#include "ofVec3f.h"
 
 #include "matrix.h"
 #include "material.h"
-#include "color_rgba.h"
+#include "ofColor.h"
 #include "face.h"
 
 #include "cow_ptr.h"
@@ -82,13 +82,13 @@ struct Light : public Transformation
 
 	HVector3D _position;
 	
-	Vector3D  _spot_direction;
+	ofVec3f  _spot_direction;
 	float     _spot_exponent;
 	float     _spot_cutoff;
 
-	ColorRGBA _ambient_color;
-	ColorRGBA _diffuse_color;
-	ColorRGBA _specular_color;
+	ofColor _ambient_color;
+	ofColor _diffuse_color;
+	ofColor _specular_color;
 
 	float     _constant_attenuation;
 	float     _linear_attenuation;
@@ -188,7 +188,7 @@ struct Text : Transformation
 
 	unsigned int _fontsize;
 
-	ColorRGBA _color;
+	ofColor _color;
 
 	Material  _material;
 

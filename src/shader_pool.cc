@@ -12,7 +12,7 @@
 #include <dirent.h>
 
 #include <cstring>
-
+/*
 ShaderPool *ShaderPool::_instance = 0;
 
 ShaderPool *ShaderPool::get_instance ()
@@ -53,10 +53,9 @@ void ShaderPool::scan_directory (const std::string &directory)
 	{
 		traverse_directory (directory, &ShaderPool::add_shader);
 	}
-	catch (const char *e)
-	{
-		std::cout << "[ShaderPool]: Failed to traverse directory. Reason: " << e << std::endl;
-	}
+        catch (const std::exception& ex) {
+            std::cout << "[ShaderPool]: Failed to traverse directory. Reason: " << ex.what() << std::endl;
+        }
 }
 
 void ShaderPool::traverse_directory (const std::string &directory, void (ShaderPool::*function)(const std::string &filename))
@@ -69,7 +68,7 @@ void ShaderPool::traverse_directory (const std::string &directory, void (ShaderP
 
 	DIR *dir = opendir (directory.c_str ());
 	if (!dir)
-		throw ("[ShaderPool]: Couldn't read directory");
+            throw (std::runtime_error("[ShaderPool]: Couldn't read directory"));
 
 
 	std::vector<std::string> filenames;
@@ -175,5 +174,5 @@ void ShaderPool::clear_shader_programs() {
 	emit(shader_programs_changed());
 }
 
-
+*/
 

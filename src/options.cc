@@ -47,8 +47,12 @@ Options::Options (int argc, char *argv[]) :
 #ifdef HAVE_JACK
 	_jack_ports             (2),
 #endif
-	_plugin_path         (PREFIX "/lib/scgraph/plugins"),
-	_sc_plugin_path      (SC3_PLUGIN_PATH)
+	// TODO _plugin_path         (PREFIX "/lib/scgraph/plugins"),
+	// TODO _sc_plugin_path      (SC3_PLUGIN_PATH),
+
+_plugin_path         ("/usr/local/lib/scgraph/plugins"),
+//_plugin_path         ("/usr/local/lib/scgra/plugins"),
+    _sc_plugin_path      ("/Applications/SuperCollider/SuperCollider.app/Contents/Resources/plugins")
 {
 	char options[] = "u:c:v:g:f:r:p:j:s:h";
 

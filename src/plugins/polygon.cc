@@ -48,8 +48,8 @@ void Polygon::process_g (double delta_t)
 
 		for (size_t i = 0; i < (int)*_control_ins[0]; ++i)
 		{
-			_f.touch()->_vertices.push_back (Vector3D ());
-			_f.touch()->_normals.push_back (Vector3D ());
+			_f.touch()->_vertices.push_back (ofVec3f ());
+			_f.touch()->_normals.push_back (ofVec3f ());
 		}
 	}
 

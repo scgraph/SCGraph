@@ -35,99 +35,99 @@ Cube::Cube () :
 	//std::cout << "aaaargh" << std::endl;
 	// face.touch()->_material._emissive_color._c[0] = 1.0;
 
-	face.touch()->_vertices.push_back (Vector3D (-1, 1, -1));
-	face.touch()->_vertices.push_back (Vector3D (1, 1, -1));
-	face.touch()->_vertices.push_back (Vector3D (1, -1, -1));
-	face.touch()->_vertices.push_back (Vector3D (-1, -1, -1));
+	face.touch()->_vertices.push_back (ofVec3f (-1, 1, -1));
+	face.touch()->_vertices.push_back (ofVec3f (1, 1, -1));
+	face.touch()->_vertices.push_back (ofVec3f (1, -1, -1));
+	face.touch()->_vertices.push_back (ofVec3f (-1, -1, -1));
 
-	face.touch()->_normals.push_back (Vector3D (-1, 1, -1));
-	face.touch()->_normals.push_back (Vector3D (1, 1, -1));
-	face.touch()->_normals.push_back (Vector3D (1, -1, -1));
-	face.touch()->_normals.push_back (Vector3D (-1, -1, -1));
+	face.touch()->_normals.push_back (ofVec3f (-1, 1, -1));
+	face.touch()->_normals.push_back (ofVec3f (1, 1, -1));
+	face.touch()->_normals.push_back (ofVec3f (1, -1, -1));
+	face.touch()->_normals.push_back (ofVec3f (-1, -1, -1));
 
-// 	face.touch()->_normals.push_back (Vector3D (0, 0, -1));
-// 	face.touch()->_normals.push_back (Vector3D (0, 0, -1));
-// 	face.touch()->_normals.push_back (Vector3D (0, 0, -1));
-// 	face.touch()->_normals.push_back (Vector3D (0, 0, -1));
-
-
-
-	face.touch()->_vertices.push_back (Vector3D (-1, -1, 1));
-	face.touch()->_vertices.push_back (Vector3D (1, -1, 1));
-	face.touch()->_vertices.push_back (Vector3D (1, 1, 1));
-	face.touch()->_vertices.push_back (Vector3D (-1, 1, 1));
-
-	face.touch()->_normals.push_back (Vector3D (-1, -1, 1));
-	face.touch()->_normals.push_back (Vector3D (1, -1, 1));
-	face.touch()->_normals.push_back (Vector3D (1, 1, 1));
-	face.touch()->_normals.push_back (Vector3D (-1, 1, 1));
-// 	face.touch()->_normals.push_back (Vector3D (0, 0, 1));
-// 	face.touch()->_normals.push_back (Vector3D (0, 0, 1));
-// 	face.touch()->_normals.push_back (Vector3D (0, 0, 1));
-// 	face.touch()->_normals.push_back (Vector3D (0, 0, 1));
-
-
-	face.touch()->_vertices.push_back (Vector3D (1, -1, -1));
-	face.touch()->_vertices.push_back (Vector3D (1, -1, 1));
-	face.touch()->_vertices.push_back (Vector3D (-1, -1, 1));
-	face.touch()->_vertices.push_back (Vector3D (-1, -1, -1));
-
-	face.touch()->_normals.push_back (Vector3D (1, -1, -1));
-	face.touch()->_normals.push_back (Vector3D (1, -1, 1));
-	face.touch()->_normals.push_back (Vector3D (-1, -1, 1));
-	face.touch()->_normals.push_back (Vector3D (-1, -1, -1));
-// 	face.touch()->_normals.push_back (Vector3D (0, -1, 0));
-// 	face.touch()->_normals.push_back (Vector3D (0, -1, 0));
-// 	face.touch()->_normals.push_back (Vector3D (0, -1, 0));
-// 	face.touch()->_normals.push_back (Vector3D (0, -1, 0));
-
-
-	face.touch()->_vertices.push_back (Vector3D (-1, 1, -1));
-	face.touch()->_vertices.push_back (Vector3D (-1, 1, 1));
-	face.touch()->_vertices.push_back (Vector3D (1, 1, 1));
-	face.touch()->_vertices.push_back (Vector3D (1, 1, -1));
-
-	face.touch()->_normals.push_back (Vector3D (-1, 1, -1));
-	face.touch()->_normals.push_back (Vector3D (-1, 1, 1));
-	face.touch()->_normals.push_back (Vector3D (1, 1, 1));
-	face.touch()->_normals.push_back (Vector3D (1, 1, -1));
-// 	face.touch()->_normals.push_back (Vector3D (0, 1, 0));
-// 	face.touch()->_normals.push_back (Vector3D (0, 1, 0));
-// 	face.touch()->_normals.push_back (Vector3D (0, 1, 0));
-// 	face.touch()->_normals.push_back (Vector3D (0, 1, 0));
-
-
-	face.touch()->_vertices.push_back (Vector3D (1, 1, -1));
-	face.touch()->_vertices.push_back (Vector3D (1, 1, 1));
-	face.touch()->_vertices.push_back (Vector3D (1, -1, 1));
-	face.touch()->_vertices.push_back (Vector3D (1, -1, -1));
-
-	face.touch()->_normals.push_back (Vector3D (1, 1, -1));
-	face.touch()->_normals.push_back (Vector3D (1, 1, 1));
-	face.touch()->_normals.push_back (Vector3D (1, -1, 1));
-	face.touch()->_normals.push_back (Vector3D (1, -1, -1));
-// 	face.touch()->_normals.push_back (Vector3D (1, 0, 0));
-// 	face.touch()->_normals.push_back (Vector3D (1, 0, 0));
-// 	face.touch()->_normals.push_back (Vector3D (1, 0, 0));
-// 	face.touch()->_normals.push_back (Vector3D (1, 0, 0));
+// 	face.touch()->_normals.push_back (ofVec3f (0, 0, -1));
+// 	face.touch()->_normals.push_back (ofVec3f (0, 0, -1));
+// 	face.touch()->_normals.push_back (ofVec3f (0, 0, -1));
+// 	face.touch()->_normals.push_back (ofVec3f (0, 0, -1));
 
 
 
-	face.touch()->_vertices.push_back (Vector3D (-1, -1, -1));
-	face.touch()->_vertices.push_back (Vector3D (-1, -1, 1));
-	face.touch()->_vertices.push_back (Vector3D (-1, 1, 1));
-	face.touch()->_vertices.push_back (Vector3D (-1, 1, -1));
+	face.touch()->_vertices.push_back (ofVec3f (-1, -1, 1));
+	face.touch()->_vertices.push_back (ofVec3f (1, -1, 1));
+	face.touch()->_vertices.push_back (ofVec3f (1, 1, 1));
+	face.touch()->_vertices.push_back (ofVec3f (-1, 1, 1));
 
-	face.touch()->_normals.push_back (Vector3D (-1, -1, -1));
-	face.touch()->_normals.push_back (Vector3D (-1, -1, 1));
-	face.touch()->_normals.push_back (Vector3D (-1, 1, 1));
-	face.touch()->_normals.push_back (Vector3D (-1, 1, -1));
-/*	face.touch()->_normals.push_back (Vector3D (-1, 0, 0));
-	face.touch()->_normals.push_back (Vector3D (-1, 0, 0));
-	face.touch()->_normals.push_back (Vector3D (-1, 0, 0));
-	face.touch()->_normals.push_back (Vector3D (-1, 0, 0));
+	face.touch()->_normals.push_back (ofVec3f (-1, -1, 1));
+	face.touch()->_normals.push_back (ofVec3f (1, -1, 1));
+	face.touch()->_normals.push_back (ofVec3f (1, 1, 1));
+	face.touch()->_normals.push_back (ofVec3f (-1, 1, 1));
+// 	face.touch()->_normals.push_back (ofVec3f (0, 0, 1));
+// 	face.touch()->_normals.push_back (ofVec3f (0, 0, 1));
+// 	face.touch()->_normals.push_back (ofVec3f (0, 0, 1));
+// 	face.touch()->_normals.push_back (ofVec3f (0, 0, 1));
+
+
+	face.touch()->_vertices.push_back (ofVec3f (1, -1, -1));
+	face.touch()->_vertices.push_back (ofVec3f (1, -1, 1));
+	face.touch()->_vertices.push_back (ofVec3f (-1, -1, 1));
+	face.touch()->_vertices.push_back (ofVec3f (-1, -1, -1));
+
+	face.touch()->_normals.push_back (ofVec3f (1, -1, -1));
+	face.touch()->_normals.push_back (ofVec3f (1, -1, 1));
+	face.touch()->_normals.push_back (ofVec3f (-1, -1, 1));
+	face.touch()->_normals.push_back (ofVec3f (-1, -1, -1));
+// 	face.touch()->_normals.push_back (ofVec3f (0, -1, 0));
+// 	face.touch()->_normals.push_back (ofVec3f (0, -1, 0));
+// 	face.touch()->_normals.push_back (ofVec3f (0, -1, 0));
+// 	face.touch()->_normals.push_back (ofVec3f (0, -1, 0));
+
+
+	face.touch()->_vertices.push_back (ofVec3f (-1, 1, -1));
+	face.touch()->_vertices.push_back (ofVec3f (-1, 1, 1));
+	face.touch()->_vertices.push_back (ofVec3f (1, 1, 1));
+	face.touch()->_vertices.push_back (ofVec3f (1, 1, -1));
+
+	face.touch()->_normals.push_back (ofVec3f (-1, 1, -1));
+	face.touch()->_normals.push_back (ofVec3f (-1, 1, 1));
+	face.touch()->_normals.push_back (ofVec3f (1, 1, 1));
+	face.touch()->_normals.push_back (ofVec3f (1, 1, -1));
+// 	face.touch()->_normals.push_back (ofVec3f (0, 1, 0));
+// 	face.touch()->_normals.push_back (ofVec3f (0, 1, 0));
+// 	face.touch()->_normals.push_back (ofVec3f (0, 1, 0));
+// 	face.touch()->_normals.push_back (ofVec3f (0, 1, 0));
+
+
+	face.touch()->_vertices.push_back (ofVec3f (1, 1, -1));
+	face.touch()->_vertices.push_back (ofVec3f (1, 1, 1));
+	face.touch()->_vertices.push_back (ofVec3f (1, -1, 1));
+	face.touch()->_vertices.push_back (ofVec3f (1, -1, -1));
+
+	face.touch()->_normals.push_back (ofVec3f (1, 1, -1));
+	face.touch()->_normals.push_back (ofVec3f (1, 1, 1));
+	face.touch()->_normals.push_back (ofVec3f (1, -1, 1));
+	face.touch()->_normals.push_back (ofVec3f (1, -1, -1));
+// 	face.touch()->_normals.push_back (ofVec3f (1, 0, 0));
+// 	face.touch()->_normals.push_back (ofVec3f (1, 0, 0));
+// 	face.touch()->_normals.push_back (ofVec3f (1, 0, 0));
+// 	face.touch()->_normals.push_back (ofVec3f (1, 0, 0));
+
+
+
+	face.touch()->_vertices.push_back (ofVec3f (-1, -1, -1));
+	face.touch()->_vertices.push_back (ofVec3f (-1, -1, 1));
+	face.touch()->_vertices.push_back (ofVec3f (-1, 1, 1));
+	face.touch()->_vertices.push_back (ofVec3f (-1, 1, -1));
+
+	face.touch()->_normals.push_back (ofVec3f (-1, -1, -1));
+	face.touch()->_normals.push_back (ofVec3f (-1, -1, 1));
+	face.touch()->_normals.push_back (ofVec3f (-1, 1, 1));
+	face.touch()->_normals.push_back (ofVec3f (-1, 1, -1));
+/*	face.touch()->_normals.push_back (ofVec3f (-1, 0, 0));
+	face.touch()->_normals.push_back (ofVec3f (-1, 0, 0));
+	face.touch()->_normals.push_back (ofVec3f (-1, 0, 0));
+	face.touch()->_normals.push_back (ofVec3f (-1, 0, 0));
 */
-	face.touch()->_face_color = ColorRGBA (1,1,1,1);
+	face.touch()->_face_color = ofColor (1,1,1,1);
 
 	// std::cout << "ugh" << std::endl;
 	_g.touch()->_faces.push_back (face);
@@ -150,7 +150,7 @@ void Cube::process_g (double delta_t)
 	_g.touch()->_commands.clear();
 
 	cow_ptr<Scale> cmd (new Scale);
-	cmd.touch()->_scaling_vector = Vector3D (*_control_ins[0], *_control_ins[0], *_control_ins[0]);
+	cmd.touch()->_scaling_vector = ofVec3f (*_control_ins[0], *_control_ins[0], *_control_ins[0]);
 	_g.touch()->_commands.push_back(cmd);
 
 	_graphics_outs[0]._graphics.push_back(cow_ptr<Geometry>(_g));

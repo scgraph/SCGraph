@@ -37,7 +37,7 @@ GColor::~GColor ()
 
 void GColor::visitGeometry (Geometry *g)
 {
-	ColorRGBA color (*_control_ins[1], *_control_ins[2], *_control_ins[3], *_control_ins[4]);
+	ofColor color (*_control_ins[1], *_control_ins[2], *_control_ins[3], *_control_ins[4]);
 
 	//std::cout << "[GColor]: Destructor" << std::endl;
 	for (size_t i = 0; i < g->_faces.size (); ++i)
@@ -59,7 +59,7 @@ void GColor::visitGeometry (Geometry *g)
 
 void GColor::visitText (Text *t)
 {
-	ColorRGBA color (*_control_ins[1], *_control_ins[2], *_control_ins[3], *_control_ins[4]);
+	ofColor color (*_control_ins[1], *_control_ins[2], *_control_ins[3], *_control_ins[4]);
 
 	//std::cout << "[GColor]: Destructor" << std::endl;
 

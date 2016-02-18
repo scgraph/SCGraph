@@ -60,10 +60,10 @@ void GMaterial::process_g (double delta_t)
 	_material._shinyness = *_control_ins[1];
 	for (int i = 0; i < 4; ++i)
 	{
-		_material._ambient_reflection._c[i] = *_control_ins[2 + i];
-		_material._diffuse_reflection._c[i] = *_control_ins[6 + i];
-		_material._specular_reflection._c[i] = *_control_ins[10 + i];
-		_material._emissive_color._c[i] = *_control_ins[14 + i];
+		_material._ambient_reflection[i] = *_control_ins[2 + i];
+		_material._diffuse_reflection[i] = *_control_ins[6 + i];
+		_material._specular_reflection[i] = *_control_ins[10 + i];
+		_material._emissive_color[i] = *_control_ins[14 + i];
 	}
 
   for (size_t i = 0; i < _graphics_outs[0]._graphics.size (); ++i)

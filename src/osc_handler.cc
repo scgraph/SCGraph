@@ -12,29 +12,36 @@
 #include <stdexcept>
 #include <sstream>
 
-#include <osc/OscReceivedElements.h>
-#include <osc/OscOutboundPacketStream.h>
 
 #include <algorithm>
 
+
+#include <osc/OscReceivedElements.h>
+#include <osc/OscOutboundPacketStream.h>
+
+
+/*
 #include <QtCore/QMetaType>
 #include <QtCore/QReadLocker>
 #include <QtCore/QWriteLocker>
+*/
 
 OscHandler::OscHandler () :
-	_notifications (false),
-	_mutex (QMutex::Recursive)
+	_notifications (false)
 {
 	Options *options = Options::get_instance ();
 
-	// pthread_mutex_init (&_mutex, 0);
+    // TODO
+	pthread_mutex_init (&_mutex, 0);
 
 	// queued connection is nessecary to get the msg across thread boundaries
-	QObject::connect (this, SIGNAL (message_received(OscMessage*)), this, SLOT (handle_message(OscMessage*)), Qt::QueuedConnection);
+	// TODO QObject::connect (this, SIGNAL (message_received(OscMessage*)), this, SLOT (handle_message(OscMessage*)), Qt::QueuedConnection);
 
 	try
 	{
-		_socket = new UdpListeningReceiveSocket (IpEndpointName (IpEndpointName::ANY_ADDRESS, options->_port), this);
+        _socket = new osc::UdpListeningReceiveSocket (osc::IpEndpointName (osc::IpEndpointName::ANY_ADDRESS, options->_port), this);
+        //_receiver = new ofxOscReceiver;
+        //_receiver.setup(options->_port);
 	}
 	catch (std::runtime_error e)
 	{
@@ -43,6 +50,46 @@ OscHandler::OscHandler () :
 	}
 
 	// start ();
+}
+
+
+void OscHandler::threadedFunction()
+{
+    
+    Options *options = Options::get_instance ();
+    
+    bool done = false;
+    
+    while (!done)
+    {
+        // TODO: Fix this madness
+        if (options->_verbose >= 2)
+            std::cout << "[OscHandler]: Running!" << std::endl;
+        
+        try
+        {
+            std::cout << "." << std::endl;
+            
+            _socket->Run ();
+            std::cout << "......" << std::endl;
+            done = true;
+        }
+        catch (std::runtime_error e)
+        {
+            std::cout << "[OscHandler]: Something went wrong: " << e.what () << std::endl;
+            std::exit (EXIT_FAILURE);
+        }
+        catch (osc::MalformedMessageException e)
+        {
+            std::cout << "[OscHandler]: Error: Malformed message: " << e.what () << std::endl;
+        }
+        catch (osc::MalformedBundleException e)
+        {
+            std::cout << "[OscHandler]: Error: Malformed message: " << e.what () << std::endl;
+        }
+    }
+
+    
 }
 
 OscHandler::~OscHandler ()
@@ -88,33 +135,38 @@ void OscHandler::run ()
 	// std::cout << "fini" << std::endl;
 }
 
+
 void OscHandler::stop ()
 {
-	_mutex.lock ();
+	pthread_mutex_lock (&_mutex);
 
 	_socket->AsynchronousBreak ();
 	// std::cout << "break" << std::endl;
 
-	_mutex.unlock ();
+	pthread_mutex_unlock (&_mutex);
 	// std::cout << "unlock" << std::endl;
 
-	QThread::wait ();
+	// TODO QThread::wait ();
 	// std::cout << "wait" << std::endl;
 
 }
 
-void OscHandler::ProcessMessage (const osc::ReceivedMessage& message, const IpEndpointName& name)
+
+
+void OscHandler::ProcessMessage (const osc::ReceivedMessage& message, const osc::IpEndpointName& name)
 {
-	// std::cout << "message!" << std::endl;
+	//std::cout << "message!" << std::endl;
 	OscMessage *msg = new OscMessage (message, name);
 
-	// std::cout << "path: " << message.AddressPattern () << std::endl;
+	//std::cout << "path: " << message.AddressPattern () << std::endl;
 	// we use queued connection to get the message in the main qt thread context
 	//_condition_mutex.lock ();
 	//_handling_done = false;
+    handle_message(msg);
 
-	emit (message_received(msg));
+	// TODO emit (message_received(msg));
 }
+
 
 void OscHandler::send_notifications (std::string path, int id)
 {
@@ -142,7 +194,7 @@ void OscHandler::send_notifications (std::string path, int id)
 
 		p << osc::EndMessage;
 
-		for (std::vector<IpEndpointName>::iterator it = _notifications.begin (); it != _notifications.end (); ++it)
+		for (std::vector<osc::IpEndpointName>::iterator it = _notifications.begin (); it != _notifications.end (); ++it)
 		{
 			_socket->SendTo ((*it), p.Data (), p.Size ());
 		}
@@ -271,10 +323,11 @@ int OscHandler::command_name_to_int (const std::string& command_name)
 		return cmd_graphicsRate;
 	if (command_name == std::string("/controlRate"))
 		return cmd_controlRate;
-	if (command_name == std::string("/loadShaderProgram"))
+     if (command_name == std::string("/loadShaderProgram"))
 		return cmd_loadShaderProgram;
 	if (command_name == std::string("/clearShaderPrograms"))
 		return cmd_clearShaderPrograms;
+     
 	if (command_name == std::string("/addString"))
 		return cmd_addString;
 	if (command_name == std::string("/changeString"))
@@ -322,11 +375,11 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 	{
 		case cmd_quit:
 		{
-			QReadLocker locker (&scgraph->_read_write_lock);
+			// TODO QReadLocker locker (&scgraph->_read_write_lock);
 
 			send_done("/quit", msg->_endpoint_name);
 
-			QApplication::instance()->exit ();
+			// TODO QApplication::instance()->exit ();
 			// we are done anyways
 			//pthread_mutex_unlock (&_mutex);
 			std::cout << "[OscHandler]: cmd_quit()" << std::endl;
@@ -348,7 +401,7 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 						if (options->_verbose >= 2)
 							std::cout << "[OscHandler]: /setFont " << tmp << std::endl;
 
-						QReadLocker locker (&scgraph->_read_write_lock);
+						QWriteLocker locker (&scgraph->_read_write_lock);
 						StringPool::get_instance()->set_font(tmp);
 						//send_notifications ("/n_go", synth->_id);
 	
@@ -383,7 +436,7 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 						if (options->_verbose >= 2)
 							std::cout << "[OscHandler]: /changeString " << tmp << std::endl;
 
-						QReadLocker locker (&scgraph->_read_write_lock);
+						QWriteLocker locker (&scgraph->_read_write_lock);
 						StringPool::get_instance()->change_string(tmp, index);
 						//send_notifications ("/n_go", synth->_id);
 	
@@ -437,7 +490,7 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 
 		case cmd_clearShaderPrograms:
 		{
-			ShaderPool::get_instance()->clear_shader_programs();
+			// TODO ShaderPool::get_instance()->clear_shader_programs();
 		}
 		break;
 
@@ -449,10 +502,10 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 			std::cout << "[OscHandler]: cmd_loadShaderProgram()" << std::endl;
 
 			// false = FragmentShader
-	
+	/* TODO
 			try
 			{
-				QWriteLocker locker (&scgraph->_read_write_lock);
+				// TODO QWriteLocker locker (&scgraph->_read_write_lock);
 
 				boost::shared_ptr<ShaderPool::ShaderProgram> p(new ShaderPool::ShaderProgram);
 
@@ -503,6 +556,7 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 			{
 				std::cout << "[OscHandler]: Error while parsing message: /loadShaderProgram | /dumpOSC: " << e.what () << std::endl;
 			}
+     */
 		}
 		break;
 
@@ -517,7 +571,7 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 				args >> graphics_rate;
 				std::cout << "[OscHandler]: Setting graphics rate to: " << graphics_rate << std::endl;
 
-				QWriteLocker locker (&scgraph->_read_write_lock);
+				// TODO QWriteLocker locker (&scgraph->_read_write_lock);
 
 				scgraph->_graphic_loop.set_rate (graphics_rate);
 			}
@@ -539,7 +593,7 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 				args >> control_rate;
 				std::cout << "[OscHandler]: Setting control rate to: " << control_rate << std::endl;
 
-				QWriteLocker locker (&scgraph->_read_write_lock);
+				// TODO QWriteLocker locker (&scgraph->_read_write_lock);
 
 				scgraph->_control_loop.set_rate (control_rate);
 			}
@@ -562,7 +616,7 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 				args >> verbose_level;
 				std::cout << "[OscHandler]: Setting verbose level to: " << verbose_level << std::endl;
 
-				QWriteLocker locker (&scgraph->_read_write_lock);
+				// TODO QWriteLocker locker (&scgraph->_read_write_lock);
 
 				options->_verbose = verbose_level;
 			}
@@ -583,7 +637,7 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 				{
 					std::string name = (arg++)->AsString();
 
-					QWriteLocker locker (&scgraph->_read_write_lock);
+					// TODO QWriteLocker locker (&scgraph->_read_write_lock);
 
 					scgraph->_synthdef_pool.d_free (name);
 				}
@@ -601,7 +655,7 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 
 		case cmd_d_freeAll:
 		{
-			QWriteLocker locker (&scgraph->_read_write_lock);
+			// TODO QWriteLocker locker (&scgraph->_read_write_lock);
 
 			scgraph->_synthdef_pool.d_freeAll ();
 		}
@@ -609,7 +663,7 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 
 		case cmd_sync:
 		{
-			QReadLocker locker (&scgraph->_read_write_lock);
+			// TODO QReadLocker locker (&scgraph->_read_write_lock);
 
 			osc::ReceivedMessageArgumentStream args = message->ArgumentStream();
 	
@@ -643,7 +697,7 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 
 		case cmd_notify:
 		{
-			QWriteLocker locker (&scgraph->_read_write_lock);
+			// TODO QWriteLocker locker (&scgraph->_read_write_lock);
 
 			if (message->ArgumentCount () != 1)
 			{
@@ -688,7 +742,7 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 
 		case cmd_status:
 		{
-			QReadLocker locker (&scgraph->_read_write_lock);
+			// TODO QReadLocker locker (&scgraph->_read_write_lock);
 
 			osc::OutboundPacketStream p (_message_buffer, SCGRAPH_OSC_MESSAGE_BUFFER_SIZE);
 
@@ -716,7 +770,7 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 				{
 					try
 					{
-						QWriteLocker locker (&scgraph->_read_write_lock);
+						// TODO QWriteLocker locker (&scgraph->_read_write_lock);
 						scgraph->_node_tree.g_freeAll ((*(arg++)).AsInt32 ());
 					}
 					catch (const char *e)
@@ -757,7 +811,7 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 					if (options->_verbose >= 2)
 						std::cout << "[OscHandler]: /g_new " << id << " " << add_action << " " << target_id << std::endl;
 
-					QWriteLocker locker (&scgraph->_read_write_lock);
+					// TODO QWriteLocker locker (&scgraph->_read_write_lock);
 
 					id = scgraph->_node_tree.g_new (id, add_action, target_id);
 
@@ -788,10 +842,10 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 			osc::ReceivedMessage::const_iterator arg = message->ArgumentsBegin();
 	
 			const void *synthdefblob;
-			unsigned long synthdef_size;
+                        osc::osc_bundle_element_size_t synthdef_size;
 	
 			const void *completion_message;
-			unsigned long completion_message_size;
+                        osc::osc_bundle_element_size_t completion_message_size;
 	
 			try 
 			{
@@ -805,7 +859,7 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 	
 				for (std::vector <boost::shared_ptr<GSynthDef> >::iterator it = synthdef_file._synthdefs.begin (); it != synthdef_file._synthdefs.end (); ++it)
 				{
-					QWriteLocker locker (&scgraph->_read_write_lock);
+					// TODO QWriteLocker locker (&scgraph->_read_write_lock);
 					scgraph->_synthdef_pool.add_synthdef ((*it));
 				}
 
@@ -850,7 +904,7 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 		{
 			osc::ReceivedMessage::const_iterator arg = message->ArgumentsBegin();
 
-			QWriteLocker locker (&scgraph->_read_write_lock);
+			// TODO QWriteLocker locker (&scgraph->_read_write_lock);
 
 
 			// FIXME: c_set really needs to take a vector and do the locking itself
@@ -892,7 +946,7 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 				if (options->_verbose >= 2)
 					std::cout << "[OscHandler]: /s_new " << tmp << " " << id << " " << add_action << " " << add_target_id << std::endl;
 
-				QWriteLocker locker (&scgraph->_read_write_lock);
+				// TODO QWriteLocker locker (&scgraph->_read_write_lock);
 				boost::shared_ptr<GSynth> synth = scgraph->_node_tree.s_new (tmp, (int)id, (int)add_action, (int)add_target_id);
 
 				send_notifications ("/n_go", synth->_id);
@@ -944,11 +998,6 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 				}
 				synth->process_c (0);
 			}
-			catch (const char* error)
-			{
-				if (name)
-					std::cout << "[OscHandler]: Warning: Synth creation failed (SynthDef-name: \"" << name << "\"). Reason: " << error << std::endl;
-			}
 			catch (osc::Exception &e)
 			{
 				std::cout << "[OscHandler]: Error while parsing message: /s_new: " << e.what () << ". TypeTags: " << message->TypeTags() << std::endl;
@@ -987,7 +1036,7 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 					else
 						control_value = (*(arg++)).AsInt32 ();
 
-					QWriteLocker locker (&scgraph->_read_write_lock);
+					// TODO QWriteLocker locker (&scgraph->_read_write_lock);
 
 					scgraph->_node_tree.n_set (node_id, control_name, control_value);
 				}
@@ -1078,14 +1127,13 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 				{
 					try
 					{
-						QWriteLocker locker (&scgraph->_read_write_lock);
-
+						// TODO QWriteLocker locker (&scgraph->_read_write_lock);
+                                                //std::cout << (*(arg++)).AsInt32() << std::endl;
 						scgraph->_node_tree.n_free ((*(arg++)).AsInt32 ());
 					}
-					catch (const char *e)
-					{
-						std::cout << "[OscHandler]: n_free(): " << e << std::endl;
-					}
+                                        catch (const std::exception& ex) {
+                                            std::cout << "[OscHandler]: n_free(): " << ex.what() << std::endl;
+                                        }
 				}
 			}
 			catch (osc::Exception &e)
@@ -1106,7 +1154,7 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 			const char *path = 0;
 
 			const void *completion_message;
-			unsigned long completion_message_size;
+                        osc::osc_bundle_element_size_t completion_message_size;
 
 			try
 				{
@@ -1123,7 +1171,7 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 
 					TexturePool * tp = TexturePool::get_instance();
 
-					QReadLocker locker (&scgraph->_read_write_lock);
+					// TODO QReadLocker locker (&scgraph->_read_write_lock);
 					if(bufnum < tp->get_number_of_textures())
 						tp->change_image(tmp, bufnum);
 					else
@@ -1169,7 +1217,7 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 			const char *path = 0;
 
 			const void *completion_message;
-			unsigned long completion_message_size;
+                        osc::osc_bundle_element_size_t completion_message_size;
 
 			try
 				{
@@ -1182,7 +1230,7 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 					if (options->_verbose >= 2)
 						std::cout << "[OscHandler]: /b_allocRead " << tmp << std::endl;
 
-					QReadLocker locker (&scgraph->_read_write_lock);
+					// TODO QReadLocker locker (&scgraph->_read_write_lock);
 					TexturePool::get_instance()->add_image(tmp, bufnum);
 
 					if (arg != message->ArgumentsEnd () && ((*arg).TypeTag () == 'b'))
@@ -1270,7 +1318,7 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 			osc::int32 bufnum;
 
 			const void *completion_message;
-			unsigned long completion_message_size;
+			osc::osc_bundle_element_size_t completion_message_size;
 
 			try
 				{
@@ -1431,8 +1479,6 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 		}
 		break;
 
-
-
 		default:
 		{
 			if (options->_verbose)
@@ -1449,7 +1495,7 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 	// std::cout << "handle message lcoked end" << std::endl;
 }
 
-void OscHandler::send_done (std::string command, IpEndpointName endpoint)
+void OscHandler::send_done (std::string command, osc::IpEndpointName endpoint)
 {
 
 	osc::OutboundPacketStream p (_message_buffer, SCGRAPH_OSC_MESSAGE_BUFFER_SIZE);
@@ -1459,7 +1505,7 @@ void OscHandler::send_done (std::string command, IpEndpointName endpoint)
 			p << osc::BeginMessage ("/done") 
 			  << command.c_str()
 			  << osc::EndMessage;
-	
+
 			_socket->SendTo (endpoint, p.Data (), p.Size ());
 		}
 	catch (osc::Exception &e)
@@ -1473,14 +1519,13 @@ void OscHandler::handle_message (OscMessage *message)
 	//osc::ReceivedMessage msg(*(message->_msg));
 	// std::cout << "handle message" << std::endl;
 	//_condition_mutex.lock ();
-
-	_mutex.lock ();
+    pthread_mutex_lock (&_mutex);
 
 	handle_message_locked (message);
 
 	//_handling_done = true;
 
-	_mutex.unlock ();
+	pthread_mutex_unlock (&_mutex);
 
 	//_condition_mutex.unlock ();
 	//_condition.wakeAll ();

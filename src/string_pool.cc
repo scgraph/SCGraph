@@ -42,16 +42,19 @@ unsigned int StringPool::change_string (const std::string &str, unsigned int ind
 void StringPool::set_font (const std::string &filename)
 {
 	// Create a polygon font from a TrueType file.
-	FTPolygonFont * tmp_font = new FTPolygonFont(filename.c_str());
+	ofTrueTypeFont * tmp_font = new ofTrueTypeFont();
+    tmp_font->load(filename.c_str(), 32);
+    //FTBufferFont * tmp_font = new FTBufferFont(filename.c_str());
+    //FTTextureFont* tmp_font = new     FTTextureFont(filename.c_str());
 
 	// If something went wrong, bail out.
-	if(tmp_font->Error())
+	if(!tmp_font->isLoaded())
 		std::cout << "[StringPool]: Loading font " << filename << " didn't work!" << std::endl;
 	else
 		{
 			std::cout << "[StringPool]: Loaded font " << filename << "" << std::endl;
 			_font = tmp_font;
-			_font->UseDisplayList(true);
+			//_font->UseDisplayList(true);
 		}
 }
 

@@ -2,7 +2,8 @@
 #define SCGRAPH_VIDEO_TEXTURE_HH
 
 #include "texture.h"
-
+#include "ofThread.h"
+/*
 extern "C"
 {
 #define __STDC_CONSTANT_MACROS // for UINT64_C
@@ -40,7 +41,7 @@ class VideoTexture : public QObject, public AbstractTexture {
 	int get_channels();
 	double get_framerate();
  
-	QMutex _queue_mutex;
+	ofThread _queue_mutex;
 	uint32_t get_num_frames();
 
 	int load(const std::string &filename);
@@ -52,5 +53,5 @@ class VideoTexture : public QObject, public AbstractTexture {
  signals:
 	void update_tmp_texture(uint32_t id, boost::shared_ptr<Texture> texture);
 };
-
+*/
 #endif

@@ -33,18 +33,22 @@
 // #include <SuperCollider/plugin_interface/SC_InterfaceTable.h>
 
 #include "ofThread.h"
+#include <mutex>
 
 /** this class implements the singleton pattern and is the global
  * access point for pretty much everything */
 
 class ScGraph
 {
-	ofThread                            _main_mutex;
+	
+    std::mutex                        _main_mutex;
 
 	static ScGraph*                   _instance;
 
 	/** first is id, second is action */
 	std::vector<std::pair<int, int> > _done_actions;
+    
+   
 
 	protected:
 		ScGraph (int argc, char *argv[]);
@@ -121,7 +125,7 @@ class ScGraph
 		/** convenience functions */
 		void lock_for_read ();
 		void lock_for_write ();
-		// void lock ();
+		void lock ();
 		void unlock ();
 };
 

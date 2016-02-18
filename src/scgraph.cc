@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include <stdexcept>
+
 #include "ofThread.h"
 
 ScGraph *ScGraph::_instance = 0;
@@ -22,7 +23,6 @@ ScGraph::ScGraph (int argc, char *argv[])
 	}
 #endif
 
-	// _instance = this;
 	Options *options = Options::get_instance ();
 
 	// _jack_client  = new JackClient (2, "scgraph");
@@ -86,42 +86,37 @@ ScGraph* ScGraph::get_instance (int argc, char *argv[])
 
 ScGraph::~ScGraph ()
 {
-	// delete _jack_client;
-
-	// pthread_mutex_destroy (&_main_mutex);
+	// TODO delete _jack_client;
+    
 	_instance = 0;
 }
 
 void ScGraph::stop ()
 {
-	// pthread_mutex_lock (&_main_mutex);
-
-	// QWriteLocker locker (&_read_write_lock);
+    lock_for_write();
 
 
 	_osc_handler.stop ();
 	_control_loop.stop ();
 	_graphic_loop.stop ();
 
-	// pthread_mutex_unlock (&_main_mutex);
+    unlock();
 }
 
 void ScGraph::start ()
 {
-	//pthread_mutex_lock (&_main_mutex);
-	// TODO QWriteLocker locker (&_read_write_lock);
-
-	_graphic_loop.startThread(true);
+    lock_for_write();
+    // start the threads
+	_graphic_loop.startThread(true); // blocking
 	_control_loop.startThread(true);
-    // start the thread
-    _osc_handler.startThread(true);    // blocking, non verbose
-	//pthread_mutex_unlock (&_main_mutex);
+    _osc_handler.startThread(true);
+
+    unlock();
 }
 
 void ScGraph::run_one_control_cycle (double delta_t)
 {
 	lock_for_read();
-	// QReadLocker locker (&_read_write_lock);
 
 #if 0
 	// FIXME: dirty hack to test jack stuff
@@ -160,9 +155,6 @@ void ScGraph::run_one_control_cycle (double delta_t)
 
 void ScGraph::run_one_graphics_cycle (double delta_t)
 {
-	// pthread_mutex_lock (&_main_mutex);
-	// QReadLocker locker (&_read_write_lock);
-	// _read_write_lock.lockForRead();
 	_delta_t = delta_t;
 
 	lock_for_read();
@@ -178,15 +170,10 @@ void ScGraph::run_one_graphics_cycle (double delta_t)
 		(*it)->process_g (delta_t);
 	}
 
-	//locker.unlock ();
 	unlock();
-	//_read_write_lock.unlock();
 
 	/* do the doneActions */
 	lock_for_write();
-
-	// _read_write_lock.lockForWrite();
-	//QWriteLocker locker (&_read_write_lock);
 
 	for 
 		(
@@ -199,7 +186,6 @@ void ScGraph::run_one_graphics_cycle (double delta_t)
 	}
 	
 	_done_actions.clear ();
-	// _read_write_lock.unlock();
 
 	unlock();
 
@@ -218,28 +204,27 @@ void ScGraph::c_set (size_t bus, float value)
 	_control_busses[bus] = value;
 }
 
+
 void  ScGraph::lock_for_read ()
 {
-	// TODO _read_write_lock.lockForRead ();
+    lock(); // TODO _read_write_lock.lockForRead ();
 }
 
 void  ScGraph::lock_for_write ()
 {
-	// TODO _read_write_lock.lockForWrite ();
+    lock();// TODO _read_write_lock.lockForWrite ();
 }
 
-#if 0
 void  ScGraph::lock ()
 {
-	_main_mutex.lock ();
+    _main_mutex.lock();
 }
-#endif
 
 void  ScGraph::unlock ()
 {
-	// TODO _read_write_lock.unlock ();
+    _main_mutex.unlock();
+    // TODO _read_write_lock.unlock ();
 }
-
 
 
 

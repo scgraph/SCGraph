@@ -17,9 +17,7 @@ ControlLoop::ControlLoop ():
 	_quit (false),
 	_freq (Options::get_instance()->_control_rate)
 {
-	int ret;
     _timer  = new ofTimer ();
-	ret = pthread_mutex_init (&_mutex, 0);
 }
 
 ControlLoop::~ControlLoop ()
@@ -29,11 +27,9 @@ ControlLoop::~ControlLoop ()
 
 void ControlLoop::stop ()
 {
-	int ret;
-
-	ret = pthread_mutex_lock (&_mutex);
+    lock();
 	_quit = true;
-	ret = pthread_mutex_unlock (&_mutex);
+    unlock();
 
 	//ret = pthread_join (_thread, 0);
 }
@@ -41,9 +37,9 @@ void ControlLoop::stop ()
 
 void ControlLoop::set_rate (int rate)
 {
-	int ret = pthread_mutex_lock (&_mutex);
+    lock();
 	_freq = rate;
-	ret = pthread_mutex_unlock (&_mutex);
+    unlock();
 }
 
 void ControlLoop::threadedFunction ()
@@ -75,14 +71,14 @@ void ControlLoop::threadedFunction ()
 		if (options->_verbose >= 5)
 			std::cout << "[ControlLoop]: Iterate!" << std::endl;
 
-		pthread_mutex_lock (&_mutex);
+        lock();
 		if (_quit)
 		{
-			pthread_mutex_unlock (&_mutex);
+			unlock();
 			break;
 		}
 
-		pthread_mutex_unlock (&_mutex);
+		unlock();
 
 		int ret;
 

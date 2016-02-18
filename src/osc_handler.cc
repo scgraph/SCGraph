@@ -31,9 +31,6 @@ OscHandler::OscHandler () :
 {
 	Options *options = Options::get_instance ();
 
-    // TODO
-	pthread_mutex_init (&_mutex, 0);
-
 	// queued connection is nessecary to get the msg across thread boundaries
 	// TODO QObject::connect (this, SIGNAL (message_received(OscMessage*)), this, SLOT (handle_message(OscMessage*)), Qt::QueuedConnection);
 
@@ -138,12 +135,12 @@ void OscHandler::run ()
 
 void OscHandler::stop ()
 {
-	pthread_mutex_lock (&_mutex);
+    lock();
 
 	_socket->AsynchronousBreak ();
 	// std::cout << "break" << std::endl;
 
-	pthread_mutex_unlock (&_mutex);
+    unlock();
 	// std::cout << "unlock" << std::endl;
 
 	// TODO QThread::wait ();
@@ -415,7 +412,6 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 					{
 						std::cout << "[OscHandler]: Error while parsing message: /setFont: " << e.what () << ". TypeTags: " << message->TypeTags() << std::endl;
 					}
-				//scgraph->unlock ();
 			}
 			
 		break;
@@ -450,7 +446,6 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 					{
 						std::cout << "[OscHandler]: Error while parsing message: /changeString: " << e.what () << ". TypeTags: " << message->TypeTags() << std::endl;
 					}
-				//scgraph->unlock ();
 			}
 			
 		break;
@@ -482,7 +477,6 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 					{
 						std::cout << "[OscHandler]: Error while parsing message: /addString: " << e.what () << ". TypeTags: " << message->TypeTags() << std::endl;
 					}
-				//scgraph->unlock ();
 			}
 			
 		break;
@@ -1518,16 +1512,14 @@ void OscHandler::handle_message (OscMessage *message)
 {
 	//osc::ReceivedMessage msg(*(message->_msg));
 	// std::cout << "handle message" << std::endl;
-	//_condition_mutex.lock ();
-    pthread_mutex_lock (&_mutex);
+    lock();
 
 	handle_message_locked (message);
 
 	//_handling_done = true;
 
-	pthread_mutex_unlock (&_mutex);
+    unlock();
 
-	//_condition_mutex.unlock ();
 	//_condition.wakeAll ();
 
 	// std::cout << "handle message end" << std::endl;

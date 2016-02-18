@@ -10,12 +10,7 @@
 #include <ip/UdpSocket.h>
 
 #include <vector>
-/*
-#include <QtCore/QThread>
-#include <QtCore/QMetaType>
-#include <QtCore/QWaitCondition>
-#include <QtCore/QMutex>
-*/
+
 // FIXME: remove
 #include <iostream>
 
@@ -135,11 +130,8 @@ class OscHandler : public osc::OscPacketListener, public ofThread
 
 	/** a list of clients wishing to receive notifications by the server */
 	std::vector<osc::IpEndpointName>  _notifications;
-
-	pthread_mutex_t                       _mutex;
-
 	
-	ofThread                       _condition_mutex;
+	// TODO ofThread                       _condition_mutex;
     /*
 	QWaitCondition               _condition;
 	bool                         _handling_done;

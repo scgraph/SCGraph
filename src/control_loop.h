@@ -3,9 +3,9 @@
 #ifndef SCGRAPH_CONTROLLOOP_HH
 #define SCGRAPH_CONTROLLOOP_HH
 
-#include <pthread.h>
 #include <sys/time.h>
 #include <time.h>
+#include <mutex>
 #include "ofTimer.h"
 #include "ofThread.h"
 
@@ -25,7 +25,7 @@ class ControlLoop : public ofThread
 	//pthread_t _thread;
 
 	/** a mutex to protect the quit toggle */
-	pthread_mutex_t _mutex;
+    // std::mutex _mutex;
 	bool _quit;
 
 	float _freq;

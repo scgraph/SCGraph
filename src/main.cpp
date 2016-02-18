@@ -38,7 +38,7 @@ void signal_handler (int signal)
             std::cout << "[SignalHandler]: Caught SIGINT or SIGTERM, exiting.." << std::endl;
         
         signalled_again = true;
-        //QApplication::instance()->exit ();
+        // TODO QApplication::instance()->exit ();
     }
 }
 
@@ -47,7 +47,7 @@ int main (int argc, char *argv[])
     //  std::cout << "ScGraph "<< scgraph_VERSION_MAJOR << "." <<
     //  scgraph_VERSION_MINOR << "- (C) 2006, 2007, 2008, 2011"<<
     //  std::endl;
-    std::cout << "ScGraph 0.14 - (C) 2006-2016"<< std::endl;
+    std::cout << "ScGraph 0.20 - (C) 2006-2016"<< std::endl;
     std::cout << "[Run scgraph -h for help]" << std::endl;
     
     /* create QApplication object before option object so it can
@@ -90,7 +90,7 @@ int main (int argc, char *argv[])
     scgraph->start ();
     //qapp.exec ();
     
-    ofSetupOpenGL(1024,768,OF_WINDOW);			// <-------- setup the GL context
+    ofSetupOpenGL(100,100,OF_WINDOW);			// <-------- setup the GL context
     
     // this kicks off the running of my app
     // can be OF_WINDOW or OF_FULLSCREEN

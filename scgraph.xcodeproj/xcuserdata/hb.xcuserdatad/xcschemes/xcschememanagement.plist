@@ -2,8 +2,126 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>SchemeUserState</key>
+	<dict>
+		<key>ALL.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>11</integer>
+		</dict>
+		<key>Plugins.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>10</integer>
+		</dict>
+		<key>color 2.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>4</integer>
+		</dict>
+		<key>color copy 2.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>12</integer>
+		</dict>
+		<key>color copy.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>7</integer>
+		</dict>
+		<key>color.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
+		<key>gl_renderer copy.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>6</integer>
+		</dict>
+		<key>gl_renderer.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>5</integer>
+		</dict>
+		<key>lighting.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>8</integer>
+		</dict>
+		<key>material.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>9</integer>
+		</dict>
+		<key>scgraph Debug.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
+		<key>scgraph Release.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
+	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>276287011C75E0570070C59C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>2762870B1C75E22F0070C59C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>276287151C7601160070C59C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>276287211C7601810070C59C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>276287291C7607BF0070C59C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>2797D6191C75184C00E6C7BD</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>2797D6221C75290500E6C7BD</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>27BC2C6B1C74B74E0044FFCC</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>27BC2C831C74B7EB0044FFCC</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>27EC54F71C75BA56001F63F1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>27EC556F1C75C5C5001F63F1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>E4B69B5A0A3A1756003C02F2</key>
 		<dict>
 			<key>primary</key>

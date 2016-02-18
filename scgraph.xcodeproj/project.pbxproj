@@ -1,2408 +1,2009 @@
-<?xml version="1.0"?>
-<plist version="1.0">
-	<dict>
-		<key>archiveVersion</key>
-		<string>1</string>
-		<key>classes</key>
-		<dict />
-		<key>objectVersion</key>
-		<string>46</string>
-		<key>objects</key>
-		<dict>
-			<key>C6937888E126BADC8777423B</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>OscTypes.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxOsc/libs/oscpack/src/osc/OscTypes.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>879A251454401BC0B6E4F238</key>
-			<dict>
-				<key>fileRef</key>
-				<string>D9BFFBBF4CC43DEE890B3C3E</string>
-				<key>isa</key>
-				<string>PBXBuildFile</string>
-			</dict>
-			<key>D9BFFBBF4CC43DEE890B3C3E</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.cpp.cpp</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>OscTypes.cpp</string>
-				<key>path</key>
-				<string>../../../addons/ofxOsc/libs/oscpack/src/osc/OscTypes.cpp</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>20F35AFADAF0068B067E713F</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>OscReceivedElements.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxOsc/libs/oscpack/src/osc/OscReceivedElements.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>0546D1A38E13BD319CC9755B</key>
-			<dict>
-				<key>fileRef</key>
-				<string>9BF3AA0D4FAA89D0F8A0E545</string>
-				<key>isa</key>
-				<string>PBXBuildFile</string>
-			</dict>
-			<key>9BF3AA0D4FAA89D0F8A0E545</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.cpp.cpp</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>OscReceivedElements.cpp</string>
-				<key>path</key>
-				<string>../../../addons/ofxOsc/libs/oscpack/src/osc/OscReceivedElements.cpp</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>4E95FB446A9C9C6F0DE12D75</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>OscPrintReceivedElements.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxOsc/libs/oscpack/src/osc/OscPrintReceivedElements.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>C4782ECC372420ACE0615B74</key>
-			<dict>
-				<key>fileRef</key>
-				<string>BC8881B3C8C0A1C45F042E7A</string>
-				<key>isa</key>
-				<string>PBXBuildFile</string>
-			</dict>
-			<key>BC8881B3C8C0A1C45F042E7A</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.cpp.cpp</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>OscPrintReceivedElements.cpp</string>
-				<key>path</key>
-				<string>../../../addons/ofxOsc/libs/oscpack/src/osc/OscPrintReceivedElements.cpp</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>6B65E6930994CC4B2D2B8B33</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>OscPacketListener.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxOsc/libs/oscpack/src/osc/OscPacketListener.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>029684CF678F70F6D3537A29</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>OscOutboundPacketStream.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxOsc/libs/oscpack/src/osc/OscOutboundPacketStream.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>62545D179C94265CA1389D4A</key>
-			<dict>
-				<key>fileRef</key>
-				<string>63A47AC60FFAFC3BF093EC0F</string>
-				<key>isa</key>
-				<string>PBXBuildFile</string>
-			</dict>
-			<key>63A47AC60FFAFC3BF093EC0F</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.cpp.cpp</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>OscOutboundPacketStream.cpp</string>
-				<key>path</key>
-				<string>../../../addons/ofxOsc/libs/oscpack/src/osc/OscOutboundPacketStream.cpp</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>A2AAA8CA403479E6FCDF920E</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>OscHostEndianness.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxOsc/libs/oscpack/src/osc/OscHostEndianness.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>F4F5B6B8BA2BD52C646ED908</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>OscException.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxOsc/libs/oscpack/src/osc/OscException.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>30CB364908817057B430D528</key>
-			<dict>
-				<key>children</key>
-				<array>
-					<string>AE335EB4709BFD4671EEAC84</string>
-					<string>F4F5B6B8BA2BD52C646ED908</string>
-					<string>A2AAA8CA403479E6FCDF920E</string>
-					<string>63A47AC60FFAFC3BF093EC0F</string>
-					<string>029684CF678F70F6D3537A29</string>
-					<string>6B65E6930994CC4B2D2B8B33</string>
-					<string>BC8881B3C8C0A1C45F042E7A</string>
-					<string>4E95FB446A9C9C6F0DE12D75</string>
-					<string>9BF3AA0D4FAA89D0F8A0E545</string>
-					<string>20F35AFADAF0068B067E713F</string>
-					<string>D9BFFBBF4CC43DEE890B3C3E</string>
-					<string>C6937888E126BADC8777423B</string>
-				</array>
-				<key>isa</key>
-				<string>PBXGroup</string>
-				<key>name</key>
-				<string>osc</string>
-				<key>sourceTree</key>
-				<string>&lt;group&gt;</string>
-			</dict>
-			<key>AE335EB4709BFD4671EEAC84</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>MessageMappingOscPacketListener.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxOsc/libs/oscpack/src/osc/MessageMappingOscPacketListener.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>2FD4B0329909D3527F003494</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>UdpSocket.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxOsc/libs/oscpack/src/ip/UdpSocket.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>444657A12E59D0ED86981498</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>TimerListener.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxOsc/libs/oscpack/src/ip/TimerListener.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>510CAFE035E576A4E1502D52</key>
-			<dict>
-				<key>fileRef</key>
-				<string>E6DEF695B88BA5FAACEAA937</string>
-				<key>isa</key>
-				<string>PBXBuildFile</string>
-			</dict>
-			<key>E6DEF695B88BA5FAACEAA937</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.cpp.cpp</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>UdpSocket.cpp</string>
-				<key>path</key>
-				<string>../../../addons/ofxOsc/libs/oscpack/src/ip/posix/UdpSocket.cpp</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>641362CA659FAFEE4E81001B</key>
-			<dict>
-				<key>children</key>
-				<array>
-					<string>3B361208CD4107E479F04E7B</string>
-					<string>E6DEF695B88BA5FAACEAA937</string>
-				</array>
-				<key>isa</key>
-				<string>PBXGroup</string>
-				<key>name</key>
-				<string>posix</string>
-				<key>sourceTree</key>
-				<string>&lt;group&gt;</string>
-			</dict>
-			<key>67FE4C7B15C2F0478C8126C2</key>
-			<dict>
-				<key>fileRef</key>
-				<string>3B361208CD4107E479F04E7B</string>
-				<key>isa</key>
-				<string>PBXBuildFile</string>
-			</dict>
-			<key>3B361208CD4107E479F04E7B</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.cpp.cpp</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>NetworkingUtils.cpp</string>
-				<key>path</key>
-				<string>../../../addons/ofxOsc/libs/oscpack/src/ip/posix/NetworkingUtils.cpp</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>23640F57DF6C4BB6BFC5DA4C</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>PacketListener.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxOsc/libs/oscpack/src/ip/PacketListener.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>F7FBC56859535E597B24BB91</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>NetworkingUtils.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxOsc/libs/oscpack/src/ip/NetworkingUtils.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>48974F980F51769171D0B2F5</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>IpEndpointName.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxOsc/libs/oscpack/src/ip/IpEndpointName.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>FF8CDF57858E9B94E3237115</key>
-			<dict>
-				<key>children</key>
-				<array>
-					<string>ADD194746185E2DA11468377</string>
-					<string>48974F980F51769171D0B2F5</string>
-					<string>F7FBC56859535E597B24BB91</string>
-					<string>23640F57DF6C4BB6BFC5DA4C</string>
-					<string>641362CA659FAFEE4E81001B</string>
-					<string>444657A12E59D0ED86981498</string>
-					<string>2FD4B0329909D3527F003494</string>
-				</array>
-				<key>isa</key>
-				<string>PBXGroup</string>
-				<key>name</key>
-				<string>ip</string>
-				<key>sourceTree</key>
-				<string>&lt;group&gt;</string>
-			</dict>
-			<key>D27B2221A225CA523C019676</key>
-			<dict>
-				<key>children</key>
-				<array>
-					<string>FF8CDF57858E9B94E3237115</string>
-					<string>30CB364908817057B430D528</string>
-				</array>
-				<key>isa</key>
-				<string>PBXGroup</string>
-				<key>name</key>
-				<string>src</string>
-				<key>sourceTree</key>
-				<string>&lt;group&gt;</string>
-			</dict>
-			<key>86D2677079A3AF4A5A88E29A</key>
-			<dict>
-				<key>children</key>
-				<array>
-					<string>D27B2221A225CA523C019676</string>
-				</array>
-				<key>isa</key>
-				<string>PBXGroup</string>
-				<key>name</key>
-				<string>oscpack</string>
-				<key>sourceTree</key>
-				<string>&lt;group&gt;</string>
-			</dict>
-			<key>38871A5825686AE018EC2BF0</key>
-			<dict>
-				<key>children</key>
-				<array>
-					<string>86D2677079A3AF4A5A88E29A</string>
-				</array>
-				<key>isa</key>
-				<string>PBXGroup</string>
-				<key>name</key>
-				<string>libs</string>
-				<key>sourceTree</key>
-				<string>&lt;group&gt;</string>
-			</dict>
-			<key>ADE367465D2A8EBAD4C7A8D9</key>
-			<dict>
-				<key>fileRef</key>
-				<string>ADD194746185E2DA11468377</string>
-				<key>isa</key>
-				<string>PBXBuildFile</string>
-			</dict>
-			<key>ADD194746185E2DA11468377</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.cpp.cpp</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>IpEndpointName.cpp</string>
-				<key>path</key>
-				<string>../../../addons/ofxOsc/libs/oscpack/src/ip/IpEndpointName.cpp</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>9F7986DC4EB05E75FCE2C777</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>ofxOscSender.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxOsc/src/ofxOscSender.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>8F5205AEF8861EF234F0651A</key>
-			<dict>
-				<key>fileRef</key>
-				<string>81967292BFC87A0144BD32C6</string>
-				<key>isa</key>
-				<string>PBXBuildFile</string>
-			</dict>
-			<key>81967292BFC87A0144BD32C6</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.cpp.cpp</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>ofxOscSender.cpp</string>
-				<key>path</key>
-				<string>../../../addons/ofxOsc/src/ofxOscSender.cpp</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>8C75AFC8774A62495DD53464</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>ofxOscReceiver.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxOsc/src/ofxOscReceiver.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>640279EE111671BD026CB013</key>
-			<dict>
-				<key>fileRef</key>
-				<string>C2FAC65C491D4231379F3298</string>
-				<key>isa</key>
-				<string>PBXBuildFile</string>
-			</dict>
-			<key>C2FAC65C491D4231379F3298</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.cpp.cpp</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>ofxOscReceiver.cpp</string>
-				<key>path</key>
-				<string>../../../addons/ofxOsc/src/ofxOscReceiver.cpp</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>B31C608870ECEB2490A93736</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>ofxOscParameterSync.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxOsc/src/ofxOscParameterSync.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>4ADB88E2FB52E76A471065DE</key>
-			<dict>
-				<key>fileRef</key>
-				<string>0AED834CE4DEC5260AF302A2</string>
-				<key>isa</key>
-				<string>PBXBuildFile</string>
-			</dict>
-			<key>0AED834CE4DEC5260AF302A2</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.cpp.cpp</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>ofxOscParameterSync.cpp</string>
-				<key>path</key>
-				<string>../../../addons/ofxOsc/src/ofxOscParameterSync.cpp</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>C58862C6D212C8E8A83810F4</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>ofxOscMessage.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxOsc/src/ofxOscMessage.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>5864AD82E20F15536D054EA3</key>
-			<dict>
-				<key>fileRef</key>
-				<string>DF49D76C45D5DB505A234880</string>
-				<key>isa</key>
-				<string>PBXBuildFile</string>
-			</dict>
-			<key>DF49D76C45D5DB505A234880</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.cpp.cpp</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>ofxOscMessage.cpp</string>
-				<key>path</key>
-				<string>../../../addons/ofxOsc/src/ofxOscMessage.cpp</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>8B30E93FD3D3475EED522A0E</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>ofxOscBundle.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxOsc/src/ofxOscBundle.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>72A929D3561B8232A182ABFC</key>
-			<dict>
-				<key>fileRef</key>
-				<string>65EEFA3DA3526E9CDD9C21F9</string>
-				<key>isa</key>
-				<string>PBXBuildFile</string>
-			</dict>
-			<key>65EEFA3DA3526E9CDD9C21F9</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.cpp.cpp</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>ofxOscBundle.cpp</string>
-				<key>path</key>
-				<string>../../../addons/ofxOsc/src/ofxOscBundle.cpp</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>7689F8A0F3D0B7635A8C3104</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>ofxOscArg.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxOsc/src/ofxOscArg.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>BD2F1A9F8D0C05EDB29122D0</key>
-			<dict>
-				<key>children</key>
-				<array>
-					<string>00D6D32B84B099226431108C</string>
-					<string>7689F8A0F3D0B7635A8C3104</string>
-					<string>65EEFA3DA3526E9CDD9C21F9</string>
-					<string>8B30E93FD3D3475EED522A0E</string>
-					<string>DF49D76C45D5DB505A234880</string>
-					<string>C58862C6D212C8E8A83810F4</string>
-					<string>0AED834CE4DEC5260AF302A2</string>
-					<string>B31C608870ECEB2490A93736</string>
-					<string>C2FAC65C491D4231379F3298</string>
-					<string>8C75AFC8774A62495DD53464</string>
-					<string>81967292BFC87A0144BD32C6</string>
-					<string>9F7986DC4EB05E75FCE2C777</string>
-				</array>
-				<key>isa</key>
-				<string>PBXGroup</string>
-				<key>name</key>
-				<string>src</string>
-				<key>sourceTree</key>
-				<string>&lt;group&gt;</string>
-			</dict>
-			<key>E6053AB7FEC63D5F83825B88</key>
-			<dict>
-				<key>children</key>
-				<array>
-					<string>BD2F1A9F8D0C05EDB29122D0</string>
-					<string>38871A5825686AE018EC2BF0</string>
-				</array>
-				<key>isa</key>
-				<string>PBXGroup</string>
-				<key>name</key>
-				<string>ofxOsc</string>
-				<key>sourceTree</key>
-				<string>&lt;group&gt;</string>
-			</dict>
-			<key>00D6D32B84B099226431108C</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>ofxOsc.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxOsc/src/ofxOsc.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>9FECF0FCF0CCAEC9C58FE54F</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>version.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxAssimpModelLoader/libs/assimp/include/assimp/version.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>A6197D72F51ED9030D7C5F16</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>vector3.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxAssimpModelLoader/libs/assimp/include/assimp/vector3.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>98033501202172DF458BD6CF</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>vector2.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxAssimpModelLoader/libs/assimp/include/assimp/vector2.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>C1638C371AC7701E1A4D6671</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>types.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxAssimpModelLoader/libs/assimp/include/assimp/types.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>221A6B45269330B270549CB3</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>texture.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxAssimpModelLoader/libs/assimp/include/assimp/texture.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>D825FF1F1EA48B305BB428B7</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>scene.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxAssimpModelLoader/libs/assimp/include/assimp/scene.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>1E0C80A97E66F858E3720C91</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>quaternion.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxAssimpModelLoader/libs/assimp/include/assimp/quaternion.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>9339B8AD0EF31B7708C53B9F</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>ProgressHandler.hpp</string>
-				<key>path</key>
-				<string>../../../addons/ofxAssimpModelLoader/libs/assimp/include/assimp/ProgressHandler.hpp</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>42D77E59A87937F5313E468D</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>postprocess.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxAssimpModelLoader/libs/assimp/include/assimp/postprocess.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>41DBF41AB15D7C33CA52C05F</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>NullLogger.hpp</string>
-				<key>path</key>
-				<string>../../../addons/ofxAssimpModelLoader/libs/assimp/include/assimp/NullLogger.hpp</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>8090B616E3293BD0E1085AE8</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>metadata.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxAssimpModelLoader/libs/assimp/include/assimp/metadata.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>6A0E743407465957DB764ED3</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>mesh.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxAssimpModelLoader/libs/assimp/include/assimp/mesh.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>A7579B6BD9B77152BF320192</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>matrix4x4.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxAssimpModelLoader/libs/assimp/include/assimp/matrix4x4.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>D501EB9AF5A65F43CB972589</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>matrix3x3.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxAssimpModelLoader/libs/assimp/include/assimp/matrix3x3.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>42B5D460590D03DC3009F243</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>material.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxAssimpModelLoader/libs/assimp/include/assimp/material.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>0E3FB6D73DB6B260295B6855</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>LogStream.hpp</string>
-				<key>path</key>
-				<string>../../../addons/ofxAssimpModelLoader/libs/assimp/include/assimp/LogStream.hpp</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>EED8C389555EA379BDFA5BD5</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>Logger.hpp</string>
-				<key>path</key>
-				<string>../../../addons/ofxAssimpModelLoader/libs/assimp/include/assimp/Logger.hpp</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>808F0EC060E7C8DA90947996</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>light.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxAssimpModelLoader/libs/assimp/include/assimp/light.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>ADAE582E4696B9BD64E5B2B8</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>IOSystem.hpp</string>
-				<key>path</key>
-				<string>../../../addons/ofxAssimpModelLoader/libs/assimp/include/assimp/IOSystem.hpp</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>18D6965F094E05B40B20AFB8</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>IOStream.hpp</string>
-				<key>path</key>
-				<string>../../../addons/ofxAssimpModelLoader/libs/assimp/include/assimp/IOStream.hpp</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>2B629E4DB07A45391A420283</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>importerdesc.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxAssimpModelLoader/libs/assimp/include/assimp/importerdesc.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>6E069CE4C58E970E3429DBE5</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>Importer.hpp</string>
-				<key>path</key>
-				<string>../../../addons/ofxAssimpModelLoader/libs/assimp/include/assimp/Importer.hpp</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>28A42A2103C59E7D30E9D245</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>Exporter.hpp</string>
-				<key>path</key>
-				<string>../../../addons/ofxAssimpModelLoader/libs/assimp/include/assimp/Exporter.hpp</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>26149D52CBE031B3F154D862</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>defs.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxAssimpModelLoader/libs/assimp/include/assimp/defs.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>24814572966A916B92F96257</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>DefaultLogger.hpp</string>
-				<key>path</key>
-				<string>../../../addons/ofxAssimpModelLoader/libs/assimp/include/assimp/DefaultLogger.hpp</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>7920005E4069FBD68DF30F56</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>config.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxAssimpModelLoader/libs/assimp/include/assimp/config.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>F38BBAA2F93DED836503E450</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>pushpack1.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxAssimpModelLoader/libs/assimp/include/assimp/Compiler/pushpack1.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>D1B370068072AAB890CD42D2</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>pstdint.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxAssimpModelLoader/libs/assimp/include/assimp/Compiler/pstdint.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>B77F1220F7C30BFF6034CC97</key>
-			<dict>
-				<key>children</key>
-				<array>
-					<string>C224E0400677911C78D08627</string>
-					<string>D1B370068072AAB890CD42D2</string>
-					<string>F38BBAA2F93DED836503E450</string>
-				</array>
-				<key>isa</key>
-				<string>PBXGroup</string>
-				<key>name</key>
-				<string>Compiler</string>
-				<key>sourceTree</key>
-				<string>&lt;group&gt;</string>
-			</dict>
-			<key>C224E0400677911C78D08627</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>poppack1.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxAssimpModelLoader/libs/assimp/include/assimp/Compiler/poppack1.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>AED6F84D8DABA623CAF59F13</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>color4.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxAssimpModelLoader/libs/assimp/include/assimp/color4.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>2412104B96C3E5E004D85DED</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>cimport.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxAssimpModelLoader/libs/assimp/include/assimp/cimport.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>3D5F33D66F2F166A4E8EA438</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>cfileio.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxAssimpModelLoader/libs/assimp/include/assimp/cfileio.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>96EBF8A6CD3F11C79F7950BC</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>cexport.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxAssimpModelLoader/libs/assimp/include/assimp/cexport.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>7B454555CF8F39CFBAAFDFA2</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>camera.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxAssimpModelLoader/libs/assimp/include/assimp/camera.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>E83EDA0A1919173D8498F392</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>anim.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxAssimpModelLoader/libs/assimp/include/assimp/anim.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>67AD613537D3ED7FD883659E</key>
-			<dict>
-				<key>children</key>
-				<array>
-					<string>3DE27F8F3350100A56220776</string>
-					<string>E83EDA0A1919173D8498F392</string>
-					<string>7B454555CF8F39CFBAAFDFA2</string>
-					<string>96EBF8A6CD3F11C79F7950BC</string>
-					<string>3D5F33D66F2F166A4E8EA438</string>
-					<string>2412104B96C3E5E004D85DED</string>
-					<string>AED6F84D8DABA623CAF59F13</string>
-					<string>B77F1220F7C30BFF6034CC97</string>
-					<string>7920005E4069FBD68DF30F56</string>
-					<string>24814572966A916B92F96257</string>
-					<string>26149D52CBE031B3F154D862</string>
-					<string>28A42A2103C59E7D30E9D245</string>
-					<string>6E069CE4C58E970E3429DBE5</string>
-					<string>2B629E4DB07A45391A420283</string>
-					<string>18D6965F094E05B40B20AFB8</string>
-					<string>ADAE582E4696B9BD64E5B2B8</string>
-					<string>808F0EC060E7C8DA90947996</string>
-					<string>EED8C389555EA379BDFA5BD5</string>
-					<string>0E3FB6D73DB6B260295B6855</string>
-					<string>42B5D460590D03DC3009F243</string>
-					<string>D501EB9AF5A65F43CB972589</string>
-					<string>A7579B6BD9B77152BF320192</string>
-					<string>6A0E743407465957DB764ED3</string>
-					<string>8090B616E3293BD0E1085AE8</string>
-					<string>41DBF41AB15D7C33CA52C05F</string>
-					<string>42D77E59A87937F5313E468D</string>
-					<string>9339B8AD0EF31B7708C53B9F</string>
-					<string>1E0C80A97E66F858E3720C91</string>
-					<string>D825FF1F1EA48B305BB428B7</string>
-					<string>221A6B45269330B270549CB3</string>
-					<string>C1638C371AC7701E1A4D6671</string>
-					<string>98033501202172DF458BD6CF</string>
-					<string>A6197D72F51ED9030D7C5F16</string>
-					<string>9FECF0FCF0CCAEC9C58FE54F</string>
-				</array>
-				<key>isa</key>
-				<string>PBXGroup</string>
-				<key>name</key>
-				<string>assimp</string>
-				<key>sourceTree</key>
-				<string>&lt;group&gt;</string>
-			</dict>
-			<key>EEFDD7AE0009AE6F77EF2A93</key>
-			<dict>
-				<key>children</key>
-				<array>
-					<string>67AD613537D3ED7FD883659E</string>
-				</array>
-				<key>isa</key>
-				<string>PBXGroup</string>
-				<key>name</key>
-				<string>include</string>
-				<key>sourceTree</key>
-				<string>&lt;group&gt;</string>
-			</dict>
-			<key>59905D957FDE48902CF1F729</key>
-			<dict>
-				<key>children</key>
-				<array>
-					<string>EEFDD7AE0009AE6F77EF2A93</string>
-				</array>
-				<key>isa</key>
-				<string>PBXGroup</string>
-				<key>name</key>
-				<string>assimp</string>
-				<key>sourceTree</key>
-				<string>&lt;group&gt;</string>
-			</dict>
-			<key>C721A9AF1157766AFE54645E</key>
-			<dict>
-				<key>children</key>
-				<array>
-					<string>59905D957FDE48902CF1F729</string>
-				</array>
-				<key>isa</key>
-				<string>PBXGroup</string>
-				<key>name</key>
-				<string>libs</string>
-				<key>sourceTree</key>
-				<string>&lt;group&gt;</string>
-			</dict>
-			<key>3DE27F8F3350100A56220776</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>ai_assert.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxAssimpModelLoader/libs/assimp/include/assimp/ai_assert.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>4FAE4A0F69A8990513603BDF</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>ofxAssimpUtils.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxAssimpModelLoader/src/ofxAssimpUtils.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>8B473495EAE4247AC1A851F1</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>ofxAssimpTexture.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxAssimpModelLoader/src/ofxAssimpTexture.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>B8846EF8E504895A4A9EFEC0</key>
-			<dict>
-				<key>fileRef</key>
-				<string>B6F2EE44AD04FF549AB13699</string>
-				<key>isa</key>
-				<string>PBXBuildFile</string>
-			</dict>
-			<key>B6F2EE44AD04FF549AB13699</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.cpp.cpp</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>ofxAssimpTexture.cpp</string>
-				<key>path</key>
-				<string>../../../addons/ofxAssimpModelLoader/src/ofxAssimpTexture.cpp</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>7DF381F656E8FD352E21346E</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>ofxAssimpModelLoader.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxAssimpModelLoader/src/ofxAssimpModelLoader.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>8DED5056525646FA71980866</key>
-			<dict>
-				<key>fileRef</key>
-				<string>EDE55D82BD962DAC0E94B708</string>
-				<key>isa</key>
-				<string>PBXBuildFile</string>
-			</dict>
-			<key>EDE55D82BD962DAC0E94B708</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.cpp.cpp</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>ofxAssimpModelLoader.cpp</string>
-				<key>path</key>
-				<string>../../../addons/ofxAssimpModelLoader/src/ofxAssimpModelLoader.cpp</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>F0BBBD032D905D92679D83E6</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>ofxAssimpMeshHelper.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxAssimpModelLoader/src/ofxAssimpMeshHelper.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>483FA4F6D5FA6422C559B1F5</key>
-			<dict>
-				<key>fileRef</key>
-				<string>F67FE68E327BEFBD4B777571</string>
-				<key>isa</key>
-				<string>PBXBuildFile</string>
-			</dict>
-			<key>F67FE68E327BEFBD4B777571</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.cpp.cpp</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>ofxAssimpMeshHelper.cpp</string>
-				<key>path</key>
-				<string>../../../addons/ofxAssimpModelLoader/src/ofxAssimpMeshHelper.cpp</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>EA83DF139B3F2085C1A56C49</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>ofxAssimpAnimation.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxAssimpModelLoader/src/ofxAssimpAnimation.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>9D99F547CA5C0ECCB9EB9806</key>
-			<dict>
-				<key>children</key>
-				<array>
-					<string>36068D6C1D6D412786A5C4C1</string>
-					<string>EA83DF139B3F2085C1A56C49</string>
-					<string>F67FE68E327BEFBD4B777571</string>
-					<string>F0BBBD032D905D92679D83E6</string>
-					<string>EDE55D82BD962DAC0E94B708</string>
-					<string>7DF381F656E8FD352E21346E</string>
-					<string>B6F2EE44AD04FF549AB13699</string>
-					<string>8B473495EAE4247AC1A851F1</string>
-					<string>4FAE4A0F69A8990513603BDF</string>
-				</array>
-				<key>isa</key>
-				<string>PBXGroup</string>
-				<key>name</key>
-				<string>src</string>
-				<key>sourceTree</key>
-				<string>&lt;group&gt;</string>
-			</dict>
-			<key>2C8F245ACBE61E28646C17F2</key>
-			<dict>
-				<key>children</key>
-				<array>
-					<string>9D99F547CA5C0ECCB9EB9806</string>
-					<string>C721A9AF1157766AFE54645E</string>
-				</array>
-				<key>isa</key>
-				<string>PBXGroup</string>
-				<key>name</key>
-				<string>ofxAssimpModelLoader</string>
-				<key>sourceTree</key>
-				<string>&lt;group&gt;</string>
-			</dict>
-			<key>3B8120368B4FCCD80883BAF3</key>
-			<dict>
-				<key>fileRef</key>
-				<string>36068D6C1D6D412786A5C4C1</string>
-				<key>isa</key>
-				<string>PBXBuildFile</string>
-			</dict>
-			<key>36068D6C1D6D412786A5C4C1</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.cpp.cpp</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>ofxAssimpAnimation.cpp</string>
-				<key>path</key>
-				<string>../../../addons/ofxAssimpModelLoader/src/ofxAssimpAnimation.cpp</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>6948EE371B920CB800B5AC1A</key>
-			<dict>
-				<key>children</key>
-				<array />
-				<key>isa</key>
-				<string>PBXGroup</string>
-				<key>name</key>
-				<string>local_addons</string>
-				<key>sourceTree</key>
-				<string>&lt;group&gt;</string>
-			</dict>
-			<key>8466F1851C04CA0E00918B1C</key>
-			<dict>
-				<key>buildActionMask</key>
-				<string>12</string>
-				<key>files</key>
-				<array />
-				<key>inputPaths</key>
-				<array />
-				<key>isa</key>
-				<string>PBXShellScriptBuildPhase</string>
-				<key>outputPaths</key>
-				<array />
-				<key>runOnlyForDeploymentPostprocessing</key>
-				<string>0</string>
-				<key>shellPath</key>
-				<string>/bin/sh</string>
-				<key>shellScript</key>
-				<string># ---- Code Sign App Package ----
- 
-# WARNING: You may have to run Clean in Xcode after changing CODE_SIGN_IDENTITY!
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
 
-# Verify that $CODE_SIGN_IDENTITY is set
-if [ -z "${CODE_SIGN_IDENTITY}" ] ; then
-echo "CODE_SIGN_IDENTITY needs to be set for framework code-signing"
-exit 0
-fi
+/* Begin PBXAggregateTarget section */
+		276287151C7601160070C59C /* Plugins */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 276287161C7601160070C59C /* Build configuration list for PBXAggregateTarget "Plugins" */;
+			buildPhases = (
+			);
+			dependencies = (
+				2762871A1C76016C0070C59C /* PBXTargetDependency */,
+				2762871C1C76016E0070C59C /* PBXTargetDependency */,
+				2762871E1C7601700070C59C /* PBXTargetDependency */,
+				276287201C7601720070C59C /* PBXTargetDependency */,
+				276287341C7607E30070C59C /* PBXTargetDependency */,
+			);
+			name = Plugins;
+			productName = ALL;
+		};
+		276287211C7601810070C59C /* ALL */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 276287221C7601810070C59C /* Build configuration list for PBXAggregateTarget "ALL" */;
+			buildPhases = (
+			);
+			dependencies = (
+				276287281C7601A60070C59C /* PBXTargetDependency */,
+				276287261C7601A30070C59C /* PBXTargetDependency */,
+			);
+			name = ALL;
+			productName = ALL;
+		};
+/* End PBXAggregateTarget section */
 
-if [ -z "${CODE_SIGN_ENTITLEMENTS}" ] ; then
-echo "CODE_SIGN_ENTITLEMENTS needs to be set for framework code-signing!"
+/* Begin PBXBuildFile section */
+		0546D1A38E13BD319CC9755B /* OscReceivedElements.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9BF3AA0D4FAA89D0F8A0E545 /* OscReceivedElements.cpp */; };
+		2761B9DD1C7479520028B491 /* buffer_pool.cc in Sources */ = {isa = PBXBuildFile; fileRef = 2761B97B1C7479510028B491 /* buffer_pool.cc */; };
+		2761B9DE1C7479520028B491 /* control_loop.cc in Sources */ = {isa = PBXBuildFile; fileRef = 2761B97E1C7479510028B491 /* control_loop.cc */; };
+		2761B9DF1C7479520028B491 /* control.cc in Sources */ = {isa = PBXBuildFile; fileRef = 2761B9801C7479510028B491 /* control.cc */; };
+		2761B9E01C7479520028B491 /* cow_ptr.cc in Sources */ = {isa = PBXBuildFile; fileRef = 2761B9821C7479510028B491 /* cow_ptr.cc */; };
+		2761B9E11C7479520028B491 /* face.cc in Sources */ = {isa = PBXBuildFile; fileRef = 2761B9851C7479510028B491 /* face.cc */; };
+		2761B9E21C7479520028B491 /* graphic_loop.cc in Sources */ = {isa = PBXBuildFile; fileRef = 2761B9881C7479510028B491 /* graphic_loop.cc */; };
+		2761B9E31C7479520028B491 /* graphics_bus.cc in Sources */ = {isa = PBXBuildFile; fileRef = 2761B98A1C7479510028B491 /* graphics_bus.cc */; };
+		2761B9E41C7479520028B491 /* graphics_visitor.cc in Sources */ = {isa = PBXBuildFile; fileRef = 2761B98C1C7479510028B491 /* graphics_visitor.cc */; };
+		2761B9E51C7479520028B491 /* graphics.cc in Sources */ = {isa = PBXBuildFile; fileRef = 2761B98E1C7479510028B491 /* graphics.cc */; };
+		2761B9E61C7479520028B491 /* group.cc in Sources */ = {isa = PBXBuildFile; fileRef = 2761B9901C7479510028B491 /* group.cc */; };
+		2761B9E71C7479520028B491 /* hvector_3d.cc in Sources */ = {isa = PBXBuildFile; fileRef = 2761B9921C7479510028B491 /* hvector_3d.cc */; };
+		2761B9E81C7479520028B491 /* in_out.cc in Sources */ = {isa = PBXBuildFile; fileRef = 2761B9941C7479510028B491 /* in_out.cc */; };
+		2761B9E91C7479520028B491 /* jack_client.cc in Sources */ = {isa = PBXBuildFile; fileRef = 2761B9961C7479510028B491 /* jack_client.cc */; };
+		2761B9EA1C7479520028B491 /* loader_3d.cc in Sources */ = {isa = PBXBuildFile; fileRef = 2761B9981C7479510028B491 /* loader_3d.cc */; };
+		2761B9EB1C7479520028B491 /* material.cc in Sources */ = {isa = PBXBuildFile; fileRef = 2761B99A1C7479510028B491 /* material.cc */; };
+		2761B9EC1C7479520028B491 /* matrix.cc in Sources */ = {isa = PBXBuildFile; fileRef = 2761B99C1C7479510028B491 /* matrix.cc */; };
+		2761B9ED1C7479520028B491 /* node_tree.cc in Sources */ = {isa = PBXBuildFile; fileRef = 2761B99E1C7479510028B491 /* node_tree.cc */; };
+		2761B9EE1C7479520028B491 /* node.cc in Sources */ = {isa = PBXBuildFile; fileRef = 2761B9A01C7479510028B491 /* node.cc */; };
+		2761B9EF1C7479520028B491 /* options.cc in Sources */ = {isa = PBXBuildFile; fileRef = 2761B9A31C7479510028B491 /* options.cc */; };
+		2761B9F01C7479520028B491 /* osc_handler.cc in Sources */ = {isa = PBXBuildFile; fileRef = 2761B9A51C7479510028B491 /* osc_handler.cc */; };
+		2761B9F11C7479520028B491 /* plugin_pool.cc in Sources */ = {isa = PBXBuildFile; fileRef = 2761B9A71C7479510028B491 /* plugin_pool.cc */; };
+		2761B9F21C7479520028B491 /* plugin.cc in Sources */ = {isa = PBXBuildFile; fileRef = 2761B9A91C7479510028B491 /* plugin.cc */; };
+		2761B9F31C7479520028B491 /* sc__unit.cc in Sources */ = {isa = PBXBuildFile; fileRef = 2761B9AC1C7479510028B491 /* sc__unit.cc */; };
+		2761B9F41C7479520028B491 /* sc_unit_wrapper.cc in Sources */ = {isa = PBXBuildFile; fileRef = 2761B9AE1C7479510028B491 /* sc_unit_wrapper.cc */; };
+		2761B9F51C7479520028B491 /* scgraph.cc in Sources */ = {isa = PBXBuildFile; fileRef = 2761B9B01C7479510028B491 /* scgraph.cc */; };
+		2761B9F61C7479520028B491 /* shader_pool.cc in Sources */ = {isa = PBXBuildFile; fileRef = 2761B9B21C7479510028B491 /* shader_pool.cc */; };
+		2761B9F71C7479520028B491 /* string_pool.cc in Sources */ = {isa = PBXBuildFile; fileRef = 2761B9B41C7479510028B491 /* string_pool.cc */; };
+		2761B9F81C7479520028B491 /* synth.cc in Sources */ = {isa = PBXBuildFile; fileRef = 2761B9B61C7479510028B491 /* synth.cc */; };
+		2761B9F91C7479520028B491 /* synthdef_file.cc in Sources */ = {isa = PBXBuildFile; fileRef = 2761B9B81C7479510028B491 /* synthdef_file.cc */; };
+		2761B9FA1C7479520028B491 /* synthdef_pool.cc in Sources */ = {isa = PBXBuildFile; fileRef = 2761B9BA1C7479510028B491 /* synthdef_pool.cc */; };
+		2761B9FB1C7479520028B491 /* synthdef.cc in Sources */ = {isa = PBXBuildFile; fileRef = 2761B9BC1C7479510028B491 /* synthdef.cc */; };
+		2761B9FC1C7479520028B491 /* texture_pool.cc in Sources */ = {isa = PBXBuildFile; fileRef = 2761B9BF1C7479510028B491 /* texture_pool.cc */; };
+		2761B9FD1C7479520028B491 /* texture.cc in Sources */ = {isa = PBXBuildFile; fileRef = 2761B9C11C7479510028B491 /* texture.cc */; };
+		2761B9FE1C7479520028B491 /* transformation_command_visitor.cc in Sources */ = {isa = PBXBuildFile; fileRef = 2761B9C41C7479510028B491 /* transformation_command_visitor.cc */; };
+		2761B9FF1C7479520028B491 /* transformation_command.cc in Sources */ = {isa = PBXBuildFile; fileRef = 2761B9C61C7479510028B491 /* transformation_command.cc */; };
+		2761BA001C7479520028B491 /* tree.cc in Sources */ = {isa = PBXBuildFile; fileRef = 2761B9C81C7479510028B491 /* tree.cc */; };
+		2761BA011C7479520028B491 /* unit.cc in Sources */ = {isa = PBXBuildFile; fileRef = 2761B9CA1C7479510028B491 /* unit.cc */; };
+		2761BA021C7479520028B491 /* util.cc in Sources */ = {isa = PBXBuildFile; fileRef = 2761B9CC1C7479510028B491 /* util.cc */; };
+		2761BA031C7479520028B491 /* vector_2d.cc in Sources */ = {isa = PBXBuildFile; fileRef = 2761B9CE1C7479510028B491 /* vector_2d.cc */; };
+		2761BA041C7479520028B491 /* vector_3d.cc in Sources */ = {isa = PBXBuildFile; fileRef = 2761B9D01C7479510028B491 /* vector_3d.cc */; };
+		2761BA051C7479520028B491 /* video_texture.cc in Sources */ = {isa = PBXBuildFile; fileRef = 2761B9D21C7479510028B491 /* video_texture.cc */; };
+		2762870A1C75E0660070C59C /* lighting.cc in Sources */ = {isa = PBXBuildFile; fileRef = 27EC551E1C75BF96001F63F1 /* lighting.cc */; };
+		276287141C75E23C0070C59C /* material.cc in Sources */ = {isa = PBXBuildFile; fileRef = 27EC55221C75BF96001F63F1 /* material.cc */; };
+		276287321C7607CC0070C59C /* cube.cc in Sources */ = {isa = PBXBuildFile; fileRef = 27EC55111C75BF96001F63F1 /* cube.cc */; };
+		27EC556D1C75BFBB001F63F1 /* color.cc in Sources */ = {isa = PBXBuildFile; fileRef = 27EC550F1C75BF96001F63F1 /* color.cc */; };
+		27EC55781C75C5DA001F63F1 /* gl_renderer.cc in Sources */ = {isa = PBXBuildFile; fileRef = 27EC551A1C75BF96001F63F1 /* gl_renderer.cc */; };
+		4ADB88E2FB52E76A471065DE /* ofxOscParameterSync.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0AED834CE4DEC5260AF302A2 /* ofxOscParameterSync.cpp */; };
+		510CAFE035E576A4E1502D52 /* UdpSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E6DEF695B88BA5FAACEAA937 /* UdpSocket.cpp */; };
+		5864AD82E20F15536D054EA3 /* ofxOscMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DF49D76C45D5DB505A234880 /* ofxOscMessage.cpp */; };
+		62545D179C94265CA1389D4A /* OscOutboundPacketStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 63A47AC60FFAFC3BF093EC0F /* OscOutboundPacketStream.cpp */; };
+		640279EE111671BD026CB013 /* ofxOscReceiver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2FAC65C491D4231379F3298 /* ofxOscReceiver.cpp */; };
+		67FE4C7B15C2F0478C8126C2 /* NetworkingUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3B361208CD4107E479F04E7B /* NetworkingUtils.cpp */; };
+		72A929D3561B8232A182ABFC /* ofxOscBundle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65EEFA3DA3526E9CDD9C21F9 /* ofxOscBundle.cpp */; };
+		879A251454401BC0B6E4F238 /* OscTypes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D9BFFBBF4CC43DEE890B3C3E /* OscTypes.cpp */; };
+		8F5205AEF8861EF234F0651A /* ofxOscSender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 81967292BFC87A0144BD32C6 /* ofxOscSender.cpp */; };
+		ADE367465D2A8EBAD4C7A8D9 /* IpEndpointName.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADD194746185E2DA11468377 /* IpEndpointName.cpp */; };
+		C4782ECC372420ACE0615B74 /* OscPrintReceivedElements.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC8881B3C8C0A1C45F042E7A /* OscPrintReceivedElements.cpp */; };
+		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
+		E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4B69E1D0A3A1BDC003C02F2 /* main.cpp */; };
+		E4B69E210A3A1BDC003C02F2 /* ofApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */; };
+/* End PBXBuildFile section */
 
-if [ "${CONFIGURATION}" = "Release" ] ; then
-exit 1
-else
-# Code-signing is optional for non-release builds.
-exit 0
-fi
-fi
+/* Begin PBXContainerItemProxy section */
+		276287191C76016C0070C59C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E4B69B4C0A3A1720003C02F2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2762870B1C75E22F0070C59C;
+			remoteInfo = material;
+		};
+		2762871B1C76016E0070C59C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E4B69B4C0A3A1720003C02F2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 276287011C75E0570070C59C;
+			remoteInfo = lighting;
+		};
+		2762871D1C7601700070C59C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E4B69B4C0A3A1720003C02F2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 27EC556F1C75C5C5001F63F1;
+			remoteInfo = gl_renderer;
+		};
+		2762871F1C7601720070C59C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E4B69B4C0A3A1720003C02F2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 27EC54F71C75BA56001F63F1;
+			remoteInfo = color;
+		};
+		276287251C7601A30070C59C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E4B69B4C0A3A1720003C02F2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 276287151C7601160070C59C;
+			remoteInfo = Plugins;
+		};
+		276287271C7601A60070C59C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E4B69B4C0A3A1720003C02F2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E4B69B5A0A3A1756003C02F2;
+			remoteInfo = scgraph;
+		};
+		276287331C7607E30070C59C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E4B69B4C0A3A1720003C02F2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 276287291C7607BF0070C59C;
+			remoteInfo = cube;
+		};
+		E4328147138ABC890047C5CB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E4B27C1510CBEB8E00536013;
+			remoteInfo = openFrameworks;
+		};
+		E4EEB9AB138B136A00A80321 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = E4B27C1410CBEB8E00536013;
+			remoteInfo = openFrameworks;
+		};
+/* End PBXContainerItemProxy section */
 
-ITEMS=""
+/* Begin PBXCopyFilesBuildPhase section */
+		276287051C75E0570070C59C /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+		2762870F1C75E22F0070C59C /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+		2762872D1C7607BF0070C59C /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+		27EC54F61C75BA56001F63F1 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+		27EC55731C75C5C5001F63F1 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+		E4C2427710CC5ABF004149E2 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
-FRAMEWORKS_DIR="${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}"
-echo "$FRAMEWORKS_DIR"
-if [ -d "$FRAMEWORKS_DIR" ] ; then
-FRAMEWORKS=$(find "${FRAMEWORKS_DIR}" -depth -type d -name "*.framework" -or -name "*.dylib" -or -name "*.bundle" | sed -e "s/\(.*framework\)/\1\/Versions\/A\//")
-RESULT=$?
-if [[ $RESULT != 0 ]] ; then
-exit 1
-fi
+/* Begin PBXFileReference section */
+		00D6D32B84B099226431108C /* ofxOsc.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxOsc.h; path = ../../../addons/ofxOsc/src/ofxOsc.h; sourceTree = SOURCE_ROOT; };
+		029684CF678F70F6D3537A29 /* OscOutboundPacketStream.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = OscOutboundPacketStream.h; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/OscOutboundPacketStream.h; sourceTree = SOURCE_ROOT; };
+		0AED834CE4DEC5260AF302A2 /* ofxOscParameterSync.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxOscParameterSync.cpp; path = ../../../addons/ofxOsc/src/ofxOscParameterSync.cpp; sourceTree = SOURCE_ROOT; };
+		20F35AFADAF0068B067E713F /* OscReceivedElements.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = OscReceivedElements.h; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/OscReceivedElements.h; sourceTree = SOURCE_ROOT; };
+		23640F57DF6C4BB6BFC5DA4C /* PacketListener.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = PacketListener.h; path = ../../../addons/ofxOsc/libs/oscpack/src/ip/PacketListener.h; sourceTree = SOURCE_ROOT; };
+		2761B97B1C7479510028B491 /* buffer_pool.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = buffer_pool.cc; sourceTree = "<group>"; };
+		2761B97C1C7479510028B491 /* buffer_pool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = buffer_pool.h; sourceTree = "<group>"; };
+		2761B97D1C7479510028B491 /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		2761B97E1C7479510028B491 /* control_loop.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = control_loop.cc; sourceTree = "<group>"; };
+		2761B97F1C7479510028B491 /* control_loop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = control_loop.h; sourceTree = "<group>"; };
+		2761B9801C7479510028B491 /* control.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = control.cc; sourceTree = "<group>"; };
+		2761B9811C7479510028B491 /* control.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = control.h; sourceTree = "<group>"; };
+		2761B9821C7479510028B491 /* cow_ptr.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cow_ptr.cc; sourceTree = "<group>"; };
+		2761B9831C7479510028B491 /* cow_ptr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cow_ptr.h; sourceTree = "<group>"; };
+		2761B9851C7479510028B491 /* face.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = face.cc; sourceTree = "<group>"; };
+		2761B9861C7479510028B491 /* face.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = face.h; sourceTree = "<group>"; };
+		2761B9871C7479510028B491 /* fo_frigate.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fo_frigate.obj; sourceTree = "<group>"; };
+		2761B9881C7479510028B491 /* graphic_loop.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = graphic_loop.cc; sourceTree = "<group>"; };
+		2761B9891C7479510028B491 /* graphic_loop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = graphic_loop.h; sourceTree = "<group>"; };
+		2761B98A1C7479510028B491 /* graphics_bus.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = graphics_bus.cc; sourceTree = "<group>"; };
+		2761B98B1C7479510028B491 /* graphics_bus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = graphics_bus.h; sourceTree = "<group>"; };
+		2761B98C1C7479510028B491 /* graphics_visitor.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = graphics_visitor.cc; sourceTree = "<group>"; };
+		2761B98D1C7479510028B491 /* graphics_visitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = graphics_visitor.h; sourceTree = "<group>"; };
+		2761B98E1C7479510028B491 /* graphics.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = graphics.cc; sourceTree = "<group>"; };
+		2761B98F1C7479510028B491 /* graphics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = graphics.h; sourceTree = "<group>"; };
+		2761B9901C7479510028B491 /* group.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = group.cc; sourceTree = "<group>"; };
+		2761B9911C7479510028B491 /* group.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = group.h; sourceTree = "<group>"; };
+		2761B9921C7479510028B491 /* hvector_3d.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = hvector_3d.cc; sourceTree = "<group>"; };
+		2761B9931C7479510028B491 /* hvector_3d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hvector_3d.h; sourceTree = "<group>"; };
+		2761B9941C7479510028B491 /* in_out.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = in_out.cc; sourceTree = "<group>"; };
+		2761B9951C7479510028B491 /* in_out.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = in_out.h; sourceTree = "<group>"; };
+		2761B9961C7479510028B491 /* jack_client.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jack_client.cc; sourceTree = "<group>"; };
+		2761B9971C7479510028B491 /* jack_client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jack_client.h; sourceTree = "<group>"; };
+		2761B9981C7479510028B491 /* loader_3d.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = loader_3d.cc; sourceTree = "<group>"; };
+		2761B9991C7479510028B491 /* loader_3d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = loader_3d.h; sourceTree = "<group>"; };
+		2761B99A1C7479510028B491 /* material.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = material.cc; sourceTree = "<group>"; };
+		2761B99B1C7479510028B491 /* material.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = material.h; sourceTree = "<group>"; };
+		2761B99C1C7479510028B491 /* matrix.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = matrix.cc; sourceTree = "<group>"; };
+		2761B99D1C7479510028B491 /* matrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = matrix.h; sourceTree = "<group>"; };
+		2761B99E1C7479510028B491 /* node_tree.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = node_tree.cc; sourceTree = "<group>"; };
+		2761B99F1C7479510028B491 /* node_tree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = node_tree.h; sourceTree = "<group>"; };
+		2761B9A01C7479510028B491 /* node.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = node.cc; sourceTree = "<group>"; };
+		2761B9A11C7479510028B491 /* node.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = node.h; sourceTree = "<group>"; };
+		2761B9A31C7479510028B491 /* options.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = options.cc; sourceTree = "<group>"; };
+		2761B9A41C7479510028B491 /* options.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = options.h; sourceTree = "<group>"; };
+		2761B9A51C7479510028B491 /* osc_handler.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = osc_handler.cc; sourceTree = "<group>"; };
+		2761B9A61C7479510028B491 /* osc_handler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = osc_handler.h; sourceTree = "<group>"; };
+		2761B9A71C7479510028B491 /* plugin_pool.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = plugin_pool.cc; sourceTree = "<group>"; };
+		2761B9A81C7479510028B491 /* plugin_pool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = plugin_pool.h; sourceTree = "<group>"; };
+		2761B9A91C7479510028B491 /* plugin.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = plugin.cc; sourceTree = "<group>"; };
+		2761B9AA1C7479510028B491 /* plugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = plugin.h; sourceTree = "<group>"; };
+		2761B9AC1C7479510028B491 /* sc__unit.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sc__unit.cc; sourceTree = "<group>"; };
+		2761B9AD1C7479510028B491 /* sc__unit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sc__unit.h; sourceTree = "<group>"; };
+		2761B9AE1C7479510028B491 /* sc_unit_wrapper.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sc_unit_wrapper.cc; sourceTree = "<group>"; };
+		2761B9AF1C7479510028B491 /* sc_unit_wrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sc_unit_wrapper.h; sourceTree = "<group>"; };
+		2761B9B01C7479510028B491 /* scgraph.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = scgraph.cc; sourceTree = "<group>"; };
+		2761B9B11C7479510028B491 /* scgraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = scgraph.h; sourceTree = "<group>"; };
+		2761B9B21C7479510028B491 /* shader_pool.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shader_pool.cc; sourceTree = "<group>"; };
+		2761B9B31C7479510028B491 /* shader_pool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shader_pool.h; sourceTree = "<group>"; };
+		2761B9B41C7479510028B491 /* string_pool.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = string_pool.cc; sourceTree = "<group>"; };
+		2761B9B51C7479510028B491 /* string_pool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = string_pool.h; sourceTree = "<group>"; };
+		2761B9B61C7479510028B491 /* synth.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = synth.cc; sourceTree = "<group>"; };
+		2761B9B71C7479510028B491 /* synth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = synth.h; sourceTree = "<group>"; };
+		2761B9B81C7479510028B491 /* synthdef_file.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = synthdef_file.cc; sourceTree = "<group>"; };
+		2761B9B91C7479510028B491 /* synthdef_file.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = synthdef_file.h; sourceTree = "<group>"; };
+		2761B9BA1C7479510028B491 /* synthdef_pool.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = synthdef_pool.cc; sourceTree = "<group>"; };
+		2761B9BB1C7479510028B491 /* synthdef_pool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = synthdef_pool.h; sourceTree = "<group>"; };
+		2761B9BC1C7479510028B491 /* synthdef.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = synthdef.cc; sourceTree = "<group>"; };
+		2761B9BD1C7479510028B491 /* synthdef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = synthdef.h; sourceTree = "<group>"; };
+		2761B9BF1C7479510028B491 /* texture_pool.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = texture_pool.cc; sourceTree = "<group>"; };
+		2761B9C01C7479510028B491 /* texture_pool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = texture_pool.h; sourceTree = "<group>"; };
+		2761B9C11C7479510028B491 /* texture.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = texture.cc; sourceTree = "<group>"; };
+		2761B9C21C7479510028B491 /* texture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = texture.h; sourceTree = "<group>"; };
+		2761B9C41C7479510028B491 /* transformation_command_visitor.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = transformation_command_visitor.cc; sourceTree = "<group>"; };
+		2761B9C51C7479510028B491 /* transformation_command_visitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = transformation_command_visitor.h; sourceTree = "<group>"; };
+		2761B9C61C7479510028B491 /* transformation_command.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = transformation_command.cc; sourceTree = "<group>"; };
+		2761B9C71C7479510028B491 /* transformation_command.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = transformation_command.h; sourceTree = "<group>"; };
+		2761B9C81C7479510028B491 /* tree.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tree.cc; sourceTree = "<group>"; };
+		2761B9C91C7479510028B491 /* tree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tree.h; sourceTree = "<group>"; };
+		2761B9CA1C7479510028B491 /* unit.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = unit.cc; sourceTree = "<group>"; };
+		2761B9CB1C7479510028B491 /* unit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unit.h; sourceTree = "<group>"; };
+		2761B9CC1C7479510028B491 /* util.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = util.cc; sourceTree = "<group>"; };
+		2761B9CD1C7479510028B491 /* util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = util.h; sourceTree = "<group>"; };
+		2761B9CE1C7479510028B491 /* vector_2d.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vector_2d.cc; sourceTree = "<group>"; };
+		2761B9CF1C7479510028B491 /* vector_2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vector_2d.h; sourceTree = "<group>"; };
+		2761B9D01C7479510028B491 /* vector_3d.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vector_3d.cc; sourceTree = "<group>"; };
+		2761B9D11C7479510028B491 /* vector_3d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vector_3d.h; sourceTree = "<group>"; };
+		2761B9D21C7479510028B491 /* video_texture.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = video_texture.cc; sourceTree = "<group>"; };
+		2761B9D31C7479510028B491 /* video_texture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = video_texture.h; sourceTree = "<group>"; };
+		2761B9D41C7479510028B491 /* color_rgba.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = color_rgba.cc; sourceTree = "<group>"; };
+		2761B9D51C7479510028B491 /* color_rgba.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = color_rgba.h; sourceTree = "<group>"; };
+		2761B9D61C7479510028B491 /* glew */ = {isa = PBXFileReference; lastKnownFileType = folder; path = glew; sourceTree = "<group>"; };
+		2761B9DA1C7479510028B491 /* oscpack */ = {isa = PBXFileReference; lastKnownFileType = folder; path = oscpack; sourceTree = "<group>"; };
+		2761B9DB1C7479510028B491 /* sc */ = {isa = PBXFileReference; lastKnownFileType = folder; path = sc; sourceTree = "<group>"; };
+		2761B9DC1C7479510028B491 /* tests */ = {isa = PBXFileReference; lastKnownFileType = folder; path = tests; sourceTree = "<group>"; };
+		276287091C75E0570070C59C /* lighting.bundle */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = lighting.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		276287131C75E22F0070C59C /* material.bundle */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = material.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		276287311C7607BF0070C59C /* cube.bundle */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = cube.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		27EC55041C75BF96001F63F1 /* binary_op.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = binary_op.cc; sourceTree = "<group>"; };
+		27EC55051C75BF96001F63F1 /* binary_op.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = binary_op.h; sourceTree = "<group>"; };
+		27EC55061C75BF96001F63F1 /* blending.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = blending.cc; sourceTree = "<group>"; };
+		27EC55071C75BF96001F63F1 /* blending.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = blending.h; sourceTree = "<group>"; };
+		27EC55081C75BF96001F63F1 /* bordered_rectangle.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = bordered_rectangle.cc; sourceTree = "<group>"; };
+		27EC55091C75BF96001F63F1 /* bordered_rectangle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bordered_rectangle.h; sourceTree = "<group>"; };
+		27EC550A1C75BF96001F63F1 /* buf_info_ugens.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = buf_info_ugens.cc; sourceTree = "<group>"; };
+		27EC550B1C75BF96001F63F1 /* buf_info_ugens.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = buf_info_ugens.h; sourceTree = "<group>"; };
+		27EC550C1C75BF96001F63F1 /* circle.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = circle.cc; sourceTree = "<group>"; };
+		27EC550D1C75BF96001F63F1 /* circle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = circle.h; sourceTree = "<group>"; };
+		27EC550E1C75BF96001F63F1 /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		27EC550F1C75BF96001F63F1 /* color.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = color.cc; sourceTree = "<group>"; };
+		27EC55101C75BF96001F63F1 /* color.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = color.h; sourceTree = "<group>"; };
+		27EC55111C75BF96001F63F1 /* cube.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cube.cc; sourceTree = "<group>"; };
+		27EC55121C75BF96001F63F1 /* cube.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cube.h; sourceTree = "<group>"; };
+		27EC55131C75BF96001F63F1 /* culling.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = culling.cc; sourceTree = "<group>"; };
+		27EC55141C75BF96001F63F1 /* culling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = culling.h; sourceTree = "<group>"; };
+		27EC55151C75BF96001F63F1 /* delay.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = delay.cc; sourceTree = "<group>"; };
+		27EC55161C75BF96001F63F1 /* frame_rate.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = frame_rate.cc; sourceTree = "<group>"; };
+		27EC55171C75BF96001F63F1 /* frame_rate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = frame_rate.h; sourceTree = "<group>"; };
+		27EC55181C75BF96001F63F1 /* freq_amp.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = freq_amp.cc; sourceTree = "<group>"; };
+		27EC55191C75BF96001F63F1 /* freq_amp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = freq_amp.h; sourceTree = "<group>"; };
+		27EC551A1C75BF96001F63F1 /* gl_renderer.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gl_renderer.cc; sourceTree = "<group>"; };
+		27EC551B1C75BF96001F63F1 /* gl_renderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gl_renderer.h; sourceTree = "<group>"; };
+		27EC551C1C75BF96001F63F1 /* light.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = light.cc; sourceTree = "<group>"; };
+		27EC551D1C75BF96001F63F1 /* light.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = light.h; sourceTree = "<group>"; };
+		27EC551E1C75BF96001F63F1 /* lighting.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lighting.cc; sourceTree = "<group>"; };
+		27EC551F1C75BF96001F63F1 /* lighting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lighting.h; sourceTree = "<group>"; };
+		27EC55201C75BF96001F63F1 /* line.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = line.cc; sourceTree = "<group>"; };
+		27EC55211C75BF96001F63F1 /* line.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = line.h; sourceTree = "<group>"; };
+		27EC55221C75BF96001F63F1 /* material.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = material.cc; sourceTree = "<group>"; };
+		27EC55231C75BF96001F63F1 /* material.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = material.h; sourceTree = "<group>"; };
+		27EC55241C75BF96001F63F1 /* model.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = model.cc; sourceTree = "<group>"; };
+		27EC55251C75BF96001F63F1 /* model.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = model.h; sourceTree = "<group>"; };
+		27EC55261C75BF96001F63F1 /* mul_add.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mul_add.cc; sourceTree = "<group>"; };
+		27EC55271C75BF96001F63F1 /* mul_add.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mul_add.h; sourceTree = "<group>"; };
+		27EC55281C75BF96001F63F1 /* points.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = points.cc; sourceTree = "<group>"; };
+		27EC55291C75BF96001F63F1 /* points.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = points.h; sourceTree = "<group>"; };
+		27EC552A1C75BF96001F63F1 /* polygon.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = polygon.cc; sourceTree = "<group>"; };
+		27EC552B1C75BF96001F63F1 /* polygon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = polygon.h; sourceTree = "<group>"; };
+		27EC552C1C75BF96001F63F1 /* quad.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = quad.cc; sourceTree = "<group>"; };
+		27EC552D1C75BF96001F63F1 /* quad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = quad.h; sourceTree = "<group>"; };
+		27EC552E1C75BF96001F63F1 /* rectangle.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rectangle.cc; sourceTree = "<group>"; };
+		27EC552F1C75BF96001F63F1 /* rectangle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rectangle.h; sourceTree = "<group>"; };
+		27EC55301C75BF96001F63F1 /* render_mode.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = render_mode.cc; sourceTree = "<group>"; };
+		27EC55311C75BF96001F63F1 /* render_mode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = render_mode.h; sourceTree = "<group>"; };
+		27EC55321C75BF96001F63F1 /* rotate.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rotate.cc; sourceTree = "<group>"; };
+		27EC55331C75BF96001F63F1 /* rotate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rotate.h; sourceTree = "<group>"; };
+		27EC55341C75BF96001F63F1 /* shader_program.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shader_program.cc; sourceTree = "<group>"; };
+		27EC55351C75BF96001F63F1 /* shader_program.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shader_program.h; sourceTree = "<group>"; };
+		27EC55361C75BF96001F63F1 /* sphere.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sphere.cc; sourceTree = "<group>"; };
+		27EC55371C75BF96001F63F1 /* sphere.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sphere.h; sourceTree = "<group>"; };
+		27EC55381C75BF96001F63F1 /* stretch.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stretch.cc; sourceTree = "<group>"; };
+		27EC55391C75BF96001F63F1 /* stretch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stretch.h; sourceTree = "<group>"; };
+		27EC553A1C75BF96001F63F1 /* sum3.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sum3.cc; sourceTree = "<group>"; };
+		27EC553B1C75BF96001F63F1 /* sum3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sum3.h; sourceTree = "<group>"; };
+		27EC553C1C75BF96001F63F1 /* sum4.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sum4.cc; sourceTree = "<group>"; };
+		27EC553D1C75BF96001F63F1 /* sum4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sum4.h; sourceTree = "<group>"; };
+		27EC553E1C75BF96001F63F1 /* text.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = text.cc; sourceTree = "<group>"; };
+		27EC553F1C75BF96001F63F1 /* text.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = text.h; sourceTree = "<group>"; };
+		27EC55401C75BF96001F63F1 /* torus.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = torus.cc; sourceTree = "<group>"; };
+		27EC55411C75BF96001F63F1 /* torus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = torus.h; sourceTree = "<group>"; };
+		27EC55421C75BF96001F63F1 /* transformation.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = transformation.cc; sourceTree = "<group>"; };
+		27EC55431C75BF96001F63F1 /* transformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = transformation.h; sourceTree = "<group>"; };
+		27EC55441C75BF96001F63F1 /* translate.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = translate.cc; sourceTree = "<group>"; };
+		27EC55451C75BF96001F63F1 /* translate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = translate.h; sourceTree = "<group>"; };
+		27EC55461C75BF96001F63F1 /* triangle.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = triangle.cc; sourceTree = "<group>"; };
+		27EC55471C75BF96001F63F1 /* triangle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = triangle.h; sourceTree = "<group>"; };
+		27EC55481C75BF96001F63F1 /* tube.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tube.cc; sourceTree = "<group>"; };
+		27EC55491C75BF96001F63F1 /* tube.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tube.h; sourceTree = "<group>"; };
+		27EC556E1C75C527001F63F1 /* color.bundle */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = color.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		27EC55771C75C5C5001F63F1 /* gl_renderer.bundle */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = gl_renderer.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		2FD4B0329909D3527F003494 /* UdpSocket.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = UdpSocket.h; path = ../../../addons/ofxOsc/libs/oscpack/src/ip/UdpSocket.h; sourceTree = SOURCE_ROOT; };
+		3B361208CD4107E479F04E7B /* NetworkingUtils.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = NetworkingUtils.cpp; path = ../../../addons/ofxOsc/libs/oscpack/src/ip/posix/NetworkingUtils.cpp; sourceTree = SOURCE_ROOT; };
+		444657A12E59D0ED86981498 /* TimerListener.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = TimerListener.h; path = ../../../addons/ofxOsc/libs/oscpack/src/ip/TimerListener.h; sourceTree = SOURCE_ROOT; };
+		48974F980F51769171D0B2F5 /* IpEndpointName.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = IpEndpointName.h; path = ../../../addons/ofxOsc/libs/oscpack/src/ip/IpEndpointName.h; sourceTree = SOURCE_ROOT; };
+		4E95FB446A9C9C6F0DE12D75 /* OscPrintReceivedElements.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = OscPrintReceivedElements.h; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/OscPrintReceivedElements.h; sourceTree = SOURCE_ROOT; };
+		63A47AC60FFAFC3BF093EC0F /* OscOutboundPacketStream.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = OscOutboundPacketStream.cpp; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/OscOutboundPacketStream.cpp; sourceTree = SOURCE_ROOT; };
+		65EEFA3DA3526E9CDD9C21F9 /* ofxOscBundle.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxOscBundle.cpp; path = ../../../addons/ofxOsc/src/ofxOscBundle.cpp; sourceTree = SOURCE_ROOT; };
+		6B65E6930994CC4B2D2B8B33 /* OscPacketListener.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = OscPacketListener.h; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/OscPacketListener.h; sourceTree = SOURCE_ROOT; };
+		7689F8A0F3D0B7635A8C3104 /* ofxOscArg.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxOscArg.h; path = ../../../addons/ofxOsc/src/ofxOscArg.h; sourceTree = SOURCE_ROOT; };
+		81967292BFC87A0144BD32C6 /* ofxOscSender.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxOscSender.cpp; path = ../../../addons/ofxOsc/src/ofxOscSender.cpp; sourceTree = SOURCE_ROOT; };
+		8B30E93FD3D3475EED522A0E /* ofxOscBundle.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxOscBundle.h; path = ../../../addons/ofxOsc/src/ofxOscBundle.h; sourceTree = SOURCE_ROOT; };
+		8C75AFC8774A62495DD53464 /* ofxOscReceiver.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxOscReceiver.h; path = ../../../addons/ofxOsc/src/ofxOscReceiver.h; sourceTree = SOURCE_ROOT; };
+		9BF3AA0D4FAA89D0F8A0E545 /* OscReceivedElements.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = OscReceivedElements.cpp; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/OscReceivedElements.cpp; sourceTree = SOURCE_ROOT; };
+		9F7986DC4EB05E75FCE2C777 /* ofxOscSender.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxOscSender.h; path = ../../../addons/ofxOsc/src/ofxOscSender.h; sourceTree = SOURCE_ROOT; };
+		A2AAA8CA403479E6FCDF920E /* OscHostEndianness.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = OscHostEndianness.h; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/OscHostEndianness.h; sourceTree = SOURCE_ROOT; };
+		ADD194746185E2DA11468377 /* IpEndpointName.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = IpEndpointName.cpp; path = ../../../addons/ofxOsc/libs/oscpack/src/ip/IpEndpointName.cpp; sourceTree = SOURCE_ROOT; };
+		AE335EB4709BFD4671EEAC84 /* MessageMappingOscPacketListener.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = MessageMappingOscPacketListener.h; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/MessageMappingOscPacketListener.h; sourceTree = SOURCE_ROOT; };
+		B31C608870ECEB2490A93736 /* ofxOscParameterSync.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxOscParameterSync.h; path = ../../../addons/ofxOsc/src/ofxOscParameterSync.h; sourceTree = SOURCE_ROOT; };
+		BC8881B3C8C0A1C45F042E7A /* OscPrintReceivedElements.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = OscPrintReceivedElements.cpp; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/OscPrintReceivedElements.cpp; sourceTree = SOURCE_ROOT; };
+		C2FAC65C491D4231379F3298 /* ofxOscReceiver.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxOscReceiver.cpp; path = ../../../addons/ofxOsc/src/ofxOscReceiver.cpp; sourceTree = SOURCE_ROOT; };
+		C58862C6D212C8E8A83810F4 /* ofxOscMessage.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxOscMessage.h; path = ../../../addons/ofxOsc/src/ofxOscMessage.h; sourceTree = SOURCE_ROOT; };
+		C6937888E126BADC8777423B /* OscTypes.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = OscTypes.h; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/OscTypes.h; sourceTree = SOURCE_ROOT; };
+		D9BFFBBF4CC43DEE890B3C3E /* OscTypes.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = OscTypes.cpp; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/OscTypes.cpp; sourceTree = SOURCE_ROOT; };
+		DF49D76C45D5DB505A234880 /* ofxOscMessage.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxOscMessage.cpp; path = ../../../addons/ofxOsc/src/ofxOscMessage.cpp; sourceTree = SOURCE_ROOT; };
+		E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = openFrameworksLib.xcodeproj; path = ../../../libs/openFrameworksCompiled/project/osx/openFrameworksLib.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E4B69B5B0A3A1756003C02F2 /* scgraphDebug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = scgraphDebug.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E4B69E1D0A3A1BDC003C02F2 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = src/main.cpp; sourceTree = SOURCE_ROOT; };
+		E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofApp.cpp; path = src/ofApp.cpp; sourceTree = SOURCE_ROOT; };
+		E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ofApp.h; path = src/ofApp.h; sourceTree = SOURCE_ROOT; };
+		E4B6FCAD0C3E899E008CF71C /* openFrameworks-Info.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.xml; path = "openFrameworks-Info.plist"; sourceTree = "<group>"; };
+		E4EB691F138AFCF100A09F29 /* CoreOF.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = CoreOF.xcconfig; path = ../../../libs/openFrameworksCompiled/project/osx/CoreOF.xcconfig; sourceTree = SOURCE_ROOT; };
+		E4EB6923138AFD0F00A09F29 /* Project.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Project.xcconfig; sourceTree = "<group>"; };
+		E6DEF695B88BA5FAACEAA937 /* UdpSocket.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = UdpSocket.cpp; path = ../../../addons/ofxOsc/libs/oscpack/src/ip/posix/UdpSocket.cpp; sourceTree = SOURCE_ROOT; };
+		F4F5B6B8BA2BD52C646ED908 /* OscException.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = OscException.h; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/OscException.h; sourceTree = SOURCE_ROOT; };
+		F7FBC56859535E597B24BB91 /* NetworkingUtils.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = NetworkingUtils.h; path = ../../../addons/ofxOsc/libs/oscpack/src/ip/NetworkingUtils.h; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
 
-ITEMS="${FRAMEWORKS}"
-fi
+/* Begin PBXFrameworksBuildPhase section */
+		276287041C75E0570070C59C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2762870E1C75E22F0070C59C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2762872C1C7607BF0070C59C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		27EC54F51C75BA56001F63F1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		27EC55721C75C5C5001F63F1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E4B69B590A3A1756003C02F2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
 
-LOGINITEMS_DIR="${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH}/Library/LoginItems/"
-if [ -d "$LOGINITEMS_DIR" ] ; then
-LOGINITEMS=$(find "${LOGINITEMS_DIR}" -depth -type d -name "*.app")
-RESULT=$?
-if [[ $RESULT != 0 ]] ; then
-exit 1
-fi
+/* Begin PBXGroup section */
+		27EC55031C75BF96001F63F1 /* plugins */ = {
+			isa = PBXGroup;
+			children = (
+				27EC55041C75BF96001F63F1 /* binary_op.cc */,
+				27EC55051C75BF96001F63F1 /* binary_op.h */,
+				27EC55061C75BF96001F63F1 /* blending.cc */,
+				27EC55071C75BF96001F63F1 /* blending.h */,
+				27EC55081C75BF96001F63F1 /* bordered_rectangle.cc */,
+				27EC55091C75BF96001F63F1 /* bordered_rectangle.h */,
+				27EC550A1C75BF96001F63F1 /* buf_info_ugens.cc */,
+				27EC550B1C75BF96001F63F1 /* buf_info_ugens.h */,
+				27EC550C1C75BF96001F63F1 /* circle.cc */,
+				27EC550D1C75BF96001F63F1 /* circle.h */,
+				27EC550E1C75BF96001F63F1 /* CMakeLists.txt */,
+				27EC550F1C75BF96001F63F1 /* color.cc */,
+				27EC55101C75BF96001F63F1 /* color.h */,
+				27EC55111C75BF96001F63F1 /* cube.cc */,
+				27EC55121C75BF96001F63F1 /* cube.h */,
+				27EC55131C75BF96001F63F1 /* culling.cc */,
+				27EC55141C75BF96001F63F1 /* culling.h */,
+				27EC55151C75BF96001F63F1 /* delay.cc */,
+				27EC55161C75BF96001F63F1 /* frame_rate.cc */,
+				27EC55171C75BF96001F63F1 /* frame_rate.h */,
+				27EC55181C75BF96001F63F1 /* freq_amp.cc */,
+				27EC55191C75BF96001F63F1 /* freq_amp.h */,
+				27EC551A1C75BF96001F63F1 /* gl_renderer.cc */,
+				27EC551B1C75BF96001F63F1 /* gl_renderer.h */,
+				27EC551C1C75BF96001F63F1 /* light.cc */,
+				27EC551D1C75BF96001F63F1 /* light.h */,
+				27EC551E1C75BF96001F63F1 /* lighting.cc */,
+				27EC551F1C75BF96001F63F1 /* lighting.h */,
+				27EC55201C75BF96001F63F1 /* line.cc */,
+				27EC55211C75BF96001F63F1 /* line.h */,
+				27EC55221C75BF96001F63F1 /* material.cc */,
+				27EC55231C75BF96001F63F1 /* material.h */,
+				27EC55241C75BF96001F63F1 /* model.cc */,
+				27EC55251C75BF96001F63F1 /* model.h */,
+				27EC55261C75BF96001F63F1 /* mul_add.cc */,
+				27EC55271C75BF96001F63F1 /* mul_add.h */,
+				27EC55281C75BF96001F63F1 /* points.cc */,
+				27EC55291C75BF96001F63F1 /* points.h */,
+				27EC552A1C75BF96001F63F1 /* polygon.cc */,
+				27EC552B1C75BF96001F63F1 /* polygon.h */,
+				27EC552C1C75BF96001F63F1 /* quad.cc */,
+				27EC552D1C75BF96001F63F1 /* quad.h */,
+				27EC552E1C75BF96001F63F1 /* rectangle.cc */,
+				27EC552F1C75BF96001F63F1 /* rectangle.h */,
+				27EC55301C75BF96001F63F1 /* render_mode.cc */,
+				27EC55311C75BF96001F63F1 /* render_mode.h */,
+				27EC55321C75BF96001F63F1 /* rotate.cc */,
+				27EC55331C75BF96001F63F1 /* rotate.h */,
+				27EC55341C75BF96001F63F1 /* shader_program.cc */,
+				27EC55351C75BF96001F63F1 /* shader_program.h */,
+				27EC55361C75BF96001F63F1 /* sphere.cc */,
+				27EC55371C75BF96001F63F1 /* sphere.h */,
+				27EC55381C75BF96001F63F1 /* stretch.cc */,
+				27EC55391C75BF96001F63F1 /* stretch.h */,
+				27EC553A1C75BF96001F63F1 /* sum3.cc */,
+				27EC553B1C75BF96001F63F1 /* sum3.h */,
+				27EC553C1C75BF96001F63F1 /* sum4.cc */,
+				27EC553D1C75BF96001F63F1 /* sum4.h */,
+				27EC553E1C75BF96001F63F1 /* text.cc */,
+				27EC553F1C75BF96001F63F1 /* text.h */,
+				27EC55401C75BF96001F63F1 /* torus.cc */,
+				27EC55411C75BF96001F63F1 /* torus.h */,
+				27EC55421C75BF96001F63F1 /* transformation.cc */,
+				27EC55431C75BF96001F63F1 /* transformation.h */,
+				27EC55441C75BF96001F63F1 /* translate.cc */,
+				27EC55451C75BF96001F63F1 /* translate.h */,
+				27EC55461C75BF96001F63F1 /* triangle.cc */,
+				27EC55471C75BF96001F63F1 /* triangle.h */,
+				27EC55481C75BF96001F63F1 /* tube.cc */,
+				27EC55491C75BF96001F63F1 /* tube.h */,
+			);
+			path = plugins;
+			sourceTree = "<group>";
+		};
+		30CB364908817057B430D528 /* osc */ = {
+			isa = PBXGroup;
+			children = (
+				AE335EB4709BFD4671EEAC84 /* MessageMappingOscPacketListener.h */,
+				F4F5B6B8BA2BD52C646ED908 /* OscException.h */,
+				A2AAA8CA403479E6FCDF920E /* OscHostEndianness.h */,
+				63A47AC60FFAFC3BF093EC0F /* OscOutboundPacketStream.cpp */,
+				029684CF678F70F6D3537A29 /* OscOutboundPacketStream.h */,
+				6B65E6930994CC4B2D2B8B33 /* OscPacketListener.h */,
+				BC8881B3C8C0A1C45F042E7A /* OscPrintReceivedElements.cpp */,
+				4E95FB446A9C9C6F0DE12D75 /* OscPrintReceivedElements.h */,
+				9BF3AA0D4FAA89D0F8A0E545 /* OscReceivedElements.cpp */,
+				20F35AFADAF0068B067E713F /* OscReceivedElements.h */,
+				D9BFFBBF4CC43DEE890B3C3E /* OscTypes.cpp */,
+				C6937888E126BADC8777423B /* OscTypes.h */,
+			);
+			name = osc;
+			sourceTree = "<group>";
+		};
+		38871A5825686AE018EC2BF0 /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				86D2677079A3AF4A5A88E29A /* oscpack */,
+			);
+			name = libs;
+			sourceTree = "<group>";
+		};
+		641362CA659FAFEE4E81001B /* posix */ = {
+			isa = PBXGroup;
+			children = (
+				3B361208CD4107E479F04E7B /* NetworkingUtils.cpp */,
+				E6DEF695B88BA5FAACEAA937 /* UdpSocket.cpp */,
+			);
+			name = posix;
+			sourceTree = "<group>";
+		};
+		6948EE371B920CB800B5AC1A /* local_addons */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = local_addons;
+			sourceTree = "<group>";
+		};
+		86D2677079A3AF4A5A88E29A /* oscpack */ = {
+			isa = PBXGroup;
+			children = (
+				D27B2221A225CA523C019676 /* src */,
+			);
+			name = oscpack;
+			sourceTree = "<group>";
+		};
+		BB4B014C10F69532006C3DED /* addons */ = {
+			isa = PBXGroup;
+			children = (
+				E6053AB7FEC63D5F83825B88 /* ofxOsc */,
+			);
+			name = addons;
+			sourceTree = "<group>";
+		};
+		BD2F1A9F8D0C05EDB29122D0 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				00D6D32B84B099226431108C /* ofxOsc.h */,
+				7689F8A0F3D0B7635A8C3104 /* ofxOscArg.h */,
+				65EEFA3DA3526E9CDD9C21F9 /* ofxOscBundle.cpp */,
+				8B30E93FD3D3475EED522A0E /* ofxOscBundle.h */,
+				DF49D76C45D5DB505A234880 /* ofxOscMessage.cpp */,
+				C58862C6D212C8E8A83810F4 /* ofxOscMessage.h */,
+				0AED834CE4DEC5260AF302A2 /* ofxOscParameterSync.cpp */,
+				B31C608870ECEB2490A93736 /* ofxOscParameterSync.h */,
+				C2FAC65C491D4231379F3298 /* ofxOscReceiver.cpp */,
+				8C75AFC8774A62495DD53464 /* ofxOscReceiver.h */,
+				81967292BFC87A0144BD32C6 /* ofxOscSender.cpp */,
+				9F7986DC4EB05E75FCE2C777 /* ofxOscSender.h */,
+			);
+			name = src;
+			sourceTree = "<group>";
+		};
+		D27B2221A225CA523C019676 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				FF8CDF57858E9B94E3237115 /* ip */,
+				30CB364908817057B430D528 /* osc */,
+			);
+			name = src;
+			sourceTree = "<group>";
+		};
+		E4328144138ABC890047C5CB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E4328148138ABC890047C5CB /* openFrameworksDebug.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E4B69B4A0A3A1720003C02F2 = {
+			isa = PBXGroup;
+			children = (
+				E4B6FCAD0C3E899E008CF71C /* openFrameworks-Info.plist */,
+				E4EB6923138AFD0F00A09F29 /* Project.xcconfig */,
+				E4B69E1C0A3A1BDC003C02F2 /* src */,
+				E4EEC9E9138DF44700A80321 /* openFrameworks */,
+				BB4B014C10F69532006C3DED /* addons */,
+				6948EE371B920CB800B5AC1A /* local_addons */,
+				E4B69B5B0A3A1756003C02F2 /* scgraphDebug.app */,
+				27EC556E1C75C527001F63F1 /* color.bundle */,
+				27EC55771C75C5C5001F63F1 /* gl_renderer.bundle */,
+				276287091C75E0570070C59C /* lighting.bundle */,
+				276287131C75E22F0070C59C /* material.bundle */,
+				276287311C7607BF0070C59C /* cube.bundle */,
+			);
+			sourceTree = "<group>";
+		};
+		E4B69E1C0A3A1BDC003C02F2 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				27EC55031C75BF96001F63F1 /* plugins */,
+				2761B97B1C7479510028B491 /* buffer_pool.cc */,
+				2761B97C1C7479510028B491 /* buffer_pool.h */,
+				2761B97D1C7479510028B491 /* CMakeLists.txt */,
+				2761B97E1C7479510028B491 /* control_loop.cc */,
+				2761B97F1C7479510028B491 /* control_loop.h */,
+				2761B9801C7479510028B491 /* control.cc */,
+				2761B9811C7479510028B491 /* control.h */,
+				2761B9821C7479510028B491 /* cow_ptr.cc */,
+				2761B9831C7479510028B491 /* cow_ptr.h */,
+				2761B9851C7479510028B491 /* face.cc */,
+				2761B9861C7479510028B491 /* face.h */,
+				2761B9871C7479510028B491 /* fo_frigate.obj */,
+				2761B9881C7479510028B491 /* graphic_loop.cc */,
+				2761B9891C7479510028B491 /* graphic_loop.h */,
+				2761B98A1C7479510028B491 /* graphics_bus.cc */,
+				2761B98B1C7479510028B491 /* graphics_bus.h */,
+				2761B98C1C7479510028B491 /* graphics_visitor.cc */,
+				2761B98D1C7479510028B491 /* graphics_visitor.h */,
+				2761B98E1C7479510028B491 /* graphics.cc */,
+				2761B98F1C7479510028B491 /* graphics.h */,
+				2761B9901C7479510028B491 /* group.cc */,
+				2761B9911C7479510028B491 /* group.h */,
+				2761B9921C7479510028B491 /* hvector_3d.cc */,
+				2761B9931C7479510028B491 /* hvector_3d.h */,
+				2761B9941C7479510028B491 /* in_out.cc */,
+				2761B9951C7479510028B491 /* in_out.h */,
+				2761B9961C7479510028B491 /* jack_client.cc */,
+				2761B9971C7479510028B491 /* jack_client.h */,
+				2761B9981C7479510028B491 /* loader_3d.cc */,
+				2761B9991C7479510028B491 /* loader_3d.h */,
+				2761B99A1C7479510028B491 /* material.cc */,
+				2761B99B1C7479510028B491 /* material.h */,
+				2761B99C1C7479510028B491 /* matrix.cc */,
+				2761B99D1C7479510028B491 /* matrix.h */,
+				2761B99E1C7479510028B491 /* node_tree.cc */,
+				2761B99F1C7479510028B491 /* node_tree.h */,
+				2761B9A01C7479510028B491 /* node.cc */,
+				2761B9A11C7479510028B491 /* node.h */,
+				2761B9A31C7479510028B491 /* options.cc */,
+				2761B9A41C7479510028B491 /* options.h */,
+				2761B9A51C7479510028B491 /* osc_handler.cc */,
+				2761B9A61C7479510028B491 /* osc_handler.h */,
+				2761B9A71C7479510028B491 /* plugin_pool.cc */,
+				2761B9A81C7479510028B491 /* plugin_pool.h */,
+				2761B9A91C7479510028B491 /* plugin.cc */,
+				2761B9AA1C7479510028B491 /* plugin.h */,
+				2761B9AC1C7479510028B491 /* sc__unit.cc */,
+				2761B9AD1C7479510028B491 /* sc__unit.h */,
+				2761B9AE1C7479510028B491 /* sc_unit_wrapper.cc */,
+				2761B9AF1C7479510028B491 /* sc_unit_wrapper.h */,
+				2761B9B01C7479510028B491 /* scgraph.cc */,
+				2761B9B11C7479510028B491 /* scgraph.h */,
+				2761B9B21C7479510028B491 /* shader_pool.cc */,
+				2761B9B31C7479510028B491 /* shader_pool.h */,
+				2761B9B41C7479510028B491 /* string_pool.cc */,
+				2761B9B51C7479510028B491 /* string_pool.h */,
+				2761B9B61C7479510028B491 /* synth.cc */,
+				2761B9B71C7479510028B491 /* synth.h */,
+				2761B9B81C7479510028B491 /* synthdef_file.cc */,
+				2761B9B91C7479510028B491 /* synthdef_file.h */,
+				2761B9BA1C7479510028B491 /* synthdef_pool.cc */,
+				2761B9BB1C7479510028B491 /* synthdef_pool.h */,
+				2761B9BC1C7479510028B491 /* synthdef.cc */,
+				2761B9BD1C7479510028B491 /* synthdef.h */,
+				2761B9BF1C7479510028B491 /* texture_pool.cc */,
+				2761B9C01C7479510028B491 /* texture_pool.h */,
+				2761B9C11C7479510028B491 /* texture.cc */,
+				2761B9C21C7479510028B491 /* texture.h */,
+				2761B9C41C7479510028B491 /* transformation_command_visitor.cc */,
+				2761B9C51C7479510028B491 /* transformation_command_visitor.h */,
+				2761B9C61C7479510028B491 /* transformation_command.cc */,
+				2761B9C71C7479510028B491 /* transformation_command.h */,
+				2761B9C81C7479510028B491 /* tree.cc */,
+				2761B9C91C7479510028B491 /* tree.h */,
+				2761B9CA1C7479510028B491 /* unit.cc */,
+				2761B9CB1C7479510028B491 /* unit.h */,
+				2761B9CC1C7479510028B491 /* util.cc */,
+				2761B9CD1C7479510028B491 /* util.h */,
+				2761B9CE1C7479510028B491 /* vector_2d.cc */,
+				2761B9CF1C7479510028B491 /* vector_2d.h */,
+				2761B9D01C7479510028B491 /* vector_3d.cc */,
+				2761B9D11C7479510028B491 /* vector_3d.h */,
+				2761B9D21C7479510028B491 /* video_texture.cc */,
+				2761B9D31C7479510028B491 /* video_texture.h */,
+				2761B9D41C7479510028B491 /* color_rgba.cc */,
+				2761B9D51C7479510028B491 /* color_rgba.h */,
+				2761B9D61C7479510028B491 /* glew */,
+				2761B9DA1C7479510028B491 /* oscpack */,
+				2761B9DB1C7479510028B491 /* sc */,
+				2761B9DC1C7479510028B491 /* tests */,
+				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
+				E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */,
+				E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */,
+			);
+			path = src;
+			sourceTree = SOURCE_ROOT;
+		};
+		E4EEC9E9138DF44700A80321 /* openFrameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E4EB691F138AFCF100A09F29 /* CoreOF.xcconfig */,
+				E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */,
+			);
+			name = openFrameworks;
+			sourceTree = "<group>";
+		};
+		E6053AB7FEC63D5F83825B88 /* ofxOsc */ = {
+			isa = PBXGroup;
+			children = (
+				BD2F1A9F8D0C05EDB29122D0 /* src */,
+				38871A5825686AE018EC2BF0 /* libs */,
+			);
+			name = ofxOsc;
+			sourceTree = "<group>";
+		};
+		FF8CDF57858E9B94E3237115 /* ip */ = {
+			isa = PBXGroup;
+			children = (
+				ADD194746185E2DA11468377 /* IpEndpointName.cpp */,
+				48974F980F51769171D0B2F5 /* IpEndpointName.h */,
+				F7FBC56859535E597B24BB91 /* NetworkingUtils.h */,
+				23640F57DF6C4BB6BFC5DA4C /* PacketListener.h */,
+				641362CA659FAFEE4E81001B /* posix */,
+				444657A12E59D0ED86981498 /* TimerListener.h */,
+				2FD4B0329909D3527F003494 /* UdpSocket.h */,
+			);
+			name = ip;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
 
-ITEMS="${ITEMS}"$'\n'"${LOGINITEMS}"
-fi
+/* Begin PBXNativeTarget section */
+		276287011C75E0570070C59C /* lighting */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 276287061C75E0570070C59C /* Build configuration list for PBXNativeTarget "lighting" */;
+			buildPhases = (
+				276287021C75E0570070C59C /* Sources */,
+				276287041C75E0570070C59C /* Frameworks */,
+				276287051C75E0570070C59C /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = lighting;
+			productName = color;
+			productReference = 276287091C75E0570070C59C /* lighting.bundle */;
+			productType = "com.apple.product-type.tool";
+		};
+		2762870B1C75E22F0070C59C /* material */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 276287101C75E22F0070C59C /* Build configuration list for PBXNativeTarget "material" */;
+			buildPhases = (
+				2762870C1C75E22F0070C59C /* Sources */,
+				2762870E1C75E22F0070C59C /* Frameworks */,
+				2762870F1C75E22F0070C59C /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = material;
+			productName = color;
+			productReference = 276287131C75E22F0070C59C /* material.bundle */;
+			productType = "com.apple.product-type.tool";
+		};
+		276287291C7607BF0070C59C /* cube */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2762872E1C7607BF0070C59C /* Build configuration list for PBXNativeTarget "cube" */;
+			buildPhases = (
+				2762872A1C7607BF0070C59C /* Sources */,
+				2762872C1C7607BF0070C59C /* Frameworks */,
+				2762872D1C7607BF0070C59C /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = cube;
+			productName = color;
+			productReference = 276287311C7607BF0070C59C /* cube.bundle */;
+			productType = "com.apple.product-type.tool";
+		};
+		27EC54F71C75BA56001F63F1 /* color */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 27EC54FC1C75BA56001F63F1 /* Build configuration list for PBXNativeTarget "color" */;
+			buildPhases = (
+				27EC54F41C75BA56001F63F1 /* Sources */,
+				27EC54F51C75BA56001F63F1 /* Frameworks */,
+				27EC54F61C75BA56001F63F1 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = color;
+			productName = color;
+			productReference = 27EC556E1C75C527001F63F1 /* color.bundle */;
+			productType = "com.apple.product-type.tool";
+		};
+		27EC556F1C75C5C5001F63F1 /* gl_renderer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 27EC55741C75C5C5001F63F1 /* Build configuration list for PBXNativeTarget "gl_renderer" */;
+			buildPhases = (
+				27EC55701C75C5C5001F63F1 /* Sources */,
+				27EC55721C75C5C5001F63F1 /* Frameworks */,
+				27EC55731C75C5C5001F63F1 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = gl_renderer;
+			productName = color;
+			productReference = 27EC55771C75C5C5001F63F1 /* gl_renderer.bundle */;
+			productType = "com.apple.product-type.tool";
+		};
+		E4B69B5A0A3A1756003C02F2 /* scgraph */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E4B69B5F0A3A1757003C02F2 /* Build configuration list for PBXNativeTarget "scgraph" */;
+			buildPhases = (
+				E4B69B580A3A1756003C02F2 /* Sources */,
+				E4B69B590A3A1756003C02F2 /* Frameworks */,
+				E4B6FFFD0C3F9AB9008CF71C /* ShellScript */,
+				E4C2427710CC5ABF004149E2 /* CopyFiles */,
+				8466F1851C04CA0E00918B1C /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E4EEB9AC138B136A00A80321 /* PBXTargetDependency */,
+			);
+			name = scgraph;
+			productName = myOFApp;
+			productReference = E4B69B5B0A3A1756003C02F2 /* scgraphDebug.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
 
-# Prefer the expanded name, if available.
-CODE_SIGN_IDENTITY_FOR_ITEMS="${EXPANDED_CODE_SIGN_IDENTITY_NAME}"
-if [ "${CODE_SIGN_IDENTITY_FOR_ITEMS}" = "" ] ; then
-# Fall back to old behavior.
-CODE_SIGN_IDENTITY_FOR_ITEMS="${CODE_SIGN_IDENTITY}"
-fi
+/* Begin PBXProject section */
+		E4B69B4C0A3A1720003C02F2 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				KnownAssetTags = (
+					New,
+				);
+				LastUpgradeCheck = 0720;
+				TargetAttributes = {
+					276287151C7601160070C59C = {
+						CreatedOnToolsVersion = 7.2.1;
+					};
+					276287211C7601810070C59C = {
+						CreatedOnToolsVersion = 7.2.1;
+					};
+					27EC54F71C75BA56001F63F1 = {
+						CreatedOnToolsVersion = 7.2.1;
+					};
+				};
+			};
+			buildConfigurationList = E4B69B4D0A3A1720003C02F2 /* Build configuration list for PBXProject "scgraph" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
+			mainGroup = E4B69B4A0A3A1720003C02F2;
+			productRefGroup = E4B69B4A0A3A1720003C02F2;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = E4328144138ABC890047C5CB /* Products */;
+					ProjectRef = E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				E4B69B5A0A3A1756003C02F2 /* scgraph */,
+				27EC54F71C75BA56001F63F1 /* color */,
+				27EC556F1C75C5C5001F63F1 /* gl_renderer */,
+				276287011C75E0570070C59C /* lighting */,
+				2762870B1C75E22F0070C59C /* material */,
+				276287291C7607BF0070C59C /* cube */,
+				276287151C7601160070C59C /* Plugins */,
+				276287211C7601810070C59C /* ALL */,
+			);
+		};
+/* End PBXProject section */
 
-echo "Identity:"
-echo "${CODE_SIGN_IDENTITY_FOR_ITEMS}"
+/* Begin PBXReferenceProxy section */
+		E4328148138ABC890047C5CB /* openFrameworksDebug.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = openFrameworksDebug.a;
+			remoteRef = E4328147138ABC890047C5CB /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
-echo "Entitlements:"
-echo "${CODE_SIGN_ENTITLEMENTS}"
+/* Begin PBXShellScriptBuildPhase section */
+		8466F1851C04CA0E00918B1C /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 12;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# ---- Code Sign App Package ----\n \n# WARNING: You may have to run Clean in Xcode after changing CODE_SIGN_IDENTITY!\n\n# Verify that $CODE_SIGN_IDENTITY is set\nif [ -z \"${CODE_SIGN_IDENTITY}\" ] ; then\necho \"CODE_SIGN_IDENTITY needs to be set for framework code-signing\"\nexit 0\nfi\n\nif [ -z \"${CODE_SIGN_ENTITLEMENTS}\" ] ; then\necho \"CODE_SIGN_ENTITLEMENTS needs to be set for framework code-signing!\"\n\nif [ \"${CONFIGURATION}\" = \"Release\" ] ; then\nexit 1\nelse\n# Code-signing is optional for non-release builds.\nexit 0\nfi\nfi\n\nITEMS=\"\"\n\nFRAMEWORKS_DIR=\"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}\"\necho \"$FRAMEWORKS_DIR\"\nif [ -d \"$FRAMEWORKS_DIR\" ] ; then\nFRAMEWORKS=$(find \"${FRAMEWORKS_DIR}\" -depth -type d -name \"*.framework\" -or -name \"*.dylib\" -or -name \"*.bundle\" | sed -e \"s/\\(.*framework\\)/\\1\\/Versions\\/A\\//\")\nRESULT=$?\nif [[ $RESULT != 0 ]] ; then\nexit 1\nfi\n\nITEMS=\"${FRAMEWORKS}\"\nfi\n\nLOGINITEMS_DIR=\"${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH}/Library/LoginItems/\"\nif [ -d \"$LOGINITEMS_DIR\" ] ; then\nLOGINITEMS=$(find \"${LOGINITEMS_DIR}\" -depth -type d -name \"*.app\")\nRESULT=$?\nif [[ $RESULT != 0 ]] ; then\nexit 1\nfi\n\nITEMS=\"${ITEMS}\"$'\\n'\"${LOGINITEMS}\"\nfi\n\n# Prefer the expanded name, if available.\nCODE_SIGN_IDENTITY_FOR_ITEMS=\"${EXPANDED_CODE_SIGN_IDENTITY_NAME}\"\nif [ \"${CODE_SIGN_IDENTITY_FOR_ITEMS}\" = \"\" ] ; then\n# Fall back to old behavior.\nCODE_SIGN_IDENTITY_FOR_ITEMS=\"${CODE_SIGN_IDENTITY}\"\nfi\n\necho \"Identity:\"\necho \"${CODE_SIGN_IDENTITY_FOR_ITEMS}\"\n\necho \"Entitlements:\"\necho \"${CODE_SIGN_ENTITLEMENTS}\"\n\necho \"Found:\"\necho \"${ITEMS}\"\n\n# Change the Internal Field Separator (IFS) so that spaces in paths will not cause problems below.\nSAVED_IFS=$IFS\nIFS=$(echo -en \"\\n\\b\")\n\n# Loop through all items.\nfor ITEM in $ITEMS;\ndo\necho \"Signing '${ITEM}'\"\ncodesign --force --verbose --sign \"${CODE_SIGN_IDENTITY_FOR_ITEMS}\" --entitlements \"${CODE_SIGN_ENTITLEMENTS}\" \"${ITEM}\"\nRESULT=$?\nif [[ $RESULT != 0 ]] ; then\necho \"Failed to sign '${ITEM}'.\"\nIFS=$SAVED_IFS\nexit 1\nfi\ndone\n\n# Restore $IFS.\nIFS=$SAVED_IFS\n";
+		};
+		E4B6FFFD0C3F9AB9008CF71C /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "mkdir -p \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/Resources/\"\n# Copy default icon file into App/Resources\nrsync -aved \"$ICON_FILE\" \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/Resources/\"\n# Copy bin/data into App/Resources\nrsync -avz --exclude='.DS_Store' \"${SRCROOT}/bin/data/\" \"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/data/\"\n# Copy libfmod and change install directory for fmod to run\nrsync -aved ../../../libs/fmodex/lib/osx/libfmodex.dylib \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/Frameworks/\";\ninstall_name_tool -change @executable_path/libfmodex.dylib @executable_path/../Frameworks/libfmodex.dylib \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/MacOS/$PRODUCT_NAME\";\n# Copy GLUT framework (must remove for AppStore submissions)\nrsync -aved ../../../libs/glut/lib/osx/GLUT.framework \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/Frameworks/\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
-echo "Found:"
-echo "${ITEMS}"
+/* Begin PBXSourcesBuildPhase section */
+		276287021C75E0570070C59C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2762870A1C75E0660070C59C /* lighting.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2762870C1C75E22F0070C59C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				276287141C75E23C0070C59C /* material.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2762872A1C7607BF0070C59C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				276287321C7607CC0070C59C /* cube.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		27EC54F41C75BA56001F63F1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				27EC556D1C75BFBB001F63F1 /* color.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		27EC55701C75C5C5001F63F1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				27EC55781C75C5DA001F63F1 /* gl_renderer.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E4B69B580A3A1756003C02F2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
+				E4B69E210A3A1BDC003C02F2 /* ofApp.cpp in Sources */,
+				2761B9F71C7479520028B491 /* string_pool.cc in Sources */,
+				2761B9F91C7479520028B491 /* synthdef_file.cc in Sources */,
+				2761B9E71C7479520028B491 /* hvector_3d.cc in Sources */,
+				2761B9E11C7479520028B491 /* face.cc in Sources */,
+				2761B9FC1C7479520028B491 /* texture_pool.cc in Sources */,
+				2761B9E61C7479520028B491 /* group.cc in Sources */,
+				2761B9FE1C7479520028B491 /* transformation_command_visitor.cc in Sources */,
+				2761B9EB1C7479520028B491 /* material.cc in Sources */,
+				2761BA011C7479520028B491 /* unit.cc in Sources */,
+				72A929D3561B8232A182ABFC /* ofxOscBundle.cpp in Sources */,
+				2761B9ED1C7479520028B491 /* node_tree.cc in Sources */,
+				2761BA021C7479520028B491 /* util.cc in Sources */,
+				5864AD82E20F15536D054EA3 /* ofxOscMessage.cpp in Sources */,
+				4ADB88E2FB52E76A471065DE /* ofxOscParameterSync.cpp in Sources */,
+				2761BA051C7479520028B491 /* video_texture.cc in Sources */,
+				2761B9E21C7479520028B491 /* graphic_loop.cc in Sources */,
+				2761B9EA1C7479520028B491 /* loader_3d.cc in Sources */,
+				2761B9FA1C7479520028B491 /* synthdef_pool.cc in Sources */,
+				2761B9E31C7479520028B491 /* graphics_bus.cc in Sources */,
+				2761B9EC1C7479520028B491 /* matrix.cc in Sources */,
+				2761B9F61C7479520028B491 /* shader_pool.cc in Sources */,
+				640279EE111671BD026CB013 /* ofxOscReceiver.cpp in Sources */,
+				2761B9F11C7479520028B491 /* plugin_pool.cc in Sources */,
+				2761B9F21C7479520028B491 /* plugin.cc in Sources */,
+				2761B9FD1C7479520028B491 /* texture.cc in Sources */,
+				2761B9F41C7479520028B491 /* sc_unit_wrapper.cc in Sources */,
+				8F5205AEF8861EF234F0651A /* ofxOscSender.cpp in Sources */,
+				2761BA031C7479520028B491 /* vector_2d.cc in Sources */,
+				2761B9F01C7479520028B491 /* osc_handler.cc in Sources */,
+				ADE367465D2A8EBAD4C7A8D9 /* IpEndpointName.cpp in Sources */,
+				2761B9E81C7479520028B491 /* in_out.cc in Sources */,
+				67FE4C7B15C2F0478C8126C2 /* NetworkingUtils.cpp in Sources */,
+				2761B9F51C7479520028B491 /* scgraph.cc in Sources */,
+				2761B9FB1C7479520028B491 /* synthdef.cc in Sources */,
+				2761B9F81C7479520028B491 /* synth.cc in Sources */,
+				2761B9EF1C7479520028B491 /* options.cc in Sources */,
+				2761B9DF1C7479520028B491 /* control.cc in Sources */,
+				2761B9DE1C7479520028B491 /* control_loop.cc in Sources */,
+				510CAFE035E576A4E1502D52 /* UdpSocket.cpp in Sources */,
+				2761B9E41C7479520028B491 /* graphics_visitor.cc in Sources */,
+				2761B9E01C7479520028B491 /* cow_ptr.cc in Sources */,
+				62545D179C94265CA1389D4A /* OscOutboundPacketStream.cpp in Sources */,
+				2761B9E51C7479520028B491 /* graphics.cc in Sources */,
+				2761BA001C7479520028B491 /* tree.cc in Sources */,
+				2761BA041C7479520028B491 /* vector_3d.cc in Sources */,
+				C4782ECC372420ACE0615B74 /* OscPrintReceivedElements.cpp in Sources */,
+				0546D1A38E13BD319CC9755B /* OscReceivedElements.cpp in Sources */,
+				2761B9F31C7479520028B491 /* sc__unit.cc in Sources */,
+				879A251454401BC0B6E4F238 /* OscTypes.cpp in Sources */,
+				2761B9EE1C7479520028B491 /* node.cc in Sources */,
+				2761B9FF1C7479520028B491 /* transformation_command.cc in Sources */,
+				2761B9DD1C7479520028B491 /* buffer_pool.cc in Sources */,
+				2761B9E91C7479520028B491 /* jack_client.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
 
-# Change the Internal Field Separator (IFS) so that spaces in paths will not cause problems below.
-SAVED_IFS=$IFS
-IFS=$(echo -en "\n\b")
+/* Begin PBXTargetDependency section */
+		2762871A1C76016C0070C59C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2762870B1C75E22F0070C59C /* material */;
+			targetProxy = 276287191C76016C0070C59C /* PBXContainerItemProxy */;
+		};
+		2762871C1C76016E0070C59C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 276287011C75E0570070C59C /* lighting */;
+			targetProxy = 2762871B1C76016E0070C59C /* PBXContainerItemProxy */;
+		};
+		2762871E1C7601700070C59C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 27EC556F1C75C5C5001F63F1 /* gl_renderer */;
+			targetProxy = 2762871D1C7601700070C59C /* PBXContainerItemProxy */;
+		};
+		276287201C7601720070C59C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 27EC54F71C75BA56001F63F1 /* color */;
+			targetProxy = 2762871F1C7601720070C59C /* PBXContainerItemProxy */;
+		};
+		276287261C7601A30070C59C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 276287151C7601160070C59C /* Plugins */;
+			targetProxy = 276287251C7601A30070C59C /* PBXContainerItemProxy */;
+		};
+		276287281C7601A60070C59C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E4B69B5A0A3A1756003C02F2 /* scgraph */;
+			targetProxy = 276287271C7601A60070C59C /* PBXContainerItemProxy */;
+		};
+		276287341C7607E30070C59C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 276287291C7607BF0070C59C /* cube */;
+			targetProxy = 276287331C7607E30070C59C /* PBXContainerItemProxy */;
+		};
+		E4EEB9AC138B136A00A80321 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = openFrameworks;
+			targetProxy = E4EEB9AB138B136A00A80321 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
-# Loop through all items.
-for ITEM in $ITEMS;
-do
-echo "Signing '${ITEM}'"
-codesign --force --verbose --sign "${CODE_SIGN_IDENTITY_FOR_ITEMS}" --entitlements "${CODE_SIGN_ENTITLEMENTS}" "${ITEM}"
-RESULT=$?
-if [[ $RESULT != 0 ]] ; then
-echo "Failed to sign '${ITEM}'."
-IFS=$SAVED_IFS
-exit 1
-fi
-done
+/* Begin XCBuildConfiguration section */
+		276287071C75E0570070C59C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				EXECUTABLE_EXTENSION = "";
+				EXECUTABLE_SUFFIX = .bundle;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_FMODEX = "";
+				LIBRARY_STYLE = BUNDLE;
+				LIB_FMODEX = "";
+				MACH_O_TYPE = mh_bundle;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = (
+					"$(OF_CORE_FRAMEWORKS)",
+					"$(OF_CORE_LIBS)",
+					../../../addons/ofxAssimpModelLoader/libs/assimp/lib/osx/assimp.a,
+					"$(SCG_PLUGIN_LIBS)",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		276287081C75E0570070C59C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				EXECUTABLE_EXTENSION = "";
+				EXECUTABLE_SUFFIX = .bundle;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_FMODEX = "";
+				LIBRARY_STYLE = BUNDLE;
+				LIB_FMODEX = "";
+				MACH_O_TYPE = mh_bundle;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = (
+					"$(OF_CORE_FRAMEWORKS)",
+					"$(OF_CORE_LIBS)",
+					../../../addons/ofxAssimpModelLoader/libs/assimp/lib/osx/assimp.a,
+					"$(SCG_PLUGIN_LIBS)",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		276287111C75E22F0070C59C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				EXECUTABLE_EXTENSION = "";
+				EXECUTABLE_SUFFIX = .bundle;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_FMODEX = "";
+				LIB_FMODEX = "";
+				MACH_O_TYPE = mh_bundle;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = (
+					"$(OF_CORE_FRAMEWORKS)",
+					"$(OF_CORE_LIBS)",
+					../../../addons/ofxAssimpModelLoader/libs/assimp/lib/osx/assimp.a,
+					"$(SCG_PLUGIN_LIBS)",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		276287121C75E22F0070C59C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				EXECUTABLE_EXTENSION = "";
+				EXECUTABLE_SUFFIX = .bundle;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_FMODEX = "";
+				LIB_FMODEX = "";
+				MACH_O_TYPE = mh_bundle;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = (
+					"$(OF_CORE_FRAMEWORKS)",
+					"$(OF_CORE_LIBS)",
+					../../../addons/ofxAssimpModelLoader/libs/assimp/lib/osx/assimp.a,
+					"$(SCG_PLUGIN_LIBS)",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		276287171C7601160070C59C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		276287181C7601160070C59C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		276287231C7601810070C59C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		276287241C7601810070C59C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		2762872F1C7607BF0070C59C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				EXECUTABLE_EXTENSION = "";
+				EXECUTABLE_SUFFIX = .bundle;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_FMODEX = "";
+				LIB_FMODEX = "";
+				MACH_O_TYPE = mh_bundle;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = (
+					"$(OF_CORE_FRAMEWORKS)",
+					"$(OF_CORE_LIBS)",
+					../../../addons/ofxAssimpModelLoader/libs/assimp/lib/osx/assimp.a,
+					"$(SCG_PLUGIN_LIBS)",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		276287301C7607BF0070C59C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				EXECUTABLE_EXTENSION = "";
+				EXECUTABLE_SUFFIX = .bundle;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_FMODEX = "";
+				LIB_FMODEX = "";
+				MACH_O_TYPE = mh_bundle;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = (
+					"$(OF_CORE_FRAMEWORKS)",
+					"$(OF_CORE_LIBS)",
+					../../../addons/ofxAssimpModelLoader/libs/assimp/lib/osx/assimp.a,
+					"$(SCG_PLUGIN_LIBS)",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		27EC54FD1C75BA56001F63F1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				EXECUTABLE_EXTENSION = "";
+				EXECUTABLE_SUFFIX = .bundle;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_FMODEX = "";
+				LIB_FMODEX = "";
+				MACH_O_TYPE = mh_bundle;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = (
+					"$(OF_CORE_FRAMEWORKS)",
+					"$(OF_CORE_LIBS)",
+					../../../addons/ofxAssimpModelLoader/libs/assimp/lib/osx/assimp.a,
+					"$(SCG_PLUGIN_LIBS)",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		27EC54FE1C75BA56001F63F1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				EXECUTABLE_EXTENSION = "";
+				EXECUTABLE_SUFFIX = .bundle;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_FMODEX = "";
+				LIB_FMODEX = "";
+				MACH_O_TYPE = mh_bundle;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = (
+					"$(OF_CORE_FRAMEWORKS)",
+					"$(OF_CORE_LIBS)",
+					../../../addons/ofxAssimpModelLoader/libs/assimp/lib/osx/assimp.a,
+					"$(SCG_PLUGIN_LIBS)",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		27EC55751C75C5C5001F63F1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				EXECUTABLE_EXTENSION = "";
+				EXECUTABLE_SUFFIX = .bundle;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_FMODEX = "";
+				LIB_FMODEX = "";
+				MACH_O_TYPE = mh_bundle;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = (
+					"$(OF_CORE_FRAMEWORKS)",
+					"$(OF_CORE_LIBS)",
+					../../../addons/ofxAssimpModelLoader/libs/assimp/lib/osx/assimp.a,
+					"$(SCG_PLUGIN_LIBS)",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		27EC55761C75C5C5001F63F1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				EXECUTABLE_EXTENSION = "";
+				EXECUTABLE_SUFFIX = .bundle;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_FMODEX = "";
+				LIB_FMODEX = "";
+				MACH_O_TYPE = mh_bundle;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = (
+					"$(OF_CORE_FRAMEWORKS)",
+					"$(OF_CORE_LIBS)",
+					../../../addons/ofxAssimpModelLoader/libs/assimp/lib/osx/assimp.a,
+					"$(SCG_PLUGIN_LIBS)",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		E4B69B4E0A3A1720003C02F2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E4EB6923138AFD0F00A09F29 /* Project.xcconfig */;
+			buildSettings = {
+				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/bin/";
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_AUTO_VECTORIZATION = YES;
+				GCC_ENABLE_SSE3_EXTENSIONS = YES;
+				GCC_ENABLE_SUPPLEMENTAL_SSE3_INSTRUCTIONS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = YES;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_UNINITIALIZED_AUTOS = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = (
+					"$(OF_CORE_HEADERS)",
+					../../../addons/ofxAssimpModelLoader/libs,
+					../../../addons/ofxAssimpModelLoader/libs/assimp,
+					../../../addons/ofxAssimpModelLoader/libs/assimp/include,
+					../../../addons/ofxAssimpModelLoader/libs/assimp/include/assimp,
+					../../../addons/ofxAssimpModelLoader/libs/assimp/include/assimp/Compiler,
+					../../../addons/ofxAssimpModelLoader/libs/assimp/lib,
+					../../../addons/ofxAssimpModelLoader/libs/assimp/lib/emscripten,
+					../../../addons/ofxAssimpModelLoader/libs/assimp/lib/osx,
+					../../../addons/ofxAssimpModelLoader/libs/assimp/license,
+					../../../addons/ofxAssimpModelLoader/src,
+					../../../addons/ofxOsc/libs,
+					../../../addons/ofxOsc/libs/oscpack,
+					../../../addons/ofxOsc/libs/oscpack/src,
+					../../../addons/ofxOsc/libs/oscpack/src/ip,
+					../../../addons/ofxOsc/libs/oscpack/src/ip/posix,
+					../../../addons/ofxOsc/libs/oscpack/src/ip/win32,
+					../../../addons/ofxOsc/libs/oscpack/src/osc,
+					../../../addons/ofxOsc/src,
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CPLUSPLUSFLAGS = (
+					"-D__MACOSX_CORE__",
+					"-mtune=native",
+				);
+				OTHER_LDFLAGS = (
+					"$(OF_CORE_FRAMEWORKS)",
+					"$(OF_CORE_LIBS)",
+					../../../addons/ofxAssimpModelLoader/libs/assimp/lib/osx/assimp.a,
+				);
+				SCG_PLUGIN_LIBS = "-bundle -fPIC -undefined dynamic_lookup -Wl,-headerpad_max_install_names -Wl,-search_paths_first";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		E4B69B4F0A3A1720003C02F2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E4EB6923138AFD0F00A09F29 /* Project.xcconfig */;
+			buildSettings = {
+				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/bin/";
+				COPY_PHASE_STRIP = YES;
+				DEAD_CODE_STRIPPING = YES;
+				GCC_AUTO_VECTORIZATION = YES;
+				GCC_ENABLE_SSE3_EXTENSIONS = YES;
+				GCC_ENABLE_SUPPLEMENTAL_SSE3_INSTRUCTIONS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_UNROLL_LOOPS = YES;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = YES;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_UNINITIALIZED_AUTOS = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = (
+					"$(OF_CORE_HEADERS)",
+					../../../addons/ofxAssimpModelLoader/libs,
+					../../../addons/ofxAssimpModelLoader/libs/assimp,
+					../../../addons/ofxAssimpModelLoader/libs/assimp/include,
+					../../../addons/ofxAssimpModelLoader/libs/assimp/include/assimp,
+					../../../addons/ofxAssimpModelLoader/libs/assimp/include/assimp/Compiler,
+					../../../addons/ofxAssimpModelLoader/libs/assimp/lib,
+					../../../addons/ofxAssimpModelLoader/libs/assimp/lib/emscripten,
+					../../../addons/ofxAssimpModelLoader/libs/assimp/lib/osx,
+					../../../addons/ofxAssimpModelLoader/libs/assimp/license,
+					../../../addons/ofxAssimpModelLoader/src,
+					../../../addons/ofxOsc/libs,
+					../../../addons/ofxOsc/libs/oscpack,
+					../../../addons/ofxOsc/libs/oscpack/src,
+					../../../addons/ofxOsc/libs/oscpack/src/ip,
+					../../../addons/ofxOsc/libs/oscpack/src/ip/posix,
+					../../../addons/ofxOsc/libs/oscpack/src/ip/win32,
+					../../../addons/ofxOsc/libs/oscpack/src/osc,
+					../../../addons/ofxOsc/src,
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				OTHER_CPLUSPLUSFLAGS = (
+					"-D__MACOSX_CORE__",
+					"-mtune=native",
+				);
+				OTHER_LDFLAGS = (
+					"$(OF_CORE_FRAMEWORKS)",
+					"$(OF_CORE_LIBS)",
+					../../../addons/ofxAssimpModelLoader/libs/assimp/lib/osx/assimp.a,
+				);
+				SCG_PLUGIN_LIBS = "-bundle -fPIC -undefined dynamic_lookup -Wl,-headerpad_max_install_names -Wl,-search_paths_first";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		E4B69B600A3A1757003C02F2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E4EB6923138AFD0F00A09F29 /* Project.xcconfig */;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../../libs/glut/lib/osx\"";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = NONE;
+				HEADER_SEARCH_PATHS = (
+					"$(OF_CORE_HEADERS)",
+					../../../addons/ofxAssimpModelLoader/libs,
+					../../../addons/ofxAssimpModelLoader/libs/assimp,
+					../../../addons/ofxAssimpModelLoader/libs/assimp/include,
+					../../../addons/ofxAssimpModelLoader/libs/assimp/include/assimp,
+					../../../addons/ofxAssimpModelLoader/libs/assimp/include/assimp/Compiler,
+					../../../addons/ofxAssimpModelLoader/libs/assimp/lib,
+					../../../addons/ofxAssimpModelLoader/libs/assimp/lib/emscripten,
+					../../../addons/ofxAssimpModelLoader/libs/assimp/lib/osx,
+					../../../addons/ofxAssimpModelLoader/libs/assimp/license,
+					../../../addons/ofxAssimpModelLoader/src,
+					../../../addons/ofxOsc/libs,
+					../../../addons/ofxOsc/libs/oscpack,
+					../../../addons/ofxOsc/libs/oscpack/src,
+					../../../addons/ofxOsc/libs/oscpack/src/ip,
+					../../../addons/ofxOsc/libs/oscpack/src/ip/posix,
+					../../../addons/ofxOsc/libs/oscpack/src/ip/win32,
+					../../../addons/ofxOsc/libs/oscpack/src/osc,
+					../../../addons/ofxOsc/src,
+					"$(SC3_SOURCES_PATH)/include/common",
+					"$(SC3_SOURCES_PATH)/common",
+					"$(SC3_SOURCES_PATH)/include/plugin_interface",
+					"$(SC3_SOURCES_PATH)/plugin_interface",
+					"$(SC3_SOURCES_PATH)/server/plugins",
+					"$(SC3_SOURCES_PATH)/server/scsynth",
+					"$(SC3_SOURCES_PATH)/external_libraries/libsndfile",
+					"$(SC3_SOURCES_PATH)/include/server",
+				);
+				ICON = "$(ICON_NAME_DEBUG)";
+				ICON_FILE = "$(ICON_FILE_PATH)$(ICON)";
+				INFOPLIST_FILE = "openFrameworks-Info.plist";
+				INSTALL_PATH = /Applications;
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				OTHER_LDFLAGS = (
+					"$(OF_CORE_FRAMEWORKS)",
+					"$(OF_CORE_LIBS)",
+					"-Wl,-bind_at_load",
+					../../../addons/ofxAssimpModelLoader/libs/assimp/lib/osx/assimp.a,
+					"$(SCG_SCGRAPH_LIBS)",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = cc.openFrameworks.ofapp;
+				PRODUCT_NAME = "$(TARGET_NAME)Debug";
+				SC3_LIBRARY_PATH = "\"/Applications/SuperCollider/SuperCollider.app/Contents/MacOS\"";
+				SC3_PLUGIN_PATH = "\"/Applications/SuperCollider/SuperCollider.app/Contents/Resources/plugins\"";
+				SC3_SOURCES_PATH = "\"/Users/hb/src/supercollider\"";
+				SCG_SCGRAPH_LIBS = "-Wl,-headerpad_max_install_names -Wl,-search_paths_first -L/Applications/SuperCollider/SuperCollider.app/Contents/MacOS -Wl,-bind_at_load ";
+				STRIP_INSTALLED_PRODUCT = YES;
+				USE_HEADERMAP = NO;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		E4B69B610A3A1757003C02F2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E4EB6923138AFD0F00A09F29 /* Project.xcconfig */;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = YES;
+				DEAD_CODE_STRIPPING = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../../libs/glut/lib/osx\"";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = NONE;
+				HEADER_SEARCH_PATHS = (
+					"$(OF_CORE_HEADERS)",
+					../../../addons/ofxAssimpModelLoader/libs,
+					../../../addons/ofxAssimpModelLoader/libs/assimp,
+					../../../addons/ofxAssimpModelLoader/libs/assimp/include,
+					../../../addons/ofxAssimpModelLoader/libs/assimp/include/assimp,
+					../../../addons/ofxAssimpModelLoader/libs/assimp/include/assimp/Compiler,
+					../../../addons/ofxAssimpModelLoader/libs/assimp/lib,
+					../../../addons/ofxAssimpModelLoader/libs/assimp/lib/emscripten,
+					../../../addons/ofxAssimpModelLoader/libs/assimp/lib/osx,
+					../../../addons/ofxAssimpModelLoader/libs/assimp/license,
+					../../../addons/ofxAssimpModelLoader/src,
+					../../../addons/ofxOsc/libs,
+					../../../addons/ofxOsc/libs/oscpack,
+					../../../addons/ofxOsc/libs/oscpack/src,
+					../../../addons/ofxOsc/libs/oscpack/src/ip,
+					../../../addons/ofxOsc/libs/oscpack/src/ip/posix,
+					../../../addons/ofxOsc/libs/oscpack/src/ip/win32,
+					../../../addons/ofxOsc/libs/oscpack/src/osc,
+					../../../addons/ofxOsc/src,
+					"$(SC3_SOURCES_PATH)/include/common",
+					"$(SC3_SOURCES_PATH)/common",
+					"$(SC3_SOURCES_PATH)/include/plugin_interface",
+					"$(SC3_SOURCES_PATH)/plugin_interface",
+					"$(SC3_SOURCES_PATH)/server/plugins",
+					"$(SC3_SOURCES_PATH)/server/scsynth",
+					"$(SC3_SOURCES_PATH)/external_libraries/libsndfile",
+					"$(SC3_SOURCES_PATH)/include/server",
+				);
+				ICON = "$(ICON_NAME_RELEASE)";
+				ICON_FILE = "$(ICON_FILE_PATH)$(ICON)";
+				INFOPLIST_FILE = "openFrameworks-Info.plist";
+				INSTALL_PATH = /Applications;
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				OTHER_LDFLAGS = (
+					"$(OF_CORE_FRAMEWORKS)",
+					"$(OF_CORE_LIBS)",
+					"-Wl,-bind_at_load",
+					../../../addons/ofxAssimpModelLoader/libs/assimp/lib/osx/assimp.a,
+					"$(SCG_SCGRAPH_LIBS)",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = cc.openFrameworks.ofapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SC3_LIBRARY_PATH = "\"/Applications/SuperCollider/SuperCollider.app/Contents/MacOS\"";
+				SC3_PLUGIN_PATH = "\"/Applications/SuperCollider/SuperCollider.app/Contents/Resources/plugins\"";
+				SC3_SOURCES_PATH = "\"/Users/hb/src/supercollider\"";
+				SCG_SCGRAPH_LIBS = "-Wl,-headerpad_max_install_names -Wl,-search_paths_first -L/Applications/SuperCollider/SuperCollider.app/Contents/MacOS -Wl,-bind_at_load ";
+				STRIP_INSTALLED_PRODUCT = YES;
+				USE_HEADERMAP = NO;
+				WRAPPER_EXTENSION = app;
+				baseConfigurationReference = E4EB6923138AFD0F00A09F29;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
 
-# Restore $IFS.
-IFS=$SAVED_IFS
-</string>
-			</dict>
-			<key>BB4B014C10F69532006C3DED</key>
-			<dict>
-				<key>children</key>
-				<array>
-					<string>2C8F245ACBE61E28646C17F2</string>
-					<string>E6053AB7FEC63D5F83825B88</string>
-				</array>
-				<key>isa</key>
-				<string>PBXGroup</string>
-				<key>name</key>
-				<string>addons</string>
-				<key>sourceTree</key>
-				<string>&lt;group&gt;</string>
-			</dict>
-			<key>E4328143138ABC890047C5CB</key>
-			<dict>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>lastKnownFileType</key>
-				<string>wrapper.pb-project</string>
-				<key>name</key>
-				<string>openFrameworksLib.xcodeproj</string>
-				<key>path</key>
-				<string>../../../libs/openFrameworksCompiled/project/osx/openFrameworksLib.xcodeproj</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>E4328144138ABC890047C5CB</key>
-			<dict>
-				<key>children</key>
-				<array>
-					<string>E4328148138ABC890047C5CB</string>
-				</array>
-				<key>isa</key>
-				<string>PBXGroup</string>
-				<key>name</key>
-				<string>Products</string>
-				<key>sourceTree</key>
-				<string>&lt;group&gt;</string>
-			</dict>
-			<key>E4328147138ABC890047C5CB</key>
-			<dict>
-				<key>containerPortal</key>
-				<string>E4328143138ABC890047C5CB</string>
-				<key>isa</key>
-				<string>PBXContainerItemProxy</string>
-				<key>proxyType</key>
-				<string>2</string>
-				<key>remoteGlobalIDString</key>
-				<string>E4B27C1510CBEB8E00536013</string>
-				<key>remoteInfo</key>
-				<string>openFrameworks</string>
-			</dict>
-			<key>E4328148138ABC890047C5CB</key>
-			<dict>
-				<key>fileType</key>
-				<string>archive.ar</string>
-				<key>isa</key>
-				<string>PBXReferenceProxy</string>
-				<key>path</key>
-				<string>openFrameworksDebug.a</string>
-				<key>remoteRef</key>
-				<string>E4328147138ABC890047C5CB</string>
-				<key>sourceTree</key>
-				<string>BUILT_PRODUCTS_DIR</string>
-			</dict>
-			<key>E4328149138ABC9F0047C5CB</key>
-			<dict>
-				<key>fileRef</key>
-				<string>E4328148138ABC890047C5CB</string>
-				<key>isa</key>
-				<string>PBXBuildFile</string>
-			</dict>
-			<key>E4B69B4A0A3A1720003C02F2</key>
-			<dict>
-				<key>children</key>
-				<array>
-					<string>E4B6FCAD0C3E899E008CF71C</string>
-					<string>E4EB6923138AFD0F00A09F29</string>
-					<string>E4B69E1C0A3A1BDC003C02F2</string>
-					<string>E4EEC9E9138DF44700A80321</string>
-					<string>BB4B014C10F69532006C3DED</string>
-					<string>6948EE371B920CB800B5AC1A</string>
-					<string>E4B69B5B0A3A1756003C02F2</string>
-				</array>
-				<key>isa</key>
-				<string>PBXGroup</string>
-				<key>sourceTree</key>
-				<string>&lt;group&gt;</string>
-			</dict>
-			<key>E4B69B4C0A3A1720003C02F2</key>
-			<dict>
-				<key>attributes</key>
-				<dict>
-					<key>LastUpgradeCheck</key>
-					<string>0600</string>
-				</dict>
-				<key>buildConfigurationList</key>
-				<string>E4B69B4D0A3A1720003C02F2</string>
-				<key>compatibilityVersion</key>
-				<string>Xcode 3.2</string>
-				<key>developmentRegion</key>
-				<string>English</string>
-				<key>hasScannedForEncodings</key>
-				<string>0</string>
-				<key>isa</key>
-				<string>PBXProject</string>
-				<key>knownRegions</key>
-				<array>
-					<string>English</string>
-					<string>Japanese</string>
-					<string>French</string>
-					<string>German</string>
-				</array>
-				<key>mainGroup</key>
-				<string>E4B69B4A0A3A1720003C02F2</string>
-				<key>productRefGroup</key>
-				<string>E4B69B4A0A3A1720003C02F2</string>
-				<key>projectDirPath</key>
-				<string />
-				<key>projectReferences</key>
-				<array>
-					<dict>
-						<key>ProductGroup</key>
-						<string>E4328144138ABC890047C5CB</string>
-						<key>ProjectRef</key>
-						<string>E4328143138ABC890047C5CB</string>
-					</dict>
-				</array>
-				<key>projectRoot</key>
-				<string />
-				<key>targets</key>
-				<array>
-					<string>E4B69B5A0A3A1756003C02F2</string>
-				</array>
-			</dict>
-			<key>E4B69B4D0A3A1720003C02F2</key>
-			<dict>
-				<key>buildConfigurations</key>
-				<array>
-					<string>E4B69B4E0A3A1720003C02F2</string>
-					<string>E4B69B4F0A3A1720003C02F2</string>
-				</array>
-				<key>defaultConfigurationIsVisible</key>
-				<string>0</string>
-				<key>defaultConfigurationName</key>
-				<string>Release</string>
-				<key>isa</key>
-				<string>XCConfigurationList</string>
-			</dict>
-			<key>E4B69B4E0A3A1720003C02F2</key>
-			<dict>
-				<key>baseConfigurationReference</key>
-				<string>E4EB6923138AFD0F00A09F29</string>
-				<key>buildSettings</key>
-				<dict>
-					<key>OTHER_LDFLAGS</key>
-					<array>
-						<string>$(OF_CORE_FRAMEWORKS) $(OF_CORE_LIBS)</string>
-						<string>../../../addons/ofxAssimpModelLoader/libs/assimp/lib/osx/assimp.a</string>
-					</array>
-					<key>HEADER_SEARCH_PATHS</key>
-					<array>
-						<string>$(OF_CORE_HEADERS)</string>
-						<string>../../../addons/ofxAssimpModelLoader/libs</string>
-						<string>../../../addons/ofxAssimpModelLoader/libs/assimp</string>
-						<string>../../../addons/ofxAssimpModelLoader/libs/assimp/include</string>
-						<string>../../../addons/ofxAssimpModelLoader/libs/assimp/include/assimp</string>
-						<string>../../../addons/ofxAssimpModelLoader/libs/assimp/include/assimp/Compiler</string>
-						<string>../../../addons/ofxAssimpModelLoader/libs/assimp/lib</string>
-						<string>../../../addons/ofxAssimpModelLoader/libs/assimp/lib/emscripten</string>
-						<string>../../../addons/ofxAssimpModelLoader/libs/assimp/lib/osx</string>
-						<string>../../../addons/ofxAssimpModelLoader/libs/assimp/license</string>
-						<string>../../../addons/ofxAssimpModelLoader/src</string>
-						<string>../../../addons/ofxOsc/libs</string>
-						<string>../../../addons/ofxOsc/libs/oscpack</string>
-						<string>../../../addons/ofxOsc/libs/oscpack/src</string>
-						<string>../../../addons/ofxOsc/libs/oscpack/src/ip</string>
-						<string>../../../addons/ofxOsc/libs/oscpack/src/ip/posix</string>
-						<string>../../../addons/ofxOsc/libs/oscpack/src/ip/win32</string>
-						<string>../../../addons/ofxOsc/libs/oscpack/src/osc</string>
-						<string>../../../addons/ofxOsc/src</string>
-					</array>
-					<key>CONFIGURATION_BUILD_DIR</key>
-					<string>$(SRCROOT)/bin/</string>
-					<key>COPY_PHASE_STRIP</key>
-					<string>NO</string>
-					<key>DEAD_CODE_STRIPPING</key>
-					<string>YES</string>
-					<key>GCC_AUTO_VECTORIZATION</key>
-					<string>YES</string>
-					<key>GCC_ENABLE_SSE3_EXTENSIONS</key>
-					<string>YES</string>
-					<key>GCC_ENABLE_SUPPLEMENTAL_SSE3_INSTRUCTIONS</key>
-					<string>YES</string>
-					<key>GCC_INLINES_ARE_PRIVATE_EXTERN</key>
-					<string>NO</string>
-					<key>GCC_OPTIMIZATION_LEVEL</key>
-					<string>0</string>
-					<key>GCC_SYMBOLS_PRIVATE_EXTERN</key>
-					<string>NO</string>
-					<key>GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS</key>
-					<string>YES</string>
-					<key>GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO</key>
-					<string>NO</string>
-					<key>GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL</key>
-					<string>NO</string>
-					<key>GCC_WARN_UNINITIALIZED_AUTOS</key>
-					<string>NO</string>
-					<key>GCC_WARN_UNUSED_VALUE</key>
-					<string>NO</string>
-					<key>GCC_WARN_UNUSED_VARIABLE</key>
-					<string>NO</string>
-					<key>MACOSX_DEPLOYMENT_TARGET</key>
-					<string>10.8</string>
-					<key>ONLY_ACTIVE_ARCH</key>
-					<string>YES</string>
-					<key>OTHER_CPLUSPLUSFLAGS</key>
-					<array>
-						<string>-D__MACOSX_CORE__</string>
-						<string>-mtune=native</string>
-					</array>
-					<key>SDKROOT</key>
-					<string>macosx</string>
-				</dict>
-				<key>isa</key>
-				<string>XCBuildConfiguration</string>
-				<key>name</key>
-				<string>Debug</string>
-			</dict>
-			<key>E4B69B4F0A3A1720003C02F2</key>
-			<dict>
-				<key>baseConfigurationReference</key>
-				<string>E4EB6923138AFD0F00A09F29</string>
-				<key>buildSettings</key>
-				<dict>
-					<key>OTHER_LDFLAGS</key>
-					<array>
-						<string>$(OF_CORE_FRAMEWORKS) $(OF_CORE_LIBS)</string>
-						<string>../../../addons/ofxAssimpModelLoader/libs/assimp/lib/osx/assimp.a</string>
-					</array>
-					<key>HEADER_SEARCH_PATHS</key>
-					<array>
-						<string>$(OF_CORE_HEADERS)</string>
-						<string>../../../addons/ofxAssimpModelLoader/libs</string>
-						<string>../../../addons/ofxAssimpModelLoader/libs/assimp</string>
-						<string>../../../addons/ofxAssimpModelLoader/libs/assimp/include</string>
-						<string>../../../addons/ofxAssimpModelLoader/libs/assimp/include/assimp</string>
-						<string>../../../addons/ofxAssimpModelLoader/libs/assimp/include/assimp/Compiler</string>
-						<string>../../../addons/ofxAssimpModelLoader/libs/assimp/lib</string>
-						<string>../../../addons/ofxAssimpModelLoader/libs/assimp/lib/emscripten</string>
-						<string>../../../addons/ofxAssimpModelLoader/libs/assimp/lib/osx</string>
-						<string>../../../addons/ofxAssimpModelLoader/libs/assimp/license</string>
-						<string>../../../addons/ofxAssimpModelLoader/src</string>
-						<string>../../../addons/ofxOsc/libs</string>
-						<string>../../../addons/ofxOsc/libs/oscpack</string>
-						<string>../../../addons/ofxOsc/libs/oscpack/src</string>
-						<string>../../../addons/ofxOsc/libs/oscpack/src/ip</string>
-						<string>../../../addons/ofxOsc/libs/oscpack/src/ip/posix</string>
-						<string>../../../addons/ofxOsc/libs/oscpack/src/ip/win32</string>
-						<string>../../../addons/ofxOsc/libs/oscpack/src/osc</string>
-						<string>../../../addons/ofxOsc/src</string>
-					</array>
-					<key>CONFIGURATION_BUILD_DIR</key>
-					<string>$(SRCROOT)/bin/</string>
-					<key>COPY_PHASE_STRIP</key>
-					<string>YES</string>
-					<key>DEAD_CODE_STRIPPING</key>
-					<string>YES</string>
-					<key>GCC_AUTO_VECTORIZATION</key>
-					<string>YES</string>
-					<key>GCC_ENABLE_SSE3_EXTENSIONS</key>
-					<string>YES</string>
-					<key>GCC_ENABLE_SUPPLEMENTAL_SSE3_INSTRUCTIONS</key>
-					<string>YES</string>
-					<key>GCC_INLINES_ARE_PRIVATE_EXTERN</key>
-					<string>NO</string>
-					<key>GCC_OPTIMIZATION_LEVEL</key>
-					<string>3</string>
-					<key>GCC_SYMBOLS_PRIVATE_EXTERN</key>
-					<string>NO</string>
-					<key>GCC_UNROLL_LOOPS</key>
-					<string>YES</string>
-					<key>GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS</key>
-					<string>YES</string>
-					<key>GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO</key>
-					<string>NO</string>
-					<key>GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL</key>
-					<string>NO</string>
-					<key>GCC_WARN_UNINITIALIZED_AUTOS</key>
-					<string>NO</string>
-					<key>GCC_WARN_UNUSED_VALUE</key>
-					<string>NO</string>
-					<key>GCC_WARN_UNUSED_VARIABLE</key>
-					<string>NO</string>
-					<key>MACOSX_DEPLOYMENT_TARGET</key>
-					<string>10.8</string>
-					<key>OTHER_CPLUSPLUSFLAGS</key>
-					<array>
-						<string>-D__MACOSX_CORE__</string>
-						<string>-mtune=native</string>
-					</array>
-					<key>SDKROOT</key>
-					<string>macosx</string>
-				</dict>
-				<key>isa</key>
-				<string>XCBuildConfiguration</string>
-				<key>name</key>
-				<string>Release</string>
-			</dict>
-			<key>E4B69B580A3A1756003C02F2</key>
-			<dict>
-				<key>buildActionMask</key>
-				<string>2147483647</string>
-				<key>files</key>
-				<array>
-					<string>E4B69E200A3A1BDC003C02F2</string>
-					<string>E4B69E210A3A1BDC003C02F2</string>
-					<string>3B8120368B4FCCD80883BAF3</string>
-					<string>483FA4F6D5FA6422C559B1F5</string>
-					<string>8DED5056525646FA71980866</string>
-					<string>B8846EF8E504895A4A9EFEC0</string>
-					<string>72A929D3561B8232A182ABFC</string>
-					<string>5864AD82E20F15536D054EA3</string>
-					<string>4ADB88E2FB52E76A471065DE</string>
-					<string>640279EE111671BD026CB013</string>
-					<string>8F5205AEF8861EF234F0651A</string>
-					<string>ADE367465D2A8EBAD4C7A8D9</string>
-					<string>67FE4C7B15C2F0478C8126C2</string>
-					<string>510CAFE035E576A4E1502D52</string>
-					<string>62545D179C94265CA1389D4A</string>
-					<string>C4782ECC372420ACE0615B74</string>
-					<string>0546D1A38E13BD319CC9755B</string>
-					<string>879A251454401BC0B6E4F238</string>
-				</array>
-				<key>isa</key>
-				<string>PBXSourcesBuildPhase</string>
-				<key>runOnlyForDeploymentPostprocessing</key>
-				<string>0</string>
-			</dict>
-			<key>E4B69B590A3A1756003C02F2</key>
-			<dict>
-				<key>buildActionMask</key>
-				<string>2147483647</string>
-				<key>files</key>
-				<array>
-					<string>E4328149138ABC9F0047C5CB</string>
-				</array>
-				<key>isa</key>
-				<string>PBXFrameworksBuildPhase</string>
-				<key>runOnlyForDeploymentPostprocessing</key>
-				<string>0</string>
-			</dict>
-			<key>E4B69B5A0A3A1756003C02F2</key>
-			<dict>
-				<key>buildConfigurationList</key>
-				<string>E4B69B5F0A3A1757003C02F2</string>
-				<key>buildPhases</key>
-				<array>
-					<string>E4B69B580A3A1756003C02F2</string>
-					<string>E4B69B590A3A1756003C02F2</string>
-					<string>E4B6FFFD0C3F9AB9008CF71C</string>
-					<string>E4C2427710CC5ABF004149E2</string>
-					<string>8466F1851C04CA0E00918B1C</string>
-				</array>
-				<key>buildRules</key>
-				<array />
-				<key>dependencies</key>
-				<array>
-					<string>E4EEB9AC138B136A00A80321</string>
-				</array>
-				<key>isa</key>
-				<string>PBXNativeTarget</string>
-				<key>name</key>
-				<string>scgraph</string>
-				<key>productName</key>
-				<string>myOFApp</string>
-				<key>productReference</key>
-				<string>E4B69B5B0A3A1756003C02F2</string>
-				<key>productType</key>
-				<string>com.apple.product-type.application</string>
-			</dict>
-			<key>E4B69B5B0A3A1756003C02F2</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>wrapper.application</string>
-				<key>includeInIndex</key>
-				<string>0</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>path</key>
-				<string>scgraphDebug.app</string>
-				<key>sourceTree</key>
-				<string>BUILT_PRODUCTS_DIR</string>
-			</dict>
-			<key>E4B69B5F0A3A1757003C02F2</key>
-			<dict>
-				<key>buildConfigurations</key>
-				<array>
-					<string>E4B69B600A3A1757003C02F2</string>
-					<string>E4B69B610A3A1757003C02F2</string>
-				</array>
-				<key>defaultConfigurationIsVisible</key>
-				<string>0</string>
-				<key>defaultConfigurationName</key>
-				<string>Release</string>
-				<key>isa</key>
-				<string>XCConfigurationList</string>
-			</dict>
-			<key>E4B69B600A3A1757003C02F2</key>
-			<dict>
-				<key>baseConfigurationReference</key>
-				<string>E4EB6923138AFD0F00A09F29</string>
-				<key>buildSettings</key>
-				<dict>
-					<key>OTHER_LDFLAGS</key>
-					<array>
-						<string>$(OF_CORE_FRAMEWORKS) $(OF_CORE_LIBS)</string>
-						<string>../../../addons/ofxAssimpModelLoader/libs/assimp/lib/osx/assimp.a</string>
-					</array>
-					<key>HEADER_SEARCH_PATHS</key>
-					<array>
-						<string>$(OF_CORE_HEADERS)</string>
-						<string>../../../addons/ofxAssimpModelLoader/libs</string>
-						<string>../../../addons/ofxAssimpModelLoader/libs/assimp</string>
-						<string>../../../addons/ofxAssimpModelLoader/libs/assimp/include</string>
-						<string>../../../addons/ofxAssimpModelLoader/libs/assimp/include/assimp</string>
-						<string>../../../addons/ofxAssimpModelLoader/libs/assimp/include/assimp/Compiler</string>
-						<string>../../../addons/ofxAssimpModelLoader/libs/assimp/lib</string>
-						<string>../../../addons/ofxAssimpModelLoader/libs/assimp/lib/emscripten</string>
-						<string>../../../addons/ofxAssimpModelLoader/libs/assimp/lib/osx</string>
-						<string>../../../addons/ofxAssimpModelLoader/libs/assimp/license</string>
-						<string>../../../addons/ofxAssimpModelLoader/src</string>
-						<string>../../../addons/ofxOsc/libs</string>
-						<string>../../../addons/ofxOsc/libs/oscpack</string>
-						<string>../../../addons/ofxOsc/libs/oscpack/src</string>
-						<string>../../../addons/ofxOsc/libs/oscpack/src/ip</string>
-						<string>../../../addons/ofxOsc/libs/oscpack/src/ip/posix</string>
-						<string>../../../addons/ofxOsc/libs/oscpack/src/ip/win32</string>
-						<string>../../../addons/ofxOsc/libs/oscpack/src/osc</string>
-						<string>../../../addons/ofxOsc/src</string>
-					</array>
-					<key>COMBINE_HIDPI_IMAGES</key>
-					<string>YES</string>
-					<key>COPY_PHASE_STRIP</key>
-					<string>NO</string>
-					<key>FRAMEWORK_SEARCH_PATHS</key>
-					<array>
-						<string>$(inherited)</string>
-						<string>$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)</string>
-					</array>
-					<key>FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1</key>
-					<string>"$(SRCROOT)/../../../libs/glut/lib/osx"</string>
-					<key>GCC_DYNAMIC_NO_PIC</key>
-					<string>NO</string>
-					<key>GCC_GENERATE_DEBUGGING_SYMBOLS</key>
-					<string>YES</string>
-					<key>GCC_MODEL_TUNING</key>
-					<string>NONE</string>
-					<key>ICON</key>
-					<string>$(ICON_NAME_DEBUG)</string>
-					<key>ICON_FILE</key>
-					<string>$(ICON_FILE_PATH)$(ICON)</string>
-					<key>INFOPLIST_FILE</key>
-					<string>openFrameworks-Info.plist</string>
-					<key>INSTALL_PATH</key>
-					<string>/Applications</string>
-					<key>LIBRARY_SEARCH_PATHS</key>
-					<string>$(inherited)</string>
-					<key>PRODUCT_NAME</key>
-					<string>$(TARGET_NAME)Debug</string>
-					<key>WRAPPER_EXTENSION</key>
-					<string>app</string>
-				</dict>
-				<key>isa</key>
-				<string>XCBuildConfiguration</string>
-				<key>name</key>
-				<string>Debug</string>
-			</dict>
-			<key>E4B69B610A3A1757003C02F2</key>
-			<dict>
-				<key>baseConfigurationReference</key>
-				<string>E4EB6923138AFD0F00A09F29</string>
-				<key>buildSettings</key>
-				<dict>
-					<key>OTHER_LDFLAGS</key>
-					<array>
-						<string>$(OF_CORE_FRAMEWORKS) $(OF_CORE_LIBS)</string>
-						<string>../../../addons/ofxAssimpModelLoader/libs/assimp/lib/osx/assimp.a</string>
-					</array>
-					<key>HEADER_SEARCH_PATHS</key>
-					<array>
-						<string>$(OF_CORE_HEADERS)</string>
-						<string>../../../addons/ofxAssimpModelLoader/libs</string>
-						<string>../../../addons/ofxAssimpModelLoader/libs/assimp</string>
-						<string>../../../addons/ofxAssimpModelLoader/libs/assimp/include</string>
-						<string>../../../addons/ofxAssimpModelLoader/libs/assimp/include/assimp</string>
-						<string>../../../addons/ofxAssimpModelLoader/libs/assimp/include/assimp/Compiler</string>
-						<string>../../../addons/ofxAssimpModelLoader/libs/assimp/lib</string>
-						<string>../../../addons/ofxAssimpModelLoader/libs/assimp/lib/emscripten</string>
-						<string>../../../addons/ofxAssimpModelLoader/libs/assimp/lib/osx</string>
-						<string>../../../addons/ofxAssimpModelLoader/libs/assimp/license</string>
-						<string>../../../addons/ofxAssimpModelLoader/src</string>
-						<string>../../../addons/ofxOsc/libs</string>
-						<string>../../../addons/ofxOsc/libs/oscpack</string>
-						<string>../../../addons/ofxOsc/libs/oscpack/src</string>
-						<string>../../../addons/ofxOsc/libs/oscpack/src/ip</string>
-						<string>../../../addons/ofxOsc/libs/oscpack/src/ip/posix</string>
-						<string>../../../addons/ofxOsc/libs/oscpack/src/ip/win32</string>
-						<string>../../../addons/ofxOsc/libs/oscpack/src/osc</string>
-						<string>../../../addons/ofxOsc/src</string>
-					</array>
-					<key>COMBINE_HIDPI_IMAGES</key>
-					<string>YES</string>
-					<key>COPY_PHASE_STRIP</key>
-					<string>YES</string>
-					<key>FRAMEWORK_SEARCH_PATHS</key>
-					<array>
-						<string>$(inherited)</string>
-						<string>$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)</string>
-					</array>
-					<key>FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1</key>
-					<string>"$(SRCROOT)/../../../libs/glut/lib/osx"</string>
-					<key>GCC_GENERATE_DEBUGGING_SYMBOLS</key>
-					<string>YES</string>
-					<key>GCC_MODEL_TUNING</key>
-					<string>NONE</string>
-					<key>ICON</key>
-					<string>$(ICON_NAME_RELEASE)</string>
-					<key>ICON_FILE</key>
-					<string>$(ICON_FILE_PATH)$(ICON)</string>
-					<key>INFOPLIST_FILE</key>
-					<string>openFrameworks-Info.plist</string>
-					<key>INSTALL_PATH</key>
-					<string>/Applications</string>
-					<key>LIBRARY_SEARCH_PATHS</key>
-					<string>$(inherited)</string>
-					<key>PRODUCT_NAME</key>
-					<string>$(TARGET_NAME)</string>
-					<key>WRAPPER_EXTENSION</key>
-					<string>app</string>
-					<key>baseConfigurationReference</key>
-					<string>E4EB6923138AFD0F00A09F29</string>
-				</dict>
-				<key>isa</key>
-				<string>XCBuildConfiguration</string>
-				<key>name</key>
-				<string>Release</string>
-			</dict>
-			<key>E4B69E1C0A3A1BDC003C02F2</key>
-			<dict>
-				<key>children</key>
-				<array>
-					<string>E4B69E1D0A3A1BDC003C02F2</string>
-					<string>E4B69E1E0A3A1BDC003C02F2</string>
-					<string>E4B69E1F0A3A1BDC003C02F2</string>
-				</array>
-				<key>isa</key>
-				<string>PBXGroup</string>
-				<key>path</key>
-				<string>src</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>E4B69E1D0A3A1BDC003C02F2</key>
-			<dict>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>lastKnownFileType</key>
-				<string>sourcecode.cpp.cpp</string>
-				<key>name</key>
-				<string>main.cpp</string>
-				<key>path</key>
-				<string>src/main.cpp</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>E4B69E1E0A3A1BDC003C02F2</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.cpp.cpp</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>ofApp.cpp</string>
-				<key>path</key>
-				<string>src/ofApp.cpp</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>E4B69E1F0A3A1BDC003C02F2</key>
-			<dict>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>lastKnownFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>name</key>
-				<string>ofApp.h</string>
-				<key>path</key>
-				<string>src/ofApp.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>E4B69E200A3A1BDC003C02F2</key>
-			<dict>
-				<key>fileRef</key>
-				<string>E4B69E1D0A3A1BDC003C02F2</string>
-				<key>isa</key>
-				<string>PBXBuildFile</string>
-			</dict>
-			<key>E4B69E210A3A1BDC003C02F2</key>
-			<dict>
-				<key>fileRef</key>
-				<string>E4B69E1E0A3A1BDC003C02F2</string>
-				<key>isa</key>
-				<string>PBXBuildFile</string>
-			</dict>
-			<key>E4B6FCAD0C3E899E008CF71C</key>
-			<dict>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>lastKnownFileType</key>
-				<string>text.plist.xml</string>
-				<key>path</key>
-				<string>openFrameworks-Info.plist</string>
-				<key>sourceTree</key>
-				<string>&lt;group&gt;</string>
-			</dict>
-			<key>E4B6FFFD0C3F9AB9008CF71C</key>
-			<dict>
-				<key>buildActionMask</key>
-				<string>2147483647</string>
-				<key>files</key>
-				<array />
-				<key>inputPaths</key>
-				<array />
-				<key>isa</key>
-				<string>PBXShellScriptBuildPhase</string>
-				<key>outputPaths</key>
-				<array />
-				<key>runOnlyForDeploymentPostprocessing</key>
-				<string>0</string>
-				<key>shellPath</key>
-				<string>/bin/sh</string>
-				<key>shellScript</key>
-				<string>mkdir -p "$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/Resources/"
-# Copy default icon file into App/Resources
-rsync -aved "$ICON_FILE" "$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/Resources/"
-# Copy bin/data into App/Resources
-rsync -avz --exclude='.DS_Store' "${SRCROOT}/bin/data/" "${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/data/"
-# Copy libfmod and change install directory for fmod to run
-rsync -aved ../../../libs/fmodex/lib/osx/libfmodex.dylib "$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/Frameworks/";
-install_name_tool -change @executable_path/libfmodex.dylib @executable_path/../Frameworks/libfmodex.dylib "$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/MacOS/$PRODUCT_NAME";
-# Copy GLUT framework (must remove for AppStore submissions)
-rsync -aved ../../../libs/glut/lib/osx/GLUT.framework "$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/Frameworks/"
-</string>
-			</dict>
-			<key>E4C2427710CC5ABF004149E2</key>
-			<dict>
-				<key>buildActionMask</key>
-				<string>2147483647</string>
-				<key>dstPath</key>
-				<string />
-				<key>dstSubfolderSpec</key>
-				<string>10</string>
-				<key>files</key>
-				<array />
-				<key>isa</key>
-				<string>PBXCopyFilesBuildPhase</string>
-				<key>runOnlyForDeploymentPostprocessing</key>
-				<string>0</string>
-			</dict>
-			<key>E4EB691F138AFCF100A09F29</key>
-			<dict>
-				<key>fileEncoding</key>
-				<string>4</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>lastKnownFileType</key>
-				<string>text.xcconfig</string>
-				<key>name</key>
-				<string>CoreOF.xcconfig</string>
-				<key>path</key>
-				<string>../../../libs/openFrameworksCompiled/project/osx/CoreOF.xcconfig</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>E4EB6923138AFD0F00A09F29</key>
-			<dict>
-				<key>fileEncoding</key>
-				<string>4</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>lastKnownFileType</key>
-				<string>text.xcconfig</string>
-				<key>path</key>
-				<string>Project.xcconfig</string>
-				<key>sourceTree</key>
-				<string>&lt;group&gt;</string>
-			</dict>
-			<key>E4EEB9AB138B136A00A80321</key>
-			<dict>
-				<key>containerPortal</key>
-				<string>E4328143138ABC890047C5CB</string>
-				<key>isa</key>
-				<string>PBXContainerItemProxy</string>
-				<key>proxyType</key>
-				<string>1</string>
-				<key>remoteGlobalIDString</key>
-				<string>E4B27C1410CBEB8E00536013</string>
-				<key>remoteInfo</key>
-				<string>openFrameworks</string>
-			</dict>
-			<key>E4EEB9AC138B136A00A80321</key>
-			<dict>
-				<key>isa</key>
-				<string>PBXTargetDependency</string>
-				<key>name</key>
-				<string>openFrameworks</string>
-				<key>targetProxy</key>
-				<string>E4EEB9AB138B136A00A80321</string>
-			</dict>
-			<key>E4EEC9E9138DF44700A80321</key>
-			<dict>
-				<key>children</key>
-				<array>
-					<string>E4EB691F138AFCF100A09F29</string>
-					<string>E4328143138ABC890047C5CB</string>
-				</array>
-				<key>isa</key>
-				<string>PBXGroup</string>
-				<key>name</key>
-				<string>openFrameworks</string>
-				<key>sourceTree</key>
-				<string>&lt;group&gt;</string>
-			</dict>
-		</dict>
-		<key>rootObject</key>
-		<string>E4B69B4C0A3A1720003C02F2</string>
-	</dict>
-</plist>
+/* Begin XCConfigurationList section */
+		276287061C75E0570070C59C /* Build configuration list for PBXNativeTarget "lighting" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				276287071C75E0570070C59C /* Debug */,
+				276287081C75E0570070C59C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		276287101C75E22F0070C59C /* Build configuration list for PBXNativeTarget "material" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				276287111C75E22F0070C59C /* Debug */,
+				276287121C75E22F0070C59C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		276287161C7601160070C59C /* Build configuration list for PBXAggregateTarget "Plugins" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				276287171C7601160070C59C /* Debug */,
+				276287181C7601160070C59C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		276287221C7601810070C59C /* Build configuration list for PBXAggregateTarget "ALL" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				276287231C7601810070C59C /* Debug */,
+				276287241C7601810070C59C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		2762872E1C7607BF0070C59C /* Build configuration list for PBXNativeTarget "cube" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2762872F1C7607BF0070C59C /* Debug */,
+				276287301C7607BF0070C59C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		27EC54FC1C75BA56001F63F1 /* Build configuration list for PBXNativeTarget "color" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				27EC54FD1C75BA56001F63F1 /* Debug */,
+				27EC54FE1C75BA56001F63F1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		27EC55741C75C5C5001F63F1 /* Build configuration list for PBXNativeTarget "gl_renderer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				27EC55751C75C5C5001F63F1 /* Debug */,
+				27EC55761C75C5C5001F63F1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E4B69B4D0A3A1720003C02F2 /* Build configuration list for PBXProject "scgraph" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E4B69B4E0A3A1720003C02F2 /* Debug */,
+				E4B69B4F0A3A1720003C02F2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E4B69B5F0A3A1757003C02F2 /* Build configuration list for PBXNativeTarget "scgraph" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E4B69B600A3A1757003C02F2 /* Debug */,
+				E4B69B610A3A1757003C02F2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E4B69B4C0A3A1720003C02F2 /* Project object */;
+}

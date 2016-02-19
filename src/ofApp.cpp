@@ -1,4 +1,6 @@
 #include "ofApp.h"
+#include "scgraph.h"
+//#include "graphic_loop.h"
 
 //--------------------------------------------------------------
 void ofApp::setup(){
@@ -7,12 +9,14 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
-
+    //std::cout << "update" << std::endl;
+    ScGraph::get_instance()->_control_loop.threadedFunction();
+    ScGraph::get_instance()->_graphic_loop.threadedFunction();
+    //std::cout << "update done" << std::endl;
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-
 }
 
 //--------------------------------------------------------------
@@ -22,7 +26,7 @@ void ofApp::keyPressed(int key){
 
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key){
-
+ 
 }
 
 //--------------------------------------------------------------

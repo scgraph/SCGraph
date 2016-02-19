@@ -141,7 +141,7 @@ template <class T> struct Node
 	void insert (Node<T> *what, bool before)
 	{
 		if (_parent == 0)
-			throw ("Node::insert () - Error: No parent");
+			throw (std::runtime_error("Node::insert () - Error: No parent"));
 
 		what->_parent = _parent;
 
@@ -173,12 +173,12 @@ template <class T> struct Node
 	void insert (Node<T> *where, Node<T> *what, bool before)
 	{
 		if (where != 0 && where->_parent != this)
-			throw ("Node::insert () - Error, target is not child of this node");
+			throw (std::runtime_error("Node::insert () - Error, target is not child of this node"));
 
 		if (_start == 0 && _end == 0)
 		{
 			if (where != 0)
-				throw ("Node::insert () - Error: Target does not exist");
+				throw (std::runtime_error("Node::insert () - Error: Target does not exist"));
 
 			what->_parent = this;
 

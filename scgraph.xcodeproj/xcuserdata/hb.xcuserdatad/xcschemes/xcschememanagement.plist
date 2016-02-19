@@ -44,6 +44,11 @@
 			<key>orderHint</key>
 			<integer>5</integer>
 		</dict>
+		<key>install_plugins.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>13</integer>
+		</dict>
 		<key>lighting.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -67,6 +72,11 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>273D8D8D1C772F3A00C01414</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>276287011C75E0570070C59C</key>
 		<dict>
 			<key>primary</key>

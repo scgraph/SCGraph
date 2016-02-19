@@ -27,9 +27,9 @@ ControlLoop::~ControlLoop ()
 
 void ControlLoop::stop ()
 {
-    lock();
+    _mutex.lock();
 	_quit = true;
-    unlock();
+    _mutex.unlock();
 
 	//ret = pthread_join (_thread, 0);
 }
@@ -37,9 +37,9 @@ void ControlLoop::stop ()
 
 void ControlLoop::set_rate (int rate)
 {
-    lock();
+    _mutex.lock();
 	_freq = rate;
-    unlock();
+    _mutex.unlock();
 }
 
 void ControlLoop::threadedFunction ()
@@ -59,26 +59,29 @@ void ControlLoop::threadedFunction ()
 		}
 	}
 */
+    /*
     if (options->_verbose >= 2)
         std::cout << "[ControlLoop]: Running!" << std::endl;
-    
-    _timer->setPeriodicEvent(1000);
+    */
+    //_timer->setPeriodicEvent(1000);
     //_timer->reset();
-    
-	while (isThreadRunning())
+    Boolean done = false;
+	//while (isThreadRunning())
+    while (!done)
 	{
+        done = true;
         
 		if (options->_verbose >= 5)
 			std::cout << "[ControlLoop]: Iterate!" << std::endl;
 
-        lock();
+        _mutex.lock();
 		if (_quit)
 		{
-			unlock();
+			_mutex.unlock();
 			break;
 		}
 
-		unlock();
+		_mutex.unlock();
 
 		int ret;
 
@@ -121,12 +124,12 @@ void ControlLoop::threadedFunction ()
 		_tv = tv;
 
         //_timer->waitNext();
-        sleep(1);
+        //sleep(1);
 	}
-
+/*
 	if (options->_verbose >= 2)
 		std::cout << "[ControlLoop]: Thread quitting!" << std::endl;
-
+*/
 	return 0;
 }
 

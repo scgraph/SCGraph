@@ -10,7 +10,7 @@
 #include "ofThread.h"
 
 
-class ControlLoop : public ofThread
+class ControlLoop// : public ofThread
 {
 	bool           _first_time;
 
@@ -25,7 +25,7 @@ class ControlLoop : public ofThread
 	//pthread_t _thread;
 
 	/** a mutex to protect the quit toggle */
-    // std::mutex _mutex;
+    std::mutex _mutex;
 	bool _quit;
 
 	float _freq;

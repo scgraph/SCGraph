@@ -10,7 +10,7 @@
 #include "ofTimer.h"
 #include "ofThread.h"
 
-class GraphicLoop : public ofThread
+class GraphicLoop //: public ofThread
 {
 	ofTimer        *_timer;
 	bool           _first_time;

@@ -90,12 +90,22 @@ int main (int argc, char *argv[])
     scgraph->start ();
     //qapp.exec ();
     
-    ofSetupOpenGL(100,100,OF_WINDOW);			// <-------- setup the GL context
+    //ofSetupOpenGL(100,100,OF_WINDOW);			// <-------- setup the GL context
     
     // this kicks off the running of my app
     // can be OF_WINDOW or OF_FULLSCREEN
     // pass in width and height too:
-    ofRunApp(new ofApp());
+    ofGLFWWindowSettings settings;
+    settings.width = 60;
+    settings.height = 60;
+    settings.setPosition(ofVec2f(300,0));
+    settings.resizable = true;
+    settings.title = "scgraph status";
+    shared_ptr<ofAppBaseWindow> mainWindow = ofCreateWindow(settings);
+
+    shared_ptr<ofApp> mainApp(new ofApp);
+    ofRunApp(mainWindow, mainApp);
+    ofRunMainLoop();
     
     if (options->_verbose)
         std::cout << "[Main]: Performing shutdown" << std::endl;

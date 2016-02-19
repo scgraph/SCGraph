@@ -19,7 +19,7 @@ GSynthDefFile::GSynthDefFile (const std::string &filename)
 	FILE *deffile = fopen (filename.c_str (), "rb");
 	if (!deffile)
 	{
-		throw ("[GSynthDefFile]: Couldn't open file for reading");
+		throw (std::runtime_error("[GSynthDefFile]: Couldn't open file for reading"));
 	}
 
 	// FIXME: do this properly, allocating as much mem as needed
@@ -42,7 +42,7 @@ void GSynthDefFile::construct_from_blob (unsigned char *data, unsigned long int 
 	Options *options = Options::get_instance ();
 	
 	if (size < 10)
-		throw ("[GSynthDefFile]: Malformed synthdef file");
+		throw (std::runtime_error("[GSynthDefFile]: Malformed synthdef file"));
 
 	if (options->_verbose >= 3)
 	{

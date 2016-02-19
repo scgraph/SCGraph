@@ -59,7 +59,7 @@ boost::shared_ptr<GSynth> NodeTree::s_new (const std::string &synth_name, int id
 
 	Tree::Node<NodePtr> *node = find_node_by_id (id);
 	if (node)
-		throw("[NodeTree]: Warning: Node already exists! NOT adding synth!");
+        throw(std::runtime_error("[NodeTree]: Warning: Node already exists! NOT adding synth!"));
 
 	int new_id = id;
 
@@ -72,15 +72,15 @@ boost::shared_ptr<GSynth> NodeTree::s_new (const std::string &synth_name, int id
 	if((add_action == 0) || (add_action == 1)) {
 		target_node = find_group_by_id (add_target_id);
 		if (!target_node)
-			throw("[NodeTree]: Warning: Target group doesn't exist! NOT adding synth!");
+			throw(std::runtime_error("[NodeTree]: Warning: Target group doesn't exist! NOT adding synth!"));
 	}
 	else if((add_action > 1) && (add_action < 5)) {
 		target_node = find_node_by_id (add_target_id);
 		if (!target_node)
-			throw("[NodeTree]: Warning: Target node doesn't exist! NOT adding synth!");
+			throw(std::runtime_error("[NodeTree]: Warning: Target node doesn't exist! NOT adding synth!"));
 	}
 	else {
-		throw ("[NodeTree]: Bad add_action");
+		throw (std::runtime_error("[NodeTree]: Bad add_action"));
 	}
 
 	boost::shared_ptr<GSynth> synth 
@@ -141,7 +141,7 @@ void NodeTree::g_freeAll (int id)
 	Tree::Node<NodePtr> *node = find_group_by_id (id);
 
 	if (!node)
-		throw ("[NodeTree]: g_freeAll(): Unknown group!");
+		throw (std::runtime_error("[NodeTree]: g_freeAll(): Unknown group!"));
 
 	node = node->_start;
 
@@ -186,7 +186,7 @@ int NodeTree::g_new (int id, int add_action, int add_target_id)
 	Tree::Node<NodePtr> *node = find_node_by_id (id);
 
 	if (node)
-		throw ("[NodeTree]: Warning: Node ID already exists!");
+		throw (std::runtime_error("[NodeTree]: Warning: Node ID already exists!"));
 	
 	int new_id = id;
 
@@ -200,7 +200,7 @@ int NodeTree::g_new (int id, int add_action, int add_target_id)
 			Tree::Node<NodePtr> *target_group = find_group_by_id (add_target_id);
 
 			if (!target_group)
-				throw ("[NodeTree]: Warning: Target group doesn't exist!");
+				throw (std::runtime_error("[NodeTree]: Warning: Target group doesn't exist!"));
 
 			boost::shared_ptr<GGroup> group (new GGroup (new_id));
 
@@ -215,7 +215,7 @@ int NodeTree::g_new (int id, int add_action, int add_target_id)
 			Tree::Node<NodePtr> *target_group = find_group_by_id (add_target_id);
 
 			if (!target_group)
-				throw ("[NodeTree]: Warning: Target group doesn't exist!");
+				throw (std::runtime_error("[NodeTree]: Warning: Target group doesn't exist!"));
 
 			boost::shared_ptr<GGroup> group (new GGroup (new_id));
 
@@ -230,7 +230,7 @@ int NodeTree::g_new (int id, int add_action, int add_target_id)
 			Tree::Node<NodePtr> *target_node = find_node_by_id (add_target_id);
 
 			if (!target_node)
-				throw ("[NodeTree]: Warning: Target node doesn't exist!");
+				throw (std::runtime_error("[NodeTree]: Warning: Target node doesn't exist!"));
 
 			boost::shared_ptr<GGroup> group (new GGroup (new_id));
 
@@ -245,7 +245,7 @@ int NodeTree::g_new (int id, int add_action, int add_target_id)
 			Tree::Node<NodePtr> *target_node = find_node_by_id (add_target_id);
 
 			if (!target_node)
-				throw ("[NodeTree]: Warning: Target node doesn't exist!");
+				throw (std::runtime_error("[NodeTree]: Warning: Target node doesn't exist!"));
 
 			boost::shared_ptr<GGroup> group (new GGroup (new_id));
 
@@ -260,7 +260,7 @@ int NodeTree::g_new (int id, int add_action, int add_target_id)
 			Tree::Node<NodePtr> *target_node = find_node_by_id (add_target_id);
 
 			if (!target_node)
-				throw ("[NodeTree]: Warning: Target node doesn't exist!");
+				throw (std::runtime_error("[NodeTree]: Warning: Target node doesn't exist!"));
 
 			boost::shared_ptr<GGroup> group (new GGroup (new_id));
 

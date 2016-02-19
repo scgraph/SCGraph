@@ -175,7 +175,7 @@ void OscHandler::send_notifications (std::string path, int id)
 	Tree::Node<NodePtr> *node = scgraph->_node_tree.find_node_by_id (id);
 
 	if (!node)
-		throw ("[OscHandler]: send_notifications(): Warning: ID doesn't exist");
+		throw (std::runtime_error("[OscHandler]: send_notifications(): Warning: ID doesn't exist"));
 
 	int is_group = 0;
 	if (dynamic_cast<GGroup*> (node->_payload.get()))
@@ -432,7 +432,8 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 						if (options->_verbose >= 2)
 							std::cout << "[OscHandler]: /changeString " << tmp << std::endl;
 
-						QWriteLocker locker (&scgraph->_read_write_lock);
+						//QWriteLocker locker (&scgraph->_read_write_lock);
+                        //lock();
 						StringPool::get_instance()->change_string(tmp, index);
 						//send_notifications ("/n_go", synth->_id);
 	

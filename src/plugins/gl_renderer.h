@@ -19,33 +19,12 @@
 
 #include "../transformation_command_visitor.h"
 
-#include "ofAppGlutWindow.h"
+#include "ofAppGLFWWindow.h"
 #include "ofColor.h"
 #include "ofGraphics.h"
+#include "ofApp.h"
 #include "ofMaterial.h"
-/*
-#include <QtCore/QObject>
-#include <QtCore/QEvent>
-#include <QtCore/QHash>
 
-#include <QtGui/QApplication>
-#include <QtGui/QMouseEvent>
-#include <QtGui/QKeyEvent>
-#include <QtGui/QMainWindow>
-#include <QtGui/QLabel>
-
-#include <QtGui/QImage>
-#include <QtCore/QDateTime>
-#include <QtCore/QString>
-#include <QtCore/QStringList>
-
-#include <QtCore/QFuture>
-#include <QtCore/QtConcurrentRun>		
-
-#include <QtOpenGL/QGLWidget>
-#include <QtOpenGL/QGLFramebufferObject>
-#include <QtGui/QPainter>
-*/
 
 /*
 void writeImage (QImage img);
@@ -65,7 +44,7 @@ class Recorder
 
 };
 */
-//class GLRenderer;
+class GLRenderer;
 /*
 class GLRenderWidget //: public QGLWidget
 {
@@ -121,13 +100,32 @@ class GLMainWindow //: public QMainWindow
 #define SCGRAPH_QT_GL_RENDERER_DEFAULT_HEIGHT       480
 #define SCGRAPH_QT_GL_RENDERER_MAXMAX_FEEDBACK_FRAMES       1024
 
-class GLRenderer : public ofAppGlutWindow,
-	public GUnit, 
+class GLApp : public ofApp
+{
+    GLRenderer *_renderer;
+    
+public:
+    GLApp (GLRenderer *renderer);
+    //~GLApp ();
+    void setup();
+    void update();
+    void draw();
+
+    
+    void mousePressed(int x, int y, int button);
+    void mouseReleased(int x, int y, int button);
+    void mouseDragged(int x, int y, int button);
+    // TODO void mouseDoubleClickEvent (QMouseEvent *event);
+    void keyPressed(int key);
+    void keyReleased(int key);
+
+
+};
+
+class GLRenderer : public GUnit,
 	public GraphicsVisitor, 
 	public TransformationCommandVisitor
 {
-	//Q_OBJECT
-
 	enum // keep track of these pesty indeces
 	{
 		CLEAR_MODE = 1,
@@ -157,6 +155,11 @@ class GLRenderer : public ofAppGlutWindow,
 	GLRenderWidget   *_gl_widget;
 */
 	bool _ready;
+    
+    shared_ptr<ofAppBaseWindow> _main_window;
+    
+    shared_ptr<GLApp> _main_app;
+    
 
 	/* the transformation matrix for user input */
 	Matrix            _transformation_matrix;
@@ -199,6 +202,7 @@ class GLRenderer : public ofAppGlutWindow,
 	QList<int> offsets;
 	QFont font;
 */
+    string helptext;
 	unsigned int _feedback;
 	unsigned int _fbcounter;
 	unsigned int _max_feedback_frames;
@@ -247,10 +251,10 @@ class GLRenderer : public ofAppGlutWindow,
 		GLRenderer ();
 		~GLRenderer ();
     
-        void setup();
-        void update();
+        //void setup();
+    /*    void update();
         void draw();
-
+*/
 		virtual void process_g (double delta_t);
 		virtual void really_process_g (double delta_t);
 
@@ -275,7 +279,7 @@ class GLRenderer : public ofAppGlutWindow,
 
 		void mousePressed(int x, int y, int button);
 		void mouseReleased(int x, int y, int button);
-		void mouseMoved(int x, int y );
+		void mouseDragged(int x, int y, int button);
 		// TODO void mouseDoubleClickEvent (QMouseEvent *event);
 		void keyPressed(int key);
 		void keyReleased(int key);

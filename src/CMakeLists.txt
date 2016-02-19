@@ -18,7 +18,7 @@ set(scgraph_srcs main cow_ptr transformation_command
   control_loop graphic_loop synthdef_file util synthdef_pool plugin_pool
   plugin unit  osc_handler graphics tree in_out control graphics_bus 
   material face color_rgba 
-  vector_3d hvector_3d vector_2d 
+  vector_3d hvector_3d ofVec2f 
   sc_unit_wrapper sc__unit texture
   texture_pool shader_pool)
 

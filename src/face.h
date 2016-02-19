@@ -4,7 +4,7 @@
 #include "ofColor.h"
 #include "material.h"
 #include "ofVec3f.h"
-#include "vector_2d.h"
+#include "ofVec2f.h"
 
 #include <stdint.h>
 
@@ -32,7 +32,7 @@ struct Face : public DeepCopyable
 
 	/** if this vector is nonempty it has to have the same size
 	    as _vertices. if it's empty then no texture will be applied */
-	std::vector<Vector2D>      _texture_coordinates;
+	std::vector<ofVec2f>      _texture_coordinates;
 
 	/** this indicates which texture to use */
 	int               _texture_index;

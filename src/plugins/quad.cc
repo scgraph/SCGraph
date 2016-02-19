@@ -123,7 +123,7 @@ TexQuad::TexQuad () :
 	{
 		face.touch()->_vertices.push_back (ofVec3f ());
 		face.touch()->_normals.push_back (ofVec3f ());
-		face.touch()->_texture_coordinates.push_back (Vector2D());
+		face.touch()->_texture_coordinates.push_back (ofVec2f());
 	}
 
 	face.touch()->_face_color = ofColor (1,1,1,1);
@@ -227,7 +227,7 @@ FBTexQuad::FBTexQuad () :
 	{
 		face.touch()->_vertices.push_back (ofVec3f ());
 		face.touch()->_normals.push_back (ofVec3f ());
-		face.touch()->_texture_coordinates.push_back (Vector2D());
+		face.touch()->_texture_coordinates.push_back (ofVec2f());
 	}
 
 	face.touch()->_face_color = ofColor (1,1,1,1);

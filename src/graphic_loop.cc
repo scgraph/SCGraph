@@ -24,12 +24,12 @@ void GraphicLoop::threadedFunction ()
 {
 	Options *options = Options::get_instance ();
 
-	_timer->setPeriodicEvent((int)(1000 * 1.0/(float)options->_graphics_rate));
-    _timer->reset();
+	//_timer->setPeriodicEvent((int)(1000 * 1.0/(float)options->_graphics_rate));
+    //_timer->reset();
     
-    while(isThreadRunning()) {
+    //while(isThreadRunning()) {
         timer_callback();
-    }
+    //}
 
 	if (options->_verbose >= 2)
 		std::cout << "[GraphicLoop]: Running!" << std::endl;
@@ -91,7 +91,7 @@ void GraphicLoop::timer_callback ()
 
 	++_iteration_count;
 	_tv = tv;
-    sleep((int)(1000 * 1.0/(float)options->_graphics_rate));
+    //sleep((int)(1000 * 1.0/(float)options->_graphics_rate));
     //_timer->waitNext();
 }
 

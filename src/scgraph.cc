@@ -107,8 +107,8 @@ void ScGraph::start ()
 {
     lock_for_write();
     // start the threads
-	_graphic_loop.startThread(true); // blocking
-	_control_loop.startThread(true);
+	//_graphic_loop.startThread(true); // blocking
+	//_control_loop.startThread(true);
     _osc_handler.startThread(true);
 
     unlock();

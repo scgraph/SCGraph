@@ -71,6 +71,7 @@ class ScGraph
 		*/
 
 	public:
+    
 #ifdef HAVE_JACK
 		boost::shared_ptr<JackClient>
 		                           _jack_client;

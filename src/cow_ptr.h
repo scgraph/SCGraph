@@ -6,7 +6,7 @@
 #include <iostream>
 #include <boost/shared_ptr.hpp>
 
-//#define DEBUG
+#undef DEBUG
 
 /**
 	Everything that should be handled by the cow ptr and needs 

@@ -240,10 +240,9 @@ GLEWContext *GLRenderWidget::getGlewContext()
 	return &_glew_context; 
 }
 
-
-GLMainWindow::GLMainWindow (GLRenderer *renderer) :
-	QMainWindow (),
-	_renderer (renderer)
+*/
+/*
+GLMainWindow::GLMainWindow ()
 {
 
 }
@@ -255,7 +254,87 @@ void GLMainWindow::closeEvent (QCloseEvent *event)
 
 	((QEvent*)event)->ignore ();
 }
+
 */
+
+
+GLApp::GLApp(GLRenderer *renderer) :
+_renderer(renderer)
+{
+
+}
+
+void GLApp::draw() {
+    _renderer->really_process_g(0.1);
+}
+
+void GLApp::setup() {
+    glEnable (GL_DEPTH_TEST);
+    glDepthFunc(GL_LEQUAL);
+    glClearDepth(1.0);
+    glEnable(GL_BLEND);
+    ofSetWindowShape (SCGRAPH_QT_GL_RENDERER_DEFAULT_WIDTH,
+                    SCGRAPH_QT_GL_RENDERER_DEFAULT_HEIGHT);
+    
+    //_glew_context = glewGetContext();
+    // TODO glewContext = getGlewContext();
+    
+    GLenum err = glewInit();
+    if (GLEW_OK != err)
+    {
+        // Problem: glewInit failed, something is seriously wrong.
+        fprintf(stderr, "Error: %s\n", glewGetErrorString(err));
+    }
+#ifdef HAVE_SHADERS
+    if (!GLEW_ARB_vertex_program)
+    {
+        std::cout << "[GGLRenderer]: Warning: vertex program extension missing" << std::endl;
+    }
+    
+    if (!GLEW_ARB_fragment_program)
+    {
+        std::cout << "[GGLRenderer]: Warning: frament program extension missing" << std::endl;
+    }
+    
+    if (!GLEW_ARB_shader_objects)
+    {
+        std::cout << "[GGLRenderer]: Warning: shader objects extension missing" << std::endl;
+    }
+#endif
+    _renderer->init_textures();
+    
+#ifdef HAVE_SHADERS
+    _renderer->change_shader_programs();
+#endif
+    //_shader_program = glCreateProgramObjectARB();
+}
+
+void GLApp::update() {
+    
+}
+
+
+void GLApp::mousePressed(int x, int y, int button)
+{
+    _renderer->mousePressed(x, y, button);
+}
+void GLApp::mouseReleased(int x, int y, int button)
+{
+    _renderer->mouseReleased(x, y, button);
+}
+void GLApp::mouseDragged(int x, int y, int button)
+{
+    _renderer->mouseDragged(x, y, button);
+}
+void GLApp::keyPressed(int key)
+{
+    _renderer->keyPressed(key);
+}
+void GLApp::keyReleased(int key)
+{
+    _renderer->keyReleased(key);
+}
+
 
 
 GLRenderer::GLRenderer () :
@@ -289,20 +368,6 @@ GLRenderer::GLRenderer () :
 	_current_shader_program (0),
 	_delta_t(0.1)
 {
-	// TODO _main_window = new GLMainWindow(this);
-    // TODO _gl_widget = new GLRenderWidget(_main_window, this);
-
-	// TODO _main_window->setCentralWidget(_gl_widget);
-
-	// TODO _main_window->setAttribute (Qt::WA_DeleteOnClose, false);
-	// TODO _main_window->setAttribute (Qt::WA_QuitOnClose, false);
-
-	setWindowTitle (_window_title);
-	setWindowShape (SCGRAPH_QT_GL_RENDERER_DEFAULT_WIDTH,
-						  SCGRAPH_QT_GL_RENDERER_DEFAULT_HEIGHT);
-
-    //_main_window->show();
- 
 	_transformation_matrix.set_identity ();
 	_rotation_matrix.set_identity ();
 
@@ -315,7 +380,7 @@ GLRenderer::GLRenderer () :
 	_gl_light_indexes[6] = GL_LIGHT6;
 	_gl_light_indexes[7] = GL_LIGHT7;
 
-	//std::cout << "[GLRenderer]: constructor" << std::endl;
+	std::cout << "[GLRenderer]: constructor" << std::endl;
 
     /* TODO
 	// set up display texts
@@ -343,8 +408,22 @@ GLRenderer::GLRenderer () :
 			  << "SHIFT-UPARROW - up"
 			  << "SHIFT-DOWNARROW - down";
      */
+    
+    helptext = std::string("F1 or H - this help\n")
+    + "Clicking the little X - kill the node containing this GLRenderer\n"
+    + "R - reset view\n"
+    + "I - show info\n"
+    + "F or double click - toggle fullscreen\n"
+    + "S - screenshot\n"
+    + "M - toggle recording\n"
+    + "UPARROW - forward\n"
+    + "DOWNARROW - backward\n"
+    + "RIGHTARROW - right\n"
+    + "LEFTARROW - left\n"
+    + "SHIFT-UPARROW - up\n"
+    + "SHIFT-DOWNARROW - down\n";
 
-	TexturePool *texture_pool = TexturePool::get_instance ();
+	//TexturePool *texture_pool = TexturePool::get_instance ();
 /* TODO
 	connect (texture_pool, 
 			 SIGNAL (texture_changed(unsigned int)), 
@@ -377,7 +456,7 @@ GLRenderer::GLRenderer () :
 
 	change_shader_programs();
 #endif
-    _ready = true;
+    //_ready = true;
 }
 
 
@@ -599,10 +678,10 @@ void GLRenderer::upload_texture(uint32_t id, bool samep) {
 
 void GLRenderer::clear_textures ()
 {
-	// TODO _gl_widget->makeCurrent();
+	_main_window->makeCurrent();
 
 	// we make everything new here :)
-	// TODO glDeleteTextures (_texture_handles.size (), &_texture_handles[0]);
+	glDeleteTextures (_texture_handles.size (), &_texture_handles[0]);
 	
 	_texture_handles.clear ();
 }
@@ -644,7 +723,7 @@ void GLRenderer::delete_tmp_texture(uint32_t id) {
 }
 
 void GLRenderer::init_textures () {
-	// TODO _gl_widget->makeCurrent();
+	_main_window->makeCurrent();
 	clear_textures ();
 /* TODO
 	TexturePool *texture_pool = TexturePool::get_instance ();
@@ -669,7 +748,7 @@ void GLRenderer::init_textures () {
 
 void GLRenderer::change_feedback_frames ()
 {
-	// TODO _gl_widget->makeCurrent();
+	_main_window->makeCurrent();
 
 	// TODO texture size?
 
@@ -702,7 +781,7 @@ void GLRenderer::change_feedback_frames ()
 
 void GLRenderer::clear_feedback_frames ()
 {
-	// TODO _gl_widget->makeCurrent();
+	_main_window->makeCurrent();
 
 	// TODO glDeleteTextures (_past_frame_handles.size (), &_past_frame_handles[0]);
 
@@ -725,34 +804,37 @@ GLRenderer::~GLRenderer ()
 
 	// TODO delete _gl_widget;
 	// TODO delete _main_window;
-    close();
+    //TODO close();
 }
 
 void GLRenderer::do_face (const Face& face)
 {
     // TODO glColor4iv (&face._face_color[0][0]);
-    ofSetColor(face._face_color[0]);
-	// std::cout << face._texture_coordinates.size () << " " <<
-	// *_control_ins[TEXTURING] << " " << face._texture_index <<
-	// std::endl;
-    /* TODO
+    //ofSetColor(face._face_color[0]);
+    
+    glColor4f (face._face_color[0], face._face_color[1], face._face_color[2], face._face_color[3]);
+	/*std::cout << face._texture_coordinates.size () << " " <<
+	 *_control_ins[TEXTURING] << " " << face._texture_index <<
+	 std::endl; */
+
 	if((*_control_ins[TEXTURING] > 0.5) && (face._texture_coordinates.size () > 0)) {
-		if (face.colors.size () > 0) {
+		if (face._colors.size () > 0) {
 			//std::cout << "1" << std::endl;
 			for (size_t i = 0; i < face._vertices.size (); ++i)	{
-				glColor4fv (&face._colors[i][0]);
-				glNormal3fv (&face._normals[i][0]);
-				glTexCoord2fv (&face._texture_coordinates[i][0]);
-				glVertex3fv (&face._vertices[i]);
+				glColor4f (face._colors[i][0], face._colors[i][1], face._colors[i][2], face._colors[i][3]);
+               // ofSetColor(face._colors[i]);
+				glNormal3fv (face._normals[i].getPtr());
+				glTexCoord2fv (face._texture_coordinates[i].getPtr());
+				glVertex3fv (face._vertices[i].getPtr());
 			}
 		}
 		else {
 			//std::cout << "2" << std::endl;
 			for (size_t i = 0; i < face._vertices.size (); ++i)
 				{
-					glNormal3fv (&face._normals[i][0]);
-					glTexCoord2fv (&face._texture_coordinates[i][0]);
-					glVertex3fv (&face._vertices[i][0]);
+					glNormal3fv (face._normals[i].getPtr());
+					glTexCoord2fv (face._texture_coordinates[i].getPtr());
+					glVertex3fv (face._vertices[i].getPtr());
 				}
 		}
 	}
@@ -760,25 +842,28 @@ void GLRenderer::do_face (const Face& face)
 		//std::cout << "3" << std::endl;
 		for (size_t i = 0; i < face._vertices.size (); ++i)
 			{
-				glColor4fv (&face._colors[i][0]);
-				glNormal3fv (&face._normals[i][0]);
-				glVertex3fv (&face._vertices[i][0]);
+				//glColor4fv (&face._colors[i][0]);
+                //ofSetColor(face._colors[i]);
+                
+                glColor4f (face._colors[i][0], face._colors[i][1], face._colors[i][2], face._colors[i][3]);
+				glNormal3fv (face._normals[i].getPtr());
+				glVertex3fv (face._vertices[i].getPtr());
 			}
 	}
 	else {
 		//std::cout << "4" << std::endl;
 		for (size_t i = 0; i < face._vertices.size (); ++i)
 			{
-				glNormal3fv (&face._normals[i][0]);
-				glVertex3fv (&face._vertices[i][0]);
+				glNormal3fv (face._normals[i].getPtr());
+				glVertex3fv (face._vertices[i].getPtr());
 			}
 	}
-     */
+     
 }
 
 
 void GLRenderer::draw_face (const Face &face) {
-	TexturePool *texture_pool = TexturePool::get_instance ();
+	//TexturePool *texture_pool = TexturePool::get_instance ();
 
 	if (face._render_mode == WIREFRAME) {
 		glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
@@ -990,6 +1075,7 @@ void GLRenderer::do_material (const Material &material)
     ma.setAmbientColor(material._ambient_reflection);
     ma.setEmissiveColor(material._emissive_color);
     ma.setShininess(material._shinyness);
+    ma.begin();
     /*
 	glMaterialfv (GL_FRONT, GL_SPECULAR, material._specular_reflection);
 	glMaterialfv (GL_FRONT, GL_DIFFUSE, material._diffuse_reflection);
@@ -1008,14 +1094,14 @@ void GLRenderer::do_light (const Light &light)
 	}
 
 	glEnable (index);
-/* TODO
-	glLightfv(index, GL_POSITION, &(light._position[0]));
-	glLightfv(index, GL_SPOT_DIRECTION, &(light._spot_direction[0]));
-	glLightfv(index, GL_AMBIENT, &(light._ambient_color[0]));
+/* TODO */
+	glLightfv(index, GL_POSITION, &(light._position._c[0]));
+    glLightfv(index, GL_SPOT_DIRECTION, light._spot_direction.getPtr());
+	/* TODO glLightfv(index, GL_AMBIENT, &(light._ambient_color[0]));
 	// std::cout << "am: " << light._ambient_color._c[0] << " " <<	light._ambient_color._c[1] << " " << light._ambient_color._c[2] << std::endl;
 	glLightfv(index, GL_DIFFUSE, &(light._diffuse_color[0]));
-	glLightfv(index, GL_SPECULAR, &(light._specular_color[0]));
-*/
+	glLightfv(index, GL_SPECULAR, &(light._specular_color[0]));*/
+
 	glLightf(index, GL_SPOT_EXPONENT, light._spot_exponent);
 	glLightf(index, GL_SPOT_CUTOFF, light._spot_cutoff);
 
@@ -1235,14 +1321,30 @@ void GLRenderer::visitTextConst (const Text *t)
 void GLRenderer::process_g (double delta_t)
 {
 	_delta_t = delta_t;
-	//TODO glewContext = _gl_widget->getGlewContext();
-
-	//TODO _gl_widget->updateGL();
+    if(!_ready) {
+        ofGLFWWindowSettings settings;
+        settings.width = 600;
+        settings.height = 600;
+        settings.setPosition(ofVec2f(300,0));
+        settings.resizable = true;
+        settings.title = _window_title;
+        
+        _main_window = ofCreateWindow(settings);
+        shared_ptr<GLApp> app(new GLApp(this));
+        _main_app = app;
+        ofRunApp(_main_window, _main_app);
+        _ready=true;
+    }
+    
+    //TODO glewContext = _gl_widget->getGlewContext();
+    _main_app->draw();
 }
 
 
 void GLRenderer::really_process_g (double delta_t)
 {
+    delta_t = _delta_t;
+    //_main_window->makeCurrent();
 
 	if (!_ready)
 		return;
@@ -1253,12 +1355,12 @@ void GLRenderer::really_process_g (double delta_t)
 
 	// first thing to do 
 	// _gl_widget->makeCurrent ();
-
+/*
 #ifndef HAVE_SHADERS
 	// deactivate shaders
     glUseProgramObjectARB(0);
 #endif
-
+*/
 	//_gl_widget->makeOverlayCurrent ()
 
 	if (_up_key_down && !_shift_key_down)
@@ -1294,6 +1396,8 @@ void GLRenderer::really_process_g (double delta_t)
 
 	if (_mouse_down)
 	{
+        
+        std::cout << "mouse pressed" << _rot_y << _rot_x << _cur_mouse_x << _cur_mouse_y << std::endl;
 		_rot_y += (_ren_mouse_x - _cur_mouse_x)*0.1*delta_t;
 		_rot_x += (_ren_mouse_y - _cur_mouse_y)*0.1*delta_t;
 	}
@@ -1429,18 +1533,25 @@ void GLRenderer::really_process_g (double delta_t)
 
 	if (*_control_ins[PERSPECTIVE] > 0.5)
 	{
-		gluPerspective (*_control_ins[FOV],
+		/*gluPerspective (*_control_ins[FOV],
                         // TODO: right measurements?
-						(GLfloat)getWidth()
-						/ (GLfloat)getHeight(),
+						(GLfloat)_main_window->getWidth()
+						/ (GLfloat)_main_window->getHeight(),
 						*_control_ins[NEAR_PLANE], 
 						*_control_ins[FAR_PLANE]);
+         */
+        ofSetupScreenPerspective(_main_window->getWidth(),
+                                 _main_window->getHeight(),
+                                 *_control_ins[FOV],
+                                 *_control_ins[NEAR_PLANE],
+                                 *_control_ins[FAR_PLANE]);
+                                 
 	}
 	else
 	{
         // TODO: right measurements?
-		float ratio = (GLfloat)getWidth()
-			/ (GLfloat)getHeight();
+		float ratio = (GLfloat)_main_window->getWidth()
+			/ (GLfloat)_main_window->getHeight();
 
 		glOrtho (-1.0 * ratio, 1.0 * ratio, 
 				 -1.0, 1.0,
@@ -1453,7 +1564,19 @@ void GLRenderer::really_process_g (double delta_t)
 	glLoadIdentity ();
 
 	glMultMatrixf (_transformation_matrix.get_coefficients ());
-
+    ofMatrix4x4 matrix;
+    matrix.makeLookAtMatrix(ofVec3f(*_control_ins[EYE + 0],
+                                    *_control_ins[EYE + 1],
+                                    *_control_ins[EYE + 2]),
+                            ofVec3f(*_control_ins[CENTER + 0],
+                                    *_control_ins[CENTER + 1],
+                                    *_control_ins[CENTER + 2]),
+                            ofVec3f(*_control_ins[UP + 0],
+                                    *_control_ins[UP + 1],
+                                    *_control_ins[UP + 2]));
+    /*ofCamera cam;
+    cam.setTransformMatrix(matrix);*/
+    
 	gluLookAt(*_control_ins[EYE + 0],
 			  *_control_ins[EYE + 1],
 			  *_control_ins[EYE + 2],
@@ -1510,21 +1633,23 @@ void GLRenderer::really_process_g (double delta_t)
 							  (int)pow(2,(int)ceil(log2(_gl_widget->height()))), 
 							  0);*/
 		glActiveTexture(_past_frame_handles[_fbcounter]);
-		// TODO glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16, 0, 0,
-		// TODO 				 _gl_widget->width(), _gl_widget->height(), 0);
+        glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16, 0, 0,
+                         _main_window->getWidth(), _main_window->getHeight(), 0);
 		//std::cout << "GL error message:" << glGetError() << std::endl; 
 		_feedback = 0;
 	}
 	_fbcounter = (_fbcounter + 1) % _max_feedback_frames;
 
 	glDisable (GL_LIGHTING);
-/* TODO
+    
 	if (_show_help)
 	{
 		int y_offset = 20;
 
 		glColor3f (1, 1, 1);
-
+        ofSetColor(ofColor::white);
+        _main_window->renderer()->drawString(helptext, 10, y_offset, 0);
+/*
 		QStringList::const_iterator constIterator;
 		for (constIterator = helptexts.constBegin(); 
 			 _show_help && (constIterator != helptexts.constEnd());
@@ -1533,6 +1658,7 @@ void GLRenderer::really_process_g (double delta_t)
 				_gl_widget->renderText (10, y_offset, *constIterator, font);
 				y_offset += 13;
 			}
+ */
 	}
 
 	if (_show_info)
@@ -1540,7 +1666,7 @@ void GLRenderer::really_process_g (double delta_t)
 		_show_help = false;
 
 		glColor3f (1, 1, 1);
-
+/*
 		for(unsigned char dir = 0; _show_info && (dir < 3); dir++) {
 			for(unsigned char axis = 0; _show_info && (axis < 3); axis++) {
 				if(_show_info)
@@ -1552,9 +1678,11 @@ void GLRenderer::really_process_g (double delta_t)
 									   .arg(*_control_ins[offsets.at(dir) + axis]),
 									   font);
 			}
+ 
 		}
+ */
 	}
-*/
+
 	//if(_gl_widget->doubleBuffer()) _gl_widget->swapBuffers ();
 }
 
@@ -1562,22 +1690,19 @@ void GLRenderer::really_process_g (double delta_t)
 void GLRenderer::mousePressed(int x, int y, int button)
 {
 	_mouse_down = true;
-	// TODO event->ignore ();
 }
 
 
 void GLRenderer::mouseReleased(int x, int y, int button)
 {
 	_mouse_down = false;
-	// TODO event->ignore ();
 }
 
 
-void GLRenderer::mouseMoved(int x, int y )
+void GLRenderer::mouseDragged(int x, int y, int button)
 {
 	_cur_mouse_x = x;
 	_cur_mouse_y = y;
-	// TODO event->ignore ();
 }
 /* TODO
 void GLRenderer::mouseDoubleClickEvent (QMouseEvent *event)
@@ -1593,40 +1718,34 @@ void GLRenderer::mouseDoubleClickEvent (QMouseEvent *event)
 
 void GLRenderer::keyPressed(int key)
 {
-    /* TODO
 	switch (key)
 	{
-		case Qt::Key_Up:
+		case OF_KEY_UP:
 			_up_key_down = true;
-			event->accept ();
 			return;
 		break;
 
-		case Qt::Key_Down:
+		case OF_KEY_DOWN:
 			_down_key_down = true;
-			event->accept ();
 			return;
 		break;
 
-		case Qt::Key_Right:
+		case OF_KEY_RIGHT:
 			_right_key_down = true;
-			event->accept ();
 			return;
 		break;
 
-		case Qt::Key_Left:
+		case OF_KEY_LEFT:
 			_left_key_down = true;
-			event->accept ();
 			return;
 		break;
 
-		case Qt::Key_Shift:
+		case OF_KEY_SHIFT:
 			_shift_key_down = true;
-			event->accept ();
 			return;
 		break;
 
-		case Qt::Key_R:
+		case (int)'r':
 			_transformation_matrix.set_identity ();
 			_rotation_matrix.set_identity ();
 			_rot_y = 0;
@@ -1634,111 +1753,96 @@ void GLRenderer::keyPressed(int key)
 			_forward = 0;
 			_sideward = 0;
 			_upward = 0;
-			event->accept ();
 			return;
 		break;
 
-		case Qt::Key_S: 
-			if(event->isAutoRepeat() == false)
-				_gl_widget->makeScreenshot();			
+		case (int)'s':
+			/* TODO if(event->isAutoRepeat() == false)
+				_gl_widget->makeScreenshot();			*/
 
-			event->accept ();
 			return;
 		break;
 
-		case Qt::Key_M: 
+		case (int)'m':
+            /* TODO
 			if(event->isAutoRepeat() == false) 
-				_gl_widget->toggleRecording();
+				_gl_widget->toggleRecording();*/
 
-			event->accept ();
 			return;
 		break;
 	
-		case Qt::Key_I:
+		case (int)'i':
 			_show_info = !_show_info;
 
 			if (_show_info)
 				_show_help = false;
 
-			event->accept ();
 			return;
 		break;
 
-		case Qt::Key_F1:
-		case Qt::Key_H:
+		case OF_KEY_F1:
+		case (int)'h':
 			_show_help = !_show_help;
 
 			if (_show_help)
 				_show_info = false;
 
-			event->accept ();
 			return;
 		break;
 
-		case Qt::Key_F:
+		case (int)'f':
 			_full_screen = !_full_screen;
 			if (_full_screen)
-				_main_window->showFullScreen ();
+				_main_window->setFullscreen(true);
 			else
-				_main_window->showNormal ();
-			event->accept ();
+				_main_window->setFullscreen(false);
+	
 			return;
 		break;
 
-		case Qt::Key_Escape:
+		case OF_KEY_ESC:
 			if (_full_screen)
 				{
 					_full_screen = !_full_screen;
-					_main_window->showNormal ();
+					_main_window->setFullscreen(false);
 				}
-			event->accept ();
 			return;
 		break;
 
 	
 	}
-     */
-	// TODO event->ignore ();
 }
 
 
 void GLRenderer::keyReleased(int key)
 {
-    /* TODO
-	switch (event->key ())
+	switch (key)
 	{
-		case Qt::Key_Up:
+		case OF_KEY_UP:
 			_up_key_down = false;
-			event->accept ();
 			return;
 		break;
 
-		case Qt::Key_Down:
+		case OF_KEY_DOWN:
 			_down_key_down = false;
-			event->accept ();
 			return;
 		break;
 
-		case Qt::Key_Right:
+		case OF_KEY_RIGHT:
 			_right_key_down = false;
-			event->accept ();
 			return;
 		break;
 
-		case Qt::Key_Left:
+		case OF_KEY_LEFT:
 			_left_key_down = false;
-			event->accept ();
 			return;
 		break;
 
-		case Qt::Key_Shift:
+		case OF_KEY_SHIFT:
 			_shift_key_down = false;
-			event->accept ();
 			return;
 		break;
 	}
-	event->ignore ();
-     */
 }
 
 

@@ -742,7 +742,7 @@ GLRenderer::~GLRenderer ()
 
 void GLRenderer::do_face (const Face& face)
 {
-    ofSetColor(face._face_color[0]);
+    ofSetColor(face._face_color);
     
 	/*std::cout << face._texture_coordinates.size () << " " <<
 	 *_control_ins[TEXTURING] << " " << face._texture_index <<

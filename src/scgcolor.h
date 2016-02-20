@@ -3,9 +3,9 @@
 
 #include "ofColor.h"
 
-class scgColor : public ofColor
+class scgColor : public ofFloatColor
 {
-    using ofColor::ofColor;
+    using ofFloatColor::ofFloatColor;
     
     public:
         void scale_alpha(float factor);

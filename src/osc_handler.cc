@@ -85,8 +85,6 @@ void OscHandler::threadedFunction()
             std::cout << "[OscHandler]: Error: Malformed message: " << e.what () << std::endl;
         }
     }
-
-    
 }
 
 OscHandler::~OscHandler ()
@@ -145,7 +143,6 @@ void OscHandler::stop ()
 
 	// TODO QThread::wait ();
 	// std::cout << "wait" << std::endl;
-
 }
 
 
@@ -1511,21 +1508,14 @@ void OscHandler::send_done (std::string command, osc::IpEndpointName endpoint)
 
 void OscHandler::handle_message (OscMessage *message)
 {
-	//osc::ReceivedMessage msg(*(message->_msg));
-	// std::cout << "handle message" << std::endl;
     lock();
-    std::cout << "handle message" << std::endl;
+    //std::cout << "handle message" << std::endl;
 
 	handle_message_locked (message);
 
-	//_handling_done = true;
-    std::cout << "handle message done" << std::endl;
+    //std::cout << "handle message done" << std::endl;
 
     unlock();
-
-	//_condition.wakeAll ();
-
-	// std::cout << "handle message end" << std::endl;
 	delete message;
 }
 

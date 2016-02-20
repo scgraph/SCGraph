@@ -1176,23 +1176,19 @@ void GLRenderer::visitBlendingConst (const Blending *b)
 {
 	if ((b->_on) && (*_control_ins[TRANSPARENCY] > 0.5))
 	{
-		std::cout << "on" << std::endl;
-		glEnable (GL_BLEND);
+		//std::cout << "on" << std::endl;
+        ofEnableAlphaBlending();
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glShadeModel(GL_FLAT);
 
 		///// evil workaround to fix blending
 		glDisable(GL_CULL_FACE);
 		glDisable(GL_DEPTH_TEST);
-        //ofSetDepthTest(false);
-        
-        ofEnableAlphaBlending();
 	}
 	else
 	{
-        std::cout << "off" << std::endl;
+        //std::cout << "off" << std::endl;
         ofDisableAlphaBlending();
-		//glDisable (GL_BLEND);
 	}
 
 }

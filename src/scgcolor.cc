@@ -2,5 +2,5 @@
 
 void scgColor::scale_alpha(float factor)
 {
-	this[3] *= factor;
+	this->a *= factor;
 }

@@ -184,7 +184,7 @@ unsigned int TexturePool::add_image (const std::string &filename, unsigned int i
 		_textures.push_back (tmp);
 			
 		//if (options->_verbose >= 2)
-		std::cout << "  [TexturePool]: New texture has index: " 
+		std::cout << "  [TexturePool]: New texture has index: "
 				  << _textures.size() - 1 << std::endl;
 	
 		// TODO ofNotifyEvent(texture_changed, _textures.size() - 1);
@@ -239,7 +239,7 @@ TexturePool::~TexturePool ()
 
 
 void TexturePool::delete_textures_at_id(uint32_t id) {
-	// TODO _tmp_textures.remove(id);
+	_tmp_textures.erase(id);
 	// TODO ofNotifyEvent(delete_texture, id);
 }
 

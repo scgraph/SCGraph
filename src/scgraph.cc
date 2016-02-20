@@ -158,6 +158,7 @@ void ScGraph::run_one_graphics_cycle (double delta_t)
 	_delta_t = delta_t;
 
 	lock_for_read();
+    std::cout << "graphics cycle" << std::endl;
 
 	for (size_t i = 0; i < _past_graphics_busses.size (); ++i)
 	{
@@ -169,24 +170,25 @@ void ScGraph::run_one_graphics_cycle (double delta_t)
 	{
 		(*it)->process_g (delta_t);
 	}
+    std::cout << "graphics cycle done" << std::endl;
 
 	unlock();
 
 	/* do the doneActions */
 	lock_for_write();
-
+    std::cout << "scgraph: done_action" << std::endl;
 	for 
 		(
 		 std::vector<std::pair<int, int> >::iterator it = _done_actions.begin();
 		 it != _done_actions.end (); 
 		 ++it
 		 ) {
-		// std::cout << "scgraph: done_action" << std::endl;
+		
 		_node_tree.done_action ((*it).first, (*it).second);
 	}
 	
 	_done_actions.clear ();
-
+    std::cout << "scgraph: done_action done" << std::endl;
 	unlock();
 
 	lock_for_read();

@@ -66,7 +66,7 @@
       </MacroExpansion>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "-v 1"
+            argument = "-v 2"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>

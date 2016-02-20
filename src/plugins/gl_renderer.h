@@ -13,7 +13,7 @@
 #include "../string_pool.h"
 #endif
 
-#include <map>
+#include <unordered_map>
 
 #include "../shader_pool.h"
 
@@ -22,7 +22,7 @@
 #include "ofAppGLFWWindow.h"
 #include "../scgcolor.h"
 #include "ofGraphics.h"
-#include "ofApp.h"
+#include "ofMain.h"
 #include "ofMaterial.h"
 
 
@@ -100,17 +100,17 @@ class GLMainWindow //: public QMainWindow
 #define SCGRAPH_QT_GL_RENDERER_DEFAULT_HEIGHT       480
 #define SCGRAPH_QT_GL_RENDERER_MAXMAX_FEEDBACK_FRAMES       1024
 
-class GLApp : public ofApp
+class GLApp : public ofBaseApp
 {
-    GLRenderer *_renderer;
     
 public:
+    GLRenderer *_renderer;
+
     GLApp (GLRenderer *renderer);
     //~GLApp ();
     void setup();
     void update();
     void draw();
-
     
     void mousePressed(int x, int y, int button);
     void mouseReleased(int x, int y, int button);
@@ -166,6 +166,8 @@ class GLRenderer : public GUnit,
 
 	ofMatrix4x4            _rotation_matrix;
     
+    ofMatrix4x4            _look_at_matrix;
+    
     ofCamera          _camera;
 
 	bool              _show_info;
@@ -215,7 +217,8 @@ class GLRenderer : public GUnit,
 	std::vector<GLuint>
                       _texture_handles;
 
-	// TODO QHash<uint32_t, GLuint> _tmp_texture_handles;
+    std::unordered_map<uint32_t, GLuint>
+                      _tmp_texture_handles;
 
 	std::vector<GLuint>
                       _past_frame_handles;
@@ -241,7 +244,7 @@ class GLRenderer : public GUnit,
 
 	void upload_texture (uint32_t id, bool samep);
 
-	void do_material (const Material &material);
+	ofMaterial do_material (const Material &material);
 	void do_light (const Light &light);
 
 	void do_face (const Face& face);
@@ -253,11 +256,7 @@ class GLRenderer : public GUnit,
 		GLRenderer ();
 		~GLRenderer ();
     
-        //void setup();
-    /*    void update();
-        void draw();
-*/
-		virtual void process_g (double delta_t);
+  		virtual void process_g (double delta_t);
 		virtual void really_process_g (double delta_t);
 
 		virtual void visitLightConst (const Light *l);
@@ -277,7 +276,7 @@ class GLRenderer : public GUnit,
 		virtual void visitScaleConst (const Scale *s);
 		virtual void visitLinearConst (const Linear *l);
 
-		// TODO void appendToWindowTitle (QString toAppend);
+		void appendToWindowTitle (string toAppend);
 
 		void mousePressed(int x, int y, int button);
 		void mouseReleased(int x, int y, int button);

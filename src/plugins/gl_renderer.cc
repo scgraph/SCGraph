@@ -135,78 +135,6 @@ void GLRenderWidget::paintGL ()
 		_recorder.nextFrame(grabFrameBuffer());
 }
 
-void GLRenderWidget::initializeGL ()
-{
-	glEnable (GL_DEPTH_TEST);
-	glDepthFunc(GL_LEQUAL);
-	glClearDepth(1.0); 
-	glEnable(GL_BLEND);
-	resizeGL (SCGRAPH_QT_GL_RENDERER_DEFAULT_WIDTH,
-			  SCGRAPH_QT_GL_RENDERER_DEFAULT_HEIGHT);
-
-	//_glew_context = glewGetContext();
-	glewContext = getGlewContext();
-
-	GLenum err = glewInit();
-	if (GLEW_OK != err)
-	{
-		// Problem: glewInit failed, something is seriously wrong.
-		fprintf(stderr, "Error: %s\n", glewGetErrorString(err));
-	}
-#ifdef HAVE_SHADERS
-	if (!GLEW_ARB_vertex_program)
-	{
-		std::cout << "[GGLRenderer]: Warning: vertex program extension missing" << std::endl;
-	}
-	
-	if (!GLEW_ARB_fragment_program)
-	{
-		std::cout << "[GGLRenderer]: Warning: frament program extension missing" << std::endl;
-	}
-
-	if (!GLEW_ARB_shader_objects)
-	{
-		std::cout << "[GGLRenderer]: Warning: shader objects extension missing" << std::endl;
-	}
-#endif
-	_renderer->init_textures();
-
-#ifdef HAVE_SHADERS
-	_renderer->change_shader_programs();
-#endif
-	//_shader_program = glCreateProgramObjectARB();
-}
-
-
-void GLRenderWidget::mousePressEvent (QMouseEvent *event)
-{
-	_renderer->mousePressEvent (event);
-}
-
-
-void GLRenderWidget::mouseReleaseEvent (QMouseEvent *event)
-{
-	_renderer->mouseReleaseEvent (event);
-}
-
-
-void GLRenderWidget::mouseMoveEvent (QMouseEvent *event)
-{
-	_renderer->mouseMoveEvent (event);
-}
-
-void GLRenderWidget::mouseDoubleClickEvent (QMouseEvent *event)
-{
-	_renderer->mouseDoubleClickEvent (event);
-}
-
-
-void GLRenderWidget::keyPressEvent (QKeyEvent *event)
-{
-	_renderer->keyPressEvent (event);
-}
-
-
 void GLRenderWidget::makeScreenshot ()
 {
 	QFuture<void> future = QtConcurrent::run(writeImage,
@@ -261,11 +189,18 @@ void GLMainWindow::closeEvent (QCloseEvent *event)
 GLApp::GLApp(GLRenderer *renderer) :
 _renderer(renderer)
 {
-
 }
 
 void GLApp::draw() {
-    _renderer->really_process_g(0.1);
+    // TODO: dirty hack
+    if(_renderer) {
+        ScGraph* sc = ScGraph::get_instance();
+        sc->lock_for_read();
+        //std::cout << "[GLApp]: drawing" << std::endl;
+        _renderer->really_process_g(0.1);
+        //std::cout << "[GLApp]: drawing done" << std::endl;
+        sc->unlock();
+    }
 }
 
 void GLApp::setup() {
@@ -313,7 +248,6 @@ void GLApp::update() {
     
 }
 
-
 void GLApp::mousePressed(int x, int y, int button)
 {
     _renderer->mousePressed(x, y, button);
@@ -341,6 +275,7 @@ GLRenderer::GLRenderer () :
 	_ready (false),
 	_transformation_matrix (ofMatrix4x4()),
 	_rotation_matrix (ofMatrix4x4()),
+    _look_at_matrix (ofMatrix4x4()),
 	_show_info (false),
 	_show_help (false),
 	_full_screen (false),
@@ -654,26 +589,26 @@ GLuint GLRenderer::upload_texture(boost::shared_ptr<Texture> const & texture)
 }
 
 void GLRenderer::upload_texture(uint32_t id, bool samep) {
-    /* TODO
+
 	TexturePool *texture_pool = TexturePool::get_instance ();
-	if(texture_pool->_tmp_textures.contains(id)) {
-		boost::shared_ptr<Texture> t = texture_pool->_tmp_textures.value(id);
+	if(texture_pool->_tmp_textures.count(id) > 0) {
+		boost::shared_ptr<Texture> t = texture_pool->_tmp_textures.at(id);
 
 		if(samep) {
-			upload_texture(t, _tmp_texture_handles.value(id));
+			upload_texture(t, _tmp_texture_handles.at(id));
 		}
 		else {
 			//std::cout << "loading frame" << std::endl;
-			_tmp_texture_handles.insert(id, 0);
+			// TODO: is this necessary? :
+            _tmp_texture_handles.insert({id, (GLuint) 0});
 			GLuint tmp = upload_texture(t);
-			_tmp_texture_handles.insert(id, tmp);
+			_tmp_texture_handles.at(id) = tmp;
 		}
 		texture_pool->loaded_tmp_texture(id);
 	}
 	else {
 		std::cout << "[GLRenderer] No such frame at ID " << id << std::endl;
 	}
-     */
 }
 
 void GLRenderer::clear_textures ()
@@ -681,7 +616,7 @@ void GLRenderer::clear_textures ()
 	_main_window->makeCurrent();
 
 	// we make everything new here :)
-	glDeleteTextures (_texture_handles.size (), &_texture_handles[0]);
+	glDeleteTextures (_texture_handles.size(), &_texture_handles[0]);
 	
 	_texture_handles.clear ();
 }
@@ -709,23 +644,22 @@ void GLRenderer::change_texture (unsigned int index) {
 
 void GLRenderer::change_tmp_texture(uint32_t id, bool samep) {
 	// std::cout << "[GLRenderer] changing tmp texture " << id << std::endl;
-    /* TODO
-	if(_tmp_texture_handles.contains(id) && (!samep)) {
-		delete_texture(_tmp_texture_handles.value(id));
+    
+	if(_tmp_texture_handles.count(id) > 0 && (!samep)) {
+		delete_texture(_tmp_texture_handles.at(id));
 	}
 	upload_texture(id, samep);
-     */
 }
 
 void GLRenderer::delete_tmp_texture(uint32_t id) {
-	//if(_tmp_texture_handles.contains(id))
-		// TODO delete_texture(_tmp_texture_handles.value(id));
+	if(_tmp_texture_handles.count(id) > 0)
+        delete_texture(_tmp_texture_handles.at(id));
 }
 
 void GLRenderer::init_textures () {
 	_main_window->makeCurrent();
 	clear_textures ();
-/* TODO
+
 	TexturePool *texture_pool = TexturePool::get_instance ();
 
 	for (size_t i = 0; i < texture_pool->get_number_of_textures (); ++i) {
@@ -736,12 +670,8 @@ void GLRenderer::init_textures () {
 			_texture_handles[i] = upload_texture((*t)->_texture);		
 	}
 	
-	QHashIterator<uint32_t, boost::shared_ptr<Texture> > i(texture_pool->_tmp_textures);
-	while (i.hasNext()) {
-		i.next();
-		upload_texture(i.key(), false);
-	}
- */
+    for( auto i = texture_pool->_tmp_textures.begin(); i != texture_pool->_tmp_textures.end(); ++i)
+        upload_texture(i->first, false);
 }
 
 
@@ -783,34 +713,32 @@ void GLRenderer::clear_feedback_frames ()
 {
 	_main_window->makeCurrent();
 
-	// TODO glDeleteTextures (_past_frame_handles.size (), &_past_frame_handles[0]);
+	glDeleteTextures (_past_frame_handles.size(), &_past_frame_handles[0]);
 
 	_past_frame_handles.clear ();
 }
 
 GLRenderer::~GLRenderer ()
 {
-	//std::cout << "[GLRenderer]: destructor" << std::endl;
-
+    _main_app->_renderer = NULL;
+	std::cout << "[GLRenderer]: destructor" << std::endl;
+    std::cout << "[GLRenderer]: done" << std::endl;
 	clear_textures ();
 
-	/* TODO
-     foreach(GLuint handle, _tmp_texture_handles)
-		glDeleteTextures(1, &handle);
+    for( auto i = _tmp_texture_handles.begin(); i != _tmp_texture_handles.end(); ++i)
+		glDeleteTextures(1, &i->second);
 
 	_tmp_texture_handles.clear();
-*/
+    
 	clear_feedback_frames ();
 
-	// TODO delete _gl_widget;
-	// TODO delete _main_window;
-    //TODO close();
+    _main_window->setWindowShouldClose();
 }
 
 void GLRenderer::do_face (const Face& face)
 {
     // TODO glColor4iv (&face._face_color[0][0]);
-    //ofSetColor(face._face_color[0]);
+    ofSetColor(face._face_color[0]);
     
     glColor4f (face._face_color[0], face._face_color[1], face._face_color[2], face._face_color[3]);
 	/*std::cout << face._texture_coordinates.size () << " " <<
@@ -822,7 +750,7 @@ void GLRenderer::do_face (const Face& face)
 			//std::cout << "1" << std::endl;
 			for (size_t i = 0; i < face._vertices.size (); ++i)	{
 				glColor4f (face._colors[i][0], face._colors[i][1], face._colors[i][2], face._colors[i][3]);
-               // ofSetColor(face._colors[i]);
+                ofSetColor(face._colors[i]);
 				glNormal3fv (face._normals[i].getPtr());
 				glTexCoord2fv (face._texture_coordinates[i].getPtr());
 				glVertex3fv (face._vertices[i].getPtr());
@@ -843,7 +771,7 @@ void GLRenderer::do_face (const Face& face)
 		for (size_t i = 0; i < face._vertices.size (); ++i)
 			{
 				//glColor4fv (&face._colors[i][0]);
-                //ofSetColor(face._colors[i]);
+                ofSetColor(face._colors[i]);
                 
                 glColor4f (face._colors[i][0], face._colors[i][1], face._colors[i][2], face._colors[i][3]);
 				glNormal3fv (face._normals[i].getPtr());
@@ -858,12 +786,11 @@ void GLRenderer::do_face (const Face& face)
 				glVertex3fv (face._vertices[i].getPtr());
 			}
 	}
-     
 }
 
 
 void GLRenderer::draw_face (const Face &face) {
-	//TexturePool *texture_pool = TexturePool::get_instance ();
+	TexturePool *texture_pool = TexturePool::get_instance ();
 
 	if (face._render_mode == WIREFRAME) {
 		glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
@@ -874,19 +801,21 @@ void GLRenderer::draw_face (const Face &face) {
 	}
 
 	// if lighting is enabled at this point, then select the material
+    ofMaterial ma;
 	if (*_control_ins[LIGHTING] > 0.5)
-		do_material (face._material);
+		ma = do_material (face._material);
 
 	if (*_control_ins[TEXTURING] > 0.5 && face._texture_coordinates.size () > 0) {
-        /* TODO
+
 		if(face._texture_index >= 0 		
 		   && face._texture_index < _texture_handles.size()) {
 			glEnable (GL_TEXTURE_2D);
 
 			if((*texture_pool->get_texture(face._texture_index))->isVideo() == true) {
-				if(_tmp_texture_handles.contains(face._frame_id)) {
-					glBindTexture (GL_TEXTURE_2D, 
-								   _tmp_texture_handles.value(face._frame_id, 0));
+				if(_tmp_texture_handles.count(face._frame_id) > 0) {
+					glBindTexture (GL_TEXTURE_2D,
+                                   // TODO: had default value, is it needed?
+								   _tmp_texture_handles.at(face._frame_id));
 				}
 			}
 			else if(_texture_handles[face._texture_index] != -1)
@@ -911,7 +840,6 @@ void GLRenderer::draw_face (const Face &face) {
 				glDisable (GL_TEXTURE_2D);
 			}
 		}
-         */
 	}
 	else 
 		{
@@ -1060,13 +988,16 @@ void GLRenderer::draw_face (const Face &face) {
 
 			break;
 		}
+    
+    if (*_control_ins[LIGHTING] > 0.5)
+        ma.end();
 
 	glEnd ();
 
 	glDisable (GL_TEXTURE_2D);
 }
 
-void GLRenderer::do_material (const Material &material)
+ofMaterial GLRenderer::do_material (const Material &material)
 {
 	// set material for face
     ofMaterial ma;
@@ -1076,6 +1007,7 @@ void GLRenderer::do_material (const Material &material)
     ma.setEmissiveColor(material._emissive_color);
     ma.setShininess(material._shinyness);
     ma.begin();
+    return ma;
     /*
 	glMaterialfv (GL_FRONT, GL_SPECULAR, material._specular_reflection);
 	glMaterialfv (GL_FRONT, GL_DIFFUSE, material._diffuse_reflection);
@@ -1087,20 +1019,27 @@ void GLRenderer::do_material (const Material &material)
 void GLRenderer::do_light (const Light &light)
 {
 	int index = _gl_light_indexes[light._index];
+    
+    //ofLight _light;
+    
 	if (!light._on)
 	{
+        //_light.disable();
 		glDisable (index);
 		return;
 	}
 
-	glEnable (index);
-/* TODO */
+    glEnable (index);
+    //_light.enable();
+
+    //_light.setPosition(&(light._position._c[0]));
 	glLightfv(index, GL_POSITION, &(light._position._c[0]));
     glLightfv(index, GL_SPOT_DIRECTION, light._spot_direction.getPtr());
-	/* TODO glLightfv(index, GL_AMBIENT, &(light._ambient_color[0]));
+    // TODO: not very nice
+	glLightfv(index, GL_AMBIENT, ofVec4f(light._ambient_color[0], light._ambient_color[1], light._ambient_color[2], light._ambient_color[3]).getPtr());
 	// std::cout << "am: " << light._ambient_color._c[0] << " " <<	light._ambient_color._c[1] << " " << light._ambient_color._c[2] << std::endl;
-	glLightfv(index, GL_DIFFUSE, &(light._diffuse_color[0]));
-	glLightfv(index, GL_SPECULAR, &(light._specular_color[0]));*/
+	glLightfv(index, GL_DIFFUSE, ofVec4f(light._diffuse_color[0], light._diffuse_color[1], light._diffuse_color[2], light._diffuse_color[3]).getPtr());
+	glLightfv(index, GL_SPECULAR, ofVec4f(light._specular_color[0], light._specular_color[1], light._specular_color[2], light._specular_color[3]).getPtr());
 
 	glLightf(index, GL_SPOT_EXPONENT, light._spot_exponent);
 	glLightf(index, GL_SPOT_CUTOFF, light._spot_cutoff);
@@ -1184,7 +1123,7 @@ void GLRenderer::visitShaderUniformConst (const ShaderUniform *s)
 		break;
 	}
 	// lookup attribute
-	//GLint attribute = glGetAttribLocation(_shader_program[s->_index].first, _shader_programs[s->_index].second->_attributes
+	GLint attribute = glGetAttribLocation(_shader_program[s->_index].first, _shader_programs[s->_index].second->_attributes
 #endif
 }
 
@@ -1290,9 +1229,9 @@ void GLRenderer::visitCullingConst (const Culling *c)
 void GLRenderer::visitTextConst (const Text *t)
 {
 	glPushMatrix();
-
+    ofMaterial ma;
 	if (*_control_ins[LIGHTING] > 0.5)
-		do_material (t->_material);
+		ma = do_material (t->_material);
 
 	visitTransformationConst (t);
 	//glColor4fv (&(t->_color[0]));
@@ -1313,6 +1252,8 @@ void GLRenderer::visitTextConst (const Text *t)
 	str->_font->FaceSize(t->_fontsize);
 	str->_font->Render(t->_text.c_str());
 #endif
+    if (*_control_ins[LIGHTING] > 0.5)
+        ma.end();
 
 	glPopMatrix();
 }
@@ -1333,11 +1274,12 @@ void GLRenderer::process_g (double delta_t)
         shared_ptr<GLApp> app(new GLApp(this));
         _main_app = app;
         ofRunApp(_main_window, _main_app);
+        //_main_app->setup();
         _ready=true;
     }
     
     //TODO glewContext = _gl_widget->getGlewContext();
-    _main_app->draw();
+    //_main_app->draw();
 }
 
 
@@ -1396,8 +1338,6 @@ void GLRenderer::really_process_g (double delta_t)
 
 	if (_mouse_down)
 	{
-        
-        std::cout << "mouse pressed" << _rot_y << _rot_x << _cur_mouse_x << _cur_mouse_y << std::endl;
 		_rot_y += (_ren_mouse_x - _cur_mouse_x)*0.1*delta_t;
 		_rot_x += (_ren_mouse_y - _cur_mouse_y)*0.1*delta_t;
 	}
@@ -1563,8 +1503,7 @@ void GLRenderer::really_process_g (double delta_t)
 	}
 
 
-    ofMatrix4x4 matrix;
-    matrix.makeLookAtMatrix(ofVec3f(*_control_ins[EYE + 0],
+    _look_at_matrix.makeLookAtMatrix(ofVec3f(*_control_ins[EYE + 0],
                                     *_control_ins[EYE + 1],
                                     *_control_ins[EYE + 2]),
                             ofVec3f(*_control_ins[CENTER + 0],
@@ -1573,8 +1512,8 @@ void GLRenderer::really_process_g (double delta_t)
                             ofVec3f(*_control_ins[UP + 0],
                                     *_control_ins[UP + 1],
                                     *_control_ins[UP + 2]));
-    matrix *= _transformation_matrix;
-    _camera.setTransformMatrix(matrix);
+    _look_at_matrix *= _transformation_matrix;
+    _camera.setTransformMatrix(_look_at_matrix);
     _camera.begin();
     
 	// turn off all lights first so they can be reenabled on demand later
@@ -1641,7 +1580,7 @@ void GLRenderer::really_process_g (double delta_t)
 		glColor3f (1, 1, 1);
         ofSetColor(scgColor::white);
         _main_window->renderer()->drawString(helptext, 10, y_offset, 0);
-/*
+/* TODO
 		QStringList::const_iterator constIterator;
 		for (constIterator = helptexts.constBegin(); 
 			 _show_help && (constIterator != helptexts.constEnd());
@@ -1658,7 +1597,7 @@ void GLRenderer::really_process_g (double delta_t)
 		_show_help = false;
 
 		glColor3f (1, 1, 1);
-/*
+/* TODO
 		for(unsigned char dir = 0; _show_info && (dir < 3); dir++) {
 			for(unsigned char axis = 0; _show_info && (axis < 3); axis++) {
 				if(_show_info)
@@ -1675,7 +1614,6 @@ void GLRenderer::really_process_g (double delta_t)
  */
 	}
 
-	//if(_gl_widget->doubleBuffer()) _gl_widget->swapBuffers ();
 }
 
 
@@ -1706,7 +1644,6 @@ void GLRenderer::mouseDoubleClickEvent (QMouseEvent *event)
 		_main_window->showFullScreen ();
 	else
 		_main_window->showNormal ();
-	// TODO event->ignore ();
 }
 */
 
@@ -1844,12 +1781,12 @@ void GLRenderer::set_done_action (int done_action)
 {
 	_done_action = done_action;
 }
-/* TODO
-void GLRenderer::appendToWindowTitle (QString toAppend)
+
+void GLRenderer::appendToWindowTitle (string toAppend)
 {
 	_main_window->setWindowTitle (_window_title + toAppend);
 }
-*/
+
 extern "C"
 {
 	GUnit *create (size_t index, int special_index)

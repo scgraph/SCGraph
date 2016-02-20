@@ -13,6 +13,7 @@
 
 #include <vector>
 #include <string>
+#include <unordered_map>
 
 //#include <QtCore/QObject>
 //#include <QtCore/QHash>
@@ -52,7 +53,7 @@ class TexturePool //: public QObject
 
 		unsigned int get_number_of_textures ();
 
-		//QHash<uint32_t, boost::shared_ptr<Texture> > _tmp_textures;
+		unordered_map<uint32_t, boost::shared_ptr<Texture> > _tmp_textures;
 
 		boost::optional<boost::shared_ptr<AbstractTexture> > get_texture (unsigned int index);
 

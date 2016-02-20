@@ -3,7 +3,6 @@
 
 #include "ofColor.h"
 
-/** RED GREEN BLUE ALPHA */
 class scgColor : public ofColor
 {
     using ofColor::ofColor;

@@ -37,19 +37,6 @@ Stretch::~Stretch ()
 
 void Stretch::visitTransformation (Transformation *t)
 {
-#if 0
-	// std::cout << "[Stretch]: visitTransformation" << std::endl;
-	ofMatrix4x4 m = t->_transformation_matrix;
-
-	ofMatrix4x4 stretch;
-	// stretch.set_null ();
-	stretch.set_null ();
-	stretch.add_stretch (*_control_ins[1], *_control_ins[2], *_control_ins[3]);
-	stretch.at(3,3) = 1;
-	
-	t->_transformation_matrix = m.mul (stretch);
-#endif
-
 	_s.touch()->_scaling_vector = ofVec3f (*_control_ins[1], *_control_ins[2], *_control_ins[3]);
 	t->_commands.push_back (_s);
 

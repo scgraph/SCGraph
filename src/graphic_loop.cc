@@ -30,9 +30,10 @@ void GraphicLoop::threadedFunction ()
     //while(isThreadRunning()) {
         timer_callback();
     //}
-
+/*
 	if (options->_verbose >= 2)
 		std::cout << "[GraphicLoop]: Running!" << std::endl;
+ */
 }
 
 void GraphicLoop::set_rate (int rate)

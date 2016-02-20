@@ -1514,10 +1514,12 @@ void OscHandler::handle_message (OscMessage *message)
 	//osc::ReceivedMessage msg(*(message->_msg));
 	// std::cout << "handle message" << std::endl;
     lock();
+    std::cout << "handle message" << std::endl;
 
 	handle_message_locked (message);
 
 	//_handling_done = true;
+    std::cout << "handle message done" << std::endl;
 
     unlock();
 

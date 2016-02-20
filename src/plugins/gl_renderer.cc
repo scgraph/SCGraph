@@ -204,22 +204,26 @@ void GLApp::draw() {
 }
 
 void GLApp::setup() {
-    glEnable (GL_DEPTH_TEST);
-    glDepthFunc(GL_LEQUAL);
-    glClearDepth(1.0);
-    glEnable(GL_BLEND);
-    ofSetWindowShape (SCGRAPH_QT_GL_RENDERER_DEFAULT_WIDTH,
-                    SCGRAPH_QT_GL_RENDERER_DEFAULT_HEIGHT);
+    /*
     
+     
     //_glew_context = glewGetContext();
     // TODO glewContext = getGlewContext();
     
-    GLenum err = glewInit();
+    /*GLenum err = glewInit();
     if (GLEW_OK != err)
     {
         // Problem: glewInit failed, something is seriously wrong.
         fprintf(stderr, "Error: %s\n", glewGetErrorString(err));
     }
+     */
+    ofSetWindowShape (SCGRAPH_QT_GL_RENDERER_DEFAULT_WIDTH,
+                      SCGRAPH_QT_GL_RENDERER_DEFAULT_HEIGHT);
+
+    glEnable (GL_DEPTH_TEST);
+    glDepthFunc(GL_LEQUAL);
+    glClearDepth(1.0);
+    glEnable(GL_BLEND);
 #ifdef HAVE_SHADERS
     if (!GLEW_ARB_vertex_program)
     {
@@ -242,6 +246,7 @@ void GLApp::setup() {
     _renderer->change_shader_programs();
 #endif
     //_shader_program = glCreateProgramObjectARB();
+    
 }
 
 void GLApp::update() {
@@ -613,7 +618,7 @@ void GLRenderer::upload_texture(uint32_t id, bool samep) {
 
 void GLRenderer::clear_textures ()
 {
-	_main_window->makeCurrent();
+	//_main_window->makeCurrent();
 
 	// we make everything new here :)
 	glDeleteTextures (_texture_handles.size(), &_texture_handles[0]);
@@ -657,7 +662,7 @@ void GLRenderer::delete_tmp_texture(uint32_t id) {
 }
 
 void GLRenderer::init_textures () {
-	_main_window->makeCurrent();
+	//_main_window->makeCurrent();
 	clear_textures ();
 
 	TexturePool *texture_pool = TexturePool::get_instance ();
@@ -678,7 +683,7 @@ void GLRenderer::init_textures () {
 
 void GLRenderer::change_feedback_frames ()
 {
-	_main_window->makeCurrent();
+	//_main_window->makeCurrent();
 
 	// TODO texture size?
 
@@ -737,10 +742,8 @@ GLRenderer::~GLRenderer ()
 
 void GLRenderer::do_face (const Face& face)
 {
-    // TODO glColor4iv (&face._face_color[0][0]);
     ofSetColor(face._face_color[0]);
     
-    glColor4f (face._face_color[0], face._face_color[1], face._face_color[2], face._face_color[3]);
 	/*std::cout << face._texture_coordinates.size () << " " <<
 	 *_control_ins[TEXTURING] << " " << face._texture_index <<
 	 std::endl; */
@@ -749,7 +752,6 @@ void GLRenderer::do_face (const Face& face)
 		if (face._colors.size () > 0) {
 			//std::cout << "1" << std::endl;
 			for (size_t i = 0; i < face._vertices.size (); ++i)	{
-				glColor4f (face._colors[i][0], face._colors[i][1], face._colors[i][2], face._colors[i][3]);
                 ofSetColor(face._colors[i]);
 				glNormal3fv (face._normals[i].getPtr());
 				glTexCoord2fv (face._texture_coordinates[i].getPtr());
@@ -770,10 +772,7 @@ void GLRenderer::do_face (const Face& face)
 		//std::cout << "3" << std::endl;
 		for (size_t i = 0; i < face._vertices.size (); ++i)
 			{
-				//glColor4fv (&face._colors[i][0]);
                 ofSetColor(face._colors[i]);
-                
-                glColor4f (face._colors[i][0], face._colors[i][1], face._colors[i][2], face._colors[i][3]);
 				glNormal3fv (face._normals[i].getPtr());
 				glVertex3fv (face._vertices[i].getPtr());
 			}
@@ -856,17 +855,12 @@ void GLRenderer::draw_face (const Face &face) {
 				glDisable (GL_LIGHTING);
 
 			glPointSize (face._thickness);
-			// glPointSize (10.0);
-
 			glBegin (GL_POINTS);
-
-                //glColor4fv (&face._face_color[0]);
                 ofSetColor(face._face_color);
 
 
 			for (size_t i = 0; i < face._vertices.size (); ++i)
-                ofPoint(face._vertices[i]);
-				//glVertex3fv (&0]);
+                glVertex3fv(face._vertices[i].getPtr());
 
 			glEnd ();
 
@@ -884,11 +878,10 @@ void GLRenderer::draw_face (const Face &face) {
 
 			glBegin (GL_LINES);
 
-                //glColor4fv (&face._face_color[0]);
                 ofSetColor(face._face_color);
                 
             for (size_t i = 0; i < face._vertices.size (); ++i)
-				ofPoint(face._vertices[i]);
+				glVertex3fv(face._vertices[i].getPtr());
 
 			glEnd ();
 
@@ -903,12 +896,10 @@ void GLRenderer::draw_face (const Face &face) {
 			glLineWidth (face._thickness);
 
 			glBegin (GL_LINE_STRIP);
-
-                //glColor4fv (&face._face_color[0]);
                 ofSetColor(face._face_color);
 
 			for (size_t i = 0; i < face._vertices.size (); ++i)
-				ofPoint(face._vertices[i]);
+				glVertex3fv(face._vertices[i].getPtr());
 
 			glEnd ();
 
@@ -924,11 +915,10 @@ void GLRenderer::draw_face (const Face &face) {
 
 			glBegin (GL_LINE_LOOP);
 
-			//glColor4fv (&face._face_color[0]);
             ofSetColor(face._face_color);
 
 			for (size_t i = 0; i < face._vertices.size (); ++i)
-				ofPoint(face._vertices[i]);
+                glVertex3fv(face._vertices[i].getPtr());
 
 			glEnd ();
 
@@ -1186,7 +1176,7 @@ void GLRenderer::visitBlendingConst (const Blending *b)
 {
 	if ((b->_on) && (*_control_ins[TRANSPARENCY] > 0.5))
 	{
-		//std::cout << "on" << std::endl;
+		std::cout << "on" << std::endl;
 		glEnable (GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glShadeModel(GL_FLAT);
@@ -1194,10 +1184,15 @@ void GLRenderer::visitBlendingConst (const Blending *b)
 		///// evil workaround to fix blending
 		glDisable(GL_CULL_FACE);
 		glDisable(GL_DEPTH_TEST);
+        //ofSetDepthTest(false);
+        
+        ofEnableAlphaBlending();
 	}
 	else
 	{
-		glDisable (GL_BLEND);
+        std::cout << "off" << std::endl;
+        ofDisableAlphaBlending();
+		//glDisable (GL_BLEND);
 	}
 
 }

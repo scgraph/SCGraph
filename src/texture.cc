@@ -190,7 +190,7 @@ int ImageTexture::load(const std::string &filename) {
 				for (int i = 0; i < im_width; ++i)	{
 					for (int j = 0; j < im_height; ++j)	{
 						// swap image
-						ofColor color = image.getColor(i,im_height - j - 1);
+						scgColor color = image.getColor(i,im_height - j - 1);
 
 						int tmpIndex = 4 * (tex_width * j + i);
 						t->_data[tmpIndex]     = (unsigned char) color[0];

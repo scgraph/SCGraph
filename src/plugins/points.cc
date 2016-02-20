@@ -34,7 +34,7 @@ Points::Points () :
 
 	// face->_material._emissive_color._c[0] = 1.0;
 
-	_f.touch()->_face_color = ofColor (1,1,1,1);
+	_f.touch()->_face_color = scgColor (1,1,1,1);
 
 	//_g.touch()->_faces.push_back (face);
 }
@@ -61,7 +61,7 @@ void Points::process_g (double delta_t)
 	{
 		for (size_t j = 0; j < 3; ++j)
 		{
-			_f.touch()->_vertices[i]._c[j] = *_control_ins[2 + (3 * i) + j];
+			_f.touch()->_vertices[i][j] = *_control_ins[2 + (3 * i) + j];
 		}
 	}
 	_g.touch()->_faces.clear();

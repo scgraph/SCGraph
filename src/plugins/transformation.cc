@@ -39,7 +39,7 @@ void GTransformation::visitTransformation (Transformation *t)
 {
 	for (int i = 0; i < 16; ++i)
 	{
-		(_l.touch()->_transformation_matrix.get_coefficients())[i] = *_control_ins[i+1];
+		(_l.touch()->_transformation_matrix.getPtr())[i] = *_control_ins[i+1];
 	}
 	t->_commands.push_back (_l);
 }

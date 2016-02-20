@@ -46,7 +46,7 @@ Quad::Quad () :
 	cow_ptr<Face> face (new Face);
 	face.touch()->_geometry_type = Face::QUADS;
 
-	// face.touch()->_material._emissive_color._c[0] = 1.0;
+	// face.touch()->_material._emissive_color[0] = 1.0;
 
 	for (size_t i = 0; i < 4; ++i)
 		{
@@ -54,7 +54,7 @@ Quad::Quad () :
 			face.touch()->_normals.push_back (ofVec3f (0,0,1));
 		}
 	
-	face.touch()->_face_color = ofColor (1,1,1,1);
+	face.touch()->_face_color = scgColor (1,1,1,1);
 
 	_g.touch()->_faces.push_back (face);
 }
@@ -74,10 +74,10 @@ void Quad::process_g (double delta_t)
 		{
 		for (size_t j = 0; j < 4; ++j) 
 			{
-				_g.touch()->_faces[0].touch()->_vertices[j]._c[i] = 
+				_g.touch()->_faces[0].touch()->_vertices[j][i] = 
 					*_control_ins[i + (j * 3)];
 
-				_g.touch()->_faces[0].touch()->_normals[j]._c[i] = 
+				_g.touch()->_faces[0].touch()->_normals[j][i] = 
 					*_control_ins[i+12];
 			}
 		}
@@ -92,13 +92,13 @@ TexQuad::TexQuad () :
 
 	// set up double buffers
 	TexturePool *texture_pool = TexturePool::get_instance ();
-
+/* TODO:
 	connect (texture_pool,
 			 SIGNAL(texture_loaded(uint32_t)), 
 			 this, 
 			 SLOT(flip(uint32_t)), 
 			 Qt::QueuedConnection);
-
+*/
 	//std::cout << "[TexQuad] constructor" << std::endl;
 
 	_texquad_id_a = texture_pool->get_id();
@@ -117,7 +117,7 @@ TexQuad::TexQuad () :
 	cow_ptr<Face> face (new Face);
 	face.touch()->_geometry_type = Face::QUADS;
 
-	// face.touch()->_material._emissive_color._c[0] = 1.0;
+	// face.touch()->_material._emissive_color[0] = 1.0;
 
 	for (int i = 0; i < 4; ++i)
 	{
@@ -126,7 +126,7 @@ TexQuad::TexQuad () :
 		face.touch()->_texture_coordinates.push_back (ofVec2f());
 	}
 
-	face.touch()->_face_color = ofColor (1,1,1,1);
+	face.touch()->_face_color = scgColor (1,1,1,1);
 	_g.touch()->_faces.push_back (face);
 
 }
@@ -155,17 +155,17 @@ void TexQuad::process_g (double delta_t) {
 
 	for (size_t i = 0; i < 3; ++i) {
 		for (size_t j = 0; j < 4; ++j) {
-			_g.touch()->_faces[0].touch()->_vertices[j]._c[i] = 
+			_g.touch()->_faces[0].touch()->_vertices[j][i] =
 				*_control_ins[i + (j * 3)];
 
-			_g.touch()->_faces[0].touch()->_normals[j]._c[i] = 
+			_g.touch()->_faces[0].touch()->_normals[j][i] =
 				*_control_ins[i+22];
 		}
 	}
 
 	for (size_t i = 0; i < 2; ++i) {
 		for( size_t j = 0; j < 4; ++j) {
-			_g.touch()->_faces[0].touch()->_texture_coordinates[j]._c[i] =
+			_g.touch()->_faces[0].touch()->_texture_coordinates[j][i] =
 				*_control_ins[i+12+(j*2)];
 		}
 	}
@@ -221,7 +221,7 @@ FBTexQuad::FBTexQuad () :
 	cow_ptr<Face> face (new Face);
 	face.touch()->_geometry_type = Face::QUADS;
 
-	// face.touch()->_material._emissive_color._c[0] = 1.0;
+	// face.touch()->_material._emissive_color[0] = 1.0;
 
 	for (int i = 0; i < 4; ++i)
 	{
@@ -230,7 +230,7 @@ FBTexQuad::FBTexQuad () :
 		face.touch()->_texture_coordinates.push_back (ofVec2f());
 	}
 
-	face.touch()->_face_color = ofColor (1,1,1,1);
+	face.touch()->_face_color = scgColor (1,1,1,1);
 
 	_g.touch()->_faces.push_back (face);
 }
@@ -249,10 +249,10 @@ void FBTexQuad::process_g (double delta_t)
 		{
 		for (size_t j = 0; j < 4; ++j)
 			{
-				_g.touch()->_faces[0].touch()->_vertices[j]._c[i] = 
+				_g.touch()->_faces[0].touch()->_vertices[j][i] = 
 					*_control_ins[i + (j * 3)];
 
-				_g.touch()->_faces[0].touch()->_normals[j]._c[i] = 
+				_g.touch()->_faces[0].touch()->_normals[j][i] = 
 					*_control_ins[i+21];
 			}
 		}
@@ -261,7 +261,7 @@ void FBTexQuad::process_g (double delta_t)
 		{
 		for( size_t j = 0; j < 4; ++j)
 			{
-				_g.touch()->_faces[0].touch()->_texture_coordinates[j]._c[i] =
+				_g.touch()->_faces[0].touch()->_texture_coordinates[j][i] =
 					*_control_ins[i+12+(j*2)];
 			}
 		}

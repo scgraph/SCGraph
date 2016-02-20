@@ -2,7 +2,7 @@
 #define SCGRAPH_TRANSFORMATION_COMMAND
 
 #include "ofVec3f.h"
-#include "matrix.h"
+#include "ofMatrix4x4.h"
 #include "cow_ptr.h"
 
 class TransformationCommandVisitor;
@@ -56,7 +56,7 @@ struct Scale : public TransformationCommand
 
 struct Linear : public TransformationCommand
 {
-	Matrix _transformation_matrix;
+	ofMatrix4x4 _transformation_matrix;
 
 	void accept (TransformationCommandVisitor *v);
 	void acceptConst (TransformationCommandVisitor *v) const;

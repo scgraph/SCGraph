@@ -1,18 +1,16 @@
 #ifndef SCGRAPH_MATERIAL_HH
 #define SCGRAPH_MATERIAL_HH
 
-//#include "color_rgba.h"
-
-#include "ofColor.h"
+#include "scgcolor.h"
 
 /** a material */
 struct Material
 {
 	float     _shinyness;
-	ofColor _ambient_reflection;
-	ofColor _diffuse_reflection;
-	ofColor _specular_reflection;
-	ofColor _emissive_color;
+	scgColor _ambient_reflection;
+	scgColor _diffuse_reflection;
+	scgColor _specular_reflection;
+	scgColor _emissive_color;
 
 	Material ();
 

@@ -20,7 +20,7 @@
 #include "../transformation_command_visitor.h"
 
 #include "ofAppGLFWWindow.h"
-#include "ofColor.h"
+#include "../scgcolor.h"
 #include "ofGraphics.h"
 #include "ofApp.h"
 #include "ofMaterial.h"
@@ -162,9 +162,11 @@ class GLRenderer : public GUnit,
     
 
 	/* the transformation matrix for user input */
-	Matrix            _transformation_matrix;
+	ofMatrix4x4            _transformation_matrix;
 
-	Matrix            _rotation_matrix;
+	ofMatrix4x4            _rotation_matrix;
+    
+    ofCamera          _camera;
 
 	bool              _show_info;
 	bool              _show_help;

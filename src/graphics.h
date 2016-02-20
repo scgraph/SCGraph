@@ -8,9 +8,8 @@
 #include "hvector_3d.h"
 #include "ofVec3f.h"
 
-#include "matrix.h"
 #include "material.h"
-#include "ofColor.h"
+#include "scgcolor.h"
 #include "face.h"
 
 #include "cow_ptr.h"
@@ -86,9 +85,9 @@ struct Light : public Transformation
 	float     _spot_exponent;
 	float     _spot_cutoff;
 
-	ofColor _ambient_color;
-	ofColor _diffuse_color;
-	ofColor _specular_color;
+	scgColor _ambient_color;
+	scgColor _diffuse_color;
+	scgColor _specular_color;
 
 	float     _constant_attenuation;
 	float     _linear_attenuation;
@@ -188,7 +187,7 @@ struct Text : Transformation
 
 	unsigned int _fontsize;
 
-	ofColor _color;
+	scgColor _color;
 
 	Material  _material;
 

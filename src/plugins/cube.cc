@@ -127,7 +127,7 @@ Cube::Cube () :
 	face.touch()->_normals.push_back (ofVec3f (-1, 0, 0));
 	face.touch()->_normals.push_back (ofVec3f (-1, 0, 0));
 */
-	face.touch()->_face_color = ofColor (1,1,1,1);
+    face.touch()->_face_color = scgColor(1,1,1,1);
 
 	// std::cout << "ugh" << std::endl;
 	_g.touch()->_faces.push_back (face);

@@ -14,9 +14,9 @@ Material::Material () :
 }
 
 void Material::scale_alpha(float factor) {
-    _ambient_reflection[3] = _ambient_reflection[3] * factor;
-    _diffuse_reflection[3] = _diffuse_reflection[3] * factor;
-    _specular_reflection[3] = _specular_reflection[3] * factor;
-    _emissive_color[3] = _emissive_color[3] * factor;
+    _ambient_reflection[3] *= factor;
+    _diffuse_reflection[3] *= factor;
+    _specular_reflection[3] *= factor;
+    _emissive_color[3] *= factor;
 }
 

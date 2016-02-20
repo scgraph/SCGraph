@@ -31,7 +31,7 @@ Triangle::Triangle () :
 	cow_ptr<Face> face (new Face);
 	face.touch()->_geometry_type = Face::TRIANGLES;
 
-	// face.touch()->_material._emissive_color._c[0] = 1.0;
+	// face.touch()->_material._emissive_color[0] = 1.0;
 
 	face.touch()->_vertices.push_back (ofVec3f ());
 	face.touch()->_vertices.push_back (ofVec3f ());
@@ -41,7 +41,7 @@ Triangle::Triangle () :
 	face.touch()->_normals.push_back (ofVec3f ());
 	face.touch()->_normals.push_back (ofVec3f ());
 
-	face.touch()->_face_color = ofColor (1,1,1,1);
+	face.touch()->_face_color = scgColor (1,1,1,1);
 
 	_g.touch()->_faces.push_back (face);
 }
@@ -57,9 +57,9 @@ void Triangle::process_g (double delta_t)
 
 	for (size_t i = 0; i < 3; ++i)
 	{
-		_g.touch()->_faces[0].touch()->_vertices[0]._c[i] = *_control_ins[i];
-		_g.touch()->_faces[0].touch()->_vertices[1]._c[i] = *_control_ins[i+3];
-		_g.touch()->_faces[0].touch()->_vertices[2]._c[i] = *_control_ins[i+6];
+		_g.touch()->_faces[0].touch()->_vertices[0][i] = *_control_ins[i];
+		_g.touch()->_faces[0].touch()->_vertices[1][i] = *_control_ins[i+3];
+		_g.touch()->_faces[0].touch()->_vertices[2][i] = *_control_ins[i+6];
 	}
 
 	_graphics_outs[0]._graphics.push_back (_g);

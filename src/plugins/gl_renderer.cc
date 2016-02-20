@@ -339,8 +339,8 @@ void GLApp::keyReleased(int key)
 
 GLRenderer::GLRenderer () :
 	_ready (false),
-	_transformation_matrix (Matrix()),
-	_rotation_matrix (Matrix()),
+	_transformation_matrix (ofMatrix4x4()),
+	_rotation_matrix (ofMatrix4x4()),
 	_show_info (false),
 	_show_help (false),
 	_full_screen (false),
@@ -368,8 +368,8 @@ GLRenderer::GLRenderer () :
 	_current_shader_program (0),
 	_delta_t(0.1)
 {
-	_transformation_matrix.set_identity ();
-	_rotation_matrix.set_identity ();
+	_transformation_matrix.makeIdentityMatrix();
+	_rotation_matrix.makeIdentityMatrix();
 
 	_gl_light_indexes[0] = GL_LIGHT0;
 	_gl_light_indexes[1] = GL_LIGHT1;
@@ -1217,7 +1217,7 @@ void GLRenderer::visitScaleConst (const Scale *s)
 
 void GLRenderer::visitLinearConst (const Linear *l)
 {
-	glMultMatrixf (l->_transformation_matrix.get_coefficients());
+	glMultMatrixf (l->_transformation_matrix.getPtr());
 }
 
 
@@ -1387,12 +1387,12 @@ void GLRenderer::really_process_g (double delta_t)
 	_upward -= delta_t *  (_upward);
 #endif
 
-	_transformation_matrix.set_identity ();
-	_rotation_matrix.set_identity ();
+	_transformation_matrix.makeIdentityMatrix();
+	_rotation_matrix.makeIdentityMatrix();
 
-	Matrix m;
-	m.set_identity ();
-	m.add_translation (_sideward, _upward, _forward);
+	ofMatrix4x4 m;
+	m.makeIdentityMatrix();
+	m.translate(_sideward, _upward, _forward);
 
 	if (_mouse_down)
 	{
@@ -1402,18 +1402,19 @@ void GLRenderer::really_process_g (double delta_t)
 		_rot_x += (_ren_mouse_y - _cur_mouse_y)*0.1*delta_t;
 	}
 
-	Matrix r;
+	ofMatrix4x4 r;
 
-	r.set_axis_rotation (ofVec3f(1,0,0), _rot_x);
-	_rotation_matrix = _rotation_matrix.mul (r);
+	r.rotateRad(_rot_x, 1, 0, 0);
+    
+	_rotation_matrix *= r;
 
-	r.set_axis_rotation (ofVec3f(0,1,0),  _rot_y);
-	_rotation_matrix = _rotation_matrix.mul (r);
+    r.rotateRad(_rot_y, 0, 1, 0);
+	_rotation_matrix = _rotation_matrix * r;
 
-	_rotation_matrix.normalize ();
+	_rotation_matrix.makeOrthoNormalOf(_rotation_matrix);
 
-	_transformation_matrix	= _transformation_matrix.mul (_rotation_matrix);
-	_transformation_matrix = _transformation_matrix.mul (m);
+	_transformation_matrix	*= _rotation_matrix;
+    _transformation_matrix *= m;
 
 	_ren_mouse_x = _cur_mouse_x;
 	_ren_mouse_y = _cur_mouse_y;
@@ -1545,6 +1546,7 @@ void GLRenderer::really_process_g (double delta_t)
                                  *_control_ins[FOV],
                                  *_control_ins[NEAR_PLANE],
                                  *_control_ins[FAR_PLANE]);
+        _camera.disableOrtho();
                                  
 	}
 	else
@@ -1557,13 +1559,10 @@ void GLRenderer::really_process_g (double delta_t)
 				 -1.0, 1.0,
 				 *_control_ins[NEAR_PLANE], 
 				 *_control_ins[FAR_PLANE]);
+        _camera.enableOrtho();
 	}
 
-	glMatrixMode (GL_MODELVIEW);
 
-	glLoadIdentity ();
-
-	glMultMatrixf (_transformation_matrix.get_coefficients ());
     ofMatrix4x4 matrix;
     matrix.makeLookAtMatrix(ofVec3f(*_control_ins[EYE + 0],
                                     *_control_ins[EYE + 1],
@@ -1574,19 +1573,10 @@ void GLRenderer::really_process_g (double delta_t)
                             ofVec3f(*_control_ins[UP + 0],
                                     *_control_ins[UP + 1],
                                     *_control_ins[UP + 2]));
-    /*ofCamera cam;
-    cam.setTransformMatrix(matrix);*/
+    matrix *= _transformation_matrix;
+    _camera.setTransformMatrix(matrix);
+    _camera.begin();
     
-	gluLookAt(*_control_ins[EYE + 0],
-			  *_control_ins[EYE + 1],
-			  *_control_ins[EYE + 2],
-			  *_control_ins[CENTER + 0],
-			  *_control_ins[CENTER + 1],
-			  *_control_ins[CENTER + 2],
-			  *_control_ins[UP + 0],
-			  *_control_ins[UP + 1],
-			  *_control_ins[UP + 2]);
-
 	// turn off all lights first so they can be reenabled on demand later
 	if (*_control_ins[LIGHTING] > 0.5)
 	{
@@ -1642,12 +1632,14 @@ void GLRenderer::really_process_g (double delta_t)
 
 	glDisable (GL_LIGHTING);
     
+    _camera.end();
+    
 	if (_show_help)
 	{
 		int y_offset = 20;
 
 		glColor3f (1, 1, 1);
-        ofSetColor(ofColor::white);
+        ofSetColor(scgColor::white);
         _main_window->renderer()->drawString(helptext, 10, y_offset, 0);
 /*
 		QStringList::const_iterator constIterator;
@@ -1689,6 +1681,8 @@ void GLRenderer::really_process_g (double delta_t)
 
 void GLRenderer::mousePressed(int x, int y, int button)
 {
+    _cur_mouse_x = _ren_mouse_x = x;
+    _cur_mouse_y = _ren_mouse_y = y;
 	_mouse_down = true;
 }
 
@@ -1746,8 +1740,8 @@ void GLRenderer::keyPressed(int key)
 		break;
 
 		case (int)'r':
-			_transformation_matrix.set_identity ();
-			_rotation_matrix.set_identity ();
+			_transformation_matrix.makeIdentityMatrix();
+			_rotation_matrix.makeIdentityMatrix();
 			_rot_y = 0;
 			_rot_x = 0;
 			_forward = 0;

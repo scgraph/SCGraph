@@ -8,7 +8,10 @@ extern "C"
 	{
 		if (index == 0) return (GUnit*) new GShaderProgram (); 
 		if (index == 1) return (GUnit*) new GShaderUniform (); 
-		else std::cout << "[GShaderProgram]: wrong type!" << std::endl;
+        else {
+            std::cout << "[GShaderProgram]: wrong type!" << std::endl;
+            return NULL;
+        }
 	}
 
 	size_t get_num_of_units ()

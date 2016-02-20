@@ -3,7 +3,7 @@
 
 #include "../unit.h"
 #include "../graphics_visitor.h"
-#include "ofColor.h"
+#include "../scgcolor.h"
 
 class GColor : public GUnit, public GraphicsVisitor
 {

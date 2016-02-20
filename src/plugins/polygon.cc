@@ -6,7 +6,7 @@ extern "C"
 {
 	GUnit *create (size_t index, int special_index)
 	{
-		return (GUnit*) new Polygon (); 
+		return (GUnit*) new GPolygon (); 
 	}
 
 	size_t get_num_of_units ()
@@ -24,19 +24,19 @@ extern "C"
 }
 
 
-Polygon::Polygon () :
+GPolygon::GPolygon () :
 	_g (new Geometry),
 	_f (new Face),
 	_first_time(true)
 {
 }
 
-Polygon::~Polygon ()
+GPolygon::~GPolygon ()
 {
-	// std::cout << "[Polygon]: Destructor" << std::endl;
+	// std::cout << "[GPolygon]: Destructor" << std::endl;
 }
 
-void Polygon::process_g (double delta_t)
+void GPolygon::process_g (double delta_t)
 {
 	_graphics_outs[0]._graphics.clear();
 
@@ -55,13 +55,13 @@ void Polygon::process_g (double delta_t)
 
 	for (size_t i = 0; i < (int)*_control_ins[0]; ++i)
 	{
-		_f.touch()->_vertices[i]._c[0] =  *_control_ins[1 + 3*i];
-		_f.touch()->_vertices[i]._c[1] =  *_control_ins[2 + 3*i];
-		_f.touch()->_vertices[i]._c[2] =  *_control_ins[3 + 3*i];
+		_f.touch()->_vertices[i][0] =  *_control_ins[1 + 3*i];
+		_f.touch()->_vertices[i][1] =  *_control_ins[2 + 3*i];
+		_f.touch()->_vertices[i][2] =  *_control_ins[3 + 3*i];
 
-		_f.touch()->_normals[i]._c[0] =  *_control_ins[1 + (int)*_control_ins[0]*3];
-		_f.touch()->_normals[i]._c[1] =  *_control_ins[2 + (int)*_control_ins[0]*3];
-		_f.touch()->_normals[i]._c[2] =  *_control_ins[3 + (int)*_control_ins[0]*3];
+		_f.touch()->_normals[i][0] =  *_control_ins[1 + (int)*_control_ins[0]*3];
+		_f.touch()->_normals[i][1] =  *_control_ins[2 + (int)*_control_ins[0]*3];
+		_f.touch()->_normals[i][2] =  *_control_ins[3 + (int)*_control_ins[0]*3];
 	}
 
 	_g.touch()->_faces.clear();

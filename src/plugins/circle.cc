@@ -44,7 +44,7 @@ Circle::Circle () :
 		face.touch()->_normals.push_back(ofVec3f (0, 0, 1));
     }
 
-    face.touch()->_face_color = ofColor(1,1,1,1);
+    face.touch()->_face_color = scgColor(1,1,1,1);
 
     _g.touch()->_faces.push_back(face);
 }

@@ -3,9 +3,6 @@
 
 #include "../unit.h"
 
-//#include <QtCore/QObject>
-
-
 class Quad : public GUnit
 {
 	cow_ptr<Geometry> _g;
@@ -19,8 +16,6 @@ class Quad : public GUnit
 
 class TexQuad : public GUnit
 {
-	//Q_OBJECT
-
 	cow_ptr<Geometry> _g;
 
 	uint32_t _texquad_id_a, _texquad_id_b;
@@ -35,7 +30,7 @@ class TexQuad : public GUnit
 
 	virtual void process_g (double delta_t);
 
-	//public slots:
+	// TODO: public slots:
 		void flip(uint32_t tex_id);
 };
 

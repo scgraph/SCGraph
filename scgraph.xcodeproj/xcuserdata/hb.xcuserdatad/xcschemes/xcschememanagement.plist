@@ -14,6 +14,31 @@
 			<key>orderHint</key>
 			<integer>10</integer>
 		</dict>
+		<key>binary_op copy.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>15</integer>
+		</dict>
+		<key>blending copy.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>16</integer>
+		</dict>
+		<key>bordered_rectangle copy.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>17</integer>
+		</dict>
+		<key>buf_info_ugens copy.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>19</integer>
+		</dict>
+		<key>circle copy.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>18</integer>
+		</dict>
 		<key>color 2.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -34,6 +59,21 @@
 			<key>orderHint</key>
 			<integer>3</integer>
 		</dict>
+		<key>culling copy.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>20</integer>
+		</dict>
+		<key>frame_rate copy.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>21</integer>
+		</dict>
+		<key>freq_amp copy.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>22</integer>
+		</dict>
 		<key>gl_renderer copy.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -49,15 +89,75 @@
 			<key>orderHint</key>
 			<integer>13</integer>
 		</dict>
+		<key>light copy.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>23</integer>
+		</dict>
+		<key>lighting copy.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>42</integer>
+		</dict>
 		<key>lighting.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>8</integer>
 		</dict>
+		<key>line copy.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>24</integer>
+		</dict>
+		<key>material copy.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>14</integer>
+		</dict>
 		<key>material.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>9</integer>
+		</dict>
+		<key>model copy.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>25</integer>
+		</dict>
+		<key>mul_add copy.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>26</integer>
+		</dict>
+		<key>points copy.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>27</integer>
+		</dict>
+		<key>polygon copy.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>28</integer>
+		</dict>
+		<key>quad copy.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>29</integer>
+		</dict>
+		<key>rectangle copy.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>30</integer>
+		</dict>
+		<key>render_mode copy.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>31</integer>
+		</dict>
+		<key>rotate copy.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>32</integer>
 		</dict>
 		<key>scgraph Debug.xcscheme_^#shared#^_</key>
 		<dict>
@@ -69,10 +169,60 @@
 			<key>orderHint</key>
 			<integer>2</integer>
 		</dict>
+		<key>shader_program copy.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>33</integer>
+		</dict>
+		<key>sphere copy.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>34</integer>
+		</dict>
+		<key>sum3 copy.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>35</integer>
+		</dict>
+		<key>sum4 copy.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>36</integer>
+		</dict>
+		<key>text copy.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>37</integer>
+		</dict>
+		<key>torus copy.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>38</integer>
+		</dict>
+		<key>transformation copy.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>39</integer>
+		</dict>
+		<key>translate copy.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>40</integer>
+		</dict>
+		<key>triangle copy.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>41</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>273D8D8D1C772F3A00C01414</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>274A02D61C77E14E0045A84A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -98,6 +248,146 @@
 			<true/>
 		</dict>
 		<key>276287291C7607BF0070C59C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>27833ACD1C77DB1200AE483E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>27833ADA1C77DC1600AE483E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>27833AE41C77DC2800AE483E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>27833AEE1C77DC7100AE483E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>27833AF81C77DC8600AE483E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>27833B021C77DCA500AE483E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>27833B0C1C77DCB500AE483E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>27833B161C77DCC600AE483E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>27833B201C77DCD500AE483E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>27833B2A1C77DCE400AE483E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>27833B341C77DCFC00AE483E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>27833B3E1C77DD0E00AE483E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>27833B481C77DD4800AE483E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>27833B521C77DD5900AE483E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>27833B5C1C77DD6900AE483E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>278964EE1C77DDA90066056C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>278964F81C77DDBA0066056C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>278965021C77DDC70066056C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>2789650C1C77DDD20066056C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>278965161C77DDE30066056C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>278965201C77DE300066056C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>2789652A1C77DE440066056C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>278965341C77DE4F0066056C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>2789653E1C77DE590066056C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>278965481C77DE640066056C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>278965521C77DE710066056C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>2789655C1C77DE7D0066056C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>278965661C77DE890066056C</key>
 		<dict>
 			<key>primary</key>
 			<true/>

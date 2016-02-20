@@ -1,7 +1,7 @@
 #ifndef SCGRAPH_FACE_HH
 #define SCGRAPH_FACE_HH
 
-#include "ofColor.h"
+#include "scgcolor.h"
 #include "material.h"
 #include "ofVec3f.h"
 #include "ofVec2f.h"
@@ -41,7 +41,7 @@ struct Face : public DeepCopyable
 	/** use this color vector if you use per vertex color.
 	    in the other case use the per face color below.
 	     if this is nonempty it has to have the same size as _vertices */
-	std::vector<ofColor>     _colors;
+	std::vector<scgColor>     _colors;
 	float _alpha_mul;
 
 	/** set to true if you want to specify colors per vertex */
@@ -49,7 +49,7 @@ struct Face : public DeepCopyable
 
 	/** this is the single color used to draw the face when lighting
 	    is disabled and _per_vertex_colors is false */
-	ofColor                  _face_color;
+	scgColor                  _face_color;
 
 
 	Material                   _material;

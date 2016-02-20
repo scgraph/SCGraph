@@ -3,10 +3,10 @@
 
 #include "../unit.h"
 #include "../string_pool.h"
-
+/*
 #include <QString>
 #include <QFont>
-
+*/
 
 class Textfield : public GUnit
 {

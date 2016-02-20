@@ -36,7 +36,7 @@ Line::Line () :
 	face.touch()->_vertices.push_back (ofVec3f ());
 	face.touch()->_vertices.push_back (ofVec3f ());
 
-	face.touch()->_face_color = ofColor (1,1,1,1);
+	face.touch()->_face_color = scgColor (1,1,1,1);
 
 	_g.touch()->_faces.push_back (face);
 
@@ -55,8 +55,8 @@ void Line::process_g (double delta_t)
 
 	for (size_t i = 0; i < 3; ++i)
 	{
-		_g.touch()->_faces[0].touch()->_vertices[0]._c[i] = *_control_ins[i + 1];
-		_g.touch()->_faces[0].touch()->_vertices[1]._c[i] = *_control_ins[i + 1 + 3];
+		_g.touch()->_faces[0].touch()->_vertices[0][i] = *_control_ins[i + 1];
+		_g.touch()->_faces[0].touch()->_vertices[1][i] = *_control_ins[i + 1 + 3];
 	}
 
 	_graphics_outs[0]._graphics.push_back(_g);

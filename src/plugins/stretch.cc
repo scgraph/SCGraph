@@ -39,9 +39,9 @@ void Stretch::visitTransformation (Transformation *t)
 {
 #if 0
 	// std::cout << "[Stretch]: visitTransformation" << std::endl;
-	Matrix m = t->_transformation_matrix;
+	ofMatrix4x4 m = t->_transformation_matrix;
 
-	Matrix stretch;
+	ofMatrix4x4 stretch;
 	// stretch.set_null ();
 	stretch.set_null ();
 	stretch.add_stretch (*_control_ins[1], *_control_ins[2], *_control_ins[3]);

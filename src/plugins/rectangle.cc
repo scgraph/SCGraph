@@ -31,7 +31,7 @@ Rectangle::Rectangle () :
 	cow_ptr<Face> face (new Face);
 	face.touch()->_geometry_type = Face::QUADS;
 
-	// face->_material._emissive_color._c[0] = 1.0;
+	// face->_material._emissive_color[0] = 1.0;
 
 	face.touch()->_vertices.push_back (ofVec3f ());
 	face.touch()->_normals.push_back (ofVec3f (0,0,1));
@@ -45,7 +45,7 @@ Rectangle::Rectangle () :
 	face.touch()->_vertices.push_back (ofVec3f ());
 	face.touch()->_normals.push_back (ofVec3f (0,0,1));
 
-	face.touch()->_face_color = ofColor (1,1,1,1);
+	face.touch()->_face_color = scgColor (1,1,1,1);
 
 	_g.touch()->_faces.push_back (face);
 	//_graphics_outs[0].touch()->_graphics.push_back(_g);
@@ -62,21 +62,21 @@ void Rectangle::process_g (double delta_t)
 
 	Face *f = _g.touch()->_faces[0].touch();
 
-	f->_vertices[0]._c[0] = - (*_control_ins[0])/2.0;
-	f->_vertices[0]._c[1] = - (*_control_ins[1])/2.0;
-	f->_vertices[0]._c[2] = 0;
+	f->_vertices[0][0] = - (*_control_ins[0])/2.0;
+	f->_vertices[0][1] = - (*_control_ins[1])/2.0;
+	f->_vertices[0][2] = 0;
 
-	f->_vertices[1]._c[0] = (*_control_ins[0])/2.0;
-	f->_vertices[1]._c[1] = - (*_control_ins[1])/2.0;
-	f->_vertices[1]._c[2] = 0;
+	f->_vertices[1][0] = (*_control_ins[0])/2.0;
+	f->_vertices[1][1] = - (*_control_ins[1])/2.0;
+	f->_vertices[1][2] = 0;
 
-	f->_vertices[2]._c[0] = (*_control_ins[0])/2.0;
-	f->_vertices[2]._c[1] = (*_control_ins[1])/2.0;
-	f->_vertices[2]._c[2] = 0;
+	f->_vertices[2][0] = (*_control_ins[0])/2.0;
+	f->_vertices[2][1] = (*_control_ins[1])/2.0;
+	f->_vertices[2][2] = 0;
 
-	f->_vertices[3]._c[0] = - (*_control_ins[0])/2.0;
-	f->_vertices[3]._c[1] = (*_control_ins[1])/2.0;
-	f->_vertices[3]._c[2] = 0;
+	f->_vertices[3][0] = - (*_control_ins[0])/2.0;
+	f->_vertices[3][1] = (*_control_ins[1])/2.0;
+	f->_vertices[3][2] = 0;
 
 	_graphics_outs[0]._graphics.push_back(_g);
 }

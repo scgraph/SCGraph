@@ -4,11 +4,7 @@
 #include "boost/shared_ptr.hpp"
 #include <vector>
 #include <string>
-/*
-#include <QtCore/QObject>
-#include <QtCore/QString>
 
- */
 #include "ofTrueTypeFont.h"
 
 class StringPool //: public QObject
@@ -32,8 +28,7 @@ class StringPool //: public QObject
 		unsigned int change_string (const std::string &str, unsigned int index);
 
 		ofTrueTypeFont* _font;
-                //FTBufferFont* _font;
-                //FTTextureFont* _font;
+    
 		void set_font(const std::string &filename);
 
 		/** if the index is -1, we simply add it to the end of the list */

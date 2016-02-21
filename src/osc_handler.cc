@@ -3,10 +3,7 @@
 
 #include "shader_pool.h"
 #include "texture_pool.h"
-
-#ifdef HAVE_FTGL
 #include "string_pool.h"
-#endif
 
 #include <iostream>
 #include <stdexcept>
@@ -369,19 +366,14 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 	{
 		case cmd_quit:
 		{
-			// TODO QReadLocker locker (&scgraph->_read_write_lock);
+            send_done("/quit", msg->_endpoint_name);
 
-			send_done("/quit", msg->_endpoint_name);
-
-			// TODO QApplication::instance()->exit ();
+            ofExit();
 			// we are done anyways
-			//pthread_mutex_unlock (&_mutex);
 			std::cout << "[OscHandler]: cmd_quit()" << std::endl;
-			// return;
 		}
 		break;
 
-#ifdef HAVE_FTGL
 		case cmd_setFont:
 			{
 				osc::ReceivedMessage::const_iterator arg = message->ArgumentsBegin();
@@ -395,7 +387,7 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 						if (options->_verbose >= 2)
 							std::cout << "[OscHandler]: /setFont " << tmp << std::endl;
 
-						QWriteLocker locker (&scgraph->_read_write_lock);
+						//QWriteLocker locker (&scgraph->_read_write_lock);
 						StringPool::get_instance()->set_font(tmp);
 						//send_notifications ("/n_go", synth->_id);
 	
@@ -461,9 +453,11 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 						if (options->_verbose >= 2)
 							std::cout << "[OscHandler]: /addString " << tmp << std::endl;
 
-						QReadLocker locker (&scgraph->_read_write_lock);
+						//QReadLocker locker (&scgraph->_read_write_lock);
+                        //scgraph->lock_for_read();
 						StringPool::get_instance()->add_string(tmp, -1);
 						//send_notifications ("/n_go", synth->_id);
+                        //scgraph->unlock();
 	
 					}
 				catch (const char* error)
@@ -478,7 +472,6 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 			}
 			
 		break;
-#endif
 
 		case cmd_clearShaderPrograms:
 		{

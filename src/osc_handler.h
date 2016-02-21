@@ -16,6 +16,7 @@
 
 #include "ofEvent.h"
 #include "ofThread.h"
+#include "ofAppRunner.h"
 
 /* if you modify this, do the same to the command_name_to_int () method */
 enum {

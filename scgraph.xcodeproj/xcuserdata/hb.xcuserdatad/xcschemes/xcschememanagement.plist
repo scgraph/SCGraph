@@ -214,6 +214,11 @@
 			<key>orderHint</key>
 			<integer>41</integer>
 		</dict>
+		<key>tube copy.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
@@ -248,6 +253,11 @@
 			<true/>
 		</dict>
 		<key>276287291C7607BF0070C59C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>276F65891C793BB7009C7248</key>
 		<dict>
 			<key>primary</key>
 			<true/>

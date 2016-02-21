@@ -217,6 +217,7 @@ void GLApp::setup() {
         fprintf(stderr, "Error: %s\n", glewGetErrorString(err));
     }
      */
+    ofSetEscapeQuitsApp(false);
     ofSetWindowShape (SCGRAPH_QT_GL_RENDERER_DEFAULT_WIDTH,
                       SCGRAPH_QT_GL_RENDERER_DEFAULT_HEIGHT);
 
@@ -1215,11 +1216,11 @@ void GLRenderer::visitTextConst (const Text *t)
 		glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
 	}
 
-#ifdef HAVE_FTGL
 	StringPool *str = StringPool::get_instance();
-	str->_font->FaceSize(t->_fontsize);
-	str->_font->Render(t->_text.c_str());
-#endif
+//	str->_font->FaceSize(t->_fontsize);
+//	str->_font->Render(t->_text.c_str());
+    str->_font->drawStringAsShapes(t->_text, 0, 0);
+
     if (*_control_ins[LIGHTING] > 0.5)
         ma.end();
 

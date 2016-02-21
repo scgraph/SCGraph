@@ -9,9 +9,7 @@
 #include "../graphics_visitor.h"
 #include "../texture_pool.h"
 
-#ifdef HAVE_FTGL
 #include "../string_pool.h"
-#endif
 
 #include <unordered_map>
 #include <list>

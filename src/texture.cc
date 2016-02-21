@@ -137,17 +137,16 @@ void ImageTexture::set_pixel(unsigned int pindex, int32_t color) {
 	_texture->set_pixel( pindex,  color);
 }
 
-int ImageTexture::load(const std::string &filename) {
-	_filename = filename;
+int ImageTexture::load(const std::string &_filename) {
 	Options *options = Options::get_instance ();
 
 	try {
 
-		const char * tmp = _filename.c_str();
         ofImage image = *new ofImage();
-        image.load(tmp);
+        //image.setUseTexture(false);
+        Boolean loaded = image.load(_filename);
 
-		if(image.isAllocated()) {
+		if(loaded) {
 			// TODO put this somewhere else
 			std::cout << "  [TexturePool]: Unrecognized Image Format. No texture loaded." 
 					  << std::endl;
@@ -160,7 +159,7 @@ int ImageTexture::load(const std::string &filename) {
 			return -1;
 		}
 		else {
-			if(image.isAllocated()) {
+			if(!loaded) {
 				std::cout 
 					<< "  [TexturePool]: Unable to convert image to GL format."
 					<< "No texture loaded." 
@@ -168,25 +167,25 @@ int ImageTexture::load(const std::string &filename) {
 				return -1;
 			}
 			else {		
-				int im_width, im_height, tex_width, tex_height;
-
+                int im_width, im_height;//, tex_width, tex_height;
+                
 				im_width = image.getWidth();
 				im_height = image.getHeight();
 
-				tex_width =  (int)pow(2,(int)ceil(log2(im_width)));
-				tex_height = (int)pow(2,(int)ceil(log2(im_height)));
+				//tex_width =  (int)pow(2,(int)ceil(log2(im_width)));
+				//tex_height = (int)pow(2,(int)ceil(log2(im_height)));
 
-				boost::shared_ptr<Texture> t(new Texture (tex_width, tex_height, 4));
+				boost::shared_ptr<ofTexture> _texture(&image.getTexture());
 
 				if (options->_verbose >= 2)	{
-					std::cout << "  [TexturePool]: Texture Width/Height: " << tex_width 
-							  << "/" << tex_height << std::endl;
+					//std::cout << "  [TexturePool]: Texture Width/Height: " << tex_width
+					//		  << "/" << tex_height << std::endl;
 					std::cout << "  [TexturePool]: Image source Width/Height: " << im_width 
 							  << "/" << im_height << std::endl;
 				}
 
 				// std::cout << width << " " << height << std::endl;
-	
+	/*
 				for (int i = 0; i < im_width; ++i)	{
 					for (int j = 0; j < im_height; ++j)	{
 						// swap image
@@ -200,6 +199,7 @@ int ImageTexture::load(const std::string &filename) {
 					}
 				}
 				_texture = t;
+     */
 				return 0;
 			}
 		}

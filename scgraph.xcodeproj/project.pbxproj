@@ -27,6 +27,7 @@
 				278965871C77DEC10066056C /* PBXTargetDependency */,
 				274A02E11C77E16F0045A84A /* PBXTargetDependency */,
 				278965891C77DEC10066056C /* PBXTargetDependency */,
+				276F65951C793BD7009C7248 /* PBXTargetDependency */,
 				2789658B1C77DEC10066056C /* PBXTargetDependency */,
 				2789658D1C77DEC10066056C /* PBXTargetDependency */,
 				2789658F1C77DEC10066056C /* PBXTargetDependency */,
@@ -130,6 +131,8 @@
 		2762870A1C75E0660070C59C /* lighting.cc in Sources */ = {isa = PBXBuildFile; fileRef = 27EC551E1C75BF96001F63F1 /* lighting.cc */; };
 		276287141C75E23C0070C59C /* material.cc in Sources */ = {isa = PBXBuildFile; fileRef = 27EC55221C75BF96001F63F1 /* material.cc */; };
 		276287321C7607CC0070C59C /* cube.cc in Sources */ = {isa = PBXBuildFile; fileRef = 27EC55111C75BF96001F63F1 /* cube.cc */; };
+		276F65931C793BCA009C7248 /* stretch.cc in Sources */ = {isa = PBXBuildFile; fileRef = 27EC55381C75BF96001F63F1 /* stretch.cc */; };
+		276F65961C793C08009C7248 /* stretch.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 276F65911C793BB7009C7248 /* stretch.bundle */; };
 		27833ACC1C77DA7A00AE483E /* scgcolor.cc in Sources */ = {isa = PBXBuildFile; fileRef = 2761B9D41C7479510028B491 /* scgcolor.cc */; };
 		27833AD61C77DB2300AE483E /* binary_op.cc in Sources */ = {isa = PBXBuildFile; fileRef = 27EC55041C75BF96001F63F1 /* binary_op.cc */; };
 		27833AE31C77DC1F00AE483E /* blending.cc in Sources */ = {isa = PBXBuildFile; fileRef = 27EC55061C75BF96001F63F1 /* blending.cc */; };
@@ -225,6 +228,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 276287291C7607BF0070C59C;
 			remoteInfo = cube;
+		};
+		276F65941C793BD7009C7248 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E4B69B4C0A3A1720003C02F2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 276F65891C793BB7009C7248;
+			remoteInfo = stretch;
 		};
 		27833AD71C77DB5B00AE483E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -445,6 +455,7 @@
 			dstPath = /usr/local/lib/scgraph/plugins;
 			dstSubfolderSpec = 0;
 			files = (
+				276F65961C793C08009C7248 /* stretch.bundle in CopyFiles */,
 				273D8D961C772F4700C01414 /* gl_renderer.bundle in CopyFiles */,
 				273D8D971C772F4700C01414 /* lighting.bundle in CopyFiles */,
 				273D8D981C772F4700C01414 /* material.bundle in CopyFiles */,
@@ -509,6 +520,15 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		2762872D1C7607BF0070C59C /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 12;
+			dstPath = /usr/local/lib/scgraph/plugins;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		276F658D1C793BB7009C7248 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 12;
 			dstPath = /usr/local/lib/scgraph/plugins;
@@ -885,6 +905,7 @@
 		276287091C75E0570070C59C /* lighting.bundle */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = lighting.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		276287131C75E22F0070C59C /* material.bundle */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = material.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		276287311C7607BF0070C59C /* cube.bundle */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = cube.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		276F65911C793BB7009C7248 /* stretch.bundle */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = stretch.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		27833AD51C77DB1200AE483E /* binary_op.bundle */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = binary_op.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		27833AE21C77DC1600AE483E /* blending.bundle */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = blending.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		27833AEC1C77DC2800AE483E /* bordered_rectangle.bundle */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = bordered_rectangle.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1051,6 +1072,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		2762872C1C7607BF0070C59C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		276F658C1C793BB7009C7248 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1496,6 +1524,7 @@
 				278965641C77DE7D0066056C /* triangle.bundle */,
 				2789656E1C77DE890066056C /* tube.bundle */,
 				274A02DE1C77E14E0045A84A /* color.bundle */,
+				276F65911C793BB7009C7248 /* stretch.bundle */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1712,6 +1741,23 @@
 			name = cube;
 			productName = color;
 			productReference = 276287311C7607BF0070C59C /* cube.bundle */;
+			productType = "com.apple.product-type.tool";
+		};
+		276F65891C793BB7009C7248 /* stretch */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 276F658E1C793BB7009C7248 /* Build configuration list for PBXNativeTarget "stretch" */;
+			buildPhases = (
+				276F658A1C793BB7009C7248 /* Sources */,
+				276F658C1C793BB7009C7248 /* Frameworks */,
+				276F658D1C793BB7009C7248 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = stretch;
+			productName = color;
+			productReference = 276F65911C793BB7009C7248 /* stretch.bundle */;
 			productType = "com.apple.product-type.tool";
 		};
 		27833ACD1C77DB1200AE483E /* binary_op */ = {
@@ -2270,11 +2316,11 @@
 			targets = (
 				E4B69B5A0A3A1756003C02F2 /* scgraph */,
 				276287151C7601160070C59C /* Plugins */,
+				273D8D8D1C772F3A00C01414 /* install_plugins */,
 				27EC556F1C75C5C5001F63F1 /* gl_renderer */,
 				276287011C75E0570070C59C /* lighting */,
 				2762870B1C75E22F0070C59C /* material */,
 				276287291C7607BF0070C59C /* cube */,
-				273D8D8D1C772F3A00C01414 /* install_plugins */,
 				27833ACD1C77DB1200AE483E /* binary_op */,
 				27833ADA1C77DC1600AE483E /* blending */,
 				27833AE41C77DC2800AE483E /* bordered_rectangle */,
@@ -2304,6 +2350,7 @@
 				2789655C1C77DE7D0066056C /* triangle */,
 				278965661C77DE890066056C /* tube */,
 				274A02D61C77E14E0045A84A /* color */,
+				276F65891C793BB7009C7248 /* stretch */,
 			);
 		};
 /* End PBXProject section */
@@ -2384,6 +2431,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				276287321C7607CC0070C59C /* cube.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		276F658A1C793BB7009C7248 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				276F65931C793BCA009C7248 /* stretch.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2625,7 +2680,6 @@
 			files = (
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
 				E4B69E210A3A1BDC003C02F2 /* ofApp.cpp in Sources */,
-				2761B9F71C7479520028B491 /* string_pool.cc in Sources */,
 				2761B9F91C7479520028B491 /* synthdef_file.cc in Sources */,
 				2761B9E71C7479520028B491 /* hvector_3d.cc in Sources */,
 				2761B9E11C7479520028B491 /* face.cc in Sources */,
@@ -2633,6 +2687,7 @@
 				2761B9E61C7479520028B491 /* group.cc in Sources */,
 				2761B9FE1C7479520028B491 /* transformation_command_visitor.cc in Sources */,
 				2761B9EB1C7479520028B491 /* material.cc in Sources */,
+				2761B9F71C7479520028B491 /* string_pool.cc in Sources */,
 				2761BA011C7479520028B491 /* unit.cc in Sources */,
 				72A929D3561B8232A182ABFC /* ofxOscBundle.cpp in Sources */,
 				2761B9ED1C7479520028B491 /* node_tree.cc in Sources */,
@@ -2716,6 +2771,11 @@
 			isa = PBXTargetDependency;
 			target = 276287291C7607BF0070C59C /* cube */;
 			targetProxy = 276287331C7607E30070C59C /* PBXContainerItemProxy */;
+		};
+		276F65951C793BD7009C7248 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 276F65891C793BB7009C7248 /* stretch */;
+			targetProxy = 276F65941C793BD7009C7248 /* PBXContainerItemProxy */;
 		};
 		27833AD81C77DB5B00AE483E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -3304,6 +3364,104 @@
 			name = Debug;
 		};
 		276287301C7607BF0070C59C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				EXECUTABLE_EXTENSION = "";
+				EXECUTABLE_SUFFIX = .bundle;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_FMODEX = "";
+				LIB_FMODEX = "";
+				MACH_O_TYPE = mh_bundle;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = (
+					"$(OF_CORE_FRAMEWORKS)",
+					"$(OF_CORE_LIBS)",
+					../../../addons/ofxAssimpModelLoader/libs/assimp/lib/osx/assimp.a,
+					"$(SCG_PLUGIN_LIBS)",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		276F658F1C793BB7009C7248 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				EXECUTABLE_EXTENSION = "";
+				EXECUTABLE_SUFFIX = .bundle;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_FMODEX = "";
+				LIB_FMODEX = "";
+				MACH_O_TYPE = mh_bundle;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = (
+					"$(OF_CORE_FRAMEWORKS)",
+					"$(OF_CORE_LIBS)",
+					../../../addons/ofxAssimpModelLoader/libs/assimp/lib/osx/assimp.a,
+					"$(SCG_PLUGIN_LIBS)",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		276F65901C793BB7009C7248 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -6500,6 +6658,15 @@
 			buildConfigurations = (
 				2762872F1C7607BF0070C59C /* Debug */,
 				276287301C7607BF0070C59C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		276F658E1C793BB7009C7248 /* Build configuration list for PBXNativeTarget "stretch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				276F658F1C793BB7009C7248 /* Debug */,
+				276F65901C793BB7009C7248 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

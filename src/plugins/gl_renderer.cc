@@ -301,7 +301,6 @@ GLRenderer::GLRenderer () :
 	_rot_x (0),
 	_rot_y (0),
 	_window_title("[ScGraph]: GGLRenderer - Press F1 for help"),
-	// TODO font (QFont()),
 	_feedback (0),
 	_fbcounter (0),
 	_max_feedback_frames (SCGRAPH_QT_GL_RENDERER_MAXMAX_FEEDBACK_FRAMES + 1),
@@ -322,32 +321,13 @@ GLRenderer::GLRenderer () :
 
 	std::cout << "[GLRenderer]: constructor" << std::endl;
 
-    /* TODO
 	// set up display texts
-	font.setPixelSize(10);
 
-	directions << "eye" << "center" << "up";
+    directions = {"eye", "center", "up"};
 
-	axisnames << "x" << "y" << "z";
+    axisnames = {"x", "y", "z"};
 
-	offsets.append(EYE);
-	offsets.append(CENTER);
-	offsets.append(UP);
-
-	helptexts << "F1 or H - this help"
-			  << "Clicking the little X - kill the node containing this GLRenderer"
-			  << "R - reset view"		
-			  << "I - show info"
-			  << "F or double click - toggle fullscreen"
-			  << "S - screenshot"
-			  << "M - toggle recording"
-			  << "UPARROW - forward"
-			  << "DOWNARROW - backward"
-			  << "RIGHTARROW - right"
-			  << "LEFTARROW - left"
-			  << "SHIFT-UPARROW - up"
-			  << "SHIFT-DOWNARROW - down";
-     */
+    offsets = {EYE, CENTER, UP};
     
     helptext = std::string("F1 or H - this help\n")
     + "Clicking the little X - kill the node containing this GLRenderer\n"
@@ -389,8 +369,6 @@ GLRenderer::GLRenderer () :
 			 SLOT(change_shader_programs()), 
 			 Qt::QueuedConnection);
 */
-	//	_gl_widget->makeCurrent();
-
 #if 0
 	change_textures ();
 
@@ -1131,7 +1109,7 @@ void GLRenderer::visitGeometryConst (const Geometry *g)
 
 void GLRenderer::visitTranslationConst (const Translation *t)
 {
-	glTranslatef (t->_translation_vector[0], t->_translation_vector[1], t->_translation_vector[2]);
+	ofTranslate(t->_translation_vector);
 }
 
 void GLRenderer::visitRotationConst (const Rotation *r)
@@ -1141,7 +1119,7 @@ void GLRenderer::visitRotationConst (const Rotation *r)
 
 void GLRenderer::visitScaleConst (const Scale *s)
 {
-	glScalef (s->_scaling_vector[0], s->_scaling_vector[1], s->_scaling_vector[2]);
+	ofScale(s->_scaling_vector);
 }
 
 void GLRenderer::visitLinearConst (const Linear *l)
@@ -1156,7 +1134,6 @@ void GLRenderer::visitTransformationConst (const Transformation *t)
 	{
 		(*it)->acceptConst (this);
 	}
-	// glMultMatrixf (g->_transformation_matrix.get_coefficients());
 }
 
 
@@ -1555,7 +1532,7 @@ void GLRenderer::really_process_g (double delta_t)
 		glActiveTexture(_past_frame_handles[_fbcounter]);
         glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16, 0, 0,
                          _main_window->getWidth(), _main_window->getHeight(), 0);
-		//std::cout << "GL error message:" << glGetError() << std::endl; 
+		std::cout << "GL error message:" << glGetError() << std::endl;
 		_feedback = 0;
 	}
 	_fbcounter = (_fbcounter + 1) % _max_feedback_frames;
@@ -1564,47 +1541,27 @@ void GLRenderer::really_process_g (double delta_t)
     
     _camera.end();
     
-	if (_show_help)
-	{
-		int y_offset = 20;
-
-		glColor3f (1, 1, 1);
+	if (_show_help)	{
         ofSetColor(scgColor::white);
-        _main_window->renderer()->drawString(helptext, 10, y_offset, 0);
-/* TODO
-		QStringList::const_iterator constIterator;
-		for (constIterator = helptexts.constBegin(); 
-			 _show_help && (constIterator != helptexts.constEnd());
-			 ++constIterator)
-			{
-				_gl_widget->renderText (10, y_offset, *constIterator, font);
-				y_offset += 13;
-			}
- */
+        _main_window->renderer()->drawString(helptext, 10, 20, 0);
 	}
 
-	if (_show_info)
-	{
+	if (_show_info)	{
 		_show_help = false;
-
-		glColor3f (1, 1, 1);
-/* TODO
-		for(unsigned char dir = 0; _show_info && (dir < 3); dir++) {
-			for(unsigned char axis = 0; _show_info && (axis < 3); axis++) {
-				if(_show_info)
-					_gl_widget->renderText(10, 
-									   ((dir * 3) + (axis + 1)) * 13, 
-									   QString("%1_%2: %3")
-									   .arg(directions.at(dir))
-									   .arg(axisnames.at(axis))
-									   .arg(*_control_ins[offsets.at(dir) + axis]),
-									   font);
+        
+        ofSetColor(scgColor::white);
+        for(unsigned char dir = 0; _show_info && (dir < 3); dir++) {
+            for(unsigned char axis = 0; _show_info && (axis < 3); axis++) {
+                _main_window->renderer()->drawString(
+                                                     directions[dir] + "_"
+                                                         + axisnames[axis]
+                                                         + ": "
+                                                     + to_string(*_control_ins[offsets.at(dir) + axis]),
+                                        10,
+                                        ((dir * 3) + (axis + 1)) * 13, 0);
 			}
- 
 		}
- */
-	}
-
+    }
 }
 
 

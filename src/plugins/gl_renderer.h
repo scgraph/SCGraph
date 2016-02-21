@@ -14,6 +14,7 @@
 #endif
 
 #include <unordered_map>
+#include <list>
 
 #include "../shader_pool.h"
 
@@ -201,11 +202,10 @@ class GLRenderer : public GUnit,
 	float             _rot_y;
 
 	string _window_title;
-/* TODO
-	QStringList directions, axisnames, helptexts;
-	QList<int> offsets;
-	QFont font;
-*/
+
+    std::array<string, 3> directions, axisnames;
+    std::array<int, 3> offsets;
+    
     string helptext;
 	unsigned int _feedback;
 	unsigned int _fbcounter;

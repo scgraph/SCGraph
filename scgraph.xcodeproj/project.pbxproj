@@ -33,11 +33,9 @@
 				2789658F1C77DEC10066056C /* PBXTargetDependency */,
 				278965911C77DEC10066056C /* PBXTargetDependency */,
 				278965931C77DEC10066056C /* PBXTargetDependency */,
-				278965951C77DEC10066056C /* PBXTargetDependency */,
 				278965971C77DEC10066056C /* PBXTargetDependency */,
 				278965991C77DEC10066056C /* PBXTargetDependency */,
 				2789659B1C77DEC10066056C /* PBXTargetDependency */,
-				2789659D1C77DEC10066056C /* PBXTargetDependency */,
 				2789659F1C77DEC10066056C /* PBXTargetDependency */,
 				278965A11C77DEC10066056C /* PBXTargetDependency */,
 				278965A31C77DEC10066056C /* PBXTargetDependency */,
@@ -80,11 +78,9 @@
 		274A02F21C77E6B50045A84A /* render_mode.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 278965001C77DDBA0066056C /* render_mode.bundle */; };
 		274A02F31C77E6B50045A84A /* rotate.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2789650A1C77DDC70066056C /* rotate.bundle */; };
 		274A02F41C77E6B50045A84A /* shader_program.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 278965141C77DDD20066056C /* shader_program.bundle */; };
-		274A02F51C77E6B50045A84A /* sphere.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2789651E1C77DDE30066056C /* sphere.bundle */; };
 		274A02F61C77E6B50045A84A /* sum3.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 278965281C77DE300066056C /* sum3.bundle */; };
 		274A02F71C77E6B50045A84A /* sum4.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 278965321C77DE440066056C /* sum4.bundle */; };
 		274A02F81C77E6B50045A84A /* text.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2789653C1C77DE4F0066056C /* text.bundle */; };
-		274A02F91C77E6B50045A84A /* torus.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 278965461C77DE590066056C /* torus.bundle */; };
 		274A02FA1C77E6B50045A84A /* transformation.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 278965501C77DE640066056C /* transformation.bundle */; };
 		274A02FB1C77E6B50045A84A /* translate.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2789655A1C77DE710066056C /* translate.bundle */; };
 		274A02FC1C77E6B50045A84A /* triangle.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 278965641C77DE7D0066056C /* triangle.bundle */; };
@@ -153,11 +149,9 @@
 		278965011C77DDC20066056C /* render_mode.cc in Sources */ = {isa = PBXBuildFile; fileRef = 27EC55301C75BF96001F63F1 /* render_mode.cc */; };
 		2789650B1C77DDCE0066056C /* rotate.cc in Sources */ = {isa = PBXBuildFile; fileRef = 27EC55321C75BF96001F63F1 /* rotate.cc */; };
 		278965151C77DDDB0066056C /* shader_program.cc in Sources */ = {isa = PBXBuildFile; fileRef = 27EC55341C75BF96001F63F1 /* shader_program.cc */; };
-		2789651F1C77DDF30066056C /* sphere.cc in Sources */ = {isa = PBXBuildFile; fileRef = 27EC55361C75BF96001F63F1 /* sphere.cc */; };
 		278965291C77DE400066056C /* sum3.cc in Sources */ = {isa = PBXBuildFile; fileRef = 27EC553A1C75BF96001F63F1 /* sum3.cc */; };
 		278965331C77DE4B0066056C /* sum4.cc in Sources */ = {isa = PBXBuildFile; fileRef = 27EC553C1C75BF96001F63F1 /* sum4.cc */; };
 		2789653D1C77DE550066056C /* text.cc in Sources */ = {isa = PBXBuildFile; fileRef = 27EC553E1C75BF96001F63F1 /* text.cc */; };
-		278965471C77DE600066056C /* torus.cc in Sources */ = {isa = PBXBuildFile; fileRef = 27EC55401C75BF96001F63F1 /* torus.cc */; };
 		278965511C77DE6C0066056C /* transformation.cc in Sources */ = {isa = PBXBuildFile; fileRef = 27EC55421C75BF96001F63F1 /* transformation.cc */; };
 		2789655B1C77DE780066056C /* translate.cc in Sources */ = {isa = PBXBuildFile; fileRef = 27EC55441C75BF96001F63F1 /* translate.cc */; };
 		278965651C77DE850066056C /* triangle.cc in Sources */ = {isa = PBXBuildFile; fileRef = 27EC55461C75BF96001F63F1 /* triangle.cc */; };
@@ -369,13 +363,6 @@
 			remoteGlobalIDString = 2789650C1C77DDD20066056C;
 			remoteInfo = shader_program;
 		};
-		278965941C77DEC10066056C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E4B69B4C0A3A1720003C02F2 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 278965161C77DDE30066056C;
-			remoteInfo = sphere;
-		};
 		278965961C77DEC10066056C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E4B69B4C0A3A1720003C02F2 /* Project object */;
@@ -396,13 +383,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 278965341C77DE4F0066056C;
 			remoteInfo = text;
-		};
-		2789659C1C77DEC10066056C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E4B69B4C0A3A1720003C02F2 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 2789653E1C77DE590066056C;
-			remoteInfo = torus;
 		};
 		2789659E1C77DEC10066056C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -479,11 +459,9 @@
 				274A02F21C77E6B50045A84A /* render_mode.bundle in CopyFiles */,
 				274A02F31C77E6B50045A84A /* rotate.bundle in CopyFiles */,
 				274A02F41C77E6B50045A84A /* shader_program.bundle in CopyFiles */,
-				274A02F51C77E6B50045A84A /* sphere.bundle in CopyFiles */,
 				274A02F61C77E6B50045A84A /* sum3.bundle in CopyFiles */,
 				274A02F71C77E6B50045A84A /* sum4.bundle in CopyFiles */,
 				274A02F81C77E6B50045A84A /* text.bundle in CopyFiles */,
-				274A02F91C77E6B50045A84A /* torus.bundle in CopyFiles */,
 				274A02FA1C77E6B50045A84A /* transformation.bundle in CopyFiles */,
 				274A02FB1C77E6B50045A84A /* translate.bundle in CopyFiles */,
 				274A02FC1C77E6B50045A84A /* triangle.bundle in CopyFiles */,
@@ -708,15 +686,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		2789651A1C77DDE30066056C /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 12;
-			dstPath = /usr/local/lib/scgraph/plugins;
-			dstSubfolderSpec = 0;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		278965241C77DE300066056C /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 12;
@@ -736,15 +705,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		278965381C77DE4F0066056C /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 12;
-			dstPath = /usr/local/lib/scgraph/plugins;
-			dstSubfolderSpec = 0;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		278965421C77DE590066056C /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 12;
 			dstPath = /usr/local/lib/scgraph/plugins;
@@ -925,11 +885,9 @@
 		278965001C77DDBA0066056C /* render_mode.bundle */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = render_mode.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		2789650A1C77DDC70066056C /* rotate.bundle */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = rotate.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		278965141C77DDD20066056C /* shader_program.bundle */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = shader_program.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
-		2789651E1C77DDE30066056C /* sphere.bundle */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = sphere.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		278965281C77DE300066056C /* sum3.bundle */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = sum3.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		278965321C77DE440066056C /* sum4.bundle */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = sum4.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		2789653C1C77DE4F0066056C /* text.bundle */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = text.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
-		278965461C77DE590066056C /* torus.bundle */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = torus.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		278965501C77DE640066056C /* transformation.bundle */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = transformation.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		2789655A1C77DE710066056C /* translate.bundle */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = translate.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		278965641C77DE7D0066056C /* triangle.bundle */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = triangle.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1218,13 +1176,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		278965191C77DDE30066056C /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		278965231C77DE300066056C /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -1240,13 +1191,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		278965371C77DE4F0066056C /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		278965411C77DE590066056C /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1514,11 +1458,9 @@
 				278965001C77DDBA0066056C /* render_mode.bundle */,
 				2789650A1C77DDC70066056C /* rotate.bundle */,
 				278965141C77DDD20066056C /* shader_program.bundle */,
-				2789651E1C77DDE30066056C /* sphere.bundle */,
 				278965281C77DE300066056C /* sum3.bundle */,
 				278965321C77DE440066056C /* sum4.bundle */,
 				2789653C1C77DE4F0066056C /* text.bundle */,
-				278965461C77DE590066056C /* torus.bundle */,
 				278965501C77DE640066056C /* transformation.bundle */,
 				2789655A1C77DE710066056C /* translate.bundle */,
 				278965641C77DE7D0066056C /* triangle.bundle */,
@@ -2083,23 +2025,6 @@
 			productReference = 278965141C77DDD20066056C /* shader_program.bundle */;
 			productType = "com.apple.product-type.tool";
 		};
-		278965161C77DDE30066056C /* sphere */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 2789651B1C77DDE30066056C /* Build configuration list for PBXNativeTarget "sphere" */;
-			buildPhases = (
-				278965171C77DDE30066056C /* Sources */,
-				278965191C77DDE30066056C /* Frameworks */,
-				2789651A1C77DDE30066056C /* CopyFiles */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = sphere;
-			productName = color;
-			productReference = 2789651E1C77DDE30066056C /* sphere.bundle */;
-			productType = "com.apple.product-type.tool";
-		};
 		278965201C77DE300066056C /* sum3 */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 278965251C77DE300066056C /* Build configuration list for PBXNativeTarget "sum3" */;
@@ -2149,23 +2074,6 @@
 			name = text;
 			productName = color;
 			productReference = 2789653C1C77DE4F0066056C /* text.bundle */;
-			productType = "com.apple.product-type.tool";
-		};
-		2789653E1C77DE590066056C /* torus */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 278965431C77DE590066056C /* Build configuration list for PBXNativeTarget "torus" */;
-			buildPhases = (
-				2789653F1C77DE590066056C /* Sources */,
-				278965411C77DE590066056C /* Frameworks */,
-				278965421C77DE590066056C /* CopyFiles */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = torus;
-			productName = color;
-			productReference = 278965461C77DE590066056C /* torus.bundle */;
 			productType = "com.apple.product-type.tool";
 		};
 		278965481C77DE640066056C /* transformation */ = {
@@ -2340,11 +2248,9 @@
 				278964F81C77DDBA0066056C /* render_mode */,
 				278965021C77DDC70066056C /* rotate */,
 				2789650C1C77DDD20066056C /* shader_program */,
-				278965161C77DDE30066056C /* sphere */,
 				278965201C77DE300066056C /* sum3 */,
 				2789652A1C77DE440066056C /* sum4 */,
 				278965341C77DE4F0066056C /* text */,
-				2789653E1C77DE590066056C /* torus */,
 				278965481C77DE640066056C /* transformation */,
 				278965521C77DE710066056C /* translate */,
 				2789655C1C77DE7D0066056C /* triangle */,
@@ -2594,14 +2500,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		278965171C77DDE30066056C /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2789651F1C77DDF30066056C /* sphere.cc in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		278965211C77DE300066056C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2623,14 +2521,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				2789653D1C77DE550066056C /* text.cc in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2789653F1C77DE590066056C /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				278965471C77DE600066056C /* torus.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2872,11 +2762,6 @@
 			target = 2789650C1C77DDD20066056C /* shader_program */;
 			targetProxy = 278965921C77DEC10066056C /* PBXContainerItemProxy */;
 		};
-		278965951C77DEC10066056C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 278965161C77DDE30066056C /* sphere */;
-			targetProxy = 278965941C77DEC10066056C /* PBXContainerItemProxy */;
-		};
 		278965971C77DEC10066056C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 278965201C77DE300066056C /* sum3 */;
@@ -2891,11 +2776,6 @@
 			isa = PBXTargetDependency;
 			target = 278965341C77DE4F0066056C /* text */;
 			targetProxy = 2789659A1C77DEC10066056C /* PBXContainerItemProxy */;
-		};
-		2789659D1C77DEC10066056C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 2789653E1C77DE590066056C /* torus */;
-			targetProxy = 2789659C1C77DEC10066056C /* PBXContainerItemProxy */;
 		};
 		2789659F1C77DEC10066056C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -5370,104 +5250,6 @@
 			};
 			name = Release;
 		};
-		2789651C1C77DDE30066056C /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "-";
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_TESTABILITY = YES;
-				EXECUTABLE_EXTENSION = "";
-				EXECUTABLE_SUFFIX = .bundle;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_FMODEX = "";
-				LIB_FMODEX = "";
-				MACH_O_TYPE = mh_bundle;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_LDFLAGS = (
-					"$(OF_CORE_FRAMEWORKS)",
-					"$(OF_CORE_LIBS)",
-					../../../addons/ofxAssimpModelLoader/libs/assimp/lib/osx/assimp.a,
-					"$(SCG_PLUGIN_LIBS)",
-				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		2789651D1C77DDE30066056C /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "-";
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				EXECUTABLE_EXTENSION = "";
-				EXECUTABLE_SUFFIX = .bundle;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_FMODEX = "";
-				LIB_FMODEX = "";
-				MACH_O_TYPE = mh_bundle;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = (
-					"$(OF_CORE_FRAMEWORKS)",
-					"$(OF_CORE_LIBS)",
-					../../../addons/ofxAssimpModelLoader/libs/assimp/lib/osx/assimp.a,
-					"$(SCG_PLUGIN_LIBS)",
-				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
 		278965261C77DE300066056C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -5716,104 +5498,6 @@
 			name = Debug;
 		};
 		2789653B1C77DE4F0066056C /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "-";
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				EXECUTABLE_EXTENSION = "";
-				EXECUTABLE_SUFFIX = .bundle;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_FMODEX = "";
-				LIB_FMODEX = "";
-				MACH_O_TYPE = mh_bundle;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = (
-					"$(OF_CORE_FRAMEWORKS)",
-					"$(OF_CORE_LIBS)",
-					../../../addons/ofxAssimpModelLoader/libs/assimp/lib/osx/assimp.a,
-					"$(SCG_PLUGIN_LIBS)",
-				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
-		278965441C77DE590066056C /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "-";
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_TESTABILITY = YES;
-				EXECUTABLE_EXTENSION = "";
-				EXECUTABLE_SUFFIX = .bundle;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_FMODEX = "";
-				LIB_FMODEX = "";
-				MACH_O_TYPE = mh_bundle;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_LDFLAGS = (
-					"$(OF_CORE_FRAMEWORKS)",
-					"$(OF_CORE_LIBS)",
-					../../../addons/ofxAssimpModelLoader/libs/assimp/lib/osx/assimp.a,
-					"$(SCG_PLUGIN_LIBS)",
-				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		278965451C77DE590066056C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -6842,15 +6526,6 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2789651B1C77DDE30066056C /* Build configuration list for PBXNativeTarget "sphere" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				2789651C1C77DDE30066056C /* Debug */,
-				2789651D1C77DDE30066056C /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		278965251C77DE300066056C /* Build configuration list for PBXNativeTarget "sum3" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -6874,15 +6549,6 @@
 			buildConfigurations = (
 				2789653A1C77DE4F0066056C /* Debug */,
 				2789653B1C77DE4F0066056C /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		278965431C77DE590066056C /* Build configuration list for PBXNativeTarget "torus" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				278965441C77DE590066056C /* Debug */,
-				278965451C77DE590066056C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

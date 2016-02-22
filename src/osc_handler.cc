@@ -34,8 +34,6 @@ OscHandler::OscHandler () :
 	try
 	{
         _socket = new osc::UdpListeningReceiveSocket (osc::IpEndpointName (osc::IpEndpointName::ANY_ADDRESS, options->_port), this);
-        //_receiver = new ofxOscReceiver;
-        //_receiver.setup(options->_port);
 	}
 	catch (std::runtime_error e)
 	{
@@ -46,51 +44,13 @@ OscHandler::OscHandler () :
 	// start ();
 }
 
-
-void OscHandler::threadedFunction()
-{
-    
-    Options *options = Options::get_instance ();
-    
-    bool done = false;
-    
-    while (!done)
-    {
-        // TODO: Fix this madness
-        if (options->_verbose >= 2)
-            std::cout << "[OscHandler]: Running!" << std::endl;
-        
-        try
-        {
-            std::cout << "." << std::endl;
-            
-            _socket->Run ();
-            std::cout << "......" << std::endl;
-            done = true;
-        }
-        catch (std::runtime_error e)
-        {
-            std::cout << "[OscHandler]: Something went wrong: " << e.what () << std::endl;
-            std::exit (EXIT_FAILURE);
-        }
-        catch (osc::MalformedMessageException e)
-        {
-            std::cout << "[OscHandler]: Error: Malformed message: " << e.what () << std::endl;
-        }
-        catch (osc::MalformedBundleException e)
-        {
-            std::cout << "[OscHandler]: Error: Malformed message: " << e.what () << std::endl;
-        }
-    }
-}
-
 OscHandler::~OscHandler ()
 {
 	stop();
 	delete _socket;
 }
 
-void OscHandler::run ()
+void OscHandler::threadedFunction()
 {
 	Options *options = Options::get_instance ();
 
@@ -151,11 +111,7 @@ void OscHandler::ProcessMessage (const osc::ReceivedMessage& message, const osc:
 
 	//std::cout << "path: " << message.AddressPattern () << std::endl;
 	// we use queued connection to get the message in the main qt thread context
-	//_condition_mutex.lock ();
-	//_handling_done = false;
-    handle_message(msg);
-
-	// TODO emit (message_received(msg));
+    _channel.send(msg);
 }
 
 
@@ -318,7 +274,6 @@ int OscHandler::command_name_to_int (const std::string& command_name)
 		return cmd_loadShaderProgram;
 	if (command_name == std::string("/clearShaderPrograms"))
 		return cmd_clearShaderPrograms;
-     
 	if (command_name == std::string("/addString"))
 		return cmd_addString;
 	if (command_name == std::string("/changeString"))
@@ -329,15 +284,13 @@ int OscHandler::command_name_to_int (const std::string& command_name)
 	return cmd_none;
 }
 
-
-// this slot is called in the context of the qapplication object due to the queued
+// this slot is called in the context of the ofapp object due to the queued
 // connection
 void OscHandler::handle_message_locked (OscMessage *msg)
 {
-	// std::cout << "handle message lcoked" << std::endl;
+	// std::cout << "handle message locked" << std::endl;
 
 	// std::cout << "Message received. Path: " << msg->_msg.AddressPattern () << std::endl;
-	// std::cout << "Message received. Path: " << std::endl;
 
 	osc::ReceivedMessage *message = &(msg->_msg);
 
@@ -389,7 +342,6 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 
 						//QWriteLocker locker (&scgraph->_read_write_lock);
 						StringPool::get_instance()->set_font(tmp);
-						//send_notifications ("/n_go", synth->_id);
 	
 					}
 				catch (const char* error)
@@ -422,9 +374,7 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 							std::cout << "[OscHandler]: /changeString " << tmp << std::endl;
 
 						//QWriteLocker locker (&scgraph->_read_write_lock);
-                        //lock();
 						StringPool::get_instance()->change_string(tmp, index);
-						//send_notifications ("/n_go", synth->_id);
 	
 					}
 				catch (const char* error)
@@ -454,11 +404,9 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 							std::cout << "[OscHandler]: /addString " << tmp << std::endl;
 
 						//QReadLocker locker (&scgraph->_read_write_lock);
-                        //scgraph->lock_for_read();
+
 						StringPool::get_instance()->add_string(tmp, -1);
-						//send_notifications ("/n_go", synth->_id);
-                        //scgraph->unlock();
-	
+
 					}
 				catch (const char* error)
 					{
@@ -942,8 +890,6 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 	
 				while (arg != message->ArgumentsEnd ())
 				{
-					//TODO: Notify sc-dev about wrong types
-					//std::cout << (*arg).TypeTag () << std::endl;
 					if ((*arg).TypeTag () == 's')
 					{
 						control_name = (char*)(*(arg++)).AsString ();
@@ -991,7 +937,6 @@ void OscHandler::handle_message_locked (OscMessage *msg)
                             if (name)
                                 std::cout << "[OscHandler]: Warning: Synth creation failed (SynthDef-name: \"" << name << "\"). Reason: " << ex.what() << std::endl;
                         }
-			//scgraph->unlock ();
 		}
 		break;
 
@@ -1005,8 +950,6 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 
 			while (arg != message->ArgumentsEnd ())
 			{
-				//TODO: Notify sc-dev about wrong types
-				//std::cout << (*arg).TypeTag () << std::endl;
 				if ((*arg).TypeTag () == 's')
 				{
 					std::string control_name = (char*)(*(arg++)).AsString ();
@@ -1189,7 +1132,6 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 				{
 					std::cout << "[OscHandler]: Error while parsing message: /b_read: " << e.what () << ". TypeTags: " << message->TypeTags() << std::endl;
 				}
-			//scgraph->unlock ();
 		}
 		break;
 
@@ -1245,7 +1187,6 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 				{
 					std::cout << "[OscHandler]: Error while parsing message: /b_allocRead: " << e.what () << ". TypeTags: " << message->TypeTags() << std::endl;
 				}
-			//scgraph->unlock ();
 		}
 		break;
 
@@ -1255,8 +1196,6 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 			osc::int32 bufnum;
 			try	{
 					bufnum = (*(arg++)).AsInt32 ();
-					//TexturePool::get_instance()->add_image(tmp,
-					//bufnum);
 
 					TexturePool *tp = TexturePool::get_instance();
 					boost::optional<boost::shared_ptr<AbstractTexture> > t = tp->get_texture(bufnum);
@@ -1291,7 +1230,6 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 				{
 					std::cout << "[OscHandler]: Error while parsing message: /b_query: " << e.what () << ". TypeTags: " << message->TypeTags() << std::endl;
 				}
-			//scgraph->unlock ();
 		}
 		break;
 
@@ -1342,7 +1280,6 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 				{
 					std::cout << "[OscHandler]: Error while parsing message: /b_zero: " << e.what () << ". TypeTags: " << message->TypeTags() << std::endl;
 				}
-			//scgraph->unlock ();
 		}
 		break;
 	
@@ -1477,7 +1414,7 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 		break;
 	}
 
-	// std::cout << "handle message lcoked end" << std::endl;
+	// std::cout << "handle message locked end" << std::endl;
 }
 
 void OscHandler::send_done (std::string command, osc::IpEndpointName endpoint)

@@ -204,6 +204,12 @@ void GLApp::draw() {
 }
 
 void GLApp::setup() {
+    TexturePool *texture_pool = TexturePool::get_instance ();
+
+    texture_pool->texture_changed.add(this, &GLApp::change_texture, OF_EVENT_ORDER_AFTER_APP);
+    texture_pool->change_tmp_texture.add(this, &GLApp::change_tmp_texture, OF_EVENT_ORDER_AFTER_APP);
+    texture_pool->delete_texture.add(this, &GLApp::delete_texture, OF_EVENT_ORDER_AFTER_APP);
+    
     /*
     
      
@@ -251,7 +257,53 @@ void GLApp::setup() {
 }
 
 void GLApp::update() {
+   
+    /*
+    connect (texture_pool,
+             SIGNAL (texture_changed(unsigned int)),
+             this,
+             SLOT(change_texture(unsigned int)),
+             Qt::QueuedConnection);
     
+    connect (texture_pool,
+             SIGNAL (change_tmp_texture(uint32_t, bool)),
+             this,
+             SLOT(change_tmp_texture(uint32_t, bool)),
+             Qt::QueuedConnection);
+    
+    connect (texture_pool,
+             SIGNAL (delete_texture(uint32_t)),
+             this,
+             SLOT(delete_tmp_texture(uint32_t)),
+             Qt::QueuedConnection);
+    
+    connect (ShaderPool::get_instance (),
+             SIGNAL (shader_programs_changed()), 
+             this, 
+             SLOT(change_shader_programs()), 
+             Qt::QueuedConnection);
+     */
+}
+
+void GLApp::exit() {
+    TexturePool *texture_pool = TexturePool::get_instance ();
+    
+    texture_pool->texture_changed.remove(this, &GLApp::change_texture, OF_EVENT_ORDER_AFTER_APP);
+    texture_pool->change_tmp_texture.remove(this, &GLApp::change_tmp_texture, OF_EVENT_ORDER_AFTER_APP);
+    texture_pool->delete_texture.remove(this, &GLApp::delete_texture, OF_EVENT_ORDER_AFTER_APP);
+}
+
+void GLApp::change_texture (unsigned int & index)
+{
+    _renderer->change_texture(index);
+}
+void GLApp::change_tmp_texture (std::pair<uint32_t, bool> & p)
+{
+    _renderer->change_tmp_texture(p.first, p.second);
+}
+void GLApp::delete_texture(uint32_t & id)
+{
+    _renderer->delete_tmp_texture(id);
 }
 
 void GLApp::mousePressed(int x, int y, int button)
@@ -344,32 +396,8 @@ GLRenderer::GLRenderer () :
     + "SHIFT-UPARROW - up\n"
     + "SHIFT-DOWNARROW - down\n";
 
-	//TexturePool *texture_pool = TexturePool::get_instance ();
 /* TODO
-	connect (texture_pool, 
-			 SIGNAL (texture_changed(unsigned int)), 
-			 this, 
-			 SLOT(change_texture(unsigned int)), 
-			 Qt::QueuedConnection);
-
-	connect (texture_pool, 
-			 SIGNAL (change_tmp_texture(uint32_t, bool)), 
-			 this, 
-			 SLOT(change_tmp_texture(uint32_t, bool)), 
-			 Qt::QueuedConnection);
-
-	connect (texture_pool, 
-			 SIGNAL (delete_texture(uint32_t)), 
-			 this, 
-			 SLOT(delete_tmp_texture(uint32_t)),
-			 Qt::QueuedConnection);
-
-	connect (ShaderPool::get_instance (), 
-			 SIGNAL (shader_programs_changed()), 
-			 this, 
-			 SLOT(change_shader_programs()), 
-			 Qt::QueuedConnection);
-*/
+	*/
 #if 0
 	change_textures ();
 

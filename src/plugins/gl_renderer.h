@@ -23,6 +23,8 @@
 #include "ofGraphics.h"
 #include "ofMain.h"
 #include "ofMaterial.h"
+#include "ofEventUtils.h"
+#include "ofEvent.h"
 
 
 /*
@@ -110,6 +112,7 @@ public:
     void setup();
     void update();
     void draw();
+    void exit();
     
     void mousePressed(int x, int y, int button);
     void mouseReleased(int x, int y, int button);
@@ -117,6 +120,10 @@ public:
     // TODO void mouseDoubleClickEvent (QMouseEvent *event);
     void keyPressed(int key);
     void keyReleased(int key);
+    
+    void change_texture (unsigned int & index);
+    void change_tmp_texture (std::pair<uint32_t, bool> & p);
+    void delete_texture(uint32_t & id);
 
 
 };

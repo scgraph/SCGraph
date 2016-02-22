@@ -5,17 +5,15 @@
 // - fix oscpack/scgraph to not alloc mem.on incoming osc message
 // - implement wildcard support for d_load
 
-#include <pthread.h>
 #include <osc/OscPacketListener.h>
 #include <ip/UdpSocket.h>
 
 #include <vector>
 
-// FIXME: remove
-#include <iostream>
-
 #include "ofEvent.h"
 #include "ofThread.h"
+
+#include "ofThreadChannel.h"
 #include "ofAppRunner.h"
 
 /* if you modify this, do the same to the command_name_to_int () method */
@@ -131,12 +129,6 @@ class OscHandler : public osc::OscPacketListener, public ofThread
 
 	/** a list of clients wishing to receive notifications by the server */
 	std::vector<osc::IpEndpointName>  _notifications;
-	
-	// TODO ofThread                       _condition_mutex;
-    /*
-	QWaitCondition               _condition;
-	bool                         _handling_done;
-	*/
 
 	private:
 		void ProcessMessage (const osc::ReceivedMessage& message, const osc::IpEndpointName& name);
@@ -148,13 +140,13 @@ class OscHandler : public osc::OscPacketListener, public ofThread
 		void send_notifications (std::string path, int id);
 
 		void send_done (std::string command, osc::IpEndpointName endpoint);
-		/* inherited from QThread */
-		void run ();
     
 
 	public:
 		OscHandler ();
 		~OscHandler ();
+    
+        ofThreadChannel<OscMessage*> _channel;
 
 		void stop ();
         void threadedFunction();

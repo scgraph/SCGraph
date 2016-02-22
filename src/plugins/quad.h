@@ -29,9 +29,7 @@ class TexQuad : public GUnit
 	~TexQuad ();
 
 	virtual void process_g (double delta_t);
-
-	// TODO: public slots:
-		void flip(uint32_t tex_id);
+    void flip(uint32_t & tex_id);
 };
 
 class FBTexQuad : public GUnit

@@ -89,18 +89,9 @@ void Quad::process_g (double delta_t)
 TexQuad::TexQuad () :
 	_g(new Geometry)
 {
-
-	// set up double buffers
-	TexturePool *texture_pool = TexturePool::get_instance ();
-/* TODO:
-	connect (texture_pool,
-			 SIGNAL(texture_loaded(uint32_t)), 
-			 this, 
-			 SLOT(flip(uint32_t)), 
-			 Qt::QueuedConnection);
-*/
-	//std::cout << "[TexQuad] constructor" << std::endl;
-
+    //std::cout << "[TexQuad] constructor" << std::endl;
+    TexturePool *texture_pool = TexturePool::get_instance ();
+    
 	_texquad_id_a = texture_pool->get_id();
 	_texquad_id_b = texture_pool->get_id();
 	_tex_index_a = 0;
@@ -117,6 +108,9 @@ TexQuad::TexQuad () :
 	cow_ptr<Face> face (new Face);
 	face.touch()->_geometry_type = Face::QUADS;
 
+    // set up double buffers
+    texture_pool->texture_loaded.add(this, &TexQuad::flip, 0);
+    
 	// face.touch()->_material._emissive_color[0] = 1.0;
 
 	for (int i = 0; i < 4; ++i)
@@ -136,10 +130,12 @@ TexQuad::~TexQuad () {
 	TexturePool *texture_pool = TexturePool::get_instance ();
 	texture_pool->delete_textures_at_id(_texquad_id_a);
 	texture_pool->delete_textures_at_id(_texquad_id_b);
+    
+    texture_pool->texture_loaded.remove(this, &TexQuad::flip, 0);
 }
 
-void TexQuad::flip(uint32_t tex_id) {
-	// look if broadcast was for use_count
+void TexQuad::flip(uint32_t & tex_id) {
+	// look if broadcast was for us
 	//std::cout << "[TexQuad] flip" << std::endl;
 	if(tex_id == _texquad_id_a)
 		_flip = true;
@@ -149,6 +145,9 @@ void TexQuad::flip(uint32_t tex_id) {
 
 
 void TexQuad::process_g (double delta_t) {
+
+    
+    
 	_graphics_outs[0]._graphics.clear();
 
 	// std::cout << "[TexQuad] process_g" << std::endl;

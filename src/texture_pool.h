@@ -15,6 +15,8 @@
 #include <string>
 #include <unordered_map>
 
+#include "ofEvent.h"
+
 //#include <QtCore/QObject>
 //#include <QtCore/QHash>
 /*
@@ -72,12 +74,11 @@ class TexturePool //: public QObject
 
 		void update_tmp_texture(uint32_t id, bool samep);
 
-	// TODO signals:
-		void texture_loaded (uint32_t id);
-		void texture_changed (unsigned int index);
-
-		void delete_texture (uint32_t id);
-		void change_tmp_texture (uint32_t id, bool samep);
+    ofEvent<uint32_t> texture_loaded;
+    ofEvent<unsigned int> texture_changed;
+    
+    ofEvent<uint32_t> delete_texture;
+    ofEvent<std::pair<uint32_t, bool>> change_tmp_texture;
 };
 
 #endif

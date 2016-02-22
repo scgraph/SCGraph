@@ -43,7 +43,7 @@ void StringPool::set_font (const std::string &filename)
 {
 	// Create a font from a TrueType file.
 	ofTrueTypeFont * tmp_font = new ofTrueTypeFont();
-    Boolean loaded = tmp_font->load(filename.c_str(), 32);
+    Boolean loaded = tmp_font->load(filename.c_str(), 32, true, true, true);
 
 	// If something went wrong, bail out.
 	if(!loaded)
@@ -52,7 +52,6 @@ void StringPool::set_font (const std::string &filename)
 		{
 			std::cout << "[StringPool]: Loaded font " << filename << "" << std::endl;
 			_font = tmp_font;
-			//_font->UseDisplayList(true);
 		}
 }
 

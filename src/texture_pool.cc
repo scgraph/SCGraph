@@ -187,7 +187,8 @@ unsigned int TexturePool::add_image (const std::string &filename, unsigned int i
 		std::cout << "  [TexturePool]: New texture has index: "
 				  << _textures.size() - 1 << std::endl;
 	
-		// TODO ofNotifyEvent(texture_changed, _textures.size() - 1);
+        unsigned int id = _textures.size() - 1;
+		texture_changed.notify(this, id);
 	}
 #ifdef HAVE_FFMPEG
 	else {
@@ -224,7 +225,7 @@ unsigned int TexturePool::change_image (const std::string &filename, unsigned in
 			std::cout << "  [TexturePool]: Changed texture at index " 
 					  << index << std::endl;
 	
-		// TODO ofNotifyEvent(texture_changed, index);
+            texture_changed.notify(this, index);
 		}
 	}
 
@@ -240,17 +241,18 @@ TexturePool::~TexturePool ()
 
 void TexturePool::delete_textures_at_id(uint32_t id) {
 	_tmp_textures.erase(id);
-	// TODO ofNotifyEvent(delete_texture, id);
+    delete_texture.notify(this, id);
 }
 
 void TexturePool::update_tmp_texture(uint32_t id, bool samep)
 {
 	//std::cout << "[TexturePool] updating tmp texture" << std::endl;
-	// TODO ofNotifyEvent(change_tmp_texture, id, samep);
+    std::pair<uint32_t, bool> p(id, samep);
+    change_tmp_texture.notify(this, p);
 }
 
 void TexturePool::loaded_tmp_texture(uint32_t id) {
-	// TODO ofNotifyEvent(texture_loaded, id);
+    texture_loaded.notify(this, id);
 }
 
 unsigned int TexturePool::get_number_of_textures ()
@@ -272,5 +274,5 @@ boost::optional<boost::shared_ptr<AbstractTexture> > TexturePool::get_texture (u
 
 void TexturePool::update_texture (unsigned int index)
 {
-	// TODO ofNotifyEvent(texture_changed, index);
+	texture_changed.notify(this, index);
 }

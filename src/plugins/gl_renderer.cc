@@ -18,22 +18,6 @@
 
 #include "ofUtils.h"
 
-
-//#include <QtOpenGL/QGLFormat>
-
-/** 
-	A global variable, but don't blame me, blame the 
-	GLEW authors
-*/
-/*
-GLEWContext *glewContext;
-
-extern "C" {
-	GLEWContext* glewGetContext() {
-		return glewContext;
-	}
-}
- */
 /*
 
 Recorder::Recorder () :
@@ -140,10 +124,6 @@ void GLRenderWidget::keyReleaseEvent (QKeyEvent *event)
 	_renderer->keyReleaseEvent (event);
 }
 
-GLEWContext *GLRenderWidget::getGlewContext() 
-{ 
-	return &_glew_context; 
-}
 
 */
 /*
@@ -195,25 +175,17 @@ void GLApp::draw() {
 }
 
 void GLApp::setup() {
-    TexturePool *texture_pool = TexturePool::get_instance ();
-
-    texture_pool->texture_changed.add(this, &GLApp::change_texture, OF_EVENT_ORDER_AFTER_APP);
-    texture_pool->change_tmp_texture.add(this, &GLApp::change_tmp_texture, OF_EVENT_ORDER_AFTER_APP);
-    texture_pool->delete_texture.add(this, &GLApp::delete_texture, OF_EVENT_ORDER_AFTER_APP);
     
-    /*
-    
-     
     //_glew_context = glewGetContext();
-    // TODO glewContext = getGlewContext();
+    //glewContext = getGlewContext();
     
-    /*GLenum err = glewInit();
+    GLenum err = glewInit();
     if (GLEW_OK != err)
     {
         // Problem: glewInit failed, something is seriously wrong.
         fprintf(stderr, "Error: %s\n", glewGetErrorString(err));
     }
-     */
+    
     ofSetEscapeQuitsApp(false);
     ofSetWindowShape (SCGRAPH_QT_GL_RENDERER_DEFAULT_WIDTH,
                       SCGRAPH_QT_GL_RENDERER_DEFAULT_HEIGHT);
@@ -222,7 +194,7 @@ void GLApp::setup() {
     glDepthFunc(GL_LEQUAL);
     glClearDepth(1.0);
     glEnable(GL_BLEND);
-#ifdef HAVE_SHADERS
+    
     if (!GLEW_ARB_vertex_program)
     {
         std::cout << "[GGLRenderer]: Warning: vertex program extension missing" << std::endl;
@@ -237,26 +209,16 @@ void GLApp::setup() {
     {
         std::cout << "[GGLRenderer]: Warning: shader objects extension missing" << std::endl;
     }
-#endif
+    
     _renderer->init_textures();
     
-#ifdef HAVE_SHADERS
     _renderer->change_shader_programs();
-#endif
+
     //_shader_program = glCreateProgramObjectARB();
     
 }
 
 void GLApp::update() {
-   
-    /* TODO
-    
-    connect (ShaderPool::get_instance (),
-             SIGNAL (shader_programs_changed()), 
-             this, 
-             SLOT(change_shader_programs()), 
-             Qt::QueuedConnection);
-     */
 }
 
 void GLApp::makeScreenshot() {
@@ -266,25 +228,9 @@ void GLApp::makeScreenshot() {
 }
 
 void GLApp::exit() {
-    TexturePool *texture_pool = TexturePool::get_instance ();
-    
-    texture_pool->texture_changed.remove(this, &GLApp::change_texture, OF_EVENT_ORDER_AFTER_APP);
-    texture_pool->change_tmp_texture.remove(this, &GLApp::change_tmp_texture, OF_EVENT_ORDER_AFTER_APP);
-    texture_pool->delete_texture.remove(this, &GLApp::delete_texture, OF_EVENT_ORDER_AFTER_APP);
 }
 
-void GLApp::change_texture (unsigned int & index)
-{
-    _renderer->change_texture(index);
-}
-void GLApp::change_tmp_texture (std::pair<uint32_t, bool> & p)
-{
-    _renderer->change_tmp_texture(p.first, p.second);
-}
-void GLApp::delete_texture(uint32_t & id)
-{
-    _renderer->delete_tmp_texture(id);
-}
+
 
 void GLApp::mousePressed(int x, int y, int button)
 {
@@ -388,7 +334,7 @@ GLRenderer::GLRenderer () :
 
 
 void GLRenderer::compile_and_link_shader_program(unsigned int index, ShaderPool::ShaderProgram *s) {
-#ifdef HAVE_SHADERS
+
 	std::cout << "[GGLRenderer]: Compiling and linking shader program: " << index << std::endl;
     _main_window->makeCurrent();
 
@@ -431,13 +377,6 @@ void GLRenderer::compile_and_link_shader_program(unsigned int index, ShaderPool:
 
 	std::cout << "[GGLRenderer]: Shader log:" << std::endl << log << std::endl << "[GGLRenderer]: Shader log end." << std::endl;
 
-#if 0
-
-	glGetInfoLogARB(my_program, 100000, &length, (GLcharARB *)log);
-
-	std::cout << "Shader log:" << std::endl << log << std::endl << "Shader log end." << std::endl;
-#endif
-
 	glUseProgramObjectARB(my_program);
 
 	_shader_programs[index] = shader_entry;
@@ -463,31 +402,31 @@ void GLRenderer::compile_and_link_shader_program(unsigned int index, ShaderPool:
 
 	// deactivate new shader
 	glUseProgramObjectARB(0);
-#endif
+
 }
 
 void GLRenderer::clear_shader_program(unsigned int index) {
-#ifdef HAVE_SHADERS
+
 	for (size_t j = 0; j < _shader_programs[index].second.size(); ++j)
 		glDeleteObjectARB(_shader_programs[index].second[j]);
 
 	glDeleteObjectARB(_shader_programs[index].first);
-#endif
+
 }
 
 void GLRenderer::setup_shader_programs() {
-#ifdef HAVE_SHADERS
+
 	ShaderPool *p = ShaderPool::get_instance();
 
 	for (ShaderPool::shader_programs_map_t::iterator it = p->_shader_programs.begin(); it != p->_shader_programs.end(); ++it)
 	{
 		compile_and_link_shader_program(it->first, it->second.get());
 	}
-#endif
+
 }
 
 void GLRenderer::clear_shader_programs() {
-#ifdef HAVE_SHADERS
+
     _main_window->makeCurrent();
 
 	for (shader_programs_map_t::iterator it = _shader_programs.begin(); it != _shader_programs.end(); ++it)
@@ -496,18 +435,22 @@ void GLRenderer::clear_shader_programs() {
 	}
 
 	_shader_programs.clear();
-#endif
+
+}
+
+
+
+void GLRenderer::change_shader_programs_evt (unsigned int & i) {
+	change_shader_programs();
 }
 
 void GLRenderer::change_shader_programs () {
-#ifdef HAVE_SHADERS
-	clear_shader_programs();
-	setup_shader_programs();
-#endif
+    clear_shader_programs();
+    setup_shader_programs();
 }
 
-void GLRenderer::add_shader_program (unsigned int index) {
-	// TODO GLenum my_program = glCreateProgramObjectARB();
+void GLRenderer::add_shader_program (unsigned int & index) {
+	GLenum my_program = glCreateProgramObjectARB();
 }
 
 
@@ -620,12 +563,12 @@ void GLRenderer::clear_textures ()
 	_texture_handles.clear ();
 }
 
-void GLRenderer::delete_texture (GLuint handle) {
+void GLRenderer::delete_texture (uint32_t & handle) {
     _main_window->makeCurrent();
 	glDeleteTextures(1, &handle);
 }
 
-void GLRenderer::change_texture (unsigned int index) {
+void GLRenderer::change_texture (unsigned int & index) {
 	while(_texture_handles.size() <= index)
 		_texture_handles.push_back(-1);
 
@@ -639,6 +582,11 @@ void GLRenderer::change_texture (unsigned int index) {
 		std::cout << "tex: " << (*t)->_texture << std::endl;
 		_texture_handles[index] = upload_texture((*t)->_texture);		
 	}
+}
+
+void GLRenderer::change_tmp_texture_pair (std::pair<uint32_t, bool> & p)
+{
+    change_tmp_texture(p.first, p.second);
 }
 
 void GLRenderer::change_tmp_texture(uint32_t id, bool samep) {
@@ -677,32 +625,51 @@ void GLRenderer::init_textures () {
 void GLRenderer::change_feedback_frames ()
 {
 	_main_window->makeCurrent();
-
+    
+    std::cout << "[GLRenderer]: change_feedback_frames" << std::endl;
 	// TODO texture size?
-
 	_max_feedback_frames = std::max<unsigned int>(1, 
 												  std::min<unsigned int>((unsigned int) *_control_ins[MAXFEEDBACKFRAMES], 
 																		 SCGRAPH_QT_GL_RENDERER_MAXMAX_FEEDBACK_FRAMES));
 
 	// empty data to initialize the texture
-	std::vector<GLubyte> emptyData(1024 * 1024 * 4, 0);
+	//std::vector<GLubyte> emptyData(1024 * 1024 * 4, 0);
+    ofShortPixels pix;
+    pix.allocate(1600, 1200, OF_IMAGE_COLOR_ALPHA);
+    pix.setColor(ofColor::black);
 	
 	for (size_t i = 0; i < _max_feedback_frames; i++) {
+        ofTexture tex;
+        
+        tex.allocate(pix, false);
+        _past_frame_handles.push_back(tex);
+        /*
 		_past_frame_handles.push_back(0);
 		glGenTextures(1, &_past_frame_handles[i]);
+        
+        std::cout << "GL error message1:" << glGetError() << std::endl;
 		glBindTexture(GL_TEXTURE_2D, _past_frame_handles[i]);
+        
+        std::cout << "GL error message2:" << glGetError() << std::endl;
+
+        // GLAPI void GLAPIENTRY glTexSubImage2D (GLenum target, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, GLenum format, GLenum type, const void *pixels);
 
 		glTexSubImage2D(GL_TEXTURE_2D, 
 						0, 0, 0, 1024, 1024, 
 						GL_RGBA, GL_UNSIGNED_BYTE, &emptyData[0]);
-		glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+        
+        std::cout << "GL error message3:" << glGetError() << std::endl;
+        glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+        std::cout << "GL error message4:" << glGetError() << std::endl;
 
 		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-		
+        
+        std::cout << "GL error message5:" << glGetError() << std::endl;
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+        */
 	}
 }
 
@@ -711,16 +678,26 @@ void GLRenderer::clear_feedback_frames ()
 {
 	_main_window->makeCurrent();
 
-	glDeleteTextures (_past_frame_handles.size(), &_past_frame_handles[0]);
+	// TODO glDeleteTextures (_past_frame_handles.size(), &_past_frame_handles[0]);
 
 	_past_frame_handles.clear ();
 }
 
 GLRenderer::~GLRenderer ()
 {
+    
+    TexturePool *texture_pool = TexturePool::get_instance ();
+    
+    texture_pool->texture_changed.remove(this, &GLRenderer::change_texture, OF_EVENT_ORDER_AFTER_APP);
+    texture_pool->change_tmp_texture.remove(this, &GLRenderer::change_tmp_texture_pair, OF_EVENT_ORDER_AFTER_APP);
+    texture_pool->delete_texture.remove(this, &GLRenderer::delete_texture, OF_EVENT_ORDER_AFTER_APP);
+    
+    ShaderPool *shader_pool = ShaderPool::get_instance ();
+    shader_pool->shader_programs_changed.remove(this, &GLRenderer::change_shader_programs_evt, OF_EVENT_ORDER_AFTER_APP);
+
+    
+    std::cout << "[GLRenderer]: destructor" << std::endl;
     _main_app->_renderer = NULL;
-	std::cout << "[GLRenderer]: destructor" << std::endl;
-    std::cout << "[GLRenderer]: done" << std::endl;
 	clear_textures ();
 
     for( auto i = _tmp_texture_handles.begin(); i != _tmp_texture_handles.end(); ++i)
@@ -819,14 +796,11 @@ void GLRenderer::draw_face (const Face &face) {
 				_feedback = std::min<unsigned int>(
 												   face._texture_index * -1, 
 												   _max_feedback_frames);
-				//std::cout << face._texture_index << std::endl;
-				glEnable (GL_TEXTURE_2D);
-				glBindTexture(GL_TEXTURE_2D, 
-							  _past_frame_handles[
-												  (_max_feedback_frames 
-												   - _feedback 
-												   + _fbcounter) 
-												  % _max_feedback_frames]);
+                _past_frame_handles[
+                                    (_max_feedback_frames
+                                     - _feedback
+                                     + _fbcounter)
+                                    % _max_feedback_frames].bind();
 			}
 			else {
 				glDisable (GL_TEXTURE_2D);
@@ -991,12 +965,6 @@ ofMaterial GLRenderer::do_material (const Material &material)
     ma.setShininess(material._shinyness);
     ma.begin();
     return ma;
-    /*
-	glMaterialfv (GL_FRONT, GL_SPECULAR, material._specular_reflection);
-	glMaterialfv (GL_FRONT, GL_DIFFUSE, material._diffuse_reflection);
-	glMaterialfv (GL_FRONT, GL_AMBIENT, material._ambient_reflection);
-	glMaterialfv (GL_FRONT, GL_EMISSION, material._emissive_color);
-	glMaterialfv (GL_FRONT, GL_SHININESS, &material._shinyness);*/
 }
 
 void GLRenderer::do_light (const Light &light)
@@ -1040,7 +1008,6 @@ void GLRenderer::visitLightConst (const Light *l)
 
 void GLRenderer::visitShaderProgramConst (const ShaderProgram *s)
 {
-#ifdef HAVE_SHADERS
 	if (s->_on)
 	{
 		glUseProgramObjectARB(_shader_programs[s->_index].first);
@@ -1051,12 +1018,10 @@ void GLRenderer::visitShaderProgramConst (const ShaderProgram *s)
 		glUseProgramObjectARB(0);
 		_current_shader_program = 0;
 	}
-#endif
 }
 
 void GLRenderer::visitShaderUniformConst (const ShaderUniform *s)
 {
-#ifdef HAVE_SHADERS
     _main_window->makeCurrent();
 
 	//std::cout << "current shader program index: " << _current_shader_program << " uniform index: " << s->_uniform_index << std::endl;
@@ -1105,9 +1070,6 @@ void GLRenderer::visitShaderUniformConst (const ShaderUniform *s)
 		default:
 		break;
 	}
-	// lookup attribute
-	GLint attribute = glGetAttribLocation(_shader_program[s->_index].first, _shader_programs[s->_index].second->_attributes
-#endif
 }
 
 void GLRenderer::visitGeometryConst (const Geometry *g)
@@ -1217,7 +1179,6 @@ void GLRenderer::visitTextConst (const Text *t)
 		ma = do_material (t->_material);
 
 	visitTransformationConst (t);
-	//glColor4fv (&(t->_color[0]));
     ofSetColor(t->_color);
 
 	glScalef(0.2,0.2,0.2);
@@ -1257,8 +1218,17 @@ void GLRenderer::process_g (double delta_t)
         shared_ptr<GLApp> app(new GLApp(this));
         _main_app = app;
         ofRunApp(_main_window, _main_app);
-        //_main_app->setup();
         _ready=true;
+        
+        TexturePool *texture_pool = TexturePool::get_instance ();
+        
+        texture_pool->texture_changed.add(this, &GLRenderer::change_texture, OF_EVENT_ORDER_AFTER_APP);
+        texture_pool->change_tmp_texture.add(this, &GLRenderer::change_tmp_texture_pair, OF_EVENT_ORDER_AFTER_APP);
+        texture_pool->delete_texture.add(this, &GLRenderer::delete_texture, OF_EVENT_ORDER_AFTER_APP);
+
+        ShaderPool *shader_pool = ShaderPool::get_instance ();
+        shader_pool->shader_programs_changed.add(this, &GLRenderer::change_shader_programs_evt, OF_EVENT_ORDER_AFTER_APP);
+        
     }
     
     //TODO glewContext = _gl_widget->getGlewContext();
@@ -1269,24 +1239,25 @@ void GLRenderer::process_g (double delta_t)
 void GLRenderer::really_process_g (double delta_t)
 {
     delta_t = _delta_t;
-    //_main_window->makeCurrent();
 
 	if (!_ready)
 		return;
 
-	// TODO find a better place for this
-	if (_max_feedback_frames == (SCGRAPH_QT_GL_RENDERER_MAXMAX_FEEDBACK_FRAMES + 1))
-		change_feedback_frames();
 
-	// first thing to do 
-	// _gl_widget->makeCurrent ();
+	// first thing to do
+    _main_window->makeCurrent();
+    
+    
+    // TODO find a better place for this
+    if (_max_feedback_frames == (SCGRAPH_QT_GL_RENDERER_MAXMAX_FEEDBACK_FRAMES + 1)) {
+        change_feedback_frames();
+    }
 /*
 #ifndef HAVE_SHADERS
 	// deactivate shaders
     glUseProgramObjectARB(0);
 #endif
 */
-	//_gl_widget->makeOverlayCurrent ()
 
 	if (_up_key_down && !_shift_key_down)
 		_forward += delta_t;
@@ -1539,15 +1510,10 @@ void GLRenderer::really_process_g (double delta_t)
 	// glAccum (GL_RETURN, 1.0);
 
 	if (_feedback > 0) {
-							/*glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16, 
-							  0, 0,
-							  (int)pow(2,(int)ceil(log2(_gl_widget->width()))),
-							  (int)pow(2,(int)ceil(log2(_gl_widget->height()))), 
-							  0);*/
-		glActiveTexture(_past_frame_handles[_fbcounter]);
-        glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16, 0, 0,
-                         _main_window->getWidth(), _main_window->getHeight(), 0);
-		std::cout << "GL error message:" << glGetError() << std::endl;
+		_past_frame_handles[_fbcounter].loadScreenData(0, 0, _main_window->getWidth(), _main_window->getHeight());
+        //glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16, 0, 0,
+        //                 _main_window->getWidth(), _main_window->getHeight(), 0);
+		//std::cout << "GL error message:" << glGetError() << std::endl;
 		_feedback = 0;
 	}
 	_fbcounter = (_fbcounter + 1) % _max_feedback_frames;
@@ -1771,4 +1737,3 @@ extern "C"
 
 	void *thread_func (void *arg);
 }
-

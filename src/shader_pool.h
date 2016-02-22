@@ -8,11 +8,10 @@
 
 //#include <QtCore/QObject>
 
-#include "glew/glew.h"
+#include "ofEvent.h"
 
-struct ShaderPool //: public QObject
+struct ShaderPool
 {
-	//Q_OBJECT
 
 	public:
 		struct ShaderProgram {
@@ -71,9 +70,9 @@ struct ShaderPool //: public QObject
 	GLint get_uniform_float_location(unsigned int index);
 #endif
 
-	/// TODO signals:
-		void shader_program_added (unsigned int index);
-		void shader_programs_changed ();
+
+		ofEvent<unsigned int> shader_program_added;
+		ofEvent<unsigned int> shader_programs_changed;
 
 	private:
 		ShaderPool ();

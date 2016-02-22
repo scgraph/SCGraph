@@ -12,7 +12,7 @@
 #include <dirent.h>
 
 #include <cstring>
-/*
+
 ShaderPool *ShaderPool::_instance = 0;
 
 ShaderPool *ShaderPool::get_instance ()
@@ -165,14 +165,13 @@ boost::shared_ptr<ShaderPool::ShaderProgram> ShaderPool::get_shader_program (uns
 void ShaderPool::add_shader_program (unsigned int index, boost::shared_ptr<ShaderPool::ShaderProgram> program) {
 	std::cout << "[ShaderPool]: add_shader_program()" << std::endl;
 	_shader_programs[index] = program;
-	emit(shader_programs_changed());
+	shader_programs_changed.notify(this, index);
 }
 
 void ShaderPool::clear_shader_programs() {
 	std::cout << "[ShaderPool]: clear_shader_program()" << std::endl;
 	_shader_programs.clear();
-	emit(shader_programs_changed());
+    unsigned int i = 1;
+	shader_programs_changed.notify(this, i);
 }
-
-*/
 

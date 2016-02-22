@@ -858,7 +858,6 @@
 		2761B9D31C7479510028B491 /* video_texture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = video_texture.h; sourceTree = "<group>"; };
 		2761B9D41C7479510028B491 /* scgcolor.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = scgcolor.cc; sourceTree = "<group>"; };
 		2761B9D51C7479510028B491 /* scgcolor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = scgcolor.h; sourceTree = "<group>"; };
-		2761B9D61C7479510028B491 /* glew */ = {isa = PBXFileReference; lastKnownFileType = folder; path = glew; sourceTree = "<group>"; };
 		2761B9DA1C7479510028B491 /* oscpack */ = {isa = PBXFileReference; lastKnownFileType = folder; path = oscpack; sourceTree = "<group>"; };
 		2761B9DB1C7479510028B491 /* sc */ = {isa = PBXFileReference; lastKnownFileType = folder; path = sc; sourceTree = "<group>"; };
 		2761B9DC1C7479510028B491 /* tests */ = {isa = PBXFileReference; lastKnownFileType = folder; path = tests; sourceTree = "<group>"; };
@@ -1554,7 +1553,6 @@
 				2761B9D31C7479510028B491 /* video_texture.h */,
 				2761B9D41C7479510028B491 /* scgcolor.cc */,
 				2761B9D51C7479510028B491 /* scgcolor.h */,
-				2761B9D61C7479510028B491 /* glew */,
 				2761B9DA1C7479510028B491 /* oscpack */,
 				2761B9DB1C7479510028B491 /* sc */,
 				2761B9DC1C7479510028B491 /* tests */,

@@ -123,9 +123,6 @@ public:
     void keyPressed(int key);
     void keyReleased(int key);
     
-    void change_texture (unsigned int & index);
-    void change_tmp_texture (std::pair<uint32_t, bool> & p);
-    void delete_texture(uint32_t & id);
 
     void makeScreenshot();
 
@@ -228,7 +225,7 @@ class GLRenderer : public GUnit,
     std::unordered_map<uint32_t, GLuint>
                       _tmp_texture_handles;
 
-	std::vector<GLuint>
+	std::vector<ofTexture>
                       _past_frame_handles;
 
 	// first is program handle, second is vector of shader handles
@@ -317,14 +314,17 @@ class GLRenderer : public GUnit,
 
 	// TODO public slots:
 		void init_textures ();
-		void change_texture (unsigned int index);
 		void change_tmp_texture (uint32_t id, bool samep);
+        void change_tmp_texture_pair (std::pair<uint32_t, bool> & p);
 		void delete_tmp_texture (uint32_t index);
-		void delete_texture(uint32_t id);
+    
+        void change_texture (unsigned int & index);
+        void delete_texture(uint32_t & id);
 
 	// TODO public slots:
-		void add_shader_program (unsigned int index);
-		void change_shader_programs ();
+		void add_shader_program (unsigned int & index);
+        void change_shader_programs ();
+		void change_shader_programs_evt (unsigned int & index);
 };
 
 #endif

@@ -423,7 +423,7 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 
 		case cmd_clearShaderPrograms:
 		{
-			// TODO ShaderPool::get_instance()->clear_shader_programs();
+			ShaderPool::get_instance()->clear_shader_programs();
 		}
 		break;
 
@@ -435,7 +435,7 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 			std::cout << "[OscHandler]: cmd_loadShaderProgram()" << std::endl;
 
 			// false = FragmentShader
-	/* TODO
+
 			try
 			{
 				// TODO QWriteLocker locker (&scgraph->_read_write_lock);
@@ -489,7 +489,7 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 			{
 				std::cout << "[OscHandler]: Error while parsing message: /loadShaderProgram | /dumpOSC: " << e.what () << std::endl;
 			}
-     */
+
 		}
 		break;
 

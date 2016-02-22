@@ -390,7 +390,7 @@ GLRenderer::GLRenderer () :
 void GLRenderer::compile_and_link_shader_program(unsigned int index, ShaderPool::ShaderProgram *s) {
 #ifdef HAVE_SHADERS
 	std::cout << "[GGLRenderer]: Compiling and linking shader program: " << index << std::endl;
-	_gl_widget->makeCurrent();
+    _main_window->makeCurrent();
 
 	GLenum my_program;
 	GLenum my_shader;
@@ -488,7 +488,7 @@ void GLRenderer::setup_shader_programs() {
 
 void GLRenderer::clear_shader_programs() {
 #ifdef HAVE_SHADERS
-	_gl_widget->makeCurrent();
+    _main_window->makeCurrent();
 
 	for (shader_programs_map_t::iterator it = _shader_programs.begin(); it != _shader_programs.end(); ++it)
 	{
@@ -513,7 +513,7 @@ void GLRenderer::add_shader_program (unsigned int index) {
 
 void GLRenderer::setup_texture (size_t index)
 {
-	//_gl_widget->makeCurrent();
+    _main_window->makeCurrent();
 	std::cout << "setup_texture" << std::endl;
     
 	glBindTexture (GL_TEXTURE_2D, _texture_handles[index]);
@@ -521,6 +521,9 @@ void GLRenderer::setup_texture (size_t index)
 
 
 inline void GLRenderer::upload_texture(boost::shared_ptr<Texture> const & texture, GLuint handle) {
+    
+    _main_window->makeCurrent();
+    
 	glBindTexture (GL_TEXTURE_2D, handle);
 
 	GLenum color_format;
@@ -574,6 +577,8 @@ inline void GLRenderer::upload_texture(boost::shared_ptr<Texture> const & textur
 
 GLuint GLRenderer::upload_texture(boost::shared_ptr<Texture> const & texture)
 {
+    _main_window->makeCurrent();
+    
 	GLuint tmp;
 	glGenTextures (1, &tmp);
 	upload_texture(texture, tmp);
@@ -581,7 +586,9 @@ GLuint GLRenderer::upload_texture(boost::shared_ptr<Texture> const & texture)
 }
 
 void GLRenderer::upload_texture(uint32_t id, bool samep) {
-
+    
+    _main_window->makeCurrent();
+    
 	TexturePool *texture_pool = TexturePool::get_instance ();
 	if(texture_pool->_tmp_textures.count(id) > 0) {
 		boost::shared_ptr<Texture> t = texture_pool->_tmp_textures.at(id);
@@ -605,8 +612,8 @@ void GLRenderer::upload_texture(uint32_t id, bool samep) {
 
 void GLRenderer::clear_textures ()
 {
-	//_main_window->makeCurrent();
-
+    _main_window->makeCurrent();
+    
 	// we make everything new here :)
 	glDeleteTextures (_texture_handles.size(), &_texture_handles[0]);
 	
@@ -614,7 +621,7 @@ void GLRenderer::clear_textures ()
 }
 
 void GLRenderer::delete_texture (GLuint handle) {
-	// TODO _gl_widget->makeCurrent();
+    _main_window->makeCurrent();
 	glDeleteTextures(1, &handle);
 }
 
@@ -635,7 +642,6 @@ void GLRenderer::change_texture (unsigned int index) {
 }
 
 void GLRenderer::change_tmp_texture(uint32_t id, bool samep) {
-	// std::cout << "[GLRenderer] changing tmp texture " << id << std::endl;
     
 	if(_tmp_texture_handles.count(id) > 0 && (!samep)) {
 		delete_texture(_tmp_texture_handles.at(id));
@@ -649,7 +655,7 @@ void GLRenderer::delete_tmp_texture(uint32_t id) {
 }
 
 void GLRenderer::init_textures () {
-	//_main_window->makeCurrent();
+    _main_window->makeCurrent();
 	clear_textures ();
 
 	TexturePool *texture_pool = TexturePool::get_instance ();
@@ -670,7 +676,7 @@ void GLRenderer::init_textures () {
 
 void GLRenderer::change_feedback_frames ()
 {
-	//_main_window->makeCurrent();
+	_main_window->makeCurrent();
 
 	// TODO texture size?
 
@@ -1051,7 +1057,7 @@ void GLRenderer::visitShaderProgramConst (const ShaderProgram *s)
 void GLRenderer::visitShaderUniformConst (const ShaderUniform *s)
 {
 #ifdef HAVE_SHADERS
-	_gl_widget->makeCurrent();
+    _main_window->makeCurrent();
 
 	//std::cout << "current shader program index: " << _current_shader_program << " uniform index: " << s->_uniform_index << std::endl;
 

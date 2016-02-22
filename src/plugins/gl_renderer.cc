@@ -16,6 +16,8 @@
 #include <sstream>
 #include <stdexcept>
 
+#include "ofUtils.h"
+
 
 //#include <QtOpenGL/QGLFormat>
 
@@ -78,26 +80,7 @@ void Recorder::nextFrame (QImage img)
 }
 
 
-void writeImage (QImage img)
-{
-	try	{
-		Options *options = Options::get_instance();
-		QString path = QString::fromStdString(options->_recording_path);
-		path.append("/screenshot-");
 
-		QDateTime datetime = QDateTime::currentDateTime();
-		path.append(datetime.toString("yyyyMMdd-hhmmss-zzz"));
-
-		path.append(".png");
-
-		img.save(path);
-
-		std::cout << "[Screenshot] saved to " << path.toStdString() << std::endl;
-	}
-        catch (const std::exception& ex) {
-            std::cout << "[Screenshot]: " << ex.what() << std::endl;
-	}
-}
 */
 /*
 GLRenderWidget::GLRenderWidget (QWidget *parent, GLRenderer *renderer) :
@@ -134,13 +117,7 @@ void GLRenderWidget::paintGL ()
 	if(_recording)
 		_recorder.nextFrame(grabFrameBuffer());
 }
-
-void GLRenderWidget::makeScreenshot ()
-{
-	QFuture<void> future = QtConcurrent::run(writeImage,
-											 grabFrameBuffer());
-}
-
+ 
 bool GLRenderWidget::toggleRecording ()
 {
 	if(_recording) {
@@ -184,7 +161,21 @@ void GLMainWindow::closeEvent (QCloseEvent *event)
 }
 
 */
-
+void writeImage (ofImage img)
+{
+    try	{
+        Options *options = Options::get_instance();
+        string path = ofFilePath::addTrailingSlash(options->_recording_path);
+        path = path + "screenshot-" + ofGetTimestampString() + ".png";
+        
+        img.save(path);
+        
+        std::cout << "[Screenshot] saved to " << path << std::endl;
+    }
+    catch (const std::exception& ex) {
+        std::cout << "[Screenshot]: " << ex.what() << std::endl;
+    }
+}
 
 GLApp::GLApp(GLRenderer *renderer) :
 _renderer(renderer)
@@ -258,24 +249,7 @@ void GLApp::setup() {
 
 void GLApp::update() {
    
-    /*
-    connect (texture_pool,
-             SIGNAL (texture_changed(unsigned int)),
-             this,
-             SLOT(change_texture(unsigned int)),
-             Qt::QueuedConnection);
-    
-    connect (texture_pool,
-             SIGNAL (change_tmp_texture(uint32_t, bool)),
-             this,
-             SLOT(change_tmp_texture(uint32_t, bool)),
-             Qt::QueuedConnection);
-    
-    connect (texture_pool,
-             SIGNAL (delete_texture(uint32_t)),
-             this,
-             SLOT(delete_tmp_texture(uint32_t)),
-             Qt::QueuedConnection);
+    /* TODO
     
     connect (ShaderPool::get_instance (),
              SIGNAL (shader_programs_changed()), 
@@ -283,6 +257,12 @@ void GLApp::update() {
              SLOT(change_shader_programs()), 
              Qt::QueuedConnection);
      */
+}
+
+void GLApp::makeScreenshot() {
+    ofImage img;
+    img.grabScreen(0, 0, ofGetWindowWidth(), ofGetWindowHeight());
+    writeImage(img);
 }
 
 void GLApp::exit() {
@@ -527,7 +507,7 @@ void GLRenderer::change_shader_programs () {
 }
 
 void GLRenderer::add_shader_program (unsigned int index) {
-	// GLenum my_program = glCreateProgramObjectARB();
+	// TODO GLenum my_program = glCreateProgramObjectARB();
 }
 
 
@@ -535,8 +515,8 @@ void GLRenderer::setup_texture (size_t index)
 {
 	//_gl_widget->makeCurrent();
 	std::cout << "setup_texture" << std::endl;
-
-	// TODO glBindTexture (GL_TEXTURE_2D, _texture_handles[index]);
+    
+	glBindTexture (GL_TEXTURE_2D, _texture_handles[index]);
 }
 
 
@@ -1665,9 +1645,7 @@ void GLRenderer::keyPressed(int key)
 		break;
 
 		case (int)'s':
-			/* TODO if(event->isAutoRepeat() == false)
-				_gl_widget->makeScreenshot();			*/
-
+            _main_app->makeScreenshot();
 			return;
 		break;
 

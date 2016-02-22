@@ -28,7 +28,6 @@
 
 
 /*
-void writeImage (QImage img);
 
 class Recorder
 {
@@ -101,6 +100,9 @@ class GLMainWindow //: public QMainWindow
 #define SCGRAPH_QT_GL_RENDERER_DEFAULT_HEIGHT       480
 #define SCGRAPH_QT_GL_RENDERER_MAXMAX_FEEDBACK_FRAMES       1024
 
+
+void writeImage (ofImage img);
+
 class GLApp : public ofBaseApp
 {
     
@@ -125,6 +127,7 @@ public:
     void change_tmp_texture (std::pair<uint32_t, bool> & p);
     void delete_texture(uint32_t & id);
 
+    void makeScreenshot();
 
 };
 

@@ -643,33 +643,6 @@ void GLRenderer::change_feedback_frames ()
         
         tex.allocate(pix, false);
         _past_frame_handles.push_back(tex);
-        /*
-		_past_frame_handles.push_back(0);
-		glGenTextures(1, &_past_frame_handles[i]);
-        
-        std::cout << "GL error message1:" << glGetError() << std::endl;
-		glBindTexture(GL_TEXTURE_2D, _past_frame_handles[i]);
-        
-        std::cout << "GL error message2:" << glGetError() << std::endl;
-
-        // GLAPI void GLAPIENTRY glTexSubImage2D (GLenum target, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, GLenum format, GLenum type, const void *pixels);
-
-		glTexSubImage2D(GL_TEXTURE_2D, 
-						0, 0, 0, 1024, 1024, 
-						GL_RGBA, GL_UNSIGNED_BYTE, &emptyData[0]);
-        
-        std::cout << "GL error message3:" << glGetError() << std::endl;
-        glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-        std::cout << "GL error message4:" << glGetError() << std::endl;
-
-		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-        
-        std::cout << "GL error message5:" << glGetError() << std::endl;
-		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-        */
 	}
 }
 
@@ -677,9 +650,11 @@ void GLRenderer::change_feedback_frames ()
 void GLRenderer::clear_feedback_frames ()
 {
 	_main_window->makeCurrent();
-
-	// TODO glDeleteTextures (_past_frame_handles.size(), &_past_frame_handles[0]);
-
+    
+    for (size_t i = 0; i < _max_feedback_frames; i++) {
+        _past_frame_handles[i].clear();
+    }
+    
 	_past_frame_handles.clear ();
 }
 

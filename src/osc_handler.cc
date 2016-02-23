@@ -434,9 +434,7 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 
 			std::cout << "[OscHandler]: cmd_loadShaderProgram()" << std::endl;
 
-			// false = FragmentShader
-
-			try
+            try
 			{
 				// TODO QWriteLocker locker (&scgraph->_read_write_lock);
 
@@ -453,16 +451,6 @@ void OscHandler::handle_message_locked (OscMessage *msg)
 					p->_uniforms.push_back(attribute);
 					std::cout << "[OscHandler]: add attribute: \"" << attribute << "\"" << std::endl;
 				}
-#if 0
-				attributes_stream >> attribute;
-
-				while(attributes_stream.good() || attributes_stream.eof()) {
-					p->_attributes.push_back(attribute);
-					if (attributes_stream.eof()) break;
-					std::cout << "[OscHandler]: add attribute: \"" << attribute << "\"" << std::endl;
-					attributes_stream >> attribute;
-				}
-#endif				
 
 				while(arg != message->ArgumentsEnd())
 				{

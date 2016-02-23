@@ -7,24 +7,12 @@
 
 #include "texture.h"
 
-#ifdef HAVE_FFMPEG
-#include "video_texture.h"
-#endif
-
 #include <vector>
 #include <string>
 #include <unordered_map>
 
 #include "ofEvent.h"
 
-//#include <QtCore/QObject>
-//#include <QtCore/QHash>
-/*
-#include <QtGui/QImage>
-#include <QtGui/QImageReader>
-#include <QtGui/QColor>
-#include <QtOpenGL/QGLWidget>
-*/
 /** a texture image in RGBA format with unsigned chars as data */
 
 

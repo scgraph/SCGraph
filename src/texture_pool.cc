@@ -16,51 +16,8 @@
 #include "ofThread.h"
 #include "ofEvent.h"
 
-#ifdef HAVE_FFMPEG
-extern "C"
-{
-#define __STDC_CONSTANT_MACROS // for UINT64_C
-#include <libavcodec/avcodec.h>
-#include <libavformat/avformat.h>
-#include <libswscale/swscale.h>
-}
+#include "video_texture.h"
 
-extern "C"
-{
-int ffmpeg_lock_callback(void **mutex, enum AVLockOp op);
-}
-
-int ffmpeg_lock_callback(void **mutex, enum AVLockOp op)
-{
-	static ofThread m;
-
-	switch(op)
-		{
-		case AV_LOCK_CREATE:
-			{
-				*mutex = &m;
-				break;
-			}
-		case AV_LOCK_OBTAIN:
-			{
-				((ofThread*)(*mutex))->lock();
-				break;
-			}
-		case AV_LOCK_RELEASE:
-			{
-				((ofThread*)(*mutex))->unlock();
-				break;
-			}
-		case AV_LOCK_DESTROY:
-			{
-				*mutex = 0;
-				break;
-			}
-		}
-
-	return 0;
-} 
-#endif
 
 typedef boost::shared_ptr< AbstractTexture > AbstractTexturePtr;
 
@@ -77,16 +34,6 @@ TexturePool *TexturePool::get_instance ()
 TexturePool::TexturePool ()
 {
 	Options *options = Options::get_instance ();
-
-#ifdef HAVE_FFMPEG
-	// Register all formats and codecs
-	av_register_all();
-
-	if(options->_verbose > 0)
-		std::cout << "[TexturePool]: all video formats registered." << std::endl;
-
-	av_lockmgr_register(&ffmpeg_lock_callback); 
-#endif
 
 	//qRegisterMetaType<uint32_t>("uint32_t");
 	//qRegisterMetaType<boost::shared_ptr<Texture> >("boost::shared_ptr<Texture>");
@@ -190,7 +137,6 @@ unsigned int TexturePool::add_image (const std::string &filename, unsigned int i
         unsigned int id = _textures.size() - 1;
 		texture_changed.notify(this, id);
 	}
-#ifdef HAVE_FFMPEG
 	else {
 		AbstractTexturePtr tmp = boost::make_shared<VideoTexture>();
 		if(tmp->load(filename) == 0) {
@@ -199,10 +145,10 @@ unsigned int TexturePool::add_image (const std::string &filename, unsigned int i
 			std::cout << "  [TexturePool]: New video texture has index: " 
 					  << _textures.size() - 1 << std::endl;
 	
-			emit (texture_changed(_textures.size() - 1));
+            unsigned int id = _textures.size() - 1;
+            texture_changed.notify(this, id);
 		}
 	}
-#endif
 
 	return _textures.size() - 1;
 }

@@ -1,7 +1,7 @@
 #include "model.h"
 
 #include <iostream>
-/*
+
 extern "C"
 {
     GUnit *create (size_t index, int special_index)
@@ -27,8 +27,9 @@ extern "C"
 
 Model::Model ()
 {
-	//ObjLoader obj = ObjLoader("/Users/hb/src/scgraph/src/fo_frigate.obj");
-	ObjLoader obj = ObjLoader("/Users/hb/src/scgraph/src/test.obj");
+	ObjLoader obj = ObjLoader("/Users/hb/src/scgraph/src/fo_frigate.obj");
+	//ObjLoader obj = ObjLoader("/Users/hb/src/scgraph/src/test.obj");
+    //ObjLoader obj = ObjLoader("/Users/hb/Downloads/of_v0.9.2_osx_release/examples/3d/pointPickerExample/bin/data/lofi-bunny.ply");
 
 	_g = obj._geometry;
 }
@@ -40,7 +41,7 @@ Model::~Model ()
 
 void Model::process_g (double delta_t)
 {
-
+    
 	_graphics_outs[0]._graphics.clear();
 
 	_g.touch()->_commands.clear();
@@ -51,4 +52,3 @@ void Model::process_g (double delta_t)
 
 	_graphics_outs[0]._graphics.push_back(cow_ptr<Geometry>(_g));
 }
- */

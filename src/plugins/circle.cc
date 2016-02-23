@@ -31,8 +31,7 @@ Circle::Circle () :
     _g(new Geometry),
     _segments(32)
 {
-    cow_ptr<Face> face (new Face);
-    face.touch()->_geometry_type = Face::TRIANGLE_FAN;
+    cow_ptr<Face> face (new Face(Face::TRIANGLE_FAN));
 
     // face.touch()->_material._emissive_color._c[0] = 1.0;
     float phi = 0;

@@ -26,11 +26,10 @@ extern "C"
 
 Points::Points () :
 	_g(new Geometry),
-	_f(new Face),
+	_f(new Face(Face::POINTS)),
 	_first_time(true)
 {
 	/* create face data - only one face now */
-	_f.touch()->_geometry_type = Face::POINTS;
 
 	// face->_material._emissive_color._c[0] = 1.0;
 

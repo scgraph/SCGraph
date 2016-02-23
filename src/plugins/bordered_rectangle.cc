@@ -28,8 +28,7 @@ BorderedRectangle::BorderedRectangle () :
 	_g(new Geometry)
 {
 	/* create face data - only one face now */
-	cow_ptr<Face> face (new Face);
-	face.touch()->_geometry_type = Face::QUADS;
+	cow_ptr<Face> face (new Face(Face::QUADS));
 
 	// face->_material._emissive_color[0] = 1.0;
 
@@ -50,8 +49,7 @@ BorderedRectangle::BorderedRectangle () :
 	_g.touch()->_faces.push_back (face);
 
 	// this is the outline
-	cow_ptr<Face> outline (new Face);
-	outline.touch()->_geometry_type = Face::LINE_LOOP;
+	cow_ptr<Face> outline (new Face(Face::LINE_LOOP));
 
 	outline.touch()->_vertices.push_back (ofVec3f ());
 	outline.touch()->_normals.push_back (ofVec3f (0,0,1));

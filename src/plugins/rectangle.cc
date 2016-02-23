@@ -28,8 +28,7 @@ Rectangle::Rectangle () :
 	_g(new Geometry)
 {
 	/* create face data - only one face now */
-	cow_ptr<Face> face (new Face);
-	face.touch()->_geometry_type = Face::QUADS;
+	cow_ptr<Face> face (new Face(Face::QUADS));
 
 	// face->_material._emissive_color[0] = 1.0;
 

@@ -29,8 +29,7 @@ Cube::Cube () :
 {
 	// std::cout << "aaaah" << std::endl;
 	/* create face data - only one face now */
-	cow_ptr<Face> face (new Face);
-	face.touch()->_geometry_type = Face::QUADS;
+	cow_ptr<Face> face (new Face(Face::QUADS));
 
 	//std::cout << "aaaargh" << std::endl;
 	// face.touch()->_material._emissive_color._c[0] = 1.0;

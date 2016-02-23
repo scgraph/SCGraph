@@ -1,8 +1,8 @@
 #include "face.h"
 
-Face::Face (GeometryType) :
+
+Face::Face (GeometryType geoType) :
 	//_per_vertex_colors (false),
-	_geometry_type (POINTS),
 	_render_mode (NORMAL),
 	_texture_index (0),
 	_frame_id (0),
@@ -10,7 +10,7 @@ Face::Face (GeometryType) :
 	_thickness (1.0),
 	_culling (0)
 {
-
+    _geometry_type = geoType;
 }
 
 Face::Face (const Face &f) :

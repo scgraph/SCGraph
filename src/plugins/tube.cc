@@ -30,8 +30,7 @@ Tube::Tube () :
     _g(new Geometry),
     _segments(0)
 {
-    cow_ptr<Face> face (new Face);
-    face.touch()->_geometry_type = Face::QUAD_STRIP;
+    cow_ptr<Face> face (new Face(Face::QUAD_STRIP));
 
     // disable culling
     face.touch()->_culling = 0;

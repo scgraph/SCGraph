@@ -28,8 +28,7 @@ Triangle::Triangle () :
 	_g(new Geometry)
 {
 	/* create face data - only one face now */
-	cow_ptr<Face> face (new Face);
-	face.touch()->_geometry_type = Face::TRIANGLES;
+	cow_ptr<Face> face (new Face(Face::TRIANGLES));
 
 	// face.touch()->_material._emissive_color[0] = 1.0;
 

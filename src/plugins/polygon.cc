@@ -26,7 +26,7 @@ extern "C"
 
 GPolygon::GPolygon () :
 	_g (new Geometry),
-	_f (new Face),
+	_f (new Face(Face::POLYGON)),
 	_first_time(true)
 {
 }
@@ -41,10 +41,7 @@ void GPolygon::process_g (double delta_t)
 	_graphics_outs[0]._graphics.clear();
 
 	if (_first_time) {
-		_first_time = false;
-
-		_f.touch()->_geometry_type = Face::POLYGON;
-
+        _first_time = false;
 
 		for (size_t i = 0; i < (int)*_control_ins[0]; ++i)
 		{

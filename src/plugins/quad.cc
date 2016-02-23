@@ -43,8 +43,7 @@ Quad::Quad () :
 	_g(new Geometry)
 {
 	/* create face data - only one face now */
-	cow_ptr<Face> face (new Face);
-	face.touch()->_geometry_type = Face::QUADS;
+	cow_ptr<Face> face (new Face(Face::QUADS));
 
 	// face.touch()->_material._emissive_color[0] = 1.0;
 
@@ -105,8 +104,7 @@ TexQuad::TexQuad () :
 	_processing = false;
 
 	// create face data - only one face now 
-	cow_ptr<Face> face (new Face);
-	face.touch()->_geometry_type = Face::QUADS;
+	cow_ptr<Face> face (new Face(Face::QUADS));
 
     // set up double buffers
     texture_pool->texture_loaded.add(this, &TexQuad::flip, 0);
@@ -217,8 +215,7 @@ FBTexQuad::FBTexQuad () :
 	_g(new Geometry)
 {
 	/* create face data - only one face now */
-	cow_ptr<Face> face (new Face);
-	face.touch()->_geometry_type = Face::QUADS;
+	cow_ptr<Face> face (new Face(Face::QUADS));
 
 	// face.touch()->_material._emissive_color[0] = 1.0;
 

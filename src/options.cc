@@ -6,6 +6,14 @@
 #include <sstream>
 #include <cstdlib>
 
+
+#ifndef PREFIX
+#define PREFIX "usr/local"
+#endif
+#ifndef SC3_PLUGIN_PATH
+#define SC3_PLUGIN_PATH "/Applications/SuperCollider/SuperCollider.app/Contents/Resources/plugins"
+#endif
+
 Options *Options::_instance = 0;
 
 Options *Options::get_instance (int argc, char *argv[])
@@ -36,6 +44,7 @@ Options *Options::get_instance ()
 }
 
 
+
 Options::Options (int argc, char *argv[]) :
 	_port                   (37291),
 	_verbose                (0),
@@ -47,12 +56,8 @@ Options::Options (int argc, char *argv[]) :
 #ifdef HAVE_JACK
 	_jack_ports             (2),
 #endif
-	// TODO _plugin_path         (PREFIX "/lib/scgraph/plugins"),
-	// TODO _sc_plugin_path      (SC3_PLUGIN_PATH),
-
-_plugin_path         ("/usr/local/lib/scgraph/plugins"),
-//_plugin_path         ("/usr/local/lib/scgra/plugins"),
-    _sc_plugin_path      ("/Applications/SuperCollider/SuperCollider.app/Contents/Resources/plugins")
+	_plugin_path         (PREFIX "/lib/scgraph/plugins"),
+    _sc_plugin_path      (SC3_PLUGIN_PATH)
 {
 	char options[] = "u:c:v:g:f:r:p:j:s:h";
 

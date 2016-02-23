@@ -8,7 +8,7 @@
 
 
 #ifndef PREFIX
-#define PREFIX "usr/local"
+#define PREFIX "/usr/local"
 #endif
 #ifndef SC3_PLUGIN_PATH
 #define SC3_PLUGIN_PATH "/Applications/SuperCollider/SuperCollider.app/Contents/Resources/plugins"

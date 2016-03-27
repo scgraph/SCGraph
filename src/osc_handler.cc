@@ -2206,11 +2206,5 @@ void OscHandler::handle_message (OscMessage *message)
     delete message;
 }
 
-#if 0
-void OscHandler::ProcessBundle (const osc::ReceivedBundle& b, const IpEndpointName& remoteEndpoint)
-{
-    
-}
-#endif
 
 

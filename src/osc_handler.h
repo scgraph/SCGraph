@@ -133,7 +133,6 @@ class OscHandler : public osc::OscPacketListener, public ofThread
 
 	private:
 		void ProcessMessage (const osc::ReceivedMessage& message, const osc::IpEndpointName& name);
-		// void ProcessBundle (const osc::ReceivedBundle& b, const IpEndpointName& remoteEndpoint);
 
 		int command_name_to_int (const std::string& command_name);
 

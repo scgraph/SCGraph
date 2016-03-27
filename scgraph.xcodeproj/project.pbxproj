@@ -864,7 +864,6 @@
 		2761B9D31C7479510028B491 /* video_texture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = video_texture.h; sourceTree = "<group>"; };
 		2761B9D41C7479510028B491 /* scgcolor.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = scgcolor.cc; sourceTree = "<group>"; };
 		2761B9D51C7479510028B491 /* scgcolor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = scgcolor.h; sourceTree = "<group>"; };
-		2761B9DA1C7479510028B491 /* oscpack */ = {isa = PBXFileReference; lastKnownFileType = folder; path = oscpack; sourceTree = "<group>"; };
 		2761B9DB1C7479510028B491 /* sc */ = {isa = PBXFileReference; lastKnownFileType = folder; path = sc; sourceTree = "<group>"; };
 		2761B9DC1C7479510028B491 /* tests */ = {isa = PBXFileReference; lastKnownFileType = folder; path = tests; sourceTree = "<group>"; };
 		276287091C75E0570070C59C /* lighting.bundle */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = lighting.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1711,7 +1710,6 @@
 				2761B9D31C7479510028B491 /* video_texture.h */,
 				2761B9D41C7479510028B491 /* scgcolor.cc */,
 				2761B9D51C7479510028B491 /* scgcolor.h */,
-				2761B9DA1C7479510028B491 /* oscpack */,
 				2761B9DB1C7479510028B491 /* sc */,
 				2761B9DC1C7479510028B491 /* tests */,
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
@@ -4173,7 +4171,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_FMODEX = "";
+				HEADER_FMODEX = "\"$(OF_PATH)/libs/fmodex/include\"";
 				LIB_FMODEX = "";
 				MACH_O_TYPE = mh_bundle;
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
@@ -4220,7 +4218,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_FMODEX = "";
+				HEADER_FMODEX = "\"$(OF_PATH)/libs/fmodex/include\"";
 				LIB_FMODEX = "";
 				MACH_O_TYPE = mh_bundle;
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
@@ -4271,7 +4269,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_FMODEX = "";
+				HEADER_FMODEX = "\"$(OF_PATH)/libs/fmodex/include\"";
 				LIB_FMODEX = "";
 				MACH_O_TYPE = mh_bundle;
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
@@ -4318,7 +4316,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_FMODEX = "";
+				HEADER_FMODEX = "\"$(OF_PATH)/libs/fmodex/include\"";
 				LIB_FMODEX = "";
 				MACH_O_TYPE = mh_bundle;
 				MACOSX_DEPLOYMENT_TARGET = 10.10;

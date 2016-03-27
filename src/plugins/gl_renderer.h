@@ -205,6 +205,9 @@ class GLRenderer : public GUnit,
 
 	float             _rot_x;
 	float             _rot_y;
+    
+    
+    bool _window_closed;
 
 	string _window_title;
 
@@ -296,6 +299,8 @@ class GLRenderer : public GUnit,
 								   GLuint handle);
 
 		void set_done_action (int done_action);
+    
+        void set_window_closed ();
 
 		void setup_texture (size_t index);
 

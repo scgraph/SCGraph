@@ -228,9 +228,12 @@ void GLApp::makeScreenshot() {
 }
 
 void GLApp::exit() {
+    if(_renderer) {
+        _renderer->set_done_action (2);
+        _renderer->set_window_closed();
+    }
+    std::cout << "[GLApp]: exit" << std::endl;
 }
-
-
 
 void GLApp::mousePressed(int x, int y, int button)
 {
@@ -284,7 +287,8 @@ GLRenderer::GLRenderer () :
 	_fbcounter (0),
 	_max_feedback_frames (SCGRAPH_QT_GL_RENDERER_MAXMAX_FEEDBACK_FRAMES + 1),
 	_current_shader_program (0),
-	_delta_t(0.1)
+	_delta_t(0.1),
+    _window_closed(false)
 {
 	_transformation_matrix.makeIdentityMatrix();
 	_rotation_matrix.makeIdentityMatrix();
@@ -681,8 +685,11 @@ GLRenderer::~GLRenderer ()
 	_tmp_texture_handles.clear();
     
 	clear_feedback_frames ();
+    
+    if(!_window_closed) {
+        _main_window->setWindowShouldClose();
+    }
 
-    _main_window->setWindowShouldClose();
 }
 
 void GLRenderer::do_face (const Face& face)
@@ -1682,6 +1689,11 @@ void GLRenderer::keyReleased(int key)
 void GLRenderer::set_done_action (int done_action)
 {
 	_done_action = done_action;
+}
+
+void GLRenderer::set_window_closed ()
+{
+    _window_closed = true;
 }
 
 void GLRenderer::appendToWindowTitle (string toAppend)

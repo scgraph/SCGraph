@@ -1227,19 +1227,13 @@ void GLRenderer::really_process_g (double delta_t)
 
 
 	// first thing to do
-    _main_window->makeCurrent();
+    //_main_window->makeCurrent();
     
     
     // TODO find a better place for this
     if (_max_feedback_frames == (SCGRAPH_QT_GL_RENDERER_MAXMAX_FEEDBACK_FRAMES + 1)) {
         change_feedback_frames();
     }
-/*
-#ifndef HAVE_SHADERS
-	// deactivate shaders
-    glUseProgramObjectARB(0);
-#endif
-*/
 
 	if (_up_key_down && !_shift_key_down)
 		_forward += delta_t;
@@ -1471,7 +1465,6 @@ void GLRenderer::really_process_g (double delta_t)
 	else
 		glDisable (GL_CULL_FACE);
 
-
 	glMatrixMode (GL_MODELVIEW);
 
 	// this does the gruntwork)
@@ -1493,16 +1486,14 @@ void GLRenderer::really_process_g (double delta_t)
 
 	if (_feedback > 0) {
 		_past_frame_handles[_fbcounter].loadScreenData(0, 0, _main_window->getWidth(), _main_window->getHeight());
-        //glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16, 0, 0,
-        //                 _main_window->getWidth(), _main_window->getHeight(), 0);
-		//std::cout << "GL error message:" << glGetError() << std::endl;
 		_feedback = 0;
 	}
 	_fbcounter = (_fbcounter + 1) % _max_feedback_frames;
-
-	glDisable (GL_LIGHTING);
     
     _camera.end();
+ 
+    glDisable (GL_CULL_FACE);
+    glDisable (GL_LIGHTING);
     
 	if (_show_help)	{
         ofSetColor(scgColor::white);

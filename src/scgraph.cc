@@ -109,7 +109,9 @@ void ScGraph::start ()
     // start the threads
 	//_graphic_loop.startThread(true); // blocking
 	//_control_loop.startThread(true);
+#ifndef OFXOSC
     _osc_handler.startThread(true);
+#endif
 
     unlock();
 }

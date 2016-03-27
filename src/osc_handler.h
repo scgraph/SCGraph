@@ -15,6 +15,7 @@
 
 #include "ofThreadChannel.h"
 #include "ofAppRunner.h"
+#include "ofxOsc.h"
 
 /* if you modify this, do the same to the command_name_to_int () method */
 enum {
@@ -102,9 +103,8 @@ enum {
 	NUMBER_OF_COMMANDS = 61
 };
 
-class OscMessage //: public QObject
+class OscMessage
 {
-	//Q_OBJECT
 	public:
 		OscMessage (const osc::ReceivedMessage& msg,  const osc::IpEndpointName &endpoint_name) :
 			_msg (msg),
@@ -122,13 +122,14 @@ class OscMessage //: public QObject
 
 class OscHandler : public osc::OscPacketListener, public ofThread
 {
-	//Q_OBJECT
-
 	osc::UdpListeningReceiveSocket   *_socket;
 	char                         _message_buffer [SCGRAPH_OSC_MESSAGE_BUFFER_SIZE];
+    
+    ofxOscSender        *_sender;
 
 	/** a list of clients wishing to receive notifications by the server */
 	std::vector<osc::IpEndpointName>  _notifications;
+    std::vector<std::pair<string, int>>  _notifications_of;
 
 	private:
 		void ProcessMessage (const osc::ReceivedMessage& message, const osc::IpEndpointName& name);
@@ -138,9 +139,11 @@ class OscHandler : public osc::OscPacketListener, public ofThread
 
 		/* used to send notifications to clients */
 		void send_notifications (std::string path, int id);
+    
+    void send_notifications_of (std::string path, int id);
 
 		void send_done (std::string command, osc::IpEndpointName endpoint);
-    
+    void send_done (std::string command, string ip, int port);
 
 	public:
 		OscHandler ();
@@ -154,7 +157,9 @@ class OscHandler : public osc::OscPacketListener, public ofThread
 	/* slots to pass messages from the receiving thread to the QMain thread */
 	//public slots:
 		void handle_message (OscMessage *message);
-		void handle_message_locked (OscMessage *message);
+        void handle_message_locked (OscMessage *msg);
+    
+        void handle_message_of (ofxOscMessage *message);
 	//signals:
 		ofEvent<OscMessage> message_received;
 };

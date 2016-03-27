@@ -6,27 +6,35 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    
-    //Options *options = Options::get_instance ();
+    Options *options = Options::get_instance ();
     ofSetEscapeQuitsApp(false);
-    //_receiver.setup(options->_port);
     
+#ifdef OFXOSC
+    _receiver.setup(options->_port);
+#endif
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
+    
+    ScGraph* scgraph = ScGraph::get_instance();
+    
+#ifdef OFXOSC
     //std::cout << "update" << std::endl;
-    /*while(_receiver.hasWaitingMessages()) {
+    while(_receiver.hasWaitingMessages()) {
         ofxOscMessage msg;
         if(_receiver.getNextMessage(msg)) {
-            std::cout << msg.getAddress() << std::endl;
+            scgraph->_osc_handler.handle_message_of(&msg);
         };
-    };*/
-    ScGraph* scgraph = ScGraph::get_instance();
+    };
+#endif
+
+#ifndef OFXOSC
     OscMessage *msg;
     while(scgraph->_osc_handler._channel.tryReceive(msg)) {
         scgraph->_osc_handler.handle_message(msg);
     }
+#endif
     
     scgraph->_control_loop.threadedFunction();
     scgraph->_graphic_loop.threadedFunction();

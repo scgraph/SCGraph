@@ -1,63 +1,26 @@
+This is the experimental port to openFrameworks. Currently only tested on OSX using XCode to build.
+
 - Requirements:
 
- - Qt 4.6+          (http://trolltech.com)
- - SuperCollider 3.6 or newer (http://supercollider.sf.net) 
-   - You need to build scsynth as shared library (cmake -DLIBSCSYNTH=1 ..)
- - Boost            (http://www.boost.org/)
- - CMake            (http://www.cmake.org/)
- - pkg-config       (http://pkgconfig.freedesktop.org/wiki/)
- - Pthreads         (http://www.gnu.org/software/libc/)
- - SndFile          (http://www.mega-nerd.com/libsndfile/)
-
- Most of these should be available in all major linux distros. 
- On Mac OS X you will have to do some tracking down and installing.
-
-- Optional requirements:
-
- Audio analysis
- If you want the JackClient (which can do fft analysis of audio input 
- over a jack port), then you need:
-
- - JACK             (http://jackaudio.org)
- - FFTW3            (http://www.fftw.org/)
-
- Video playback
- - ffmpeg
-
- Text rendering
- - ftgl
+ - SuperCollider 3.7 or newer (http://supercollider.github.io)
+   - The binary for OSX works just fine
+   - but you also need the sources somewhere
+ - openFrameworks 0.9.3 or newer
 
 
 - How to build
 
- If you installed any of the required packages from source, make sure that 
- pkg-config finds the respective .pc file (e.g. for libsndfile and jack) by virtue 
- of the PKG_CONFIG_PATH environment variable.
- E. g. if you are on Mac OS X and use homebrew, make sure it's set to:
-    export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
-
-The build system uses cmake, so:
-
-create build directory:
-	   mkdir build
-
-	   cd build
-	   cmake ..
-
-cmake will probably fail to find some things. If it does, do 
-	  ccmake ..
-
-and edit the paths to point to:
-
-	SC3_SOURCES_PATH -> root directory of the supercollider source tree
+  - Move this folder into your openFrameworks/apps/myApps folder
+  - open the scgraph.xcodeproj in XCode
+  - In the build settings, change
  	SC3_LIBRARY_PATH -> directory which contains libscsynth (e.g. on a mac:
-	 /Applications/SuperCollider/SuperCollider.app/Contents/Resources)
+	 /Applications/SuperCollider/SuperCollider.app/Contents/MacOS)
  	SC3_PLUGIN_PATH -> directory containing the UGens (e. g. on a mac:
 	 /Applications/SuperCollider/SuperCollider.app/Contents/Resources/plugins)
+   SC3_SOURCES_PATH -> directory with the SC3 sources
 
-Then build and install the usual way:
-	 make
-	 make install
+
+  - it should now build in xcode and run
 
 - What to do if the build succeeded?
 
@@ -77,20 +40,14 @@ Optionally set the env paths: in your ~/.bashrc add:
 You can also set/overwrite the paths and other options using the 
 GServerOptions class (see the helpfile).
 
-On OSX, copy or symlink the build/SCGraph folder to ~/Library/Application Support/SuperCollider/Extensions/
-
-On Linux, add the
-
-    $(PREFIX)/share/scgraph/sclang
-
-to your	sclang.cfg, so the classes get loaded in your SuperCollider installation.
+On OSX, copy or symlink the src/sc folder to ~/Library/Application Support/SuperCollider/Extensions/
 
 
 Open supercollider and do:
 
 (
 g = GServer.default;
-g.boot;
+// g.boot; // no need for that as XCode has already done it
 )
 
 (
@@ -117,9 +74,4 @@ They show you how to make simple animations with scgraph.
 
 - Caveats
 
- Currently the linking doesn't work right on Mac OS X, so libscsynth is not found 
- by the binary if it is run standalone. It works if you start the server from within
- sclang (with the GServer class). If you want to run it standalone anyways, you can
- fix this with:
-
- install_name_tool -change libscsynth.1.dylib path/to/libscsynth.1.dylib path/to/scgraph
+This port is very experimental. Use at your own risk.

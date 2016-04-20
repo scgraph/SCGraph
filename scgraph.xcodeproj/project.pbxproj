@@ -920,7 +920,6 @@
 		2789655A1C77DE710066056C /* translate.bundle */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = translate.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		278965641C77DE7D0066056C /* triangle.bundle */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = triangle.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		2789656E1C77DE890066056C /* tube.bundle */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = tube.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
-		27C68D2A1CA87B650069166A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		27EC55041C75BF96001F63F1 /* binary_op.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = binary_op.cc; sourceTree = "<group>"; };
 		27EC55051C75BF96001F63F1 /* binary_op.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = binary_op.h; sourceTree = "<group>"; };
 		27EC55061C75BF96001F63F1 /* blending.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = blending.cc; sourceTree = "<group>"; };
@@ -1583,7 +1582,6 @@
 			children = (
 				E4B6FCAD0C3E899E008CF71C /* openFrameworks-Info.plist */,
 				E4EB6923138AFD0F00A09F29 /* Project.xcconfig */,
-				27C68D2A1CA87B650069166A /* Assets.xcassets */,
 				E4B69E1C0A3A1BDC003C02F2 /* src */,
 				E4EEC9E9138DF44700A80321 /* openFrameworks */,
 				BB4B014C10F69532006C3DED /* addons */,

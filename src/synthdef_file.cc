@@ -67,9 +67,15 @@ void GSynthDefFile::construct_from_blob (unsigned char *data, unsigned long int 
 		std::cout << " num_synthdefs: " << _num_synthdefs << std::endl;
 	}
 
-	for (int32_t i = 0; i < _num_synthdefs; ++i)
+	for (int16_t i = 0; i < _num_synthdefs; ++i)
 	{
-		_synthdefs.push_back (boost::shared_ptr<GSynthDef>(new GSynthDef(&data, size - (data-orig_data))));
+        try {
+            boost::shared_ptr<GSynthDef> synthdef = boost::shared_ptr<GSynthDef>(new GSynthDef(&data, size - (data-orig_data)));
+            _synthdefs.push_back (synthdef);
+        }
+        catch (const std::exception& ex) {
+            std::cout << "[SynthDefFile]: Error: " << ex.what() << std::endl;
+        }
 	}
 }
 

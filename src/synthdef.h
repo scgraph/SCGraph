@@ -13,7 +13,7 @@ struct ParamName
 	ParamName (unsigned char **data, unsigned long int size);
 
 	std::string  _name;
-	int16_t      _index;
+	int32_t      _index;
 };
 
 struct InputSpec
@@ -22,9 +22,9 @@ struct InputSpec
 
 	/** if _index == -1 then a constant is indexed
 	    otherwise the ugen's output index */
-	int16_t _index_of_ugen;
-	int16_t _index_of_constant;
-	int16_t _index_of_ugen_output;
+	int32_t _index_of_ugen;
+	int32_t _index_of_constant;
+	int32_t _index_of_ugen_output;
 };
 
 struct OutputSpec

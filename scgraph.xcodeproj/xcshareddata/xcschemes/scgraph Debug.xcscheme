@@ -53,7 +53,7 @@
       allowLocationSimulation = "YES">
       <PathRunnable
          runnableDebuggingMode = "0"
-         FilePath = "/Users/hb/Downloads/of_v0.9.2_osx_release/apps/myApps/scgraph/bin/scgraphDebug.app/Contents/MacOS/scgraphDebug">
+         FilePath = "/Users/hb/Downloads/of_v0.9.3_osx_release/apps/myApps/scgraph/bin/scgraphDebug.app/Contents/MacOS/scgraphDebug">
       </PathRunnable>
       <MacroExpansion>
          <BuildableReference
@@ -66,7 +66,7 @@
       </MacroExpansion>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "-v 2"
+            argument = "-v 3"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>

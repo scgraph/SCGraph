@@ -77,18 +77,22 @@ void OscHandler::threadedFunction()
             std::cout << "......" << std::endl;
             done = true;
         }
-        catch (std::runtime_error e)
-        {
-            std::cout << "[OscHandler]: Something went wrong: " << e.what () << std::endl;
-            std::exit (EXIT_FAILURE);
-        }
         catch (osc::MalformedMessageException e)
         {
             std::cout << "[OscHandler]: Error: Malformed message: " << e.what () << std::endl;
         }
         catch (osc::MalformedBundleException e)
         {
-            std::cout << "[OscHandler]: Error: Malformed message: " << e.what () << std::endl;
+            std::cout << "[OscHandler]: Error: Malformed bundle: " << e.what () << std::endl;
+        }
+        catch (osc::MalformedPacketException e)
+        {
+            std::cout << "[OscHandler]: Error: Malformed packet: " << e.what () << std::endl;
+        }
+        catch (std::exception e)
+        {
+            std::cout << "[OscHandler]: Something went wrong: " << e.what () << std::endl;
+            std::exit (EXIT_FAILURE);
         }
     }
     // std::cout << "fini" << std::endl;
@@ -118,7 +122,7 @@ void OscHandler::ProcessMessage (const osc::ReceivedMessage& message, const osc:
     
     //std::cout << "path: " << message.AddressPattern () << std::endl;
     // we use queued connection to get the message in the main qt thread context
-    _channel.send(msg);
+    _channel.send(std::move(msg));
 }
 
 
@@ -333,7 +337,7 @@ int OscHandler::command_name_to_int (const std::string& command_name)
 // connection
 void OscHandler::handle_message_locked (OscMessage *msg)
 {
-    // std::cout << "handle message locked" << std::endl;
+    //std::cout << "handle message locked" << std::endl;
     
     // std::cout << "Message received. Path: " << msg->_msg.AddressPattern () << std::endl;
     
@@ -389,14 +393,15 @@ void OscHandler::handle_message_locked (OscMessage *msg)
                 StringPool::get_instance()->set_font(tmp);
                 
             }
-            catch (const char* error)
-            {
-                if (str)
-                    std::cout << "[OscHandler]: Warning: Set font failed: (font: \"" << str << "\"). Reason: " << error << std::endl;
-            }
+           
             catch (osc::Exception &e)
             {
                 std::cout << "[OscHandler]: Error while parsing message: /setFont: " << e.what () << ". TypeTags: " << message->TypeTags() << std::endl;
+            }
+            catch (const std::exception& ex)
+            {
+                if (str)
+                    std::cout << "[OscHandler]: Warning: Set font failed: (font: \"" << str << "\"). Reason: " << ex.what() << std::endl;
             }
         }
             
@@ -422,14 +427,15 @@ void OscHandler::handle_message_locked (OscMessage *msg)
                 StringPool::get_instance()->change_string(tmp, index);
                 
             }
-            catch (const char* error)
-            {
-                if (str)
-                    std::cout << "[OscHandler]: Warning: String changing failed: (string: \"" << str << "\"). Reason: " << error << std::endl;
-            }
+            
             catch (osc::Exception &e)
             {
                 std::cout << "[OscHandler]: Error while parsing message: /changeString: " << e.what () << ". TypeTags: " << message->TypeTags() << std::endl;
+            }
+            catch (const std::exception& ex)
+            {
+                if (str)
+                    std::cout << "[OscHandler]: Warning: String changing failed: (string: \"" << str << "\"). Reason: " << ex.what() << std::endl;
             }
         }
             
@@ -453,15 +459,16 @@ void OscHandler::handle_message_locked (OscMessage *msg)
                 StringPool::get_instance()->add_string(tmp, -1);
                 
             }
-            catch (const char* error)
-            {
-                if (str)
-                    std::cout << "[OscHandler]: Warning: String adding failed: (string: \"" << str << "\"). Reason: " << error << std::endl;
-            }
             catch (osc::Exception &e)
             {
                 std::cout << "[OscHandler]: Error while parsing message: /addString: " << e.what () << ". TypeTags: " << message->TypeTags() << std::endl;
             }
+            catch (const std::exception& ex)
+            {
+                if (str)
+                    std::cout << "[OscHandler]: Warning: String adding failed: (string: \"" << str << "\"). Reason: " << ex.what() << std::endl;
+            }
+            
         }
             
             break;
@@ -595,27 +602,28 @@ void OscHandler::handle_message_locked (OscMessage *msg)
             
         case cmd_d_free:
         {
-            osc::ReceivedMessage::const_iterator arg = message->ArgumentsBegin();
-            
-            while (arg != message->ArgumentsEnd ())
-            {
-                try
+            std::cout << "[OscHandler]: Warning: /d_free is currently deactivated." << std::endl;
+            /*osc::ReceivedMessage::const_iterator arg = message->ArgumentsBegin();
+            try {
+                while (arg != message->ArgumentsEnd ())
                 {
-                    std::string name = (arg++)->AsString();
-                    
-                    // TODO QWriteLocker locker (&scgraph->_read_write_lock);
-                    
-                    scgraph->_synthdef_pool.d_free (name);
-                }
-                catch (osc::Exception &e)
-                {
-                    std::cout << "[OscHandler]: Error while parsing message: /d_free: " << e.what () << std::endl;
-                }
-                catch (const char *e)
-                {
-                    std::cout << "[OscHandler]: Error while parsing message /d_free (): " << e << std::endl;
+                    try
+                    {
+                        std::string name = (arg++)->AsString();
+                        
+                        scgraph->_synthdef_pool.d_free (name);
+                        
+                    }
+                    catch (const std::runtime_error& ex)
+                    {
+                        std::cout << "[OscHandler]: Error while parsing message /d_free (): " << ex.what() << std::endl;
+                    }
                 }
             }
+            catch (osc::Exception &e)
+            {
+                std::cout << "[OscHandler]: Error while parsing message: /d_free: " << e.what () << std::endl;
+            }*/
         }
             break;
             
@@ -624,6 +632,13 @@ void OscHandler::handle_message_locked (OscMessage *msg)
             // TODO QWriteLocker locker (&scgraph->_read_write_lock);
             
             scgraph->_synthdef_pool.d_freeAll ();
+        }
+            break;
+            
+        case cmd_clearSched:
+        {
+            std::cout << "[OscHandler]: Warning: /clearSched is not implemented yet." << std::endl;
+            // TODO: implement /clearSched
         }
             break;
             
@@ -739,9 +754,9 @@ void OscHandler::handle_message_locked (OscMessage *msg)
                         // TODO QWriteLocker locker (&scgraph->_read_write_lock);
                         scgraph->_node_tree.g_freeAll ((*(arg++)).AsInt32 ());
                     }
-                    catch (const char *e)
+                    catch (const std::runtime_error& ex)
                     {
-                        std::cout << "[OscHandler]: g_freeAll(): " << e << std::endl;
+                        std::cout << "[OscHandler]: g_freeAll(): " << ex.what() << std::endl;
                     }
                 }
             }
@@ -785,9 +800,9 @@ void OscHandler::handle_message_locked (OscMessage *msg)
                         send_notifications ("/n_go", id);
                 }
             }
-            catch (const char *e)
+            catch (const std::runtime_error& ex)
             {
-                std::cout << "[OscHandler]: Error while calling g_new (): " << e << std::endl;
+                std::cout << "[OscHandler]: Error while calling g_new (): " << ex.what() << std::endl;
             }
             catch (osc::Exception &e)
             {
@@ -1070,7 +1085,7 @@ void OscHandler::handle_message_locked (OscMessage *msg)
             {
                 std::cout << "[OscHandler]: Error while parsing message: /n_setn: " << e.what () << ". TypeTags: " << message->TypeTags() << std::endl;
             }
-            catch(std::runtime_error &e)
+            catch(std::exception &e)
             {
                 std::cout << "[OscHandler]: Runtime Error. Reason: " << e.what() << std::endl;
             }
@@ -1092,7 +1107,7 @@ void OscHandler::handle_message_locked (OscMessage *msg)
                         //std::cout << (*(arg++)).AsInt32() << std::endl;
                         scgraph->_node_tree.n_free ((*(arg++)).AsInt32 ());
                     }
-                    catch (const std::exception& ex) {
+                    catch (const std::runtime_error& ex) {
                         std::cout << "[OscHandler]: n_free(): " << ex.what() << std::endl;
                     }
                 }
@@ -1156,14 +1171,16 @@ void OscHandler::handle_message_locked (OscMessage *msg)
                 
                 send_done("/b_read", msg->_endpoint_name);
             }
-            catch (const char* error)
-            {
-                if (path)
-                    std::cout << "[OscHandler]: Warning: Texture loading failed: (path: \"" << path << "\"). Reason: " << error << std::endl;
-            }
+            
             catch (osc::Exception &e)
             {
                 std::cout << "[OscHandler]: Error while parsing message: /b_read: " << e.what () << ". TypeTags: " << message->TypeTags() << std::endl;
+            }
+            
+            catch (const std::exception* error)
+            {
+                if (path)
+                    std::cout << "[OscHandler]: Warning: Texture loading failed: (path: \"" << path << "\"). Reason: " << error->what() << std::endl;
             }
         }
             break;
@@ -1211,14 +1228,14 @@ void OscHandler::handle_message_locked (OscMessage *msg)
                 
                 send_done("/b_allocRead", msg->_endpoint_name);
             }
-            catch (const char* error)
-            {
-                if (path)
-                    std::cout << "[OscHandler]: Warning: Texture loading failed: (path: \"" << path << "\"). Reason: " << error << std::endl;
-            }
             catch (osc::Exception &e)
             {
                 std::cout << "[OscHandler]: Error while parsing message: /b_allocRead: " << e.what () << ". TypeTags: " << message->TypeTags() << std::endl;
+            }
+            catch (std::exception* error)
+            {
+                if (path)
+                    std::cout << "[OscHandler]: Warning: Texture loading failed: (path: \"" << path << "\"). Reason: " << error->what() << std::endl;
             }
         }
             break;
@@ -1450,11 +1467,12 @@ void OscHandler::handle_message_locked (OscMessage *msg)
     // std::cout << "handle message locked end" << std::endl;
 }
 
+#ifdef OFXOSC
 void OscHandler::handle_message_of (ofxOscMessage * message)
 {
-    // std::cout << "handle message locked" << std::endl;
+    //std::cout << "handle message of" << std::endl;
     
-    std::cout << "Message received. Path: " << message->getAddress() << std::endl;
+    //std::cout << "Message received. Path: " << message->getAddress() << std::endl;
     
     Options *options = Options::get_instance ();
     ScGraph *scgraph = ScGraph::get_instance ();
@@ -1586,10 +1604,18 @@ void OscHandler::handle_message_of (ofxOscMessage * message)
             for (int i = 0; i < message->getNumArgs(); i++)
             {
                 std::string name = message->getArgAsString(i);
-                
                 // TODO QWriteLocker locker (&scgraph->_read_write_lock);
-                
-                scgraph->_synthdef_pool.d_free (name);
+                try {
+                    scgraph->_synthdef_pool.d_free (name);
+                }
+                catch (std::runtime_error *e)
+                {
+                    std::cout << "[OscHandler]: d_free(): " << e->what() << std::endl;
+                }
+            }
+            catch (std::runtime_error *e)
+            {
+                std::cout << "[OscHandler]: d_free(): " << e->what() << std::endl;
             }
             break; }
             
@@ -2162,6 +2188,7 @@ void OscHandler::handle_message_of (ofxOscMessage * message)
     scgraph->unlock();
     // std::cout << "handle message locked end" << std::endl;
 }
+#endif
 
 void OscHandler::send_done (std::string command, osc::IpEndpointName endpoint)
 {

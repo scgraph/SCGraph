@@ -57,6 +57,8 @@ void SynthDefPool::add_synthdef (boost::shared_ptr<GSynthDef> synthdef)
 	}
 
 	_synthdefs [synthdef->_name] = synthdef;
+    std::cout << "[SynthDefPool]: Added SynthDef: \"" << synthdef->_name  << "\"" << std::endl;
+
 }
 
 void SynthDefPool::add_synthdef_dir (const std::string &directory)

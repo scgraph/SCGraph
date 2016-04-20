@@ -18,9 +18,9 @@ void ofApp::setup(){
 void ofApp::update(){
     
     ScGraph* scgraph = ScGraph::get_instance();
-    
-#ifdef OFXOSC
     //std::cout << "update" << std::endl;
+#ifdef OFXOSC
+    
     while(_receiver.hasWaitingMessages()) {
         ofxOscMessage msg;
         if(_receiver.getNextMessage(msg)) {

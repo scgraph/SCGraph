@@ -51,12 +51,15 @@ GSynthDef::GSynthDef (unsigned char **data, unsigned long int size)
 		std::cout << " name: " << _name << std::endl;
 
 	// the constants
-	uint32_t num = read_int32_t (data);
+	int32_t num = read_int32_t (data);
 
 	if (options->_verbose >= 3)
 		std::cout << " constants [" << num << "]: ";
 
-	for (uint32_t i = 0; i < num; ++i)
+    if (num > size)
+        throw (std::runtime_error("[GSynthDefFile]: Number of constants exceeds size of synthdef!"));
+    
+	for (int32_t i = 0; i < num; ++i)
 	{
 		float tmp = read_float (data);
 		_constants.push_back (tmp);
@@ -69,12 +72,15 @@ GSynthDef::GSynthDef (unsigned char **data, unsigned long int size)
 		std::cout << std::endl;
 
 	// the parameters
-	num = read_int32_t (data);
+    num = read_int32_t (data);
 
 	if (options->_verbose >= 3)
 		std::cout << " parameters [" << num << "]: ";
+    
+    if (num > size)
+        throw (std::runtime_error("[GSynthDefFile]: Number of parameters exceeds size of synthdef!"));
 
-	for (uint32_t i = 0; i < num; ++i)
+	for (int32_t i = 0; i < num; ++i)
 	{
 		float tmp = read_float (data);
 		_parameters.push_back (tmp);
@@ -88,11 +94,14 @@ GSynthDef::GSynthDef (unsigned char **data, unsigned long int size)
 
 	// the parameter names
 	num = read_int32_t (data);
-
+    
 	if (options->_verbose >= 3)
 		std::cout << " parameter names [" << num << "]:" << std::endl;
+    
+    if (num > size)
+        throw (std::runtime_error("[GSynthDefFile]: Number of parameter names exceeds size of synthdef!"));
 
-	for (uint32_t i = 0; i < num; ++i)
+	for (int32_t i = 0; i < num; ++i)
 	{
 		_param_names.push_back (ParamName (data, size - (*data - orig_data)));
 	}
@@ -102,8 +111,11 @@ GSynthDef::GSynthDef (unsigned char **data, unsigned long int size)
 
 	if (options->_verbose >= 3)
 		std::cout << " ugen specs [" << num << "]:" <<  std::endl;
+    
+    if (num > size)
+        throw (std::runtime_error("[GSynthDefFile]: Number of ugen-specs exceeds size of synthdef!"));
 
-	for (uint32_t i = 0; i < num; ++i)
+	for (int32_t i = 0; i < num; ++i)
 	{
 		
 		if (options->_verbose >= 3)
@@ -150,18 +162,24 @@ UgenSpec::UgenSpec (unsigned char **data, unsigned long int size)
 	if (options->_verbose >= 3)
 		std::cout << "    calculation_rate: " << (int)_calculation_rate << std::endl;
 
-		uint32_t num_ins = read_int32_t (data);
-		uint32_t num_outs =read_int32_t (data);
+    int32_t num_ins = read_int32_t (data);
+    int32_t num_outs = read_int32_t (data);
+
 
 	_special_index = read_int16_t (data);
 
 	if (options->_verbose >= 3)
 		std::cout << "    num_ins: " << num_ins << " nums_outs: " << num_outs << " special_index: " << _special_index << std::endl;
 
-	for (uint32_t i = 0; i < num_ins; ++i)
+    if (num_ins > size)
+        throw (std::runtime_error("[GSynthDefFile]: Number of ugen inputs exceeds size of synthdef!"));
+    if (num_outs > size)
+        throw (std::runtime_error("[GSynthDefFile]: Number of ugen outputs exceeds size of synthdef!"));
+    
+	for (int32_t i = 0; i < num_ins; ++i)
 		_input_specs.push_back (InputSpec (data, size - (*data - orig_data)));
 	
-	for (uint32_t i = 0; i < num_outs; ++i)
+	for (int32_t i = 0; i < num_outs; ++i)
 		_output_specs.push_back (OutputSpec (data, size - (*data - orig_data)));
 }
 

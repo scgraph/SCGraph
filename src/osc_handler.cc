@@ -121,8 +121,12 @@ void OscHandler::ProcessMessage (const osc::ReceivedMessage& message, const osc:
     OscMessage *msg = new OscMessage (message, name);
     
     //std::cout << "path: " << message.AddressPattern () << std::endl;
-    // we use queued connection to get the message in the main qt thread context
-    _channel.send(std::move(msg));
+   
+    handle_message(msg);
+    
+    // we used queued connection to get the message in the main qt thread context
+    // not necessary in ofx it seems
+    //_channel.send(std::move(msg));
 }
 
 

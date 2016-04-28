@@ -186,6 +186,9 @@ void GLApp::setup() {
         fprintf(stderr, "Error: %s\n", glewGetErrorString(err));
     }
     
+    // don't automatically clear background before draw
+    ofSetBackgroundAuto(false);
+    
     ofSetEscapeQuitsApp(false);
     ofSetWindowShape (SCGRAPH_QT_GL_RENDERER_DEFAULT_WIDTH,
                       SCGRAPH_QT_GL_RENDERER_DEFAULT_HEIGHT);

@@ -2,6 +2,7 @@
 
 #include "ofMain.h"
 #include "ofApp.h"
+#include "ofAppNoWindow.h"
 
 
 #include <cstdlib>
@@ -78,28 +79,20 @@ int main (int argc, char *argv[])
     signal (SIGINT, signal_handler);
     signal (SIGTERM, signal_handler);
     
-    /* setup a signal handler for clean shutdown */
+    // setup a signal handler for clean shutdown
     if (options->_verbose)
         std::cout << "[Main]: Up and running..." << std::endl;
     
     scgraph->start ();
-    //qapp.exec ();
-    
-    //ofSetupOpenGL(100,100,OF_WINDOW);			// <-------- setup the GL context
-    
-    // this kicks off the running of my app
-    // can be OF_WINDOW or OF_FULLSCREEN
-    // pass in width and height too:
-    ofGLFWWindowSettings settings;
-    settings.width = 60;
-    settings.height = 60;
-    settings.setPosition(ofVec2f(300,0));
-    settings.resizable = true;
-    settings.title = "scgraph status";
-    shared_ptr<ofAppBaseWindow> mainWindow = ofCreateWindow(settings);
 
+    // create a windowless window
+    ofAppNoWindow window;
+    // setup the invisible GL context
+    ofSetupOpenGL(&window,1024,768,OF_WINDOW);
+    
+    // start the app
     shared_ptr<ofApp> mainApp(new ofApp);
-    ofRunApp(mainWindow, mainApp);
+    ofRunApp(mainApp);
     ofRunMainLoop();
     
     if (options->_verbose)

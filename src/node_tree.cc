@@ -359,14 +359,112 @@ void NodeTree::done_action (int id, int done_action)
 
 	switch (done_action)
 	{
+        //  0 do nothing when the UGen is finished
+        case 0:
+        break;
+            
+        //  1	pause the enclosing synth, but do not free it
 		case 1:
 		break;
-
+            
+        //  2	free the enclosing synth
 		case 2:
 		{
 			n_free (id);
 		}
 		break;
+            
+        //  3	free both this synth and the preceding node
+        case 3:
+        {
+            Tree::Node<NodePtr> *node = find_synth_by_id (id);
+            n_free(id);
+            if (node) {
+                Tree::Node<NodePtr> *prev_node = node->_previous;
+                if (prev_node)
+                    n_free(prev_node->_payload.get()->_id);
+            }
+        }
+        break;
+            
+        //  4	free both this synth and the following node
+        case 4:
+        {
+            Tree::Node<NodePtr> *node = find_synth_by_id (id);
+            n_free(id);
+            if (node) {
+                Tree::Node<NodePtr> *next_node = node->_next;
+                if (next_node)
+                    n_free(next_node->_payload.get()->_id);
+            }
+        }
+        break;
+        
+        
+        //  5	free this synth; if the preceding node is a group then do g_freeAll on it, else free it
+        case 5:
+        {
+            Tree::Node<NodePtr> *node = find_synth_by_id (id);
+            n_free(id);
+            
+            if (node) {
+                Tree::Node<NodePtr> *prev_node = node->_previous;
+                if(prev_node) {
+                    if (dynamic_cast<GGroup*> (prev_node->_payload.get()))
+                        g_freeAll(prev_node->_payload.get()->_id);
+                    else
+                        n_free(prev_node->_payload.get()->_id);
+                }
+            }
+        }
+        break;
+            
+        //  6	free this synth; if the following node is a group then do g_freeAll on it, else free it
+        case 6:
+        {
+            Tree::Node<NodePtr> *node = find_synth_by_id (id);
+            n_free(id);
+            if (node) {
+                Tree::Node<NodePtr> *next_node = node->_next;
+                if(next_node) {
+                    if (dynamic_cast<GGroup*> (next_node->_payload.get()))
+                        g_freeAll(next_node->_payload.get()->_id);
+                    else
+                        n_free(next_node->_payload.get()->_id);
+                }
+            }
+        }
+        break;
+            
+        // TODO:
+        //  7	free this synth and all preceding nodes in this group
+        //  8	free this synth and all following nodes in this group
+            
+        //  9	free this synth and pause the preceding node
+        case 9:
+        {
+            n_free (id);
+        }
+        break;
+            
+        // 10	free this synth and pause the following node
+        case 10:
+        {
+            n_free (id);
+        }
+        break;
+        
+        // TODO:
+        // 11	free this synth and if the preceding node is a group then do g_deepFree on it, else free it
+        // 12	free this synth and if the following node is a group then do g_deepFree on it, else free it
+        // 13	free this synth and all other nodes in this group (before and after)
+        // 14	free the enclosing group and all nodes within it (including this synth)
+        
+        default:
+        {
+            std::cout << "Warning: done action " << done_action << "not supported! Done action ignored." << std::endl;
+        }
+        break;
 	}
 
 
@@ -381,11 +479,11 @@ void NodeTree::n_free (int id)
 {
 	// std::cout << "n_free" << std::endl;
 
-	Tree::Node<NodePtr> *node = find_synth_by_id (id);
+	Tree::Node<NodePtr> *node = find_node_by_id (id);
 
 	if (node)
 		delete node;
-
+    
 	_node_map.erase (id);
 }
 
